@@ -5368,7 +5368,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "ec4d1fe0210d8be60cd8586fbb37a2532a9785afb7feb24aefa0e1a7868fb7e5"
+      "sha256": "7a714d13a4f09d9e3030fa27b9e04b5ae59b8fe44b00bb8e67ebf87967c08e3a"
     },
     "frontend/src/views/FoodCatalog.vue": {
       "spec": [
