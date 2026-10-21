@@ -23,6 +23,8 @@ collection.py - 게시글·첨부 수집과 변경 감지
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   수집 진행 표시·갱신·완료 건수 수정
+
     상세 Git 이력: git log --follow -- backend/app/domains/ingestion/collection.py
     공통 규칙: doc/file-header-policy.md
 
@@ -62,6 +64,7 @@ from backend.app.domains.jobs.service import enqueue
 from backend.app.domains.analysis.service import queue_analysis
 
 BOARDS=['product_01','product_02','product_del']
+BOARD_LABELS={'product_01':'공산품','product_02':'농수축산물','product_del':'단종제품'}
 
 def store_asset(c,content,name,mime=None,url=None):
     import mimetypes
@@ -117,7 +120,7 @@ def collect_source(source_id,payload,progress=None,site=None):
             high=cursor['high_water'];cycle_max=cursor['cycle_max'];next_page=cursor['continuation_page'];pages=[1]+([next_page] if next_page and next_page!=1 else []);seen=set();processed=0;scan_complete=False;last_page=1;had_error=False
             while pages and processed<limit:
                 page=pages.pop(0);last_page=page
-                if progress:progress(f'{board} · {page}페이지 확인',len(results))
+                if progress:progress(f'{BOARD_LABELS[board]} · {page}페이지 확인',len(results))
                 posts=site.list_posts(board,page)
                 if page==1 and posts:cycle_max=max(cycle_max,max(map(int,posts)))
                 if not posts:scan_complete=True;break
@@ -130,10 +133,12 @@ def collect_source(source_id,payload,progress=None,site=None):
                     # Recent pages are revisited even when known, so edits/deletions are not hidden by high water.
                     if processed>=limit:break
                     seen.add(post_id);processed+=1;consumed+=1
-                    if progress:progress(f'{board} · 게시글 {post_id} 가져오는 중',len(results))
+                    if progress:progress(f'{BOARD_LABELS[board]} · 게시글 {post_id} 가져오는 중',len(results))
                     try:
+                        if isinstance(site,SiteClient) and progress:
+                            site.progress=lambda detail:progress(f'{BOARD_LABELS[board]} · 게시글 {post_id} · {detail}',len(results))
                         post=site.post(board,post_id)
-                        if progress:progress(f'{board} · 게시글 {post_id} 저장',len(results))
+                        if progress:progress(f'{BOARD_LABELS[board]} · 게시글 {post_id} 저장',len(results))
                         with tx() as c:
                             doc,kind=ingest(c,source_id,post);counts[kind]=counts.get(kind,0)+1
                             if doc is None:continue
@@ -163,8 +168,10 @@ def collect_source(source_id,payload,progress=None,site=None):
                 for record in recent:
                     pid=record['data']['external_post_id']
                     if pid in seen:continue
-                    if progress:progress(f'{board} · 기존 게시글 {pid} 변경 확인',len(results))
+                    if progress:progress(f'{BOARD_LABELS[board]} · 기존 게시글 {pid} 변경 확인',len(results))
                     try:
+                        if isinstance(site,SiteClient) and progress:
+                            site.progress=lambda detail:progress(f'{BOARD_LABELS[board]} · 게시글 {pid} · {detail}',len(results))
                         post=site.post(board,pid)
                         with tx() as c:
                             doc,kind=ingest(c,source_id,post);counts[kind]=counts.get(kind,0)+1

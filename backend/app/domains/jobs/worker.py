@@ -23,6 +23,8 @@ worker.py - 수집·분석·반영 작업 소비
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   수집 진행 표시·갱신·완료 건수 수정
+
     상세 Git 이력: git log --follow -- backend/app/domains/jobs/worker.py
     공통 규칙: doc/file-header-policy.md
 
@@ -105,7 +107,7 @@ def once(job_types=None):
             lock=c.execute('SELECT status,fence FROM jobs WHERE id=%s FOR UPDATE',(job['id'],)).fetchone()
             if lock['fence']!=fence or lock['status']=='cancelled':return True
             issues=job['issues'];job=getjob(c,job['id'],True);job['issues']=issues
-            count=job.get('total_count') or 1
+            count=len(output.get('document_ids',[])) if job['type']=='collect' and not output.get('connected') else job.get('total_count') or 1
             job.update(status='partial' if job['issues'] else 'succeeded',stage='일부 확인 필요' if job['issues'] else '완료',finished_at=now(),processed_count=count,total_count=count,result=output,allowed_actions=[]);savejob(c,job)
             if job['analysis_run_id']:
                 run=get(c,'analysis_run',job['analysis_run_id']);run.update(status='succeeded',finished_at=now());put(c,'analysis_run',run)

@@ -23,6 +23,8 @@ test_parsers_mcp.py - 기능·경계·회귀 검증
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   첨부 진행·취소와 완료 건수 회귀 검증 추가
+
     상세 Git 이력: git log --follow -- backend/tests/test_parsers_mcp.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -89,3 +91,32 @@ def test_site_login_and_attachment_access_boundary():
     from backend.app.connectors.school062 import safe_url
     for url in ['http://school062.com','https://evil.example/','https://school062.com:123/a']:
         with pytest.raises(Problem):safe_url(url)
+
+
+def test_attachment_progress_and_cancellation_are_not_swallowed():
+    import httpx
+    from backend.app.connectors.school062 import SiteClient
+    def handle(req):
+        if req.url.path == '/asset.png':
+            return httpx.Response(200,content=b'image bytes',headers={'content-type':'image/png'})
+        return httpx.Response(200,text='<h2 id="bo_v_title">공지</h2><div id="bo_v_con"><img src="/asset.png"></div>')
+    with httpx.Client(transport=httpx.MockTransport(handle)) as client:
+        site=SiteClient(client);messages=[];site.progress=messages.append
+        post=site.post('product_01','27747')
+        assert len(post['assets'])==1
+        assert any('첨부 1/1' in message and '다운로드 시작' in message for message in messages)
+        assert any('MB 받음' in message for message in messages)
+        def cancelled(message):raise Problem(409,'CANCELLED','취소된 작업입니다.')
+        site.progress=cancelled
+        with pytest.raises(Problem) as error:site.post('product_01','27747')
+        assert error.value.code=='CANCELLED'
+
+
+def test_oversized_attachment_is_rejected_before_reading_body():
+    import httpx
+    from backend.app.connectors.school062 import SiteClient
+    class UnreadBody(httpx.SyncByteStream):
+        def __iter__(self):raise AssertionError('oversized response body must not be read')
+    with httpx.Client(transport=httpx.MockTransport(lambda req:httpx.Response(200,headers={'content-length':str(21*1024*1024)},stream=UnreadBody()))) as client:
+        with pytest.raises(Problem) as error:SiteClient(client).request('https://school062.com/large.xlsx')
+        assert error.value.code=='SOURCE_SIZE'

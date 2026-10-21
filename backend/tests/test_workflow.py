@@ -23,6 +23,8 @@ test_workflow.py - 기능·경계·회귀 검증
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   첨부 진행·취소와 완료 건수 회귀 검증 추가
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -636,3 +638,18 @@ def test_reader_can_logout_without_business_mutation_permissions_or_idempotency_
     response = client.delete('/api/v1/auth/session')
     assert response.status_code == 204
     assert client.get('/api/v1/auth/me').status_code == 401
+
+
+@pytest.mark.parametrize('count',[0,3])
+def test_collection_completion_uses_actual_document_count(client,monkeypatch,count):
+    from backend.app.domains.jobs import worker
+    from backend.app.domains.jobs.service import enqueue,getjob
+    while once():pass
+    with tx() as c:
+        source=put(c,'source',{'id':uid(),'name':'count-test','version':1})
+        job=enqueue(c,'collect',{'source_id':source['id']})
+    monkeypatch.setattr(worker,'collect_source',lambda *args:{'issues':[],'document_ids':[uid() for _ in range(count)]})
+    assert worker.once(['collect'])
+    with tx() as c:result=getjob(c,job['id'])
+    assert result['status']=='succeeded'
+    assert result['processed_count']==result['total_count']==count

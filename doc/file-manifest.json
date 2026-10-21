@@ -23,6 +23,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "678e71b6082649ef77fc6ffdae94cbf979fa163a03093eeba37724b87f449477"
@@ -47,6 +52,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "f1cddbfb7f75bcc2692babbff0db140dfcfa15564664f49ed82a22e1fb86b5e5"
@@ -71,6 +81,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "6093c448b6de376e0042ab908266c8c0f928ae09d2e4e8aa4787dd982abff9ab"
@@ -95,6 +110,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "d8e87b7c24cd22771ceea43107e32519ad799a03f728ebf50d0a021e3a7fcfcd"
@@ -119,6 +139,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "82b4062ef045665ac015d39fc94a2ab3c28330553b5bd651c305a30e28624f9b"
@@ -143,6 +168,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "6169647592c2de77ef49989aff40354bd8140909676676cf0dce5a5f03b44511"
@@ -167,6 +197,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "bff621ca7772d9a231d8a53a6c7b81541ab3dcd7ea29a6c147a7e953705506b3"
@@ -201,6 +236,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "177422a7b0e79b05a830fd7ecf669dd66b3f60f24a2d68311d885f04e4bac722"
@@ -225,6 +265,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "c2c2deedba25fc04192a53e3e12dd33e12a7f2c8fb16b15f663e40a111a5f018"
@@ -249,6 +294,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "06735ff1fdfc829bd847add818a36c0badad9c65315a3d4301a95dcef8968f2f"
@@ -273,6 +323,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "2719a70f2183841f6714a963b01fa8d3c25c1a93490b3e1c185348abc0ff35b6"
@@ -297,6 +352,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.analysis.agent.",
@@ -322,6 +382,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.analysis.export.",
@@ -347,6 +412,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.analysis.provider.",
@@ -372,6 +442,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.review.items.",
@@ -397,6 +472,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.analysis.schemas.",
@@ -422,6 +502,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "3738d2126d9567c3041ddf2a6f0541ccf95f50f60a108080a363dc6ccdfc5d98"
@@ -446,6 +531,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Process-local signing key; credentials are not part of domain responses.",
@@ -471,6 +561,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Shared HTTP presentation helpers; no domain workflows live here.",
@@ -496,6 +591,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Application composition root. Domain routers own business endpoints.",
@@ -521,6 +621,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Explicit domain ownership: no request writes outside the shared transaction.",
@@ -546,6 +651,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Create explicit domain paths with unique operations and documented path parameters.",
@@ -571,6 +681,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "HTTP guards, bounded body ingestion and transaction/idempotency boundary.",
@@ -596,10 +711,15 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts.",
-      "sha256": "fd3ab2a3db2b078fca9a0bb0d364622c81c2f01f9082b8ec7b7b8ef20e741409"
+      "sha256": "f0111be04f5d33c620cab94af1ad0e0353a1ac8179ceee02f0703fb005ea650c"
     },
     "backend/app/db.py": {
       "spec": [
@@ -621,6 +741,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses infrastructure.database.",
@@ -646,6 +771,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.review.proposals.",
@@ -671,6 +801,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "7379076d2f08be202e3c12ec4d8ce20b8a4b264d6e9733dcb0a9708366906459"
@@ -695,6 +830,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "fceebd205cd3cfe59de62e35a2289a70aed67ce5c0fe4ae589a6d54ffa61916e"
@@ -719,6 +859,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
@@ -744,6 +889,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Analysis HTTP use cases. The transport owns authentication and the transaction.",
@@ -769,6 +919,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Automatic, evidence-linked review workbook; source strings are never formulas.",
@@ -794,6 +949,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
@@ -819,6 +979,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "d5cbf5f2185eb41a90fcfecf8319c26310be40a1d998f3875cb5d19c649e47eb"
@@ -843,6 +1008,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Register durable analysis without calling an LLM inside the HTTP transaction.",
@@ -868,6 +1038,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Small durable LangGraph state: IDs only; source bodies live in storage.",
@@ -893,6 +1068,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "7f5982587078bae3bb5099b5a8b5cf085b1f8cff1760f2c6e6ff77f9543646a9"
@@ -917,6 +1097,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Catalog HTTP use cases. The transport owns authentication and the transaction.",
@@ -942,6 +1127,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "2a6187b245eed987e10593ee25532cd9488996834b5692f26030beab940b2ec0"
@@ -966,6 +1156,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
@@ -991,6 +1186,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "3e885088d03ffc2ee87f31a55a291e1fd6aef97497cdf3f2d578e6cace1bba21"
@@ -1015,6 +1215,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Authenticated session reads and logout; login/CSRF are pre-auth transport hooks.",
@@ -1040,6 +1245,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Session authentication and role checks shared by domain endpoints.",
@@ -1065,6 +1275,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "bd0db39b56e049db01626b84e3ba4d2e681b02f1ab7ca75f691617160af4ebfb"
@@ -1089,6 +1304,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Ingestion HTTP use cases. The transport owns authentication and the transaction.",
@@ -1114,6 +1334,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Recoverable catalog/material removal. Original evidence and facts are retained.",
@@ -1139,10 +1364,15 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Resumable incremental collection with short DB transactions, per-post commit,\nrevisit of recent known posts, immutable revisions and durable analysis handoff.",
-      "sha256": "e5611808adde7f765e18ba54ce6b19e8408f3f8d96c4dcb16cf810a03c0a3eeb"
+      "sha256": "157ae97426e7a2abca13ed88e475b882685f7c0023f2670eb9503eed76110308"
     },
     "backend/app/domains/ingestion/connections.py": {
       "spec": [
@@ -1164,6 +1394,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Source credentials/cookies encrypted at rest; API never returns secrets.",
@@ -1189,6 +1424,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "1db988ccbdc2c6803f6d625b4240e18166acdd6c77a8a0f64effdd60a3e05655"
@@ -1213,6 +1453,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Permanent removal of discarded, unreferenced materials and derived artifacts.",
@@ -1238,6 +1483,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "d824e4c1e8cf43fa3e8de41fc2c7eb45723f5f14b0f1458b32d014111b128451"
@@ -1262,6 +1512,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Jobs HTTP use cases. The transport owns authentication and the transaction.",
@@ -1287,6 +1542,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "247fb97150b7c55fc447dde2e4704c85832b5cc806d0930406e5e55a4bc6030f"
@@ -1311,10 +1571,15 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Durable queue consumer. Single worker by default; database claim/fencing prevents duplicates.",
-      "sha256": "f48876627cd08eda0e2b0948ae40d3b6b902382c4260028d3312e7f9d4ca16c0"
+      "sha256": "67379b4052bb7d2c71d82602bcd2802003416660b353655eba2ecefa1899df5d"
     },
     "backend/app/domains/pricing/__init__.py": {
       "spec": [
@@ -1336,6 +1601,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "195b34721c308d1603b0c4f984913e6a9bab371518932118d9e04282ef2ac0f9"
@@ -1360,6 +1630,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Pricing HTTP use cases. The transport owns authentication and the transaction.",
@@ -1385,6 +1660,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Deterministic, user-mapped table ingestion. Explicit period/party/price basis;\nno unreviewed facts. Each product group is one atomic proposal (max 50 ops).",
@@ -1410,6 +1690,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Source workbook reader. Never writes authoritative product/price facts.\nRead-only streaming import; values, sheet/row/cell coordinates and formula absence\nare retained. Queries, compound filters, ordering and pagination run in PostgreSQL.\n",
@@ -1435,6 +1720,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "1c2b9909dffe4403bf4704b31c0f2f0f12b62a076f90e6b7f60b98059187fb7b"
@@ -1459,6 +1749,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Reporting HTTP use cases. The transport owns authentication and the transaction.",
@@ -1484,6 +1779,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "3a0e3bdd4779a2c9cd402c1ba6083fb5fdd387c1d70b019669a20af2e8b59760"
@@ -1508,6 +1808,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Review HTTP use cases. The transport owns authentication and the transaction.",
@@ -1533,6 +1838,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "655dbb3847df7502310cc3b5e74ecf60cbbbbba410670addeb4c13bae5015429"
@@ -1557,6 +1867,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Versioned, field-editable FoodChangeDTO review. No model calls during review.",
@@ -1582,6 +1897,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "32be40c02277a66758138bc6301ad93db5dc9f9376935ef6a9c82595f24d1e52"
@@ -1606,6 +1926,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "30ae8520562b92ec957ec5ff73e06414378ce3fba06fc607aefba7c297dda22a"
@@ -1630,6 +1955,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.catalog.record.",
@@ -1655,6 +1985,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "ca3b12429a58e8353cca2448ea126003f88a81630badfebef6f59d2f751c2538"
@@ -1679,6 +2014,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Versioned JSON contracts shared by HTTP, MCP and application services.",
@@ -1704,6 +2044,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "3dee42d1afae31b91defd9735b873ba33e340bcfbaddeb914debd6a5e3b6dcd8"
@@ -1728,6 +2073,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Local stdio adapter. Default mode exposes only read tools to model clients.\nHost-only tools are registered only with --host, in a separate trusted process.\nNever pass the host server to the model's tool registry.\n",
@@ -1753,6 +2103,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Bounded synchronous parsing, executed only in the worker process.",
@@ -1778,6 +2133,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Isolated PaddleOCR adapter; --serve reuses one model across bounded requests.",
@@ -1803,6 +2163,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "One serialized OCR subprocess: reuse weights, recycle, release idle native memory.",
@@ -1828,6 +2193,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "34476b3231beee7c6007848e066b90219512693169646ff93f5adabd78600038"
@@ -1852,6 +2222,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "30788d84c263827411ebc0ffe32d1e42077effe518ab4ba159dce185a1bfae3a"
@@ -1876,6 +2251,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Bounded resources shared by HTTP, inference and queue workers.",
@@ -1901,6 +2281,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Explicit local demo seed. Never run automatically on API startup.",
@@ -1926,6 +2311,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.ingestion.archives.",
@@ -1951,6 +2341,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.catalog.queries.",
@@ -1976,6 +2371,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.ingestion.collection.",
@@ -2001,6 +2401,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.ingestion.connections.",
@@ -2026,6 +2431,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.ingestion.documents.",
@@ -2051,6 +2461,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.jobs.service.",
@@ -2076,6 +2491,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.ingestion.purge.",
@@ -2101,6 +2521,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.pricing.proposals.",
@@ -2126,6 +2551,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.pricing.workbooks.",
@@ -2151,6 +2581,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.jobs.worker.",
@@ -2176,6 +2611,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility entry point; new code uses domains.analysis.workflow.",
@@ -2249,6 +2689,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "3edff159b36f3ac4c546fd1a2991f289212c564e086cf76a9a65c4aed862ea6a"
@@ -2273,6 +2718,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Keep test source files isolated from the user's real content-addressed assets.",
@@ -2298,6 +2748,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Deterministic integration tests use an explicit test double; live results are separate.",
@@ -2323,6 +2778,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "2e298f4ddd47cd14c9d496988a8e2e2c125106e18c562d6d14a005ee80988bab"
@@ -2347,6 +2807,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Keep domain routing and dependency boundaries intact as the service grows.",
@@ -2367,7 +2832,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        }
+      ],
       "original_docstring": "Check that documenting source files preserves executable code and original inputs.",
       "sha256": "9ae3d46cae34b41413ff72559f005adfc6eb08bb87615ed752f00ea6a66db18e"
     },
@@ -2391,6 +2862,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "676a49e5d0387e2c1904b3f7742d6cdab9cc7eeb1aaa196088a12f5e918e700f"
@@ -2415,9 +2891,14 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "026a12e564abe6060510fcf2272229c6815b1f538ce3fe66462dbe4683fdc37a"
+      "sha256": "bfd81798554c5e86c4cab0b69c38a14af06e34c312b4d21471c4adb17281fa2b"
     },
     "backend/tests/test_workflow.py": {
       "spec": [
@@ -2439,10 +2920,15 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "b00db129c2e3646e490dce3f71c9f772a5da93cf9d48fd58af17481817633f95"
+      "sha256": "d9189f8adf5a560bba7ac4228da47d0b2b891c9b2d61626856b9889649b3e616"
     },
     "compose.food.yml": {
       "spec": [
@@ -2464,6 +2950,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "a0790140060506937a43a73fa41081512f6951667099e187cbd62d7b0eb8f26a"
@@ -2536,6 +3027,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "6b650424ccee06fe9531e9ad5e3dcdb3f4e126a9fe5c02cb46c4ce791223e1b2"
@@ -2555,7 +3051,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        }
+      ],
       "sha256": "370f3aecc578c02b07dea24ff3e2f51049911d513e88ea661b2e71dcf21c44fc"
     },
     "doc/file-manifest.json": {
@@ -2573,7 +3075,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        }
+      ],
       "sha256": null
     },
     "doc/file-specs.md": {
@@ -2591,7 +3099,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        }
+      ],
       "sha256": null
     },
     "doc/food-agent/README.md": {
@@ -2614,6 +3128,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "b8b90b76cd4260838dd225024bc0be136597d15ecd14a6d86c157064ca7c1111"
@@ -2638,6 +3157,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "a257cd34e1dd88e3ba87d0667250f1816ad8aae48967013972ad3108c15ab9d3"
@@ -2662,6 +3186,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "81fd1bb1641e1b3d0428c80a6324ea9d771452dc78cd5371d515b75ce8ae55ef"
@@ -2686,6 +3215,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "9b503417824a546f0c8ead1cfe7bec25893230141aaba6c5458311e5252bdf28"
@@ -2710,6 +3244,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "c9f1c45bf09a6659e5c15ac5cae73cd95cfd0d530389f52e79cc0de449676d6d"
@@ -2734,6 +3273,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "b3b48e9431e83d86edc8f4fc881a20287054223793e0496c306dd05400d8d183"
@@ -2758,6 +3302,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "fbddc585a1a7666e4fcb0ce8d45a939686e706f8485048b9fb87e7acb196a91c"
@@ -3118,6 +3667,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "b8e1f0644fcaab9f2ed529777702d4d0883d2e57cff65174cc1aa229428085b5"
@@ -3142,6 +3696,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "aa5f7d46241eea7ee110962120dfc2e0cb4f5286f6acf0e64aa52ffaefafc8db"
@@ -3190,6 +3749,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "b6f23e64cc13c96cf6322b24d96d2195f1b09b2e0310d3c19ae601b39c5e5333"
@@ -3238,6 +3802,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "1373ef9735c10d94c225559231f0046795dab27571d34800391c8b92c8dae371"
@@ -3310,6 +3879,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "525d58a1cf1940ed1bf1a6521868c6d38a0fa2b83c723c9925541625b0c340c6"
@@ -3406,6 +3980,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "c48c818aa6b5539c18d7076743c28f5314c4d6d64c73049ed20f0e27d72a2454"
@@ -3454,6 +4033,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "955555b82c455bd8df7d8a6f92db6039e0a841b9438efb206730ef91f824c35a"
@@ -3478,6 +4062,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "9fdf45ababe80248e628d40200607c7cc18c50ce41ce2a82aa76068204e82e57"
@@ -3598,6 +4187,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "26dd0109c9a319aa176d18d9d9a2587d1eef101389d25b8b01ad685b879917e4"
@@ -3742,6 +4336,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "b2dc5ab103baafc3265a46e03637c98532853afdd16d358c40c710bff47f19a5"
@@ -3766,6 +4365,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Stdlib-only checks for this draft; not a complete OpenAPI validator.",
@@ -3791,6 +4395,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Check v0.2 design artifacts, not a running MCP server or resource benchmark.",
@@ -3840,6 +4449,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "027fba210b094730ee94ebdde0fee044e5c8b0fa510a1c4c428d0a4ac4dae08e"
@@ -3864,6 +4478,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "4af4ec1db2fcf63043f229057420a2736575b466d86127e5e3f06f35a577b696"
@@ -3888,6 +4507,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "6882871abcfc84658a2239ab32a3c02d9809d3903dc07caa08bccfe48bba984b"
@@ -3912,6 +4536,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "ec575a6da88bcceb2782c5948ab37978d4abd9433e3171a82c42030de837536e"
@@ -3936,6 +4565,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "560a13fbda0c2693d91e29f894b5fc75b548aeec9a0e6e82ce3c302ae7e6689e"
@@ -4008,6 +4642,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "67950022644ea97a87656ababb29607a751a7e5b0b01177441bb7322ab805931"
@@ -4032,6 +4671,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "15e9b949c6f953af5f9c595e95a7d5b61ef28307800523c15da2fcf18e8342fc"
@@ -4056,6 +4700,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "e812d33992c1d90b8581769e7c50f141cf02f9a1a5656145a2128bba83c904ea"
@@ -4080,6 +4729,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "d19107cb2fe6dd05a190323c8b2e5115e39a5e280bb828c0065a592b5a68cde3"
@@ -4104,6 +4758,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "9a03981ccc4ce216ee6247b89ca423e898bb726af6b809501c78aa4cdda25ff5"
@@ -4128,6 +4787,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "9fc3130bcac87d3c4aeb588dc6e7ee1a97a94fdd029e3d1a58cc226b5c3c968e"
@@ -4152,6 +4816,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "c322f25d40b8688d38b6a61ce5979ce2b1dfb118181df593ed03a8b4a6338b7a"
@@ -4176,6 +4845,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "b5942fd51d62792ed8f22a90cc93cff8e3fc36ebf55f7b9ff89a3fba48d5453c"
@@ -4200,6 +4874,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "2ee2d649f9024f3c1c4e77df29e6413e2100a217408ae6a2a6dbaddcb3e86ed5"
@@ -4224,6 +4903,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "446fcd428cb417328d59839bcb0d7798432467094e9e2ad1e17a7f188f93a705"
@@ -4248,6 +4932,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "200c77530891d4c4b00486bbeb943261a6cfc633196d8d12e6fc3a8aca953d9a"
@@ -4272,6 +4961,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "93955a2f2d311e85bfb8b5ce5c3261923df0f33afe9454e443971325e30c2b2d"
@@ -4296,6 +4990,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "d7f9d289be246c0f0dac0d5e48e8398a7ba05286af7ae160744a808ad2d23d7f"
@@ -4320,6 +5019,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "eb084416e733b6b7927dcf0389549076367948d41de15a4dc44162c2af209a2c"
@@ -4344,6 +5048,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "9e7822f2533c5120ccb6dd4bf0dbee0818ffca15cf1244ba86f4365909466fb0"
@@ -4368,6 +5077,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "be428bfdc1d4e991ab68d1893a24d198c100258608bc2edf06ab118095439108"
@@ -4392,6 +5106,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "7fcdca8588adc7bffd6978ece02f84312b3ff3215508787fb33e8db0b041ce64"
@@ -4416,6 +5135,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "94939010e3ae9fbd199fd30686250d26f2a38daff89fa87e9cde7ca79a60be53"
@@ -4440,6 +5164,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "84c20f1747e422e688c1ad45a84a43068e796c5e1ad12326169cdb66611d7599"
@@ -4464,9 +5193,14 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "676cedcb1eac54ec56088c84b1e153ff95f47c5bde000c7c9c96f45d45e47386"
+      "sha256": "061303d2288c9b4d0f57102fe243e130fc739d51ec69e96399060a23d3ec63bb"
     },
     "frontend/src/views/Documents.vue": {
       "spec": [
@@ -4488,6 +5222,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "0f2f5770f775ed3577f6533029df5105b6d0f640961f906c4d53d218efd825a5"
@@ -4512,6 +5251,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "4a2d77b2e6fb06839813afc5223c88af077e9624dd7e495680f1f288b1f430b6"
@@ -4536,6 +5280,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "2990b89d763d6b84a0f462b5b1ff40657fed502084cf3cef346e825307b67e25"
@@ -4560,9 +5309,14 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "6c8832628843a976db86c5ae08172ed1c36ded9e2b233991f2a5c82a0b5bed4c"
+      "sha256": "83589d23521c713daf39f9af01d6788981c8e406cc57ee89f69688085b49844a"
     },
     "frontend/src/views/Prices.vue": {
       "spec": [
@@ -4584,6 +5338,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "4a992ee19dc578898ab3fad6e9b0af7d986d03cf800700141a6f697cc264f426"
@@ -4608,6 +5367,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "4ffb00c2aaa4879aa9067a33f13a848b64e9a15a221d83f1a32369abeb9e81e3"
@@ -4632,6 +5396,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "ad42924b062801f0f283bac72183b5771875188ed452a9d3c15c2a92f6979682"
@@ -4656,6 +5425,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "d345a7de5662d6720fd67b76080fc420a43776e0a484a3e3485f328ea329337f"
@@ -4680,6 +5454,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "ba80baaf1b649ab4afa50b33ca8dcfb325a867f523076880a0b177d015f540d0"
@@ -4704,6 +5483,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "e948016ed366bf72822aa7240fa7898b6d8f76e7cf4dc228e25a1efc8b5e65d1"
@@ -5472,6 +6256,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Food-domain MCP stdio entry point; --host exposes trusted host tools only.",
@@ -5497,6 +6286,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "c624fdf695c686b6bb1b2145645c879b49677db4ff70dc7dfd6f3f8800f98dcc"
@@ -5521,6 +6315,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "0b1de383e9560f43ba3c1e84e29a0fbb6267084a02a65b1d43358b2c3e42df56"
@@ -5545,6 +6344,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "a2e2c4fbdd511615366a2fe0421a8bcc633c6c64e4af9a8ff5563ebedfa2dc3a"
@@ -5569,6 +6373,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "05d7bffa6898a32879c9d54a0501d4980aa7be3769256d2fde294d358d41929f"
@@ -5593,6 +6402,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "3e2f7be6e741a6e50be707bdfd258a60e8c656d22e74c3b0c51c13615478182f"
@@ -5617,6 +6431,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "1960799386af2d4ad0ac4e7b699e1b305f7f4c38040d8d9f092efc16b1c37583"
@@ -5641,6 +6460,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "f1e3f61c0e63a2d6db44e36c6aee7102390418c307d182247d62c233b8cc384d"
@@ -5665,6 +6489,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "7818be5fd8979603b05581b6f499d8c867c92b29728384cfcc39b5fd0f356b04"
@@ -5689,6 +6518,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "4ea55225c8362f368721193393d7c6c9692da088eee1896866b793963a33e530"
@@ -5718,6 +6552,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "53b3cfb083c5513945cc430949543f4544060758831053d379b309cb797836a2"
@@ -5742,6 +6581,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "4ad5a10e730443d86eeabcab3ac050b80630ca81236a7b7b8c32b2420e87a871"
@@ -5766,6 +6610,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "1fbd7b291a1137e3e83bb6d00c3af1184dacc34442afbf359619af3816f39341"
@@ -5790,6 +6639,11 @@
           "commit": "76610858ca055554a429de1def945a0079054690",
           "date": "2026-10-21T19:06:23+09:00",
           "subject": "docs: cover submission rubric, five-minute presentation and demo readiness"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Read-only demo probes. This never approves data or declares a rehearsal complete.",
@@ -5815,6 +6669,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "01a0931dc99dae801324235fb08ab083844d71a98f1b39b5c4a0a2832f7ccdd6"
@@ -5882,7 +6741,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        }
+      ],
       "original_docstring": "Apply source headers and maintain a format-safe file specification inventory.",
       "sha256": "3cc24c18c4253dda9c148fdeab4db8434e09b545042441cfa3fba95459cc8c16"
     },
@@ -5906,6 +6771,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Register an authorized local source for viewing; never applies business prices.",
@@ -5931,6 +6801,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "sha256": "cb4dab307890367e7730d676b0b162a78304c12192c292f6358bc8429b8777bd"
@@ -5955,6 +6830,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "be0e63283f611166084c0605109606b825d03e1f",
+          "date": "2026-10-21T19:30:28+09:00",
+          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
       "original_docstring": "Compatibility ASGI entry point for the food service: uvicorn server:app.",
