@@ -323,3 +323,16 @@ npm --prefix frontend run build
 ## 17. 저장소 포함·제외 기준
 
 소스·마이그레이션·가상 예제·테스트·실행 화면·문서를 포함합니다. `.env`, 사이트 회원 계정, 암호화 키, DB/세션 파일, 실수집 assets, 가상환경, node_modules, 모델 가중치, 로컬 로그와 빌드 산출물은 제외합니다. 루트 `README.md`는 GitHub 첫 화면용 안내이고, 요청한 상세 명세 파일명은 이 문서 `readmd.md`입니다.
+
+## 18. 최종 제출·평가 기준과 발표 준비
+
+제출용 10개 항목은 루트 [README.md](README.md)의 1~10절로 정리했습니다. 특히 선정 배경, 문제/구현/검증 대응표, 기술 선택의 비용, 개발 중 문제와 해결 과정, Before/After의 측정 한계를 보완했습니다.
+
+- [평가 기준 대조·최종 확인 상태](doc/submission/requirements-audit.md)
+- [Before/After 근거와 추가 실측 계획](doc/submission/before-after.md)
+- [설명과 시연을 합친 5분 구성·대본](doc/submission/presentation-5min.md)
+- [시연 환경·리허설·Zoom 준비 안내](doc/submission/demo-guide.md)
+- 시연 입력: `demo/notice.txt`, `demo/prices.csv` (가상 자료)
+- 읽기 전용 사전 점검: `.venv/bin/python scripts/demo-preflight.py --help`
+
+문서·CI·테스트 완료와 실제 발표 준비 완료를 구분합니다. 발표 환경의 실제 모델/선택 OCR 전체 처리, 브라우저 E2E, Zoom 화면·소리·해상도와 전체 Agent Before/After 반복 측정은 직접 확인해야 하는 항목으로 남겼습니다. 발표 자료는 Markdown 구성·대본이며 PowerPoint 파일을 생성한 것은 아닙니다.
