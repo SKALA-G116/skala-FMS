@@ -1,0 +1,26 @@
+{
+  "status": "running",
+  "stage": "AI 정보 추출 36/67 · 품목·단가·공급 변경 해석",
+  "fence": 3,
+  "registered_worker": true,
+  "completed_batches": 35,
+  "async_calls": 1,
+  "verification_calls_skipped": 1,
+  "performance": {
+    "execution": "async_http_bounded",
+    "model_calls": 69,
+    "input_tokens": 139000,
+    "model_seconds": 2700.196,
+    "output_tokens": 52060,
+    "peak_worker_rss_bytes": 118374400
+  },
+  "checked_at": "2026-10-20T08:41:50.542143Z",
+  "concurrent_read_seconds": [
+    0.0243,
+    0.0081,
+    0.0102,
+    0.0078,
+    0.0096,
+    0.0081
+  ]
+}

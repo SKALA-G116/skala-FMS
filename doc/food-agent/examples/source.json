@@ -1,0 +1,18 @@
+{
+  "id": "00000000-0000-4000-8000-000000000002",
+  "name": "school062 예시",
+  "base_url": "https://school062.com",
+  "boards": [
+    {
+      "key": "product_01",
+      "name": "공산품",
+      "enabled": true
+    }
+  ],
+  "enabled": true,
+  "schedule_enabled": false,
+  "poll_interval_minutes": 60,
+  "access_status": "public",
+  "last_collected_at": "2026-10-20T02:00:00Z",
+  "version": 1
+}

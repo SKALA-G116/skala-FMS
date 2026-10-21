@@ -1,0 +1,10 @@
+{
+  "job_id": "63684138-c4af-4978-b381-f7906166e085",
+  "analysis_run_id": "05c9f9ff-daea-4b6c-93be-ecf7c7c756c7",
+  "status": "running",
+  "completed_batches": 34,
+  "model_calls": 68,
+  "model_seconds": 2628.426,
+  "events": 127,
+  "captured_at": "2026-10-20T08:31:53.530691Z"
+}

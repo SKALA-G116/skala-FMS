@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "id": "00000000-0000-4000-8000-000000000016",
+      "product_id": "00000000-0000-4000-8000-000000000017",
+      "product_name": "가상 식품 A",
+      "variant_id": "00000000-0000-4000-8000-000000000018",
+      "spec_label": "40~50g / 1kg 봉",
+      "supplier_item_id": "00000000-0000-4000-8000-000000000008",
+      "supplier": {
+        "id": "00000000-0000-4000-8000-000000000015",
+        "name": "가상 공급처",
+        "aliases": [],
+        "roles": [
+          "supplier"
+        ],
+        "version": 1
+      },
+      "supplier_code": "DEMO-001",
+      "value": {
+        "amount": "12500",
+        "currency": "KRW",
+        "quantity": "1",
+        "unit": "bag",
+        "tax": "unknown",
+        "price_kind": "regular",
+        "condition_key": "public_default"
+      },
+      "period": {
+        "effective_from": "2026-11-01",
+        "effective_to": null
+      },
+      "effective_state": "scheduled",
+      "reason": {
+        "original_text": "가상 예시: 원료 수급 불안정",
+        "summary": "원료 수급 불안정",
+        "code": null
+      },
+      "evidence_ids": [
+        "00000000-0000-4000-8000-000000000003"
+      ],
+      "recorded_at": "2026-10-20T02:00:00Z",
+      "supersedes_fact_id": null
+    }
+  ],
+  "next_cursor": null,
+  "has_more": false,
+  "as_of": "2026-10-20"
+}

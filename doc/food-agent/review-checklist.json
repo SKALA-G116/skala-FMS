@@ -1,0 +1,462 @@
+{
+  "version": "0.2.0-draft",
+  "scope": "설계 검토. 실제 구현/부하/OCR/복구 시험 미실행.",
+  "items": [
+    {
+      "id": "M01",
+      "area": "문맥",
+      "priority": "P0",
+      "requirement": "모든 원문·과거 대화를 한 프롬프트에 누적하지 않고 segment와 필요한 규칙만 조립",
+      "owner": "분석 호스트",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "입력 토큰·정확도·전역 각주 누락 측정",
+      "pdf_pages": [
+        46,
+        170
+      ]
+    },
+    {
+      "id": "M02",
+      "area": "문맥",
+      "priority": "P0",
+      "requirement": "입력/output/reserve를 실제 모델 context window 안에서 계산",
+      "owner": "모델 어댑터",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "서로 다른 window와 긴 schema 입력 시험",
+      "pdf_pages": [
+        170,
+        183
+      ]
+    },
+    {
+      "id": "M03",
+      "area": "문맥",
+      "priority": "P0",
+      "requirement": "Tool 결과·Resource 조각 32KiB, 누락/초과를 명시",
+      "owner": "MCP/호스트",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "큰 결과에서 조용한 잘림 없이 오류/분할 확인",
+      "pdf_pages": [
+        46,
+        48
+      ]
+    },
+    {
+      "id": "M04",
+      "area": "문맥",
+      "priority": "P1",
+      "requirement": "중요한 품목코드·금액·근거를 임의 요약으로 대체하지 않음",
+      "owner": "분석 호스트",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "요약 전후 숫자·단위·조건 비교",
+      "pdf_pages": [
+        165,
+        168
+      ]
+    },
+    {
+      "id": "M05",
+      "area": "체크포인트",
+      "priority": "P0",
+      "requirement": "배포 분석은 PostgreSQL saver, 생성/정리는 factory",
+      "owner": "실행 저장소",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "재시작 후 단계 복원 및 setup/close 확인",
+      "pdf_pages": [
+        22,
+        209,
+        211,
+        213,
+        220
+      ]
+    },
+    {
+      "id": "M06",
+      "area": "체크포인트",
+      "priority": "P0",
+      "requirement": "state는 run/segment/artifact ID와 작은 cursor 중심, 256KiB 제한",
+      "owner": "워크플로우",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "모든 노드 직렬화 크기와 누적 write 측정",
+      "pdf_pages": [
+        209,
+        211
+      ]
+    },
+    {
+      "id": "M07",
+      "area": "체크포인트",
+      "priority": "P0",
+      "requirement": "새 입력/처리 버전은 새 run/thread, 같은 입력 재시도만 복구",
+      "owner": "워크플로우",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "두 문서/버전/사용자 실행 간 상태 섞임 검사",
+      "pdf_pages": [
+        22,
+        209
+      ]
+    },
+    {
+      "id": "M08",
+      "area": "체크포인트",
+      "priority": "P0",
+      "requirement": "한 run의 lease와 fencing token으로 동시 복구·늦은 쓰기 차단",
+      "owner": "작업 저장소",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "기존 worker 지연 후 새 lease와 경합 시험",
+      "pdf_pages": [
+        194,
+        195
+      ]
+    },
+    {
+      "id": "M09",
+      "area": "체크포인트",
+      "priority": "P0",
+      "requirement": "복구 상태와 승인·업무 이력·반영 원자성을 분리",
+      "owner": "반영 서비스",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "checkpoint 성공/커밋 실패와 반대 경우 시험",
+      "pdf_pages": [
+        22,
+        209
+      ]
+    },
+    {
+      "id": "M10",
+      "area": "보존",
+      "priority": "P1",
+      "requirement": "완료 checkpoint·임시 cache는 정리, 활성 run/승인 근거 참조 보호",
+      "owner": "운영 GC",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "정리 후 근거 링크와 진행 작업 복구 검사",
+      "pdf_pages": [
+        48,
+        209
+      ]
+    },
+    {
+      "id": "M11",
+      "area": "RAM",
+      "priority": "P0",
+      "requirement": "OCR 모델은 OCR 작업자당 1회, API/MCP 자식에는 미로딩",
+      "owner": "OCR 작업자",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "프로세스별 모델 수·warmup RSS/VRAM 측정",
+      "pdf_pages": [
+        25,
+        29
+      ]
+    },
+    {
+      "id": "M12",
+      "area": "RAM",
+      "priority": "P0",
+      "requirement": "API worker 수 증가에 따른 모델/자식/캐시 복제 합산",
+      "owner": "배포",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "worker 1→2 증가에서 전체 메모리 비교",
+      "pdf_pages": [
+        25,
+        29
+      ]
+    },
+    {
+      "id": "M13",
+      "area": "RAM",
+      "priority": "P0",
+      "requirement": "압축 크기 외 픽셀·디코딩·tensor·회전 복사본 제한",
+      "owner": "파서",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "큰 해상도·다중 페이지·손상 이미지 시험",
+      "pdf_pages": [
+        194,
+        195
+      ]
+    },
+    {
+      "id": "M14",
+      "area": "RAM",
+      "priority": "P0",
+      "requirement": "엑셀 행/셀/압축 해제 크기 검사, read-only/시트별 해제",
+      "owner": "엑셀 파서",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "XLS/XLSX와 이미지 포함 workbook peak RSS 측정",
+      "pdf_pages": [
+        194,
+        195
+      ]
+    },
+    {
+      "id": "M15",
+      "area": "RAM",
+      "priority": "P0",
+      "requirement": "OCR 동시 페이지 1개, 큐에서 backpressure",
+      "owner": "OCR 작업자",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "작업 폭주에도 메모리·대기열·취소가 제한되는지 확인",
+      "pdf_pages": [
+        195
+      ]
+    },
+    {
+      "id": "M16",
+      "area": "RAM",
+      "priority": "P1",
+      "requirement": "OCR/표 pipeline detector·recognizer 중복 로딩과 native thread 제한 확인",
+      "owner": "OCR 통합",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "pipeline 객체 수·thread 수·추론 메모리 측정",
+      "pdf_pages": [
+        29,
+        195
+      ]
+    },
+    {
+      "id": "M17",
+      "area": "RAM",
+      "priority": "P0",
+      "requirement": "로컬 LLM 사용 시 모델 서버 RAM/VRAM도 합산",
+      "owner": "배포",
+      "review_status": "배포 입력 대기",
+      "verification": "모델·서버 사양과 context 크기별 peak 측정",
+      "pdf_pages": [
+        182,
+        183
+      ]
+    },
+    {
+      "id": "M18",
+      "area": "프로세스",
+      "priority": "P0",
+      "requirement": "CPU OCR을 API 이벤트 루프에서 실행하지 않음",
+      "owner": "실행 분리",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "OCR 중 API 지연·heartbeat 응답 측정",
+      "pdf_pages": [
+        194
+      ]
+    },
+    {
+      "id": "M19",
+      "area": "프로세스",
+      "priority": "P0",
+      "requirement": "MCP는 분석 호스트당 1개, 초기화 실패/종료/자식 회수 처리",
+      "owner": "MCP 수명",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "MCP 강제 종료 후 API 생존·재연결·고아 프로세스 확인",
+      "pdf_pages": [
+        10,
+        25,
+        43
+      ]
+    },
+    {
+      "id": "M20",
+      "area": "연결",
+      "priority": "P0",
+      "requirement": "전체 프로세스의 DB pool 상한 합산, 트랜잭션 장기 보유 금지",
+      "owner": "DB/배포",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "pool exhaustion·OCR 대기 중 열린 트랜잭션 확인",
+      "pdf_pages": [
+        22,
+        211,
+        220
+      ]
+    },
+    {
+      "id": "M21",
+      "area": "연결",
+      "priority": "P1",
+      "requirement": "HTTP client/session/응답 스트림을 재사용하고 종료",
+      "owner": "커넥터",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "반복 수집 후 socket·FD·MCP session 수 비교",
+      "pdf_pages": [
+        25,
+        194
+      ]
+    },
+    {
+      "id": "M22",
+      "area": "캐시",
+      "priority": "P0",
+      "requirement": "hash+parser/model/schema/policy/prompt 버전으로 캐시 분리",
+      "owner": "저장소",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "동일 입력 재사용·정책 변경 시 무효화 확인",
+      "pdf_pages": [
+        48,
+        249,
+        251
+      ]
+    },
+    {
+      "id": "M23",
+      "area": "캐시",
+      "priority": "P1",
+      "requirement": "메타데이터 캐시는 byte-LRU 상한, 원문/배열 무제한 보관 금지",
+      "owner": "호스트",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "오래 실행 후 cache bytes/항목 수 안정화",
+      "pdf_pages": [
+        48
+      ]
+    },
+    {
+      "id": "M24",
+      "area": "상한",
+      "priority": "P0",
+      "requirement": "재계획·의미 검토·transport 재시도·실행시간·토큰에 별도 상한",
+      "owner": "오케스트레이션",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "각 상한 도달 후 상태·잔여 범위·blocker 확인",
+      "pdf_pages": [
+        17,
+        170,
+        175,
+        195
+      ]
+    },
+    {
+      "id": "M25",
+      "area": "정확성",
+      "priority": "P0",
+      "requirement": "정량 검사+필요 시 의미 검사+사람 승인, 강제 통과 없음",
+      "owner": "검증/승인",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "숫자는 맞지만 다른 규격에 연결된 사례 검사",
+      "pdf_pages": [
+        16,
+        18,
+        148,
+        165,
+        168
+      ]
+    },
+    {
+      "id": "M26",
+      "area": "권한",
+      "priority": "P0",
+      "requirement": "분석 모델에 승인/실제 DB CRUD/삭제 Tool 미제공",
+      "owner": "MCP/서버",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "실제 tools/list와 모델 allowlist·서버 권한 거절 검사",
+      "pdf_pages": [
+        43,
+        46,
+        52,
+        148
+      ]
+    },
+    {
+      "id": "M27",
+      "area": "UI",
+      "priority": "P1",
+      "requirement": "이미지 lazy load·canvas 해제·Blob URL revoke·미사용 페이지 해제",
+      "owner": "Vue",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "여러 원문 반복 열기 후 heap/메모리 확인",
+      "pdf_pages": [
+        13
+      ]
+    },
+    {
+      "id": "M28",
+      "area": "UI",
+      "priority": "P1",
+      "requirement": "조회 배열 pagination·문서 본문 preview·제안 묶음 상한",
+      "owner": "API/Vue",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "대형 데이터에서 응답 크기·DOM 크기 확인",
+      "pdf_pages": [
+        13,
+        195
+      ]
+    },
+    {
+      "id": "M29",
+      "area": "UI",
+      "priority": "P1",
+      "requirement": "view 해제 시 polling/AbortController/event listener 정리",
+      "owner": "Vue",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "이동 반복 후 요청·타이머·리스너 개수 확인",
+      "pdf_pages": [
+        12,
+        13
+      ]
+    },
+    {
+      "id": "M30",
+      "area": "관측",
+      "priority": "P0",
+      "requirement": "run/job/trace/제안/application ID 연결, 입력/output·OCR·RSS·대기열 계측",
+      "owner": "운영",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "실패 한 건을 메트릭→로그→trace→근거로 추적",
+      "pdf_pages": [
+        227,
+        228,
+        229,
+        237,
+        238,
+        243
+      ]
+    },
+    {
+      "id": "M31",
+      "area": "개인정보",
+      "priority": "P0",
+      "requirement": "원문 전체·연락처·계정·signed URL을 trace/checkpoint에 불필요하게 복제하지 않음",
+      "owner": "관측/저장소",
+      "review_status": "설계 반영·실행 미검증",
+      "verification": "로그·checkpoint payload 샘플 검사",
+      "pdf_pages": [
+        227,
+        238
+      ]
+    },
+    {
+      "id": "M32",
+      "area": "평가",
+      "priority": "P0",
+      "requirement": "검수한 고정 표본과 규격/단위/금액/시점 정답으로 회귀 평가",
+      "owner": "평가",
+      "review_status": "평가 자료 대기",
+      "verification": "실제 자료 정답 구축 후 버전별 오류율·수정 시간 비교",
+      "pdf_pages": [
+        21,
+        245,
+        246,
+        247
+      ]
+    },
+    {
+      "id": "M33",
+      "area": "용량",
+      "priority": "P0",
+      "requirement": "OCR 프로세스 메모리 한도·DB 총 연결·모델 window 확정",
+      "owner": "배포",
+      "review_status": "배포 입력 대기",
+      "verification": "runtime-policy의 필수 null 값 채우고 부하 시험",
+      "pdf_pages": [
+        195,
+        213
+      ]
+    },
+    {
+      "id": "M34",
+      "area": "근거 보존",
+      "priority": "P0",
+      "requirement": "승인 근거 보존 기간과 원문 자동 수집/보관 권한 확정",
+      "owner": "사업/운영",
+      "review_status": "업무 결정 대기",
+      "verification": "권한·참조 보존 정책 승인 후 GC 시나리오 검증",
+      "pdf_pages": [
+        48
+      ]
+    }
+  ]
+}

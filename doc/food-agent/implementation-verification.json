@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-20",
+  "scope": "development MVP, not production certification",
+  "backend_integration_tests": {
+    "status": "passed",
+    "count": 27,
+    "database": "isolated PostgreSQL 17 food_agent_test"
+  },
+  "frontend_build": {
+    "status": "passed",
+    "framework": "Vue 3 / Vite 7"
+  },
+  "browser_checks": [
+    "login",
+    "dashboard",
+    "document list and original body",
+    "manual proposal form and evidence loading",
+    "real source workbook displayed",
+    "food name AND numeric price filtering",
+    "site account settings and unified price screen",
+    "nonfirst header detection on real source sheet",
+    "table proposal mapping wizard"
+  ],
+  "not_verified": [
+    "full OCR accuracy/RSS/load benchmark",
+    "configured LLM semantic extraction quality",
+    "all private attachment formats and oversized documents",
+    "Docker build",
+    "full v0.2 response DTO contract certification"
+  ],
+  "price_workbook_tests": [
+    "leading-zero codes",
+    "zero versus blank",
+    "unheaded memo column",
+    "uncached formula visibility",
+    "independent sheets",
+    "compound AND filters",
+    "decimal numeric sort and pagination",
+    "invalid filters rejected",
+    "source registration idempotency",
+    "read-only role access"
+  ],
+  "live_source_verification": {
+    "public_probe_posts": 4,
+    "korean_ocr_segments": 17,
+    "member_connection": "connected, verified without revealing credentials",
+    "member_collection": {
+      "checked": 45,
+      "new": 36,
+      "updated": 6,
+      "unchanged": 3,
+      "partial_reason": "one post exceeded attachment count limit"
+    },
+    "source_workbook_previews_linked": 25,
+    "source_workbook_preview_needs_manual_check": 1
+  },
+  "operational_flow": "doc/food-agent/operational-update.md"
+}

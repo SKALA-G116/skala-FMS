@@ -1,0 +1,902 @@
+{
+  "version": "0.2.0-draft",
+  "design_manifest_only": true,
+  "not_a_tools_list_wire_response": true,
+  "server_name": "food-capability-server",
+  "transport": "stdio",
+  "server_instances": "분석 호스트 프로세스당 1개. API/OCR 프로세스에는 생성하지 않음.",
+  "tools": [
+    {
+      "name": "parse_document_segment",
+      "exposure": "host_only",
+      "description": "고정 원문 버전의 한 segment에 대해 파서/OCR 작업을 등록한다. 원문 ID·segment ID만 받으며 임의 URL/경로를 받지 않는다. 결과는 추출 작업과 제한된 Resource 참조다. 업무 DB는 수정하지 않는다.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "document_revision_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "segment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "parser_profile": {
+            "type": "string",
+            "enum": [
+              "native_text",
+              "spreadsheet",
+              "ocr_layout"
+            ]
+          }
+        },
+        "required": [
+          "document_revision_id",
+          "segment_id",
+          "parser_profile"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "extraction_task_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "partial",
+              "failed"
+            ]
+          },
+          "extraction_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resource_uris": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "extraction_task_id",
+          "status",
+          "extraction_id",
+          "resource_uris",
+          "warnings"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "side_effects": "추출 작업·불변 산출물·캐시 기록만 생성",
+      "execution_context": "호스트가 제공하는 신뢰된 신원·run 범위·lease fencing token. 모델 입력값만으로 권한을 결정하지 않음.",
+      "timeout_policy": "runtime-policy-v1",
+      "max_result_bytes": 32768,
+      "errors": [
+        "INVALID_INPUT",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "STALE_INPUT",
+        "BUDGET_EXCEEDED",
+        "TRANSIENT_UNAVAILABLE"
+      ]
+    },
+    {
+      "name": "find_product_candidates",
+      "exposure": "model_allowed",
+      "description": "제품명·품목코드·규격 검색어로 기존 상품 후보를 최대 20개 조회한다. 검색 결과가 없다는 이유만으로 생성하지 않는다. 제품/규격/공급처 ID와 판단 근거·version을 반환한다.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "supplier_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10
+          }
+        },
+        "required": [
+          "query",
+          "as_of"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "as_of": {
+            "type": "string",
+            "format": "date"
+          },
+          "queried_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "variant_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "supplier_item_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "spec": {
+                  "type": "string"
+                },
+                "supplier_name": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "match_reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "product_id",
+                "variant_id",
+                "supplier_item_id",
+                "name",
+                "spec",
+                "supplier_name",
+                "version",
+                "match_reasons"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 20
+          }
+        },
+        "required": [
+          "as_of",
+          "queried_at",
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "side_effects": "업무 데이터 조회",
+      "execution_context": "호스트가 제공하는 신뢰된 신원·run 범위·lease fencing token. 모델 입력값만으로 권한을 결정하지 않음.",
+      "timeout_policy": "runtime-policy-v1",
+      "max_result_bytes": 32768,
+      "errors": [
+        "INVALID_INPUT",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "STALE_INPUT",
+        "BUDGET_EXCEEDED",
+        "TRANSIENT_UNAVAILABLE"
+      ]
+    },
+    {
+      "name": "get_supplier_item_facts",
+      "exposure": "model_allowed",
+      "description": "기존 공급처 상품 최대 20개의 적용일 기준 상태·가격·대체 근거와 현재 version을 조회한다. 변경안 검증에 필요한 사실만 요약하며 전체 DB를 반환하지 않는다.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "supplier_item_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 20,
+            "uniqueItems": true
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "supplier_item_ids",
+          "as_of"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "as_of": {
+            "type": "string",
+            "format": "date"
+          },
+          "queried_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "supplier_item_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "fact_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "summary": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "evidence_resource_uris": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "availability_status": {
+                  "type": "string",
+                  "enum": [
+                    "available",
+                    "temporarily_unavailable",
+                    "supply_ended",
+                    "unknown"
+                  ]
+                },
+                "price_facts": {
+                  "type": "array",
+                  "maxItems": 10,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fact_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "value": {
+                        "type": "object",
+                        "properties": {
+                          "amount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9]\\d*)(\\.\\d{1,4})?$",
+                            "description": "음이 아닌 10진 문자열. 통화 단위 금액."
+                          },
+                          "currency": {
+                            "type": "string",
+                            "enum": [
+                              "KRW"
+                            ]
+                          },
+                          "quantity": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9]\\d*)(\\.\\d{1,6})?$",
+                            "description": "10진 문자열. 계산에는 decimal 사용."
+                          },
+                          "unit": {
+                            "type": "string",
+                            "enum": [
+                              "g",
+                              "kg",
+                              "ml",
+                              "l",
+                              "ea",
+                              "bag",
+                              "box",
+                              "pack"
+                            ]
+                          },
+                          "tax": {
+                            "type": "string",
+                            "enum": [
+                              "included",
+                              "excluded",
+                              "unknown"
+                            ]
+                          },
+                          "price_kind": {
+                            "type": "string",
+                            "enum": [
+                              "regular",
+                              "promotion",
+                              "contract",
+                              "unknown"
+                            ]
+                          },
+                          "condition_key": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "amount",
+                          "currency",
+                          "quantity",
+                          "unit",
+                          "tax",
+                          "price_kind",
+                          "condition_key"
+                        ],
+                        "additionalProperties": false,
+                        "description": "quantity>0 업무 검증 필요. condition_key는 등록된 거래 조건. unknown 허용 여부는 업무 규칙에 따른다."
+                      },
+                      "effective_from": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "effective_to": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "effective_state": {
+                        "type": "string",
+                        "enum": [
+                          "active",
+                          "scheduled"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "fact_id",
+                      "value",
+                      "effective_from",
+                      "effective_to",
+                      "effective_state"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "supplier_item_id",
+                "version",
+                "fact_ids",
+                "evidence_resource_uris",
+                "summary",
+                "availability_status",
+                "price_facts"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 20
+          }
+        },
+        "required": [
+          "as_of",
+          "queried_at",
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "side_effects": "업무 데이터 조회만. 최신 값에 조회시각·version과 고정 근거 URI를 함께 반환.",
+      "execution_context": "호스트가 제공하는 신뢰된 신원·run 범위·lease fencing token. 모델 입력값만으로 권한을 결정하지 않음.",
+      "timeout_policy": "runtime-policy-v1",
+      "max_result_bytes": 32768,
+      "errors": [
+        "INVALID_INPUT",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "STALE_INPUT",
+        "BUDGET_EXCEEDED",
+        "TRANSIENT_UNAVAILABLE"
+      ]
+    },
+    {
+      "name": "get_product_history",
+      "exposure": "model_allowed",
+      "description": "제품의 최신 업무 이력을 최대 20개 검색한다. 기록 시각·적용 시점·변경 종류·근거 ID를 요약하고 상세는 Resource로 참조한다.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10
+          }
+        },
+        "required": [
+          "product_id"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "recorded_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "summary": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "required": [
+                "event_id",
+                "recorded_at",
+                "action",
+                "evidence_ids",
+                "summary"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 20
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "side_effects": "업무 이력 조회",
+      "execution_context": "호스트가 제공하는 신뢰된 신원·run 범위·lease fencing token. 모델 입력값만으로 권한을 결정하지 않음.",
+      "timeout_policy": "runtime-policy-v1",
+      "max_result_bytes": 32768,
+      "errors": [
+        "INVALID_INPUT",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "STALE_INPUT",
+        "BUDGET_EXCEEDED",
+        "TRANSIENT_UNAVAILABLE"
+      ]
+    },
+    {
+      "name": "validate_change_set",
+      "exposure": "host_only",
+      "description": "고정 분석 실행의 변경 payload를 현재 코드 규칙과 대상 version으로 검증한다. 타입·수치·기간·상품 연결·근거·중복·대체 순환을 검사하며 승인하지 않는다.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "analysis_run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "change_payload_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "analysis_run_id",
+          "change_payload_id"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "validation_report_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "blocking_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "warning_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "report_resource_uri": {
+            "type": "string"
+          },
+          "target_versions": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "object",
+              "properties": {
+                "entity_type": {
+                  "type": "string",
+                  "enum": [
+                    "product",
+                    "variant",
+                    "supplier_item"
+                  ]
+                },
+                "entity_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "entity_type",
+                "entity_id",
+                "version"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "validation_report_id",
+          "blocking_count",
+          "warning_count",
+          "report_resource_uri",
+          "target_versions"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "side_effects": "검증 보고서·provenance 저장. 업무 데이터 미변경",
+      "execution_context": "호스트가 제공하는 신뢰된 신원·run 범위·lease fencing token. 모델 입력값만으로 권한을 결정하지 않음.",
+      "timeout_policy": "runtime-policy-v1",
+      "max_result_bytes": 32768,
+      "errors": [
+        "INVALID_INPUT",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "STALE_INPUT",
+        "BUDGET_EXCEEDED",
+        "TRANSIENT_UNAVAILABLE"
+      ]
+    },
+    {
+      "name": "stage_change_proposal",
+      "exposure": "host_only",
+      "description": "검증 보고서가 있는 동일 run의 변경 후보를 제안으로 저장한다. 승인·실제 반영은 하지 않으며 중복 키로 같은 제안 생성을 방지한다.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "analysis_run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "validation_report_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "proposal_creation_key": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "analysis_run_id",
+          "validation_report_id",
+          "proposal_creation_key"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "ready"
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "proposal_id",
+          "revision",
+          "status",
+          "version"
+        ],
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "side_effects": "변경안·내용 revision 생성만 허용. 승인 DB 테이블 쓰기 금지",
+      "execution_context": "호스트가 제공하는 신뢰된 신원·run 범위·lease fencing token. 모델 입력값만으로 권한을 결정하지 않음.",
+      "timeout_policy": "runtime-policy-v1",
+      "max_result_bytes": 32768,
+      "errors": [
+        "INVALID_INPUT",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "STALE_INPUT",
+        "BUDGET_EXCEEDED",
+        "TRANSIENT_UNAVAILABLE"
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "uriTemplate": "food://schemas/{schema_version}",
+      "name": "food_change_schema",
+      "mimeType": "application/schema+json",
+      "source_file": "schemas/food-change-v1.json",
+      "immutable": true,
+      "max_text_bytes": 32768,
+      "access_control": "객체별 조회 권한. URI는 권한을 부여하지 않음.",
+      "cache_key": "고정 URI+sha256. 내용 변경은 새 버전/ID.",
+      "sha256": "81a533d12e14d8822e50fbf4b03499553cb18547a9d802311bb48d3a8ba79e1a"
+    },
+    {
+      "uriTemplate": "food://policies/{policy_version}",
+      "name": "food_business_policy",
+      "mimeType": "text/markdown",
+      "source_file": "policies/food-policy-v1.md",
+      "immutable": true,
+      "max_text_bytes": 32768,
+      "access_control": "객체별 조회 권한. URI는 권한을 부여하지 않음.",
+      "cache_key": "고정 URI+sha256. 내용 변경은 새 버전/ID.",
+      "sha256": "84696570d3bd20e63e453237bd6e05d49af4d02e854f576d03bdb18f8c8f9d12"
+    },
+    {
+      "uriTemplate": "food://documents/{revision_id}/segments/{segment_id}",
+      "name": "source_document_segment",
+      "mimeType": "application/json",
+      "immutable": true,
+      "max_text_bytes": 32768,
+      "access_control": "객체별 조회 권한. URI는 권한을 부여하지 않음.",
+      "cache_key": "고정 URI+sha256. 내용 변경은 새 버전/ID."
+    },
+    {
+      "uriTemplate": "food://extractions/{extraction_id}/segments/{segment_id}",
+      "name": "extraction_segment",
+      "mimeType": "application/json",
+      "immutable": true,
+      "max_text_bytes": 32768,
+      "access_control": "객체별 조회 권한. URI는 권한을 부여하지 않음.",
+      "cache_key": "고정 URI+sha256. 내용 변경은 새 버전/ID."
+    },
+    {
+      "uriTemplate": "food://evidence/{evidence_id}",
+      "name": "source_evidence",
+      "mimeType": "application/json",
+      "immutable": true,
+      "max_text_bytes": 32768,
+      "access_control": "객체별 조회 권한. URI는 권한을 부여하지 않음.",
+      "cache_key": "고정 URI+sha256. 내용 변경은 새 버전/ID."
+    }
+  ],
+  "prompts": [
+    {
+      "name": "analyze_food_notice",
+      "revision": "notice-v1",
+      "source_file": "prompts/notice-v1.md",
+      "sha256": "513e5e73ce9464c5c3b9436f5eacd60878ea655435c60aee3875489e208588b4",
+      "arguments": [
+        {
+          "name": "document_revision_id",
+          "required": true
+        },
+        {
+          "name": "extraction_id",
+          "required": true
+        },
+        {
+          "name": "schema_version",
+          "required": true
+        },
+        {
+          "name": "policy_version",
+          "required": true
+        }
+      ],
+      "selection": "사용자 프로필 또는 명시적인 호스트 정책. 모델 자동 Prompt 호출을 전제하지 않음.",
+      "execution": "템플릿 반환만. Resource 조립과 Tool 호출 순서·권한은 호스트/그래프가 담당."
+    },
+    {
+      "name": "analyze_price_table",
+      "revision": "price-table-v1",
+      "source_file": "prompts/price-table-v1.md",
+      "sha256": "aff624249bdf5fb52c8ee4055bf95870809039215975f3396ba6cde5bf00f46a",
+      "arguments": [
+        {
+          "name": "document_revision_id",
+          "required": true
+        },
+        {
+          "name": "extraction_id",
+          "required": true
+        },
+        {
+          "name": "schema_version",
+          "required": true
+        },
+        {
+          "name": "policy_version",
+          "required": true
+        }
+      ],
+      "selection": "사용자 프로필 또는 명시적인 호스트 정책. 모델 자동 Prompt 호출을 전제하지 않음.",
+      "execution": "템플릿 반환만. Resource 조립과 Tool 호출 순서·권한은 호스트/그래프가 담당."
+    },
+    {
+      "name": "review_change_evidence",
+      "revision": "review-evidence-v1",
+      "source_file": "prompts/review-evidence-v1.md",
+      "sha256": "af3f41b7919adf50fa83cc003d26fcacadda956b42b4d9ef92ccf206329e8f60",
+      "arguments": [
+        {
+          "name": "document_revision_id",
+          "required": true
+        },
+        {
+          "name": "extraction_id",
+          "required": true
+        },
+        {
+          "name": "schema_version",
+          "required": true
+        },
+        {
+          "name": "policy_version",
+          "required": true
+        }
+      ],
+      "selection": "사용자 프로필 또는 명시적인 호스트 정책. 모델 자동 Prompt 호출을 전제하지 않음.",
+      "execution": "템플릿 반환만. Resource 조립과 Tool 호출 순서·권한은 호스트/그래프가 담당."
+    }
+  ],
+  "model_tool_allowlist": [
+    "find_product_candidates",
+    "get_supplier_item_facts",
+    "get_product_history"
+  ],
+  "forbidden_model_capabilities": [
+    "execute_sql",
+    "create_product_directly",
+    "update_product_directly",
+    "delete_product",
+    "approve_proposal",
+    "apply_approved_proposal"
+  ],
+  "rest_contract_file": "openapi.json",
+  "schema_generation_note": "구현 시 Pydantic DTO로 입력/출력 JSON Schema를 번들링하고 capability 발견 결과와 비교한다. 이 설계 목록은 실행 서버나 완성된 MCP wire schema가 아니다."
+}

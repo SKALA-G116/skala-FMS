@@ -1,0 +1,34 @@
+{
+  "status": "design_consistency_passed",
+  "operational_readiness": "NOT_VERIFIED",
+  "rest_operations": 42,
+  "mcp_tools": 6,
+  "model_allowed_tools": 3,
+  "resource_templates": 5,
+  "prompt_templates": 3,
+  "resource_prompt_hashes_verified": 5,
+  "resource_schema_definitions_consistent": 16,
+  "fixture_count": 12,
+  "additional_invalid_tool_inputs_rejected": [
+    "extra SQL argument",
+    "unbounded result count",
+    "arbitrary parse URL"
+  ],
+  "checklist_statuses": {
+    "설계 반영·실행 미검증": 30,
+    "배포 입력 대기": 2,
+    "평가 자료 대기": 1,
+    "업무 결정 대기": 1
+  },
+  "unresolved_deployment_values": [
+    "ocr_process_memory_limit_mib",
+    "db_max_connections_budget",
+    "validated_model_context_windows"
+  ],
+  "not_executed": [
+    "Actual MCP initialize/list/read/get/call or Inspector test",
+    "PaddleOCR accuracy, RAM/VRAM, sustained load or browser heap tests",
+    "PostgreSQL saver, lease fencing or commit recovery tests",
+    "Full OpenAPI/JSON Schema standards validation"
+  ]
+}
