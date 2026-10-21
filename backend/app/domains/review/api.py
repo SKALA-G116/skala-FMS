@@ -23,6 +23,8 @@ api.py - review 도메인 HTTP 유스케이스
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   검수함을 내부 변경 묶음에서 자료별 분석 결과로 전환
+
     상세 Git 이력: git log --follow -- backend/app/domains/review/api.py
     공통 규칙: doc/file-header-policy.md
 
@@ -71,6 +73,9 @@ def handle(ctx):
     parts, root, id, action = ctx.parts, ctx.root, ctx.id, ctx.action
     mutating = method != 'GET'
     status, headers = 200, {}
+    if root == 'review-inbox':
+        from backend.app.domains.review.inbox import list_inbox
+        return DomainResult(list_inbox(c,q))
     if root == 'proposals':
         if not id:
             if method == 'POST':
@@ -178,6 +183,6 @@ def handle(ctx):
         raise Problem(404, 'NOT_FOUND', '지원하지 않는 경로입니다.')
     return DomainResult(out, status, headers)
 
-ROUTES = (('proposals', ('GET', 'POST')), ('proposals/{id}', ('GET', 'PATCH')), ('proposals/{id}/validate', ('POST',)), ('proposals/{id}/decisions', ('POST',)), ('proposals/{id}/withdraw-approval', ('POST',)), ('proposals/{id}/revisions', ('GET',)), ('proposals/{id}/applications', ('POST',)), ('applications/{id}', ('GET',)), ('audit-events/{id}', ('GET',)), ('proposals/{id}/confirm-ai', ('POST',)))
+ROUTES = (('review-inbox', ('GET',)), ('proposals', ('GET', 'POST')), ('proposals/{id}', ('GET', 'PATCH')), ('proposals/{id}/validate', ('POST',)), ('proposals/{id}/decisions', ('POST',)), ('proposals/{id}/withdraw-approval', ('POST',)), ('proposals/{id}/revisions', ('GET',)), ('proposals/{id}/applications', ('POST',)), ('applications/{id}', ('GET',)), ('audit-events/{id}', ('GET',)), ('proposals/{id}/confirm-ai', ('POST',)))
 
 router = domain_router('review', ROUTES)

@@ -629,7 +629,7 @@
         }
       ],
       "original_docstring": "Explicit domain ownership: no request writes outside the shared transaction.",
-      "sha256": "16bcdee4ce19d2ff2d7974f4141d5034bc879bd707b886aab144b8f8f3fb968f"
+      "sha256": "7e0cdb3a00fe9132472ff62c42ff10f80139d5e9d88770b4e07ce6324310dafd"
     },
     "backend/app/api/routing.py": {
       "spec": [
@@ -869,6 +869,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
@@ -919,7 +924,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        }
+      ],
       "original_docstring": "Deterministic table recovery and conservative, provenance-preserving candidate merging.",
       "sha256": "ad8e73e2a858aacdddc16d8214f01949ab2b745a154e693a01443c071ac99ca3"
     },
@@ -998,7 +1009,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        }
+      ],
       "original_docstring": "Create a new review revision from saved extraction; preserve all previous decisions.",
       "sha256": "6809dbf3a999d976a9422adb13a1d2d0195cfc293a3e3ab26557a374193576c4"
     },
@@ -1204,6 +1221,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
@@ -1869,7 +1891,7 @@
         }
       ],
       "original_docstring": "Review HTTP use cases. The transport owns authentication and the transaction.",
-      "sha256": "8ae923b3a6185a5db7b448509c59b90107be56691284cd9cc78010eeae2f0686"
+      "sha256": "15782bb5bb520dbc790e52c2e24063ed50f2fc51f7725f50d1ea66f6e232c8a2"
     },
     "backend/app/domains/review/application.py": {
       "spec": [
@@ -1899,6 +1921,25 @@
         }
       ],
       "sha256": "655dbb3847df7502310cc3b5e74ecf60cbbbbba410670addeb4c13bae5015429"
+    },
+    "backend/app/domains/review/inbox.py": {
+      "spec": [
+        "자료별 최신 분석 검수함 조회",
+        "로그인된 요청의 검색·상태·페이지 조건",
+        "자료별 최신 완료 분석 한 행·실제 항목/대기 수·검토 경로",
+        "내부 DB 반영 묶음을 검토 품목으로 노출하지 않고 전체 그룹에서 페이지를 적용"
+      ],
+      "style": "python",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "A review inbox lists completed analysis results, not internal application batches.",
+      "sha256": "f795f106d86253cbb2d21c2bbb9524051e2a41d7f188f1d21529ad86f99b01ab"
     },
     "backend/app/domains/review/items.py": {
       "spec": [
@@ -2161,6 +2202,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "original_docstring": "Bounded synchronous parsing, executed only in the worker process.",
@@ -2855,7 +2901,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        }
+      ],
       "original_docstring": "Verify lossless, conservative merging of vendor tables and repeated OCR facts.",
       "sha256": "a2b8b9bce1c17b882b3f4cd3c1c3e840fcd5d2ed367ed54251e5c7f4611d3bbb"
     },
@@ -3007,10 +3059,15 @@
           "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
           "date": "2026-10-21T19:53:12+09:00",
           "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "73b1dd429cf2854790fc40847dbacf66a48091fdb967b9fd084f5acbd93a58c8"
+      "sha256": "a00287d8f84aeca1a837f29eb1a71d4ec4fe0fb046dd9104600d7ee537747a62"
     },
     "compose.food.yml": {
       "spec": [
@@ -3167,6 +3224,16 @@
           "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
           "date": "2026-10-21T19:53:12+09:00",
           "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        },
+        {
+          "commit": "7e921ab51f22c46ebc43961225f82835f0d8de00",
+          "date": "2026-10-21T20:35:45+09:00",
+          "subject": "fix: 이전·최신 검토 결과 간 이동 시 화면 재조회 및 수정 보호"
         }
       ],
       "sha256": null
@@ -3191,6 +3258,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "sha256": null
@@ -3749,7 +3821,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        }
+      ],
       "sha256": "dc6873e78eef2cdf4d97633c8f8f0aa4a5ac891e42f2d713550e8dec27b58d62"
     },
     "doc/food-agent/frontend-spec.md": {
@@ -3962,7 +4040,7 @@
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
         }
       ],
-      "sha256": "cbc8d4f9c4c600da9969776cf27fe3dd8c7e1e2ee970c1d6fce3e34829d9c327"
+      "sha256": "9dacaeefaf3eef5234b263868dc6c6cfe56b290651ae41fc01d483a267aea0a2"
     },
     "doc/food-agent/operational-update.md": {
       "spec": [
@@ -4271,6 +4349,24 @@
         }
       ],
       "sha256": "d2408c58d837826850bcd0bbfa0453d2e9753786df5df21114665c0f7d2ce02e"
+    },
+    "doc/food-agent/review-inbox.md": {
+      "spec": [
+        "프로젝트 문서 review-inbox",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "sha256": "26f2387ead34e51ea0004840b5ba9a1056f4ce4906029b30e8049495f2f27ab6"
     },
     "doc/food-agent/review-journey.md": {
       "spec": [
@@ -4955,6 +5051,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "sha256": "566a5f3685dc9eea8adf26419f75ac4d0405ab445824aac6534323c66ebfbf7d"
@@ -5366,6 +5467,16 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        },
+        {
+          "commit": "7e921ab51f22c46ebc43961225f82835f0d8de00",
+          "date": "2026-10-21T20:35:45+09:00",
+          "subject": "fix: 이전·최신 검토 결과 간 이동 시 화면 재조회 및 수정 보호"
         }
       ],
       "sha256": "7a714d13a4f09d9e3030fa27b9e04b5ae59b8fe44b00bb8e67ebf87967c08e3a"
@@ -5518,7 +5629,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "ad42924b062801f0f283bac72183b5771875188ed452a9d3c15c2a92f6979682"
+      "sha256": "d8709310d95e9933110a88e95929e2e06503e2506ba1a6c9778910afb53d0e6e"
     },
     "frontend/src/views/Sources.vue": {
       "spec": [
@@ -6861,10 +6972,15 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
       "original_docstring": "Apply source headers and maintain a format-safe file specification inventory.",
-      "sha256": "fbea7e013986be9ccf03feb3524fc4f925a00c10ea6c0c95263460f587ea3144"
+      "sha256": "b2af30a3507edfcfc1b610d69e3876c635767d0c2632791fe5308b2be941a823"
     },
     "scripts/import-price-workbook.py": {
       "spec": [
@@ -6911,7 +7027,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
+          "date": "2026-10-21T20:33:38+09:00",
+          "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        }
+      ],
       "original_docstring": "Preview or rebuild a saved analysis without repeating OCR/LLM or overwriting review history.",
       "sha256": "b75e18c6925adea7ceba670ef27996e252b36f090cb6397c790916b207a164f4"
     },
