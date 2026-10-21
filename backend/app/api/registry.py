@@ -23,6 +23,8 @@ registry.py - 프로젝트 설정 registry.py
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   자료별 검수함 조회 경로 등록
+
     상세 Git 이력: git log --follow -- backend/app/api/registry.py
     공통 규칙: doc/file-header-policy.md
 
@@ -68,6 +70,7 @@ HANDLERS = {
     'analysis-runs': analysis.handle,
     'jobs': jobs.handle,
     'proposals': review.handle,
+    'review-inbox': review.handle,
     'applications': review.handle,
     'suppliers': catalog.handle,
     'foods': catalog.handle,

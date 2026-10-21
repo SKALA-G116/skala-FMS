@@ -70,6 +70,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/domains/review/__init__.py](../backend/app/domains/review/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/api.py](../backend/app/domains/review/api.py) | review 도메인 HTTP 유스케이스 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/application.py](../backend/app/domains/review/application.py) | 승인된 변경의 원자적 DB 반영 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/review/inbox.py](../backend/app/domains/review/inbox.py) | 자료별 최신 분석 검수함 조회 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/items.py](../backend/app/domains/review/items.py) | 추출 품목의 사용자 검토와 반영 준비 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/proposals.py](../backend/app/domains/review/proposals.py) | 변경안 검증과 승인 상태 전이 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/food/__init__.py](../backend/app/food/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
@@ -157,6 +158,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/prompts/price-table-v1.md](../doc/food-agent/prompts/price-table-v1.md) | 프로젝트 문서 price-table-v1 | 외부 명세 (원본 보존) |
 | [doc/food-agent/prompts/review-evidence-v1.md](../doc/food-agent/prompts/review-evidence-v1.md) | 프로젝트 문서 review-evidence-v1 | 외부 명세 (원본 보존) |
 | [doc/food-agent/review-checklist.json](../doc/food-agent/review-checklist.json) | 프로젝트 문서 review-checklist | 외부 명세 (원본 보존) |
+| [doc/food-agent/review-inbox.md](../doc/food-agent/review-inbox.md) | 프로젝트 문서 review-inbox | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/review-journey.md](../doc/food-agent/review-journey.md) | 프로젝트 문서 review-journey | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/runtime-policy.json](../doc/food-agent/runtime-policy.json) | 프로젝트 문서 runtime-policy | 외부 명세 (원본 보존) |
 | [doc/food-agent/schemas/food-change-dto-v1.json](../doc/food-agent/schemas/food-change-dto-v1.json) | 프로젝트 문서 food-change-dto-v1 | 외부 명세 (원본 보존) |

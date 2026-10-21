@@ -3351,6 +3351,87 @@
           }
         }
       }
+    },
+    "/review-inbox": {
+      "get": {
+        "operationId": "listReviewInbox",
+        "tags": [
+          "review"
+        ],
+        "summary": "자료별 최신 완료 분석과 수동 변경안 조회",
+        "description": "내부 반영 배치를 합산하지 않고 분석 결과의 실제 항목·검토 대기 수를 반환합니다. 같은 자료의 최신 완료 분석을 선택한 뒤 검색·상태 필터·페이지를 적용합니다.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "items에는 id, kind(analysis/manual), title, status, item_count, pending_count, created_at, href가 있습니다. 분석에는 document_id, confirmed_count, skipped_count도 포함됩니다. next_cursor와 has_more는 그룹 단위입니다.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "next_cursor",
+                    "has_more"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "has_more": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

@@ -27,6 +27,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
 
+    2026-10-21  미지정      v0.1.0   검수함을 내부 변경 묶음에서 자료별 분석 결과로 전환
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -685,3 +687,42 @@ def test_reconciliation_creates_new_pending_report_preserving_decisions(client):
         assert {e['amount'] for e in rebuilt['events']}=={'720','1600'}
         assert rebuilt['consolidation']['source_report_version']==4
         assert get(c,'asset',result['export_asset_id'])['filename'].endswith('.xlsx')
+
+
+def test_inbox_groups_internal_bundles_and_uses_latest_report_before_paging(client):
+    from backend.app.domains.ingestion.documents import import_document
+    login(client)
+    with tx() as c:
+        doc=import_document(c,'inbox grouping',b'group','inbox.txt');revision=doc['revision'];run_id=uid();report_id=uid()
+        events=[{'id':uid(),'review':{'status':status}} for status in ['pending','confirmed','skipped','pending']]
+        proposal_ids=[]
+        for i in range(3):
+            pid=uid();proposal_ids.append(pid)
+            put(c,'proposal',{'id':pid,'analysis_run_id':run_id,'summary':{'id':pid,'title':f'inbox grouping AI 변경안 {i+1}','status':'draft','change_count':45,'blocking_count':9,'created_at':now()},'changes':[]})
+        put(c,'agent_report',{'id':report_id,'status':'completed','events':events,'proposal_ids':proposal_ids})
+        put(c,'analysis_run',{'id':run_id,'document_revision_id':revision['id'],'agent_report_id':report_id,'status':'succeeded','mode':'agent','created_at':now()})
+    response=client.get('/api/v1/review-inbox?q=inbox%20grouping&limit=1');assert response.status_code==200,response.text
+    inbox=response.json();assert len(inbox['items'])==1 and not inbox['has_more']
+    row=inbox['items'][0]
+    assert row['item_count']==4 and row['pending_count']==2 and row['confirmed_count']==1 and row['skipped_count']==1
+    assert row['href']==f'/analysis-runs/{run_id}/review'
+    with tx() as c:
+        newer=uid();new_report=uid()
+        put(c,'agent_report',{'id':new_report,'status':'completed','events':[{'id':uid()}],'proposal_ids':[]})
+        put(c,'analysis_run',{'id':newer,'document_revision_id':revision['id'],'agent_report_id':new_report,'status':'succeeded','mode':'agent','created_at':now()})
+    items=client.get('/api/v1/review-inbox?q=inbox%20grouping').json()['items']
+    assert len(items)==1 and items[0]['id']==newer and items[0]['item_count']==1
+    with tx() as c:
+        assert all(get(c,'proposal',pid)['summary']['status']=='draft' for pid in proposal_ids)
+        c.execute("INSERT INTO record_archives(record_kind,record_id,archived,version,actor_id,reason) VALUES('document',%s,true,1,'test','hide')",(revision['document_id'],))
+    assert client.get('/api/v1/review-inbox?q=inbox%20grouping').json()['items']==[]
+
+
+@pytest.mark.parametrize('states,expected',[
+    (['approved','ready'],'ready'),(['approved','applied'],'approved'),
+    (['rejected','approved'],'conflict'),(['rejected'],'rejected'),
+    (['applied','applied'],'applied'),
+])
+def test_inbox_does_not_claim_whole_approval_for_mixed_batches(states,expected):
+    from backend.app.domains.review.inbox import aggregate_status
+    assert aggregate_status(states,4)==expected
