@@ -1,4 +1,47 @@
-"""Recoverable catalog/material removal. Original evidence and facts are retained."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+archives.py - 자료·식품의 삭제 보관과 복구
+==============================================================================
+설명:
+    - 자료·식품의 삭제 보관과 복구
+입력·출력 명세:
+    - 입력: 대상 종류/ID·보관 버전·행위자·사유
+    - 출력: 갱신된 보관 상태와 버전
+실행 가정:
+    - 활성 작업과 승인 근거의 일관성을 유지
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/ingestion/archives.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Recoverable catalog/material removal. Original evidence and facts are retained.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 from backend.app.infrastructure.database import Problem
 from backend.app.infrastructure.database import entity
 from backend.app.infrastructure.database import get

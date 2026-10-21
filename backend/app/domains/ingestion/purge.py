@@ -1,4 +1,47 @@
-"""Permanent removal of discarded, unreferenced materials and derived artifacts."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+purge.py - 자료 선택·일괄 작업과 조건부 영구 삭제
+==============================================================================
+설명:
+    - 자료 선택·일괄 작업과 조건부 영구 삭제
+입력·출력 명세:
+    - 입력: 검색 조건 또는 삭제 보관된 자료 ID·버전·행위자
+    - 출력: 항목별 성공/실패와 파일 정리 결과
+실행 가정:
+    - 승인된 사실이 참조하는 근거와 공유 파일을 보호
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/ingestion/purge.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Permanent removal of discarded, unreferenced materials and derived artifacts.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import re
 import uuid
 from backend.app.infrastructure.database import Problem

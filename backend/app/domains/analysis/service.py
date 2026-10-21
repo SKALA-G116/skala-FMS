@@ -1,4 +1,47 @@
-"""Register durable analysis without calling an LLM inside the HTTP transaction."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+service.py - 영속 분석 작업 등록
+==============================================================================
+설명:
+    - 영속 분석 작업 등록
+입력·출력 명세:
+    - 입력: DB connection·문서 revision·재분석 여부
+    - 출력: 분석 실행과 queued 작업 또는 기존 작업 참조
+실행 가정:
+    - HTTP 트랜잭션 안에서 실제 추론을 수행하지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/analysis/service.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Register durable analysis without calling an LLM inside the HTTP transaction.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 from backend.app.infrastructure.database import get
 from backend.app.infrastructure.database import put
 from backend.app.infrastructure.database import uid

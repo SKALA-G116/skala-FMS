@@ -1,3 +1,32 @@
+<!--
+==============================================================================
+FMS_FILE_SPEC
+FoodCatalog.vue - 표준 식품 목록과 삭제·복구
+==============================================================================
+설명:
+    - 표준 식품 목록과 삭제·복구
+입력·출력 명세:
+    - 입력: 라우트·사용자 입력·API 조회 DTO
+    - 출력: 사용자 여정에 맞는 화면과 명시적 API 요청
+실행 가정:
+    - 미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- frontend/src/views/FoodCatalog.vue
+    공통 규칙: doc/file-header-policy.md
+==============================================================================
+-->
 <script setup>
 import {ref,onMounted,computed,inject} from 'vue';import {get,api} from '../api/client';import FoodRecordForm from '../components/FoodRecordForm.vue';import CursorPager from '../components/CursorPager.vue';import EvidenceViewer from '../components/EvidenceViewer.vue';import ArchiveDialog from '../components/ArchiveDialog.vue';import {Search,Plus,Trash2,RotateCcw,ArrowUpRight,Package,X,FileText} from 'lucide-vue-next';
 const user=inject('user'),canManage=computed(()=>user.value.roles.some(r=>['admin','reviewer'].includes(r)));const data=ref({items:[]}),query=ref(''),error=ref(''),loading=ref(false),selected=ref(null),evidence=ref([]),archived=ref(false),confirm=ref(null),notice=ref(null);async function load(cursor=''){error.value='';loading.value=true;try{data.value=await get('/foods?'+new URLSearchParams({q:query.value,archived:String(archived.value),...(cursor?{cursor}:{})}));selected.value=null;evidence.value=[]}catch(e){error.value=e.message}finally{loading.value=false}}onMounted(()=>load());async function completed(result){notice.value={...result,title:confirm.value.food_record.food_name};confirm.value=null;await load()}async function undo(){try{await api('/foods/'+notice.value.id+(notice.value.archived?'/restore':''),{method:notice.value.archived?'POST':'DELETE',body:{archive_version:notice.value.archive_version,reason:'직전 작업 실행 취소'}});notice.value=null;await load()}catch(e){error.value=e.message}}

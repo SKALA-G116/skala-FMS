@@ -1,4 +1,47 @@
-"""Shared HTTP presentation helpers; no domain workflows live here."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+http.py - HTTP 공통 DTO와 응답 보조 함수
+==============================================================================
+설명:
+    - HTTP 공통 DTO와 응답 보조 함수
+입력·출력 명세:
+    - 입력: RequestContext·결과 data/status/headers·버전·페이지 조건
+    - 출력: DomainResult·오류/ETag/페이지 DTO
+실행 가정:
+    - 공통 표현 계층이며 도메인 업무 규칙을 추가하지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/api/http.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Shared HTTP presentation helpers; no domain workflows live here.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import base64
 import json
 from dataclasses import dataclass

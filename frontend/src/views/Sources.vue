@@ -1,3 +1,32 @@
+<!--
+==============================================================================
+FMS_FILE_SPEC
+Sources.vue - 사이트 연결·업데이트 수집
+==============================================================================
+설명:
+    - 사이트 연결·업데이트 수집
+입력·출력 명세:
+    - 입력: 라우트·사용자 입력·API 조회 DTO
+    - 출력: 사용자 여정에 맞는 화면과 명시적 API 요청
+실행 가정:
+    - 미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- frontend/src/views/Sources.vue
+    공통 규칙: doc/file-header-policy.md
+==============================================================================
+-->
 <script setup>
 import {ref,onMounted,inject,computed} from 'vue';import {useRouter} from 'vue-router';import {api,get} from '../api/client';import {Link,ShieldCheck,RefreshCw,Check,KeyRound} from 'lucide-vue-next';const user=inject('user'),router=useRouter(),isAdmin=computed(()=>user.value.roles.includes('admin'));const source=ref(null),tag=ref(''),connection=ref(null),form=ref({username:'',password:'',auto_login:true}),schedule=ref(false),interval=ref(30),busy=ref(false),error=ref(''),message=ref(''),limit=ref(15),autoAnalyze=ref(true);
 async function load(){try{source.value=(await get('/sources')).items[0];const r=await api('/sources/'+source.value.id);source.value=r.data;tag.value=r.etag;schedule.value=!!source.value.schedule_enabled;interval.value=source.value.poll_interval_minutes||30;if(isAdmin.value){connection.value=await get('/sources/'+source.value.id+'/connection');form.value.username=connection.value.username||'';form.value.auto_login=connection.value.auto_login}}catch(e){error.value=e.message}}onMounted(load);
