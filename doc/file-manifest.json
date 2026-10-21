@@ -716,6 +716,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "original_docstring": "Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts.",
@@ -867,7 +872,7 @@
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "933ef491f614375267cf48a52743e6f10c944841794cd85606648e9636e9e415"
+      "sha256": "b6aca40a04891bd8bb9c1b78e945d6d94e29ad785d51cb8cb7ff896661fa0382"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -898,6 +903,25 @@
       ],
       "original_docstring": "Analysis HTTP use cases. The transport owns authentication and the transaction.",
       "sha256": "c5da11b1013f38edec56876a023f385a7cfdd3dd29f2aa15982ca0ecae54667e"
+    },
+    "backend/app/domains/analysis/consolidation.py": {
+      "spec": [
+        "원본 표 정규화·추출 후보 중복 통합",
+        "근거 ID를 가진 원문 구간·표 행·AI 추출 후보",
+        "표준 DTO 후보·통합 출처·분리한 충돌 및 제외 이력",
+        "OCR/LLM을 호출하지 않고 모호한 업체·규격·가격·기간을 합치지 않음"
+      ],
+      "style": "python",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Deterministic table recovery and conservative, provenance-preserving candidate merging.",
+      "sha256": "ad8e73e2a858aacdddc16d8214f01949ab2b745a154e693a01443c071ac99ca3"
     },
     "backend/app/domains/analysis/export.py": {
       "spec": [
@@ -958,6 +982,25 @@
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
       "sha256": "fe087d8b1d755a30b1901bc977d0201fe26eb10a98e2368d1b0eb7e40f124d7b"
+    },
+    "backend/app/domains/analysis/reconciliation.py": {
+      "spec": [
+        "완료 분석의 이력 보존형 재정리",
+        "기존 분석 ID·원문 추출·검토 담당자 ID",
+        "새 검토 결과·검토 Excel·완료 작업과 이전 분석 참조",
+        "기존 검토와 승인된 식품·단가를 덮어쓰지 않고 동일 정리 요청을 재사용"
+      ],
+      "style": "python",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Create a new review revision from saved extraction; preserve all previous decisions.",
+      "sha256": "6809dbf3a999d976a9422adb13a1d2d0195cfc293a3e3ab26557a374193576c4"
     },
     "backend/app/domains/analysis/schemas.py": {
       "spec": [
@@ -1164,7 +1207,7 @@
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
-      "sha256": "4da4cd218416331473fe77d1591b34f5d85daacb184d12aef19315a31f317c45"
+      "sha256": "f236a5154c96452c0dde19f9bdbd788746944db1a448c313f8d399900cb3a191"
     },
     "backend/app/domains/identity/__init__.py": {
       "spec": [
@@ -1369,6 +1412,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "original_docstring": "Resumable incremental collection with short DB transactions, per-post commit,\nrevisit of recent known posts, immutable revisions and durable analysis handoff.",
@@ -1576,6 +1624,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "original_docstring": "Durable queue consumer. Single worker by default; database claim/fencing prevents duplicates.",
@@ -2111,7 +2164,7 @@
         }
       ],
       "original_docstring": "Bounded synchronous parsing, executed only in the worker process.",
-      "sha256": "fa668dd3079f8b3360331e958a75ccd0e2e350b9239c74a1e223c6a069493c9d"
+      "sha256": "bc4ee26be4f7f0d9fa65764cf3ba937b06ceb245c60d2d7c3275abfa66dbd146"
     },
     "backend/app/parsers/ocr.py": {
       "spec": [
@@ -2787,6 +2840,25 @@
       ],
       "sha256": "2e298f4ddd47cd14c9d496988a8e2e2c125106e18c562d6d14a005ee80988bab"
     },
+    "backend/tests/test_consolidation.py": {
+      "spec": [
+        "기능·경계·회귀 검증",
+        "테스트 fixture·가상 입력·명시적 mock/테스트 대역",
+        "assert 결과와 실패 사유",
+        "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
+      ],
+      "style": "python",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Verify lossless, conservative merging of vendor tables and repeated OCR facts.",
+      "sha256": "a2b8b9bce1c17b882b3f4cd3c1c3e840fcd5d2ed367ed54251e5c7f4611d3bbb"
+    },
     "backend/tests/test_domain_architecture.py": {
       "spec": [
         "기능·경계·회귀 검증",
@@ -2896,6 +2968,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "sha256": "bfd81798554c5e86c4cab0b69c38a14af06e34c312b4d21471c4adb17281fa2b"
@@ -2925,10 +3002,15 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "d9189f8adf5a560bba7ac4228da47d0b2b891c9b2d61626856b9889649b3e616"
+      "sha256": "73b1dd429cf2854790fc40847dbacf66a48091fdb967b9fd084f5acbd93a58c8"
     },
     "compose.food.yml": {
       "spec": [
@@ -3080,6 +3162,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "sha256": null
@@ -3646,6 +3733,24 @@
         }
       ],
       "sha256": "55f537f92ba6ac2fe6718ada314f5a08bc14ba987998fe96d5ca9ad72cafa14c"
+    },
+    "doc/food-agent/extraction-consolidation.md": {
+      "spec": [
+        "프로젝트 문서 extraction-consolidation",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "sha256": "dc6873e78eef2cdf4d97633c8f8f0aa4a5ac891e42f2d713550e8dec27b58d62"
     },
     "doc/food-agent/frontend-spec.md": {
       "spec": [
@@ -4852,7 +4957,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "b5942fd51d62792ed8f22a90cc93cff8e3fc36ebf55f7b9ff89a3fba48d5453c"
+      "sha256": "566a5f3685dc9eea8adf26419f75ac4d0405ab445824aac6534323c66ebfbf7d"
     },
     "frontend/src/components/ImageEvidence.vue": {
       "spec": [
@@ -5198,6 +5303,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "sha256": "061303d2288c9b4d0f57102fe243e130fc739d51ec69e96399060a23d3ec63bb"
@@ -5258,7 +5368,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "4a2d77b2e6fb06839813afc5223c88af077e9624dd7e495680f1f288b1f430b6"
+      "sha256": "7a714d13a4f09d9e3030fa27b9e04b5ae59b8fe44b00bb8e67ebf87967c08e3a"
     },
     "frontend/src/views/FoodCatalog.vue": {
       "spec": [
@@ -5314,6 +5424,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
+          "date": "2026-10-21T19:53:12+09:00",
+          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
       "sha256": "83589d23521c713daf39f9af01d6788981c8e406cc57ee89f69688085b49844a"
@@ -6749,7 +6864,7 @@
         }
       ],
       "original_docstring": "Apply source headers and maintain a format-safe file specification inventory.",
-      "sha256": "3cc24c18c4253dda9c148fdeab4db8434e09b545042441cfa3fba95459cc8c16"
+      "sha256": "fbea7e013986be9ccf03feb3524fc4f925a00c10ea6c0c95263460f587ea3144"
     },
     "scripts/import-price-workbook.py": {
       "spec": [
@@ -6780,6 +6895,25 @@
       ],
       "original_docstring": "Register an authorized local source for viewing; never applies business prices.",
       "sha256": "0afa5f2c36517aad0fab85769c8d0cdb73d40e30f572ab118b4069181f09c2a7"
+    },
+    "scripts/reconcile-extraction.py": {
+      "spec": [
+        "저장된 추출 결과 재정리 CLI",
+        "--run-id·--dry-run 또는 기존 검토 담당 --actor",
+        "두 품목 등 정리 미리보기 또는 새 검토 URL",
+        "추가 OCR/LLM 호출 없이 새 초안을 만들며 기존 검토를 보존"
+      ],
+      "style": "python",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-21",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Preview or rebuild a saved analysis without repeating OCR/LLM or overwriting review history.",
+      "sha256": "b75e18c6925adea7ceba670ef27996e252b36f090cb6397c790916b207a164f4"
     },
     "scripts/start-postgres.sh": {
       "spec": [

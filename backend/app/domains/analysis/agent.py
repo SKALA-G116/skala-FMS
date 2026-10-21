@@ -23,6 +23,8 @@ agent.py - LLM 계획·추출과 근거 연결
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -163,8 +165,10 @@ async def interpret(state):
     with tx() as c:
         report=get(c,'agent_report',state['agent_report_id']);r=get(c,'revision',state['revision_id']);ex=get(c,'extraction',state['extraction_id'])
     from backend.app.domains.catalog.record import upgrade_event
+    from backend.app.domains.analysis.consolidation import enrich_tables,table_event,consolidate,VERSION as CONSOLIDATION_VERSION
+    ex['segments']=enrich_tables(ex['segments'])
     model=_MODEL.get();structured=[s for s in ex['segments'] if s.get('food_record')]
-    interpreted=[s for s in ex['segments'] if not s.get('food_record') and not s.get('structured_table_header')]
+    interpreted=[s for s in ex['segments'] if not s.get('food_record') and not s.get('structured_table_header') and re.sub(r'[|:\s-]+','',s['text'])]
     if structured and all(s.get('food_record') or s.get('structured_table_header') or re.fullmatch(r'[|:\s-]+',s['text']) for s in ex['segments']):interpreted=[]
     groups=list(batches(interpreted));budget=128
     if report.get('processing_version')!='food-record-v2':
@@ -173,19 +177,11 @@ async def interpret(state):
         report['processing_version']='food-record-v2'
         with tx() as c:save_report(c,report,state)
     if len(groups)>budget:raise Problem(422,'MODEL_RUN_BUDGET','자료가 한 실행의 AI 호출 상한을 넘습니다. 문서 분할이 필요합니다.')
-    if not report.get('structured_processed'):
-        seen={}
-        for segment in structured:
-            record=segment['food_record'];signature=json.dumps({k:v for k,v in record.items() if k not in ('field_sources','issues')},sort_keys=True,ensure_ascii=False)
-            if signature in seen:
-                seen[signature]['evidence_ids'].append(segment['evidence_id'])
-                for key,source in record['field_sources'].items():seen[signature]['food_record']['field_sources'].setdefault(key,{}).setdefault('additional_sources',[]).append(source)
-                continue
-            report['events'].append({'id':uid(),'kind':'food_profile','product_name':record['food_name'],'spec':record['specification']['original_text'],'amount':None,'quantity':None,'unit':None,'effective_from':None,'effective_to':None,'reason':None,'replacements':[],'price_basis':None,'uncertainties':[],'validation_warnings':record['issues'],'evidence_ids':[segment['evidence_id']],'food_record':record,'extraction_origin':'parser'})
-            seen[signature]=report['events'][-1]
-        report['structured_processed']=True;report['coverage']['structured_rows']=len(structured)
+    if report.get('structured_version')!=CONSOLIDATION_VERSION:
+        report['events'].extend(table_event(segment) for segment in structured)
+        report['structured_processed']=True;report['structured_version']=CONSOLIDATION_VERSION
+        report['coverage']['structured_rows']=len(structured)
         with tx() as c:save_report(c,report,state)
-    signatures={tuple(str(e.get(k)) for k in ('kind','product_name','spec','amount','effective_from','effective_to')) for e in report['events']}
     report['coverage']['total_batches']=len(groups)
     with tx() as c:save_report(c,report,state)
     for i,segments in enumerate(groups):
@@ -248,20 +244,13 @@ async def interpret(state):
             if event['kind']=='price' and event['amount'] is None:
                 event['excluded_reason']='가격 근거를 확인할 수 없어 단가 변경안에서 제외했습니다.'
             # Keep distinct specs/periods and both baseline/correction evidence.
-            signature=tuple(str(event.get(k)) for k in ('kind','product_name','spec','amount','effective_from','effective_to'))
-            if signature not in signatures:report['events'].append(event);signatures.add(signature)
+            report['events'].append(event)
         report['model_calls'].extend(model.calls);model.calls=[];report['batches_completed']=i+1;report['coverage']['processed_windows']=sum(len(g) for g in groups[:i+1]);report['coverage']['total_windows']=sum(len(g) for g in groups);report['coverage']['completed_batches']=i+1;report['coverage']['processed_segments']=len(ex['segments']) if i+1==len(groups) else min(len(ex['segments']),len(structured)+len({s['evidence_id'] for group in groups[:i+1] for s in group}))
         with tx() as c:save_report(c,report,state)
-    # Broad prose and an attached detailed table often repeat the same notice.
-    # Prefer a single explicitly identified spec; retain the broad evidence in provenance.
-    remaining=[]
-    for event in report['events']:
-        specific=[other for other in report['events'] if other['spec'] and other['kind']==event['kind'] and canonical(other['product_name'])==canonical(event['product_name'])]
-        if not event['spec'] and len(specific)==1:
-            specific[0]['evidence_ids']=list(dict.fromkeys(specific[0]['evidence_ids']+event['evidence_ids']))
-            event['merged_into_event_id']=specific[0]['id'];report.setdefault('merged_events',[]).append(event)
-        else:remaining.append(event)
-    report['events']=[upgrade_event(event) for event in remaining]
+    before=len(report['events'])
+    report['events'],merged=consolidate(report['events'])
+    report.setdefault('merged_events',[]).extend(merged)
+    report['consolidation']={'version':CONSOLIDATION_VERSION,'input_events':before,'review_items':len(report['events']),'merged_or_excluded':len(merged)}
     report['coverage']['processed_segments']=len(ex['segments'])
     report['status']='matching'
     with tx() as c:save_report(c,report,state)

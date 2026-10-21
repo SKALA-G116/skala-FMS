@@ -23,12 +23,14 @@ ExtractionReview.vue - 품목 선택·원문 대조·수정·최종 반영
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
+
     상세 Git 이력: git log --follow -- frontend/src/views/ExtractionReview.vue
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 -->
 <script setup>
-import {ref,computed,onMounted,onBeforeUnmount,nextTick,watch,inject} from 'vue';import {useRoute,onBeforeRouteLeave} from 'vue-router';import {get,api} from '../api/client';import SourceComparison from '../components/SourceComparison.vue';import FoodRecordForm from '../components/FoodRecordForm.vue';import FoodRecordTable from '../components/FoodRecordTable.vue';
+import {ref,computed,onMounted,onBeforeUnmount,nextTick,watch,inject} from 'vue';import {useRoute,onBeforeRouteLeave,onBeforeRouteUpdate} from 'vue-router';import {get,api} from '../api/client';import SourceComparison from '../components/SourceComparison.vue';import FoodRecordForm from '../components/FoodRecordForm.vue';import FoodRecordTable from '../components/FoodRecordTable.vue';
 import {reviewStatus,reviewName,draftSnapshot,filterReviewItems,nextPendingItem,requiredReviewFields} from '../utils/reviewJourney';
 const route=useRoute(),user=inject('user');const sourceReady=ref(false),report=ref(null),doc=ref(null),run=ref(null),suppliers=ref([]),products=ref([]),selected=ref(''),draft=ref({}),reason=ref(''),error=ref(''),busy=ref(false),message=ref(''),proposals=ref([]),jobs=ref([]);
 const filter=ref('all'),query=ref(''),showTable=ref(false),stage=ref('review'),mobilePane=ref('fields'),savedSnapshot=ref(''),leaveTarget=ref(null),discardButton=ref(null);
@@ -47,10 +49,21 @@ async function openSummary(){if(busy.value)return;if(dirty.value&&!locked.value)
 function beforeUnload(e){if(dirty.value&&!locked.value){e.preventDefault();e.returnValue=''}}
 onMounted(()=>window.addEventListener('beforeunload',beforeUnload));onBeforeUnmount(()=>window.removeEventListener('beforeunload',beforeUnload));
 onBeforeRouteLeave(()=>!dirty.value||locked.value||window.confirm('저장하지 않은 수정 내용이 있습니다. 이 화면을 나가시겠어요?'));
+onBeforeRouteUpdate(()=>!dirty.value||locked.value||window.confirm('저장하지 않은 수정 내용이 있습니다. 다른 분석 결과로 이동할까요?'));
 const existing=ref(null);let existingRequest=0;watch(()=>draft.value.product_id,async id=>{const request=++existingRequest;existing.value=null;if(!id)return;try{const [detail,prices]=await Promise.all([get('/products/'+id),get('/prices?product_id='+id+'&include_scheduled=true')]);if(request===existingRequest)existing.value={detail,prices:prices.items}}catch{}});
 const names={food_profile:'식품 정보 등록·수정',price:'단가 변경',temporarily_unavailable:'공급 일시중단',supply_ended:'공급 종료',discontinued:'제조 단종',available:'공급 가능',substitution:'대체품',new_product:'신제품'};const fields=['kind','product_name','spec','amount','quantity','unit','effective_from','effective_to','reason','replacements','price_basis','food_record'];
 const canReview=computed(()=>user.value.roles.some(x=>['admin','reviewer'].includes(x)));const locked=computed(()=>proposals.value.some(p=>['approved','applying','applied','apply_failed'].includes(p.summary.status)));const active=computed(()=>report.value?.events.find(e=>e.id===selected.value));const confirmed=computed(()=>report.value?.events.filter(e=>e.review?.status==='confirmed').length||0);const skipped=computed(()=>report.value?.events.filter(e=>e.review?.status==='skipped').length||0);const changed=computed(()=>active.value&&fields.filter(k=>draft.value.kind==='price'||!['amount','quantity','unit','price_basis'].includes(k)).some(k=>JSON.stringify(draft.value[k]??null)!==JSON.stringify((active.value.ai_original||active.value)[k]??null)));
-async function load(){try{run.value=await get('/analysis-runs/'+route.params.id);const rev=await get('/document-revisions/'+run.value.document_revision_id);[report.value,doc.value,{items:suppliers.value},{items:products.value}]=await Promise.all([get('/analysis-runs/'+route.params.id+'/report'),get('/documents/'+rev.document_id),get('/suppliers?limit=100'),get('/products?limit=100')]);proposals.value=await Promise.all(report.value.proposal_ids.map(id=>get('/proposals/'+id)));selected.value=report.value.events.find(e=>reviewStatus(e)==='pending')?.id||report.value.events[0]?.id||'';resetDraft()}catch(e){error.value=e.message}}
+let loadRequest=0;
+async function load(){const request=++loadRequest,id=route.params.id;try{
+ const nextRun=await get('/analysis-runs/'+id);const rev=await get('/document-revisions/'+nextRun.document_revision_id);
+ const [nextReport,nextDoc,nextSuppliers,nextProducts]=await Promise.all([get('/analysis-runs/'+id+'/report'),get('/documents/'+rev.document_id),get('/suppliers?limit=100'),get('/products?limit=100')]);
+ const nextProposals=await Promise.all(nextReport.proposal_ids.map(pid=>get('/proposals/'+pid)));
+ if(request!==loadRequest)return;
+ run.value=nextRun;report.value=nextReport;doc.value=nextDoc;suppliers.value=nextSuppliers.items;products.value=nextProducts.items;proposals.value=nextProposals;
+ selected.value=nextReport.events.find(e=>reviewStatus(e)==='pending')?.id||nextReport.events[0]?.id||'';resetDraft();
+}catch(e){if(request===loadRequest)error.value=e.message}}
+watch(()=>route.params.id,()=>{report.value=null;proposals.value=[];selected.value='';sourceReady.value=false;stage.value='review';jobs.value=[];error.value='';load()});
+onBeforeUnmount(()=>{loadRequest++});
 function resetDraft(){const e=active.value;if(!e)return;const current=e.review?.fields||e;draft.value={...Object.fromEntries(fields.map(k=>[k,current[k]??null])),food_record:JSON.parse(JSON.stringify(current.food_record||e.food_record)),supplier_id:current.supplier_id||suppliers.value.find(s=>s.name===doc.value?.author_display_name)?.id||null,product_id:current.product_id||e.matched_product_id||null};reason.value=e.review?.reason||'';savedSnapshot.value=draftSnapshot(draft.value,reason.value)}
 watch(selected,resetDraft);onMounted(load);
 async function save(status){if(!active.value)return;busy.value=true;error.value='';try{if(status==='confirmed'){if(!draft.value.food_record?.food_name?.trim())throw new Error('식품명을 확인해 주세요.');if(!['food_profile','new_product'].includes(draft.value.kind)){if(!draft.value.effective_from)throw new Error('적용 시작일을 입력하거나 이번 반영에서 제외해 주세요.');if(!draft.value.food_record.company_name)throw new Error('업체를 입력해 주세요.')}}draft.value.product_name=draft.value.food_record.food_name;draft.value.spec=draft.value.food_record.specification.original_text;draft.value.supplier_id=draft.value.food_record.company_id;if(changed.value&&!reason.value.trim()&&status==='confirmed')throw new Error('수정한 이유를 간단히 남겨 주세요.');const body={version:report.value.version,status,fields:draft.value,reason:reason.value.trim()||(status==='skipped'?'이번 반영에서 제외':'원문과 표준 식품 정보를 대조해 확인')};const r=await api('/analysis-runs/'+route.params.id+'/items/'+active.value.id,{method:'PATCH',body});report.value=r.data;proposals.value=[];const next=nextPendingItem(report.value.events,selected.value);message.value=status==='skipped'?'이 항목을 반영 대상에서 제외했습니다.':'원문 대조 결과를 저장했습니다. DB 반영은 아직 진행하지 않았습니다.';if(next)selected.value=next.id;resetDraft();if(!next)stage.value='summary'}catch(e){error.value=e.message}finally{busy.value=false}}
@@ -79,6 +92,7 @@ const prepared=computed(()=>report.value?.review_prepared&&proposals.value.lengt
       </nav>
     </section>
     <div v-if="report.latest_analysis_run_id&&report.latest_analysis_run_id!==route.params.id" class="warning">더 최근에 분석한 결과가 있습니다. <RouterLink :to="'/analysis-runs/'+report.latest_analysis_run_id+'/review'">최신 결과 보기 →</RouterLink></div>
+    <div v-if="report.consolidation" class="notice small"><b>원문 후보 {{report.consolidation.input_events}}개 → 검토 항목 {{report.consolidation.review_items}}개</b><p>중복 근거는 품목별로 함께 연결했습니다. 업체·규격·가격·적용 기간이 충돌하는 항목은 별도로 남깁니다.</p><RouterLink v-if="report.consolidation.source_analysis_run_id" :to="'/analysis-runs/'+report.consolidation.source_analysis_run_id+'/review'">이전 추출 결과·검토 기록 보기 →</RouterLink></div>
     <div v-if="locked" class="locked-banner"><span><b>{{applied?'검토한 정보가 장부에 반영되었습니다.':'이 결과는 승인·반영 단계에 있습니다.'}}</b> 원문과 검토 내용을 조회할 수 있습니다.</span><RouterLink to="/products">식품 목록 →</RouterLink></div>
 
     <template v-if="stage==='review'&&report.events.length">
@@ -101,7 +115,7 @@ const prepared=computed(()=>report.value?.review_prepared&&proposals.value.lengt
               <label>어떤 정보인가요?<select v-model="draft.kind"><option v-for="(label,value) in names" :key="value" :value="value">{{label}}</option></select></label>
               <FoodRecordForm v-model="draft.food_record" :companies="suppliers" compact>
               <section class="change-fields" v-if="!['food_profile','new_product'].includes(draft.kind)"><h4>변경 내용</h4>
-                <div v-if="draft.kind==='price'" class="price-grid"><label>단가(원)<input v-model="draft.amount" inputmode="decimal" aria-label="추출 단가"></label><label>기준 수량<input v-model="draft.quantity" inputmode="decimal" aria-label="가격 기준 수량"></label><label>단위<select v-model="draft.unit"><option :value="null">선택</option><option v-for="u in ['g','kg','ml','l','ea','bag','box','pack']" :key="u" :value="u">{{u}}</option></select></label><p class="muted">AI 추출값: {{(active.ai_original||active).amount??'미기재'}}원</p></div>
+                <div v-if="draft.kind==='price'" class="price-grid"><label>단가(원)<input v-model="draft.amount" inputmode="decimal" aria-label="추출 단가"></label><label>기준 수량<input v-model="draft.quantity" inputmode="decimal" aria-label="가격 기준 수량"></label><label>단위<select v-model="draft.unit"><option :value="null">선택</option><option v-for="u in ['g','kg','ml','l','ea','bag','box','pack']" :key="u" :value="u">{{u}}</option></select></label><p class="muted">원문 추출값: {{(active.ai_original||active).amount??'미기재'}}원</p></div>
                 <div class="two-col"><label>적용 시작일<input v-model="draft.effective_from" type="date" aria-label="추출 적용 시작일"></label><label>종료일 <span class="optional">선택</span><input v-model="draft.effective_to" type="date"></label></div>
                 <label>원문에 적힌 사유<textarea v-model="draft.reason" rows="2" aria-label="추출 사유" placeholder="원문에 사유가 없으면 공란"></textarea></label>
               </section>

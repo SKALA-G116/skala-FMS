@@ -23,6 +23,8 @@ file-specs.py - 파일 명세·변경 이력 관리
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   표 정규화·재정리 모듈 명세 등록
+
     상세 Git 이력: git log --follow -- scripts/file-specs.py
     공통 규칙: doc/file-header-policy.md
 
@@ -61,6 +63,8 @@ UNKNOWN = '미지정'
 VERSION = '0.1.0'
 
 ROLES = {
+ 'analysis/consolidation.py': ('원본 표 정규화·추출 후보 중복 통합', '근거 ID를 가진 원문 구간·표 행·AI 추출 후보', '표준 DTO 후보·통합 출처·분리한 충돌 및 제외 이력', 'OCR/LLM을 호출하지 않고 모호한 업체·규격·가격·기간을 합치지 않음'),
+ 'analysis/reconciliation.py': ('완료 분석의 이력 보존형 재정리', '기존 분석 ID·원문 추출·검토 담당자 ID', '새 검토 결과·검토 Excel·완료 작업과 이전 분석 참조', '기존 검토와 승인된 식품·단가를 덮어쓰지 않고 동일 정리 요청을 재사용'),
  'analysis/agent.py': ('LLM 계획·추출과 근거 연결', '분할 원문 구간·JSON 스키마·분석 실행 ID', '표준 식품 변경 후보·근거·모델 호출 기록', '모델 후보는 승인이나 DB 반영을 대신하지 않음'),
  'analysis/workflow.py': ('LangGraph 분석 흐름', '분석 실행 ID·원본 revision ID·저장된 checkpoint', '추출·계획·해석·연결·Excel 단계의 결과 ID', '큰 원문은 저장소에 두고 checkpoint는 ID 위주로 유지'),
  'analysis/provider.py': ('Ollama 비동기 구조화 추론', '작업명·원문 payload·응답 JSON 스키마', '검증한 JSON과 호출 시간·토큰 기록', '추론 동시성·입력 크기·timeout을 제한하고 HTTP client를 정리'),
@@ -108,6 +112,8 @@ def history():
 
 def spec(path):
     p = Path(path)
+    if path == 'scripts/reconcile-extraction.py':
+        return ('저장된 추출 결과 재정리 CLI', '--run-id·--dry-run 또는 기존 검토 담당 --actor', '두 품목 등 정리 미리보기 또는 새 검토 URL', '추가 OCR/LLM 호출 없이 새 초안을 만들며 기존 검토를 보존')
     if path == 'scripts/file-specs.py':
         return ('파일 명세·변경 이력 관리', '--apply·--refresh·--check 옵션과 Git 파일 목록', '언어별 헤더·파일별 명세 목록·무결성 검사 결과', '원본·잠금·엄격한 데이터 형식을 보존하고 실명 정보를 추정하지 않음')
     if path.startswith('legacy/'):

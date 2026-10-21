@@ -23,6 +23,8 @@ record.py - 표준 FoodRecord DTO와 정규화
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/record.py
     공통 규칙: doc/file-header-policy.md
 
@@ -126,7 +128,26 @@ def specification(raw=None,quantity=None,unit=None,sales_unit=None,normalized=No
 ALIASES={
  'food_code':['공통식품코드','통식품코드','식품코드','공통코드'], 'food_name':['공통식품명','식품명','품명','제품명','상품명','품목명'],
  'attributes':['공통식품속성','식품속성','제품설명','상품설명','상세설명'], 'quantity':['규격수','규격수량','내용량'], 'unit':['규격'], 'normalized':['규격(kg.l)','규격(kg,l)','규격(kg/l)'], 'sales_unit':['단위','판매단위','포장단위'],
+ 'raw_spec':['제품규격','포장규격'], 'ingredients':['원재료','원재료명','원재료및함량'], 'description':['맛&구별','제품특징'], 'flavor':['맛','맛·종류','종류'], 'supply_price':['학교가','납품가','공급가','판매가','단가'],
  'source_applied':['적용가','적용단가'],'survey_1':['조사가1'],'survey_2':['조사가2'],'survey_3':['조사가3'], 'supplier_group':['업체군'],'eco_classification':['친환경구분'],'note':['비고','메모'], 'allergens':['알레르기','알레르기정보','알레르기유발물질'],'company_name':['업체','업체명','공급처','공급업체','판매사','제조사','제조업체','브랜드']}
+
+def company_display(value):
+    """Normalize legal-form prefixes for display; source text remains in provenance."""
+    if not value:return None
+    return re.sub(r'^(?:(?:농업|어업)회사법인\s*)?(?:주식회사|㈜|\(주\))\s*','',value).strip() or value
+
+
+def ingredient_details(raw):
+    """Keep each ingredient's raw token; ingredient origins are not product origins."""
+    result=[]
+    for token in re.split(r',(?=[^\]]*(?:\[|$))',raw):
+        token=token.strip()
+        if not token:continue
+        percent=re.search(r'(\d+(?:\.\d+)?)\s*%',token)
+        name=re.sub(r'\s*\d+(?:\.\d+)?\s*%','',token).strip()
+        result.append({'name':name,'percentage':percent[1] if percent else None,'origin_country':'KR' if re.search(r'국산|국내산',token) else None,'original_text':token})
+    return result[:100] or None
+
 
 def header_key(v):return re.sub(r'\s+','',str(v or '')).casefold()
 
@@ -136,7 +157,8 @@ def header_mapping(row):
         key=header_key(value)
         for name,aliases in ALIASES.items():
             if key in [header_key(a) for a in aliases] and name not in found:found[name]=index
-    return found if 'food_name' in found and ('food_code' in found or 'attributes' in found or 'quantity' in found) else None
+    if 'quantity' not in found and 'unit' in found:found['raw_spec']=found.pop('unit')
+    return found if 'food_name' in found and any(k in found for k in ('food_code','attributes','quantity','raw_spec','ingredients','supply_price')) else None
 
 def split_name(raw):
     original=text(raw);name=original or '';attrs={};spec={};details=[]
@@ -183,16 +205,24 @@ def apply_name(record,raw):
         record['specification'].update({k:v for k,v in normalized.items() if v is not None});record['specification'].update(extra)
     return record
 
-def from_table_row(row,mapping,locator):
+def from_table_row(row,mapping,locator,company_name=None):
     get=lambda key:row[mapping[key]] if key in mapping and mapping[key]<len(row) else None
     if text(get('food_name')) is None:return None
-    record=empty_record();record.update(record_type='common_food' if text(get('food_code')) else 'commercial_product',food_code=text(get('food_code')),food_name=text(get('food_name')),company_name=text(get('company_name')),supplier_group=text(get('supplier_group')),eco_classification=text(get('eco_classification')),note=text(get('note')))
+    record=empty_record();record.update(record_type='common_food' if text(get('food_code')) else 'commercial_product',food_code=text(get('food_code')),food_name=text(get('food_name')),company_name=company_display(text(get('company_name')) or company_name),supplier_group=text(get('supplier_group')),eco_classification=text(get('eco_classification')),note=text(get('note')))
     if isinstance(get('food_code'),(int,float)) and float(get('food_code')).is_integer():record['food_code']=str(int(get('food_code')))
-    record['attributes']=attributes(text(get('attributes')));record['specification']=specification(quantity=get('quantity'),unit=get('unit'),sales_unit=get('sales_unit'),normalized=text(get('normalized')))
+    record['attributes']=attributes(text(get('attributes')));record['specification']=specification(raw=text(get('raw_spec')),quantity=get('quantity'),unit=get('unit'),sales_unit=get('sales_unit'),normalized=text(get('normalized')))
     if record['specification']['quantity'] and record['specification']['unit']:record['specification']['original_text']=record['specification']['quantity']+record['specification']['unit']
     apply_name(record,text(get('food_name')))
-    record['allergens']=allergens_from_text(text(get('allergens')) or text(get('attributes')),record['food_name'])
-    for key in record['prices']:record['prices'][key]=number(get(key))
+    if text(get('ingredients')):record['attributes']['ingredients']=ingredient_details(text(get('ingredients')))
+    if text(get('description')):record['attributes']['other']=list(dict.fromkeys((record['attributes']['other'] or [])+[text(get('description'))]))
+    if text(get('flavor')):record['attributes']['flavor']=text(get('flavor'))
+    if text(get('supply_price')):record['prices']['source_applied']=number(get('supply_price'))
+    if record['specification']['sales_unit'] in ('개','EA','ea','EA(개)') and record['specification']['quantity']:
+        record['specification'].update(piece_quantity=record['specification']['quantity'],piece_unit=record['specification']['unit'])
+    record['allergens']=allergens_from_text(text(get('allergens')) or text(get('ingredients')) or text(get('attributes')),record['food_name'])
+    for key in record['prices']:
+        if text(get(key)) is not None:record['prices'][key]=number(get(key))
+    if company_name and not text(get('company_name')):record['field_sources']['company_name']={'locator':locator,'raw_value':company_name,'origin':'parser_context'}
     for key,index in mapping.items():
         if text(get(key)) is not None:record['field_sources'][key]={'locator':locator,'column_index':index,'raw_value':str(get(key)),'origin':'parser'}
     if record['specification'].pop('normalization_conflict',False):record['issues'].append('원본 규격과 환산 규격이 일치하지 않습니다.')

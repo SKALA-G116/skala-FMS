@@ -25,6 +25,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-21  미지정      v0.1.0   첨부 진행·취소와 완료 건수 회귀 검증 추가
 
+    2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -653,3 +655,33 @@ def test_collection_completion_uses_actual_document_count(client,monkeypatch,cou
     with tx() as c:result=getjob(c,job['id'])
     assert result['status']=='succeeded'
     assert result['processed_count']==result['total_count']==count
+
+
+def test_reconciliation_creates_new_pending_report_preserving_decisions(client):
+    from backend.app.domains.analysis.reconciliation import rebuild
+    from backend.app.domains.ingestion.documents import import_document
+    from backend.app.domains.catalog.record import from_event
+    from test_consolidation import segments
+    with tx() as c:
+        doc=import_document(c,'vendor normalization',b'table','vendor.txt')
+        revision=doc['revision'];source_id=uid();report_id=uid();extraction_id=uid()
+        source_segments=segments()
+        for segment in source_segments:
+            segment['evidence_id']=uid()
+            put(c,'evidence',{'id':segment['evidence_id'],'document_revision_id':revision['id'],'extraction_id':extraction_id,'quote':segment['text'],'locator':segment['locator'],'source_url':None,'ocr_confidence':None})
+        put(c,'extraction',{'id':extraction_id,'revision_id':revision['id'],'segments':source_segments})
+        old_event={'id':uid(),'kind':'food_profile','product_name':'찰보리빵','spec':None,'company_name':'더자람','evidence_ids':[source_segments[2]['evidence_id']],'review':{'status':'skipped','reason':'사용자 제외'}}
+        old_event['food_record']=from_event(old_event)
+        original={'id':report_id,'analysis_run_id':source_id,'document_revision_id':revision['id'],'events':[old_event],'status':'completed','version':4,'proposal_ids':[],'plan':{'document_type':'notice'},'coverage':{'source_segments':4,'processed_segments':4},'model_calls':[]}
+        put(c,'agent_report',original)
+        put(c,'analysis_run',{'id':source_id,'status':'succeeded','document_revision_id':revision['id'],'extraction_id':extraction_id,'agent_report_id':report_id,'mode':'agent','created_at':now()})
+        admin=next(u for u in records(c,'user') if u['username']=='admin')
+        result=rebuild(c,source_id,admin['id']);second=rebuild(c,source_id,admin['id'])
+        assert result['id']==second['id'] and result['id']!=source_id
+        assert get(c,'agent_report',report_id)==original
+        rebuilt=get(c,'agent_report',result['agent_report_id'])
+        assert len(rebuilt['events'])==2 and rebuilt['model_calls']==[]
+        assert all(not e.get('review') for e in rebuilt['events'])
+        assert {e['amount'] for e in rebuilt['events']}=={'720','1600'}
+        assert rebuilt['consolidation']['source_report_version']==4
+        assert get(c,'asset',result['export_asset_id'])['filename'].endswith('.xlsx')
