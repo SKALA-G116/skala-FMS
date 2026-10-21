@@ -11,8 +11,8 @@ transport.py - 공통 HTTP 보안·트랜잭션 경계
 실행 가정:
     - 업로드 크기·동시성·CSRF·Idempotency-Key를 검사
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,10 @@ transport.py - 공통 HTTP 보안·트랜잭션 경계
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/app/api/transport.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +36,8 @@ transport.py - 공통 HTTP 보안·트랜잭션 경계
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -93,7 +97,7 @@ def dispatch_request(path,req,method,mutating,q,payload,content,extra_archive):
             return handle(RequestContext(c,req,method,q,payload,content,u,path))
         if mutating:
             roles=['admin','reviewer'] if path.startswith('proposals') or path.endswith('/proposals') or path.endswith('/header') else ['admin','operator']
-            if path.startswith('analysis-runs/') and ('/items/' in path or path.endswith('/review-proposals') or path.endswith('/review-export')):roles=['admin','reviewer']
+            if path.startswith('analysis-runs/') and ('/items/' in path or path.endswith('/review-proposals') or path.endswith('/review-export') or path.endswith('/normalize')):roles=['admin','reviewer']
             if extra_archive:roles=['admin','reviewer'] if path.startswith('foods/') else ['admin','operator']
             if path=='suppliers':roles=['admin','operator','reviewer']
             if path.startswith('sources'):roles=['admin']

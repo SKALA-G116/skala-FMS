@@ -65,7 +65,8 @@ def test_python_header_preserves_future_unicode_docstring_and_decorator(tmp_path
     namespace = {}
     exec(compile(updated, str(path), 'exec'), namespace)
     assert namespace['Example'].__annotations__ == {'field': 'Example | None'}
-    assert namespace['__author__'] == '미지정'
+    assert namespace['__author__'] == '김재현(Finn)'
+    assert namespace['__email__']=='penguin.klg@gmail.com'
     file_specs.apply_header('example.py', meta)
     assert path.read_text() == updated
 

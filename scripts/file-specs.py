@@ -12,8 +12,8 @@ file-specs.py - 파일 명세·변경 이력 관리
 실행 가정:
     - 원본·잠금·엄격한 데이터 형식을 보존하고 실명 정보를 추정하지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -27,6 +27,8 @@ file-specs.py - 파일 명세·변경 이력 관리
 
     2026-10-21  미지정      v0.1.0   검수함을 내부 변경 묶음에서 자료별 분석 결과로 전환
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- scripts/file-specs.py
     공통 규칙: doc/file-header-policy.md
 
@@ -36,8 +38,8 @@ file-specs.py - 파일 명세·변경 이력 관리
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -62,6 +64,8 @@ INDEX = 'doc/file-specs.md'
 GENERATED = {MANIFEST, INDEX}
 MARKER = 'FMS_FILE_SPEC'
 UNKNOWN = '미지정'
+AUTHOR = '김재현(Finn)'
+EMAIL = 'penguin.klg@gmail.com'
 VERSION = '0.1.0'
 
 ROLES = {
@@ -99,7 +103,7 @@ def git(*args):
 
 
 def paths():
-    return sorted(set(git('ls-files', '--cached', '--others', '--exclude-standard').splitlines()) | GENERATED)
+    return sorted(path for path in set(git('ls-files', '--cached', '--others', '--exclude-standard').splitlines()) | GENERATED if (ROOT/path).is_file() or path in GENERATED)
 
 
 def history():
@@ -201,7 +205,7 @@ def prefix_end(source):
 
 def header(path, meta):
     purpose, incoming, outgoing, assumption = meta['spec']
-    lines = ['='*78, MARKER, f'{Path(path).name} - {purpose}', '='*78, '설명:', f'    - {purpose}', '입력·출력 명세:', f'    - 입력: {incoming}', f'    - 출력: {outgoing}', '실행 가정:', f'    - {assumption}', '작성 정보:', '    - 작성자: 미지정', '    - 이메일: 미지정', f'    - 작성일: {meta["created"]} (최초 Git 등록일 기준)', '    - 라이선스: 미지정', f'    - 버전: {VERSION}', '    - 상태: Development', '변경 이력 (Revision History):', '    DATE        AUTHOR      VERSION  DESCRIPTION', '    '+'-'*68]
+    lines = ['='*78, MARKER, f'{Path(path).name} - {purpose}', '='*78, '설명:', f'    - {purpose}', '입력·출력 명세:', f'    - 입력: {incoming}', f'    - 출력: {outgoing}', '실행 가정:', f'    - {assumption}', '작성 정보:', '    - 작성자: 김재현(Finn)', '    - 이메일: penguin.klg@gmail.com', f'    - 작성일: {meta["created"]} (최초 Git 등록일 기준)', '    - 라이선스: 미지정', f'    - 버전: {VERSION}', '    - 상태: Development', '변경 이력 (Revision History):', '    DATE        AUTHOR      VERSION  DESCRIPTION', '    '+'-'*68]
     first = meta['git_history'][0] if meta['git_history'] else None
     if first: lines.append(f'    {meta["created"]}  미지정      v{VERSION}   최초 Git 등록 {first["commit"][:8]}')
     lines.append(f'    {meta["documented"]}  미지정      v{VERSION}   파일 역할·입출력·가정·이력 명세 추가')
@@ -237,7 +241,8 @@ def apply_header(path, meta):
         parsed = ast.parse(source);futures = [n for n in parsed.body if isinstance(n, ast.ImportFrom) and n.module == '__future__']
         index = (futures[-1] if futures else parsed.body[0]).end_lineno
         lines = source.splitlines(keepends=True)
-        metadata = '\n# FMS_MODULE_METADATA_BEGIN\n__author__ = "미지정"\n__email__ = "미지정"\n__version__ = "0.1.0"\n__status__ = "Development"\n# FMS_MODULE_METADATA_END\n\n# ---------------------------------------------------------------------------\n# 1. Imports / Module implementation\n# ---------------------------------------------------------------------------\n'
+        metadata = '\n# FMS_MODULE_METADATA_BEGIN\n__author__ = "김재현(Finn)"\n__email__ = "penguin.klg@gmail.com"\n__version__ = "0.1.0"\n__status__ = "Development"\n# FMS_MODULE_METADATA_END\n\n# ---------------------------------------------------------------------------\n# 1. Imports / Module implementation\n# ---------------------------------------------------------------------------\n'
+        metadata=metadata.replace('__author__ = \"김재현(Finn)\"','__author__ = '+repr(meta.get('author',AUTHOR))).replace('__email__ = \"penguin.klg@gmail.com\"','__email__ = '+repr(meta.get('email',EMAIL)))
         lines.insert(index, metadata);p.write_text(''.join(lines).rstrip()+'\n');return
     text = header(path, meta)
     if mode == 'html': block = '<!--\n'+text.replace('-->', '-- >')+'\n-->\n'
@@ -254,14 +259,18 @@ def build(apply=False):
         revisions = logs.get(path, [])
         created = datetime.fromisoformat(revisions[0]['date']).astimezone(ZoneInfo('Asia/Seoul')).date().isoformat() if revisions else today
         previous = old.get(path, {})
-        meta = {'spec': list(spec(path)), 'style': style(path), 'author': UNKNOWN, 'email': UNKNOWN, 'license': UNKNOWN, 'version': VERSION, 'status':'Development', 'created': created, 'documented': previous.get('documented', today), 'git_history': revisions}
+        meta = {'spec': list(spec(path)), 'style': style(path), 'author': AUTHOR if style(path)!='external' else UNKNOWN, 'email': EMAIL if style(path)!='external' else UNKNOWN, 'license': UNKNOWN, 'version': VERSION, 'status':'Development', 'created': created, 'documented': previous.get('documented', today), 'git_history': revisions}
+        source=(ROOT/path).read_text(errors='replace')[:4000] if path not in GENERATED else ''
+        for label,key in [('작성자','author'),('이메일','email')]:
+            match=re.search(label+r': ([^\n]+)',source)
+            if match:meta[key]=match[1].strip()
         if previous.get('original_docstring'):meta['original_docstring'] = previous['original_docstring']
         if apply and meta['style'] != 'external': apply_header(path, meta)
         meta['sha256'] = hashlib.sha256((ROOT/path).read_bytes()).hexdigest() if path not in GENERATED else None
         entries[path] = meta
-    document = {'schema_version':'file-spec-v1','identity_policy':'미지정: 예시의 개인 정보·라이선스를 복사하지 않음','history_policy':'Git 이력은 생성 시점 snapshot; 최신 이력은 git log --follow로 조회','files':entries}
+    document = {'schema_version':'file-spec-v1','identity_policy':'사용자 승인 정보: 김재현(Finn), penguin.klg@gmail.com. 수정 코드·문서에 적용; 원저자 미확인 파일과 라이선스는 미지정 유지','history_policy':'Git 이력은 생성 시점 snapshot; 최신 이력은 git log --follow로 조회','files':entries}
     (ROOT/MANIFEST).write_text(json.dumps(document, ensure_ascii=False, indent=2)+'\n')
-    lines=['# 파일별 명세와 이력 목록', '', '작성자·이메일·라이선스는 모두 미지정입니다. 파일 내 헤더는 초기 명세이며 실제 변경 이력의 기준은 Git입니다.', '', 'JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy 원본은 내용 보존을 위해 외부 명세로 관리합니다. 상세 입력·출력·가정과 Git 기록은 [file-manifest.json](file-manifest.json)의 해당 경로에 있습니다.', '', '| 파일 | 역할 | 명세 위치 |', '|---|---|---|']
+    lines=['# 파일별 명세와 이력 목록', '', '사용자 승인에 따라 수정 코드·문서의 작성자·이메일은 김재현(Finn)·penguin.klg@gmail.com입니다. 원저자 미확인 파일과 라이선스는 미지정입니다. 파일 내 헤더는 초기 명세이며 실제 변경 이력의 기준은 Git입니다.', '', 'JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy 원본은 내용 보존을 위해 외부 명세로 관리합니다. 상세 입력·출력·가정과 Git 기록은 [file-manifest.json](file-manifest.json)의 해당 경로에 있습니다.', '', '| 파일 | 역할 | 명세 위치 |', '|---|---|---|']
     for path, meta in entries.items():
         where='외부 명세 (원본 보존)' if meta['style']=='external' else '파일 상단 헤더 + 외부 목록'
         lines.append(f'| [{path}](../{path}) | {meta["spec"][0]} | {where} |')
@@ -276,7 +285,7 @@ def check():
     for path,meta in entries.items():
         p=ROOT/path
         if not p.is_file():errors.append(path+': 파일 없음');continue
-        if any(meta.get(key)!=UNKNOWN for key in ('author','email','license')):errors.append(path+': 미지정 정책 불일치')
+        if (meta.get('author'),meta.get('email')) not in [(UNKNOWN,UNKNOWN),('김재현(Finn)','penguin.klg@gmail.com')] or meta.get('license')!=UNKNOWN:errors.append(path+': 승인된 작성 정보 정책 불일치')
         if path not in GENERATED and hashlib.sha256(p.read_bytes()).hexdigest()!=meta['sha256']:errors.append(path+': 명세 hash 갱신 필요')
         if meta['style']!='external':
             source=p.read_text()
@@ -284,7 +293,7 @@ def check():
             if meta['style']=='python':
                 tree=ast.parse(source)
                 values={n.targets[0].id:n.value.value for n in tree.body if isinstance(n,ast.Assign) and len(n.targets)==1 and isinstance(n.targets[0],ast.Name) and isinstance(n.value,ast.Constant)}
-                if values.get('__author__')!=UNKNOWN or values.get('__email__')!=UNKNOWN or values.get('__version__')!=VERSION or values.get('__status__')!='Development':errors.append(path+': Python metadata 누락')
+                if values.get('__author__')!=meta['author'] or values.get('__email__')!=meta['email'] or values.get('__version__')!=VERSION or values.get('__status__')!='Development':errors.append(path+': Python metadata 누락')
     if errors:raise SystemExit('\n'.join(errors))
     print(f'{len(entries)} files: headers, external specifications and hashes valid')
 

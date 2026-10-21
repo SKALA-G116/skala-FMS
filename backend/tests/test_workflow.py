@@ -11,8 +11,8 @@ test_workflow.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -29,6 +29,10 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-21  미지정      v0.1.0   검수함을 내부 변경 묶음에서 자료별 분석 결과로 전환
 
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -38,8 +42,8 @@ test_workflow.py - 기능·경계·회귀 검증
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -352,15 +356,18 @@ def test_structured_food_dto_review_and_catalog(client,monkeypatch,input_format)
     import io,openpyxl
     from test_food_record import milk
     from backend.app.domains.analysis import agent
-    class NoModelCalls:
-        def __init__(self):self.name='NOT_USED';self.calls=[]
-        def generate(self,*args):raise AssertionError('Structured columns must not require model inference')
-    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setattr(agent,'LocalModel',NoModelCalls);login(client)
+    class PlanningOnly:
+        def __init__(self):self.name='PLANNING_TEST';self.calls=[]
+        def generate(self,task,payload,schema):
+            assert 'routes' in schema['properties'],'Structured rows must not require semantic extraction'
+            self.calls.append({'task':task,'model':self.name,'input_tokens':1,'output_tokens':1,'elapsed_seconds':0,'actual_model_call':False})
+            return {'document_type':'price_table','summary':'Agent가 표 매핑 도구 선택','tasks':['match_catalog'],'routes':[{'source_id':s['id'],'tool':'normalize_table','reason':'표준 열이 충분함'} for s in payload['sources']]}
+    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setattr(agent,'LocalModel',PlanningOnly);login(client)
     header,row=milk();wb=openpyxl.Workbook();wb.active.append(header);wb.active.append(row);second=wb.create_sheet('중복 시트');second.append(header);second.append(row);stream=io.BytesIO();wb.save(stream)
     r=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('structured.xlsx',stream.getvalue()) if input_format=='xlsx' else ('structured.txt',('\t'.join(header)+'\n'+'\t'.join('' if v is None else str(v) for v in row)+'\n'+'\t'.join('' if v is None else str(v) for v in row)).encode())},data={'title':'표준 기준정보 검증'})
     assert r.status_code==201,r.text
     once();job=client.get('/api/v1/jobs/'+r.json()['analysis_job']['id']).json();assert job['status']=='succeeded',job
-    runid=job['analysis_run_id'];report=client.get('/api/v1/analysis-runs/'+runid+'/report').json();assert not report['model_calls']
+    runid=job['analysis_run_id'];report=client.get('/api/v1/analysis-runs/'+runid+'/report').json();assert len(report['model_calls'])==1 and report['tool_executions'][0]['tool']=='normalize_table'
     assert len(report['events'])==1 and len(report['events'][0]['evidence_ids'])==2
     event=report['events'][0];record=event['food_record'];record['company_name']='통합 업체 테스트'
     endpoint='/api/v1/analysis-runs/'+runid+'/items/'+event['id']
@@ -687,6 +694,10 @@ def test_reconciliation_creates_new_pending_report_preserving_decisions(client):
         assert {e['amount'] for e in rebuilt['events']}=={'720','1600'}
         assert rebuilt['consolidation']['source_report_version']==4
         assert get(c,'asset',result['export_asset_id'])['filename'].endswith('.xlsx')
+    login(client)
+    response=post(client,f'/analysis-runs/{source_id}/normalize')
+    assert response.status_code==201,response.text
+    assert response.json()['id']==result['id']
 
 
 def test_inbox_groups_internal_bundles_and_uses_latest_report_before_paging(client):
@@ -726,3 +737,39 @@ def test_inbox_groups_internal_bundles_and_uses_latest_report_before_paging(clie
 def test_inbox_does_not_claim_whole_approval_for_mixed_batches(states,expected):
     from backend.app.domains.review.inbox import aggregate_status
     assert aggregate_status(states,4)==expected
+
+
+def test_normalization_does_not_restore_stale_parser_attributes(client):
+    from backend.app.domains.analysis.reconciliation import preview
+    from backend.app.domains.analysis.consolidation import enrich_tables,table_event
+    from test_consolidation import segments
+    with tx() as c:
+        source=segments();row=next(s for s in enrich_tables(source) if s.get('food_record'))
+        stale=table_event(row);stale['food_record']['attributes']['other']=['25g','개','잘못된 이전 값']
+        run_id,report_id,ex_id=uid(),uid(),uid()
+        put(c,'extraction',{'id':ex_id,'revision_id':'revision','segments':source})
+        put(c,'agent_report',{'id':report_id,'events':[stale]})
+        put(c,'analysis_run',{'id':run_id,'status':'succeeded','agent_report_id':report_id,'extraction_id':ex_id,'document_revision_id':'revision'})
+        _,_,events,_=preview(c,run_id)
+        first=next(e for e in events if e['product_name']=='팥 찰보리빵')
+        assert first['food_record']['attributes']['other']==['간편한 한 끼']
+        assert '잘못된 이전 값' not in str(events)
+
+
+def test_agent_review_route_does_not_call_extractor_or_catalog_or_stage(client,monkeypatch):
+    from backend.app.domains.analysis import agent
+    class ReviewModel:
+        def __init__(self):self.name='REVIEW_ROUTE_TEST';self.calls=[]
+        def generate(self,task,payload,schema):
+            assert 'routes' in schema['properties'],'Agent review route must not invoke semantic extraction'
+            self.calls.append({'task':task,'model':self.name,'input_tokens':1,'output_tokens':1,'elapsed_seconds':0,'actual_model_call':False})
+            return {'document_type':'other','summary':'직접 확인 필요','tasks':['no_business_change'],'routes':[{'source_id':s['id'],'tool':'request_review','reason':'자료만으로 품목 확정 불가'} for s in payload['sources']]}
+    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setattr(agent,'LocalModel',ReviewModel);login(client)
+    imported=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('review-source.txt','읽기 어려운 자료입니다.'.encode())},data={'title':'직접 검토 경로 테스트'}).json()
+    once(['analyze']);job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']=='succeeded',job
+    report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json()
+    assert report['events']==[] and job['result']['proposal_ids']==[]
+    assert len(report['model_calls'])==1 and len(report['manual_evidence_ids'])==1
+    assert report['coverage']['processed_segments']==0 and report['coverage']['manual_segments']==1
+    assert [t['tool'] for t in report['tool_executions']]==['request_review']
+    assert client.get('/api/v1/documents/'+imported['document']['id']).json()['analysis_status']=='partial'

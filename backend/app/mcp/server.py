@@ -11,8 +11,8 @@ server.py - 식품 도메인 MCP stdio 제공
 실행 가정:
     - 기본 서버에 승인·최종 반영·임의 SQL을 노출하지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -22,6 +22,8 @@ server.py - 식품 도메인 MCP stdio 제공
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- backend/app/mcp/server.py
     공통 규칙: doc/file-header-policy.md
@@ -34,8 +36,8 @@ server.py - 식품 도메인 MCP stdio 제공
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -112,6 +114,21 @@ if HOST:
         schema_check('ProposalCreate',{'title':title,'source_document_revision_ids':document_revision_ids,'changes':changes})
         with tx() as c:
             p=create(c,title,document_revision_ids,changes);return bounded({'proposal_id':p['summary']['id'],'status':p['summary']['status'],'issues':p['issues']})
+
+@mcp.tool(annotations={'readOnlyHint': True})
+def get_agent_execution(analysis_run_id:str)->dict:
+    """Read the Agent's selected tools and execution record; never run inference."""
+    with tx() as c:
+        run=get(c,'analysis_run',analysis_run_id);report=get(c,'agent_report',run['agent_report_id'])
+        return bounded({'plan':report['plan'],'coverage':report['coverage'],'warnings':report.get('warnings',[]),
+            'tools':[{'tool':t['tool'],'reason':t['reason'],'source_id':t.get('source_id')} for t in report.get('tool_executions',[])]})
+
+
+@mcp.resource('food://agent/tools')
+def agent_tools()->str:
+    from backend.app.domains.analysis.planning import TOOLS,VERSION
+    return json.dumps({'version':VERSION,'tools':TOOLS,'writes':'검토된 DTO로 만든 변경안의 승인·반영 API만 DB 확정 값을 변경할 수 있음'},ensure_ascii=False)
+
 
 @mcp.resource('food://schemas/{schema_version}')
 def schema_resource(schema_version:str)->str:

@@ -11,8 +11,8 @@ consolidation.py - 원본 표 정규화·추출 후보 중복 통합
 실행 가정:
     - OCR/LLM을 호출하지 않고 모호한 업체·규격·가격·기간을 합치지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -21,6 +21,10 @@ consolidation.py - 원본 표 정규화·추출 후보 중복 통합
     DATE        AUTHOR      VERSION  DESCRIPTION
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/consolidation.py
     공통 규칙: doc/file-header-policy.md
@@ -31,8 +35,8 @@ consolidation.py - 원본 표 정규화·추출 후보 중복 통합
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -49,7 +53,7 @@ from backend.app.domains.catalog.record import (
     ingredient_details, merge_profile,
 )
 
-VERSION = 'food-consolidation-v2'
+VERSION = 'food-consolidation-v4'
 
 
 def canonical(value):
@@ -77,6 +81,8 @@ def enrich_tables(segments):
             origin=company_segment if field=='company_name' and source['origin']=='parser_context' else segment
             source['evidence_ids']=[origin['evidence_id']] if origin.get('evidence_id') else []
             source['locator']=deepcopy(origin['locator'])
+            prior=origin.get('food_record',{}).get('field_sources',{}).get(field,{})
+            if prior.get('document_revision_id'):source['document_revision_id']=prior['document_revision_id']
         segment['food_record']=record
     return result
 

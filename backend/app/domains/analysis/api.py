@@ -11,8 +11,8 @@ api.py - analysis 도메인 HTTP 유스케이스
 실행 가정:
     - 공통 transport가 소유한 같은 DB 트랜잭션을 사용
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,10 @@ api.py - analysis 도메인 HTTP 유스케이스
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/api.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +36,8 @@ api.py - analysis 도메인 HTTP 유스케이스
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -64,6 +68,10 @@ def handle(ctx):
             from backend.app.domains.review.items import save_item
             out = save_item(c, id, parts[3], payload, u['id'])
             headers['ETag'] = str(out.get('version', 1))
+        elif action == 'normalize' and method == 'POST':
+            from backend.app.domains.analysis.reconciliation import rebuild
+            out = rebuild(c, id, u['id'])
+            status = 201
         elif action == 'review-export' and method == 'POST':
             from backend.app.domains.analysis.export import export_review
             run = get(c, 'analysis_run', id)
@@ -98,6 +106,6 @@ def handle(ctx):
         raise Problem(404, 'NOT_FOUND', '지원하지 않는 경로입니다.')
     return DomainResult(out, status, headers)
 
-ROUTES = (('analysis-runs', ('POST',)), ('analysis-profiles', ('GET',)), ('analysis-runs/{id}', ('GET',)), ('analysis-runs/{id}/review-export', ('POST',)), ('analysis-runs/{id}/report', ('GET',)), ('analysis-runs/{id}/items/{item_id}', ('PATCH',)), ('analysis-runs/{id}/review-proposals', ('POST',)))
+ROUTES = (('analysis-runs', ('POST',)), ('analysis-profiles', ('GET',)), ('analysis-runs/{id}', ('GET',)), ('analysis-runs/{id}/normalize', ('POST',)), ('analysis-runs/{id}/review-export', ('POST',)), ('analysis-runs/{id}/report', ('GET',)), ('analysis-runs/{id}/items/{item_id}', ('PATCH',)), ('analysis-runs/{id}/review-proposals', ('POST',)))
 
 router = domain_router('analysis', ROUTES)

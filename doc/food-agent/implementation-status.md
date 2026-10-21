@@ -11,8 +11,8 @@ implementation-status.md - 프로젝트 문서 implementation-status
 실행 가정:
     - 계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -22,6 +22,8 @@ implementation-status.md - 프로젝트 문서 implementation-status
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- doc/food-agent/implementation-status.md
     공통 규칙: doc/file-header-policy.md
@@ -72,11 +74,11 @@ AI 자동 처리의 최신 구현은 [AI 처리 보완](agent-update.md)을 참�
 ## 코드의 위치
 
 - `backend/app/api/main.py`: 인증·권한·HTTP 명령·멱등 처리
-- `backend/app/domain/proposals.py`: 검증·상태 전이·내용 revision
-- `backend/app/services/catalog.py`: 기간 조회·원자적 반영·정정·audit
-- `backend/app/services/documents.py`: 원문/파일/내용 hash/revision
-- `backend/app/workflows/analysis.py`: durable 분석 그래프
-- `backend/app/workers/main.py`: 큐 실행·실패 기록
+- `backend/app/domains/review/proposals.py`: 검증·상태 전이·내용 revision
+- `backend/app/domains/review/application.py`: 기간 조회·원자적 반영·정정·audit
+- `backend/app/domains/ingestion/documents.py`: 원문/파일/내용 hash/revision
+- `backend/app/domains/analysis/workflow.py`: durable 분석 그래프
+- `backend/app/domains/jobs/worker.py`: 큐 실행·실패 기록
 - `backend/app/parsers/`: 제한을 둔 파일 파싱과 OCR 어댑터
 - `backend/app/mcp/server.py`: MCP 경계
 - `frontend/src/views/`: 페이지별 업무 흐름

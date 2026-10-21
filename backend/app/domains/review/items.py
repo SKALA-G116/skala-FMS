@@ -11,8 +11,8 @@ items.py - 추출 품목의 사용자 검토와 반영 준비
 실행 가정:
     - 품목 확인 저장은 최종 승인·DB 반영과 다름
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ items.py - 추출 품목의 사용자 검토와 반영 준비
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/review/items.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ items.py - 추출 품목의 사용자 검토와 반영 준비
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -196,9 +198,9 @@ def prepare(c,runid,payload,actor):
     if report.get('export_asset_id'):report.setdefault('previous_export_asset_ids',[]).append(report['export_asset_id'])
     report['export_asset_id']=None;put(c,'agent_report',report)
     state={'run_id':runid,'revision_id':run['document_revision_id'],'agent_report_id':report['id'],'review_mode':True}
-    from backend.app.domains.analysis.agent import resolve_and_stage
+    from backend.app.domains.review.staging import stage_confirmed
     from backend.app.domains.analysis.export import export_review
-    result=resolve_and_stage(state,connection=c)
+    result=stage_confirmed(state,connection=c)
     report=get(c,'agent_report',report['id'],True)
     if any(not event.get('proposal_id') for event in report['events'] if event.get('review',{}).get('status')=='confirmed'):raise Problem(422,'MATCH_UNRESOLVED','확인한 품목을 DB에 연결하지 못했습니다. 기존 식품 연결을 직접 선택해 주세요.')
     for pid in result['proposal_ids']:

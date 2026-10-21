@@ -11,8 +11,8 @@ test_async_runtime.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,14 +23,16 @@ test_async_runtime.py - 기능·경계·회귀 검증
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_async_runtime.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -105,11 +107,9 @@ def test_ocr_timeout_stops_process_and_clears_resources():
     finally:worker.close()
 
 
-def test_profile_extraction_avoids_redundant_business_verification():
-    from backend.app.domains.analysis.agent import needs_verification
-    assert not needs_verification([{'kind':'food_profile'},{'kind':'new_product'}])
-    for kind in ('price','temporarily_unavailable','discontinued','available','substitution'):
-        assert needs_verification([{'kind':'food_profile'},{'kind':kind}])
+def test_agent_does_not_have_a_redundant_verification_pass():
+    from backend.app.domains.analysis import agent
+    assert not hasattr(agent,'needs_verification')
 
 
 def test_report_memory_and_token_budgets_are_enforced(monkeypatch):
@@ -121,3 +121,15 @@ def test_report_memory_and_token_budgets_are_enforced(monkeypatch):
     monkeypatch.setattr(execution,'REPORT_BYTES',100)
     with pytest.raises(Problem) as exc:execution.report_metrics({'events':['x'*200]})
     assert exc.value.code=='REPORT_MEMORY_BUDGET'
+
+
+def test_planner_model_can_be_small_and_unloads_before_heavier_extraction(monkeypatch):
+    from backend.app.domains.analysis.provider import LocalModel
+    monkeypatch.setenv('FOOD_PLANNER_MODEL_NAME','small-planner')
+    monkeypatch.setenv('FOOD_EXTRACTION_MODEL_NAME','larger-extractor')
+    model=LocalModel();model.use_role('planner')
+    planning=model.request('choose',{}, {'type':'object'})
+    assert planning['model']=='small-planner' and planning['keep_alive']=='0'
+    model.use_role('extractor');extraction=model.request('extract',{}, {'type':'object'})
+    assert extraction['model']=='larger-extractor'
+    assert planning['options']['num_ctx']<extraction['options']['num_ctx']

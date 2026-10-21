@@ -11,8 +11,8 @@ export.py - 근거를 포함한 검토 Excel 생성
 실행 가정:
     - 원문 문자열을 수식으로 실행하지 않고 DB 승인과 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ export.py - 근거를 포함한 검토 Excel 생성
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/export.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ export.py - 근거를 포함한 검토 Excel 생성
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -72,6 +74,8 @@ def workbook_bytes(report,evidence,source_url):
     evs=wb.create_sheet('원문 근거');evs.append(['근거 ID','원문 인용','위치·시트·셀·페이지','OCR 신뢰도','원문 링크'])
     for e in evidence:evs.append([e['id'],e['quote'],__import__('json').dumps(e['locator'],ensure_ascii=False),e.get('ocr_confidence'),e.get('source_url')])
     info=wb.create_sheet('AI 실행 정보');info.append(['항목','값']);info.append(['모델',report['model']]);info.append(['AI 처리 요약',report['plan']['summary']]);info.append(['원문 구간 수',report['coverage']['source_segments']]);info.append(['처리 구간 수',report['coverage']['processed_segments']]);info.append(['실제 모델 호출 수',len(report['model_calls'])]);info.append(['안내','검토용 추출 결과입니다. 승인·반영 전까지 DB 확정 단가가 아닙니다.']);info.append(['분석 실행 ID',report['analysis_run_id']])
+    for route in report['plan'].get('routes',[]):info.append(['Agent 선택 '+route['source_id'],route['tool']+' · '+route['reason']])
+    for warning in report.get('warnings',[]):info.append(['원문 확인 필요',warning])
     for call in report['model_calls']:info.append([call['task'],f"{call['model']} · 입력 {call['input_tokens']} / 출력 {call['output_tokens']} 토큰 · {call['elapsed_seconds']}초"])
     for sheet in wb:
         sheet.freeze_panes='A2';sheet.auto_filter.ref=sheet.dimensions
@@ -91,10 +95,12 @@ def export_review(state,connection=None):
         report=get(c,'agent_report',state['agent_report_id'],True)
         if report.get('export_asset_id') and report.get('export_dto_schema')=='food-record-v2':return {'export_asset_id':report['export_asset_id']}
         if report.get('export_asset_id'):report.setdefault('previous_export_asset_ids',[]).append(report['export_asset_id'])
-        evidence_ids=list(dict.fromkeys(eid for event in report['events'] for eid in event['evidence_ids']))
+        evidence_ids=list(dict.fromkeys([eid for event in report['events'] for eid in event['evidence_ids']]+report.get('manual_evidence_ids',[])))
         evidence=[get(c,'evidence',eid) for eid in evidence_ids];r=get(c,'revision',state['revision_id']);doc=get(c,'document',r['document_id'])
         content=workbook_bytes(report,evidence,doc.get('source_url'))
         asset=store_asset(c,content,'AI_식품정보_검토_'+state['run_id'][:8]+'.xlsx')
         report.update(export_asset_id=asset['id'],export_dto_schema='food-record-v2',status='completed',finished_at=now());put(c,'agent_report',report)
+        if not state.get('review_mode'):
+            doc['analysis_status']='partial' if report.get('manual_evidence_ids') else 'completed';put(c,'document',doc)
         run=get(c,'analysis_run',state['run_id'],True);run['export_asset_id']=asset['id'];put(c,'analysis_run',run)
     return {'export_asset_id':asset['id']}
