@@ -1,0 +1,1 @@
+<script setup>defineProps({next:String,history:Boolean});defineEmits(['next','reset'])</script><template><div class="pager"><button v-if="history" class="quiet" @click="$emit('reset')">처음으로</button><button v-if="next" class="secondary" @click="$emit('next',next)">다음 페이지 →</button></div></template>

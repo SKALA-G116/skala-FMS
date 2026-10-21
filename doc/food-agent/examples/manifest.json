@@ -1,0 +1,14 @@
+{
+  "source.json": "Source",
+  "evidence.json": "Evidence",
+  "proposal-ready.json": "Proposal",
+  "proposal-approved.json": "Proposal",
+  "job-analyzed.json": "Job",
+  "application-accepted.json": "ApplicationAccepted",
+  "price-list.json": "PriceList",
+  "product-history.json": "AuditEventList",
+  "error-stale.json": "Error",
+  "proposal-new-product-bundle.json": "Proposal",
+  "analysis-run.json": "AnalysisRun",
+  "analysis-profiles.json": "AnalysisProfileList"
+}

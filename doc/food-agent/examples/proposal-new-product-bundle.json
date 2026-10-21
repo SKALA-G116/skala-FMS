@@ -1,0 +1,147 @@
+{
+  "summary": {
+    "id": "00000000-0000-4000-8000-000000000030",
+    "title": "가상 신규 상품 등록 및 가격의 원자적 반영 묶음",
+    "status": "draft",
+    "version": 1,
+    "revision": 1,
+    "approved_revision": null,
+    "change_count": 4,
+    "blocking_count": 1,
+    "created_at": "2026-10-20T02:00:00Z",
+    "updated_at": "2026-10-20T02:00:00Z",
+    "source_document_ids": [
+      "00000000-0000-4000-8000-000000000010"
+    ],
+    "allowed_actions": [
+      "edit",
+      "validate",
+      "hold",
+      "reject"
+    ]
+  },
+  "source_document_revision_ids": [
+    "00000000-0000-4000-8000-000000000004"
+  ],
+  "changes": [
+    {
+      "id": "00000000-0000-4000-8000-000000000031",
+      "operation": {
+        "kind": "create_product",
+        "local_ref": "new_product",
+        "name": "가상 식품 A",
+        "manufacturer_id": null,
+        "brand_id": null
+      },
+      "field_evidence": [
+        {
+          "field_path": "/name",
+          "evidence_ids": [
+            "00000000-0000-4000-8000-000000000003"
+          ],
+          "origin": "reviewer",
+          "reviewer_justification": "실제 자료가 아닌 계약 설명용 가상 예시. 실제 승인은 필수 필드별 근거 검증이 필요함."
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000032",
+      "operation": {
+        "kind": "create_variant",
+        "local_ref": "new_variant",
+        "product_ref": {
+          "local_ref": "new_product"
+        },
+        "spec_original": "40~50g / 1kg 봉",
+        "spec_normalized": "1kg 봉, 개당 40~50g",
+        "barcode": null
+      },
+      "field_evidence": [
+        {
+          "field_path": "/spec_original",
+          "evidence_ids": [
+            "00000000-0000-4000-8000-000000000003"
+          ],
+          "origin": "reviewer",
+          "reviewer_justification": "실제 자료가 아닌 계약 설명용 가상 예시. 실제 승인은 필수 필드별 근거 검증이 필요함."
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000033",
+      "operation": {
+        "kind": "create_supplier_item",
+        "local_ref": "new_item",
+        "variant_ref": {
+          "local_ref": "new_variant"
+        },
+        "supplier_id": "00000000-0000-4000-8000-000000000015",
+        "supplier_code": "DEMO-NEW-001",
+        "sales_unit": "bag"
+      },
+      "field_evidence": [
+        {
+          "field_path": "/sales_unit",
+          "evidence_ids": [
+            "00000000-0000-4000-8000-000000000003"
+          ],
+          "origin": "reviewer",
+          "reviewer_justification": "실제 자료가 아닌 계약 설명용 가상 예시. 실제 승인은 필수 필드별 근거 검증이 필요함."
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000034",
+      "operation": {
+        "kind": "set_price",
+        "supplier_item_ref": {
+          "local_ref": "new_item"
+        },
+        "value": {
+          "amount": "12500",
+          "currency": "KRW",
+          "quantity": "1",
+          "unit": "bag",
+          "tax": "unknown",
+          "price_kind": "regular",
+          "condition_key": "public_default"
+        },
+        "period": {
+          "effective_from": "2026-11-01",
+          "effective_to": null
+        },
+        "reason": {
+          "original_text": "가상 예시: 원료 수급 불안정",
+          "summary": "원료 수급 불안정",
+          "code": null
+        },
+        "supersedes_fact_id": null
+      },
+      "field_evidence": [
+        {
+          "field_path": "/value",
+          "evidence_ids": [
+            "00000000-0000-4000-8000-000000000003"
+          ],
+          "origin": "reviewer",
+          "reviewer_justification": "실제 자료가 아닌 계약 설명용 가상 예시. 실제 승인은 필수 필드별 근거 검증이 필요함."
+        }
+      ]
+    }
+  ],
+  "target_versions": [],
+  "diffs": [],
+  "issues": [
+    {
+      "code": "DEMO_EVIDENCE_INCOMPLETE",
+      "severity": "blocking",
+      "change_item_id": null,
+      "field_path": null,
+      "message": "이 예시는 local_ref 구조만 설명하며 필수 근거가 부족해 승인 불가"
+    }
+  ],
+  "decisions": [],
+  "application_id": null,
+  "duplicate_of_proposal_id": null,
+  "analysis_run_id": null
+}

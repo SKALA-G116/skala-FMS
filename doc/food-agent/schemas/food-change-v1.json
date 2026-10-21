@@ -1,0 +1,627 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "food://schemas/food-change-v1",
+  "$ref": "#/$defs/ChangeItem",
+  "$defs": {
+    "FieldEvidence": {
+      "type": "object",
+      "properties": {
+        "field_path": {
+          "type": "string"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "maxItems": 20
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "extracted",
+            "reviewer"
+          ]
+        },
+        "reviewer_justification": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "field_path",
+        "evidence_ids",
+        "origin"
+      ],
+      "additionalProperties": false
+    },
+    "EntityRef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "local_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{0,63}$"
+            }
+          },
+          "required": [
+            "local_ref"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "같은 변경안 안에서 새로 만들 대상은 local_ref, 기존 대상은 id. 참조 순서와 순환을 검사한다."
+    },
+    "Period": {
+      "type": "object",
+      "properties": {
+        "effective_from": {
+          "type": "string",
+          "format": "date"
+        },
+        "effective_to": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "effective_from",
+        "effective_to"
+      ],
+      "additionalProperties": false
+    },
+    "PriceValue": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)(\\.\\d{1,4})?$",
+          "description": "음이 아닌 10진 문자열. 통화 단위 금액."
+        },
+        "currency": {
+          "type": "string",
+          "enum": [
+            "KRW"
+          ]
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)(\\.\\d{1,6})?$",
+          "description": "10진 문자열. 계산에는 decimal 사용."
+        },
+        "unit": {
+          "type": "string",
+          "enum": [
+            "g",
+            "kg",
+            "ml",
+            "l",
+            "ea",
+            "bag",
+            "box",
+            "pack"
+          ]
+        },
+        "tax": {
+          "type": "string",
+          "enum": [
+            "included",
+            "excluded",
+            "unknown"
+          ]
+        },
+        "price_kind": {
+          "type": "string",
+          "enum": [
+            "regular",
+            "promotion",
+            "contract",
+            "unknown"
+          ]
+        },
+        "condition_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "amount",
+        "currency",
+        "quantity",
+        "unit",
+        "tax",
+        "price_kind",
+        "condition_key"
+      ],
+      "additionalProperties": false,
+      "description": "quantity>0 업무 검증 필요. condition_key는 등록된 거래 조건. unknown 허용 여부는 업무 규칙에 따른다."
+    },
+    "Reason": {
+      "type": "object",
+      "properties": {
+        "original_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "original_text",
+        "summary",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "SubstitutionMember": {
+      "type": "object",
+      "properties": {
+        "supplier_item_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)(\\.\\d{1,6})?$",
+          "description": "10진 문자열. 계산에는 decimal 사용."
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "supplier_item_ref",
+        "quantity",
+        "unit"
+      ],
+      "additionalProperties": false
+    },
+    "SubstitutionGroup": {
+      "type": "object",
+      "properties": {
+        "selection": {
+          "type": "string",
+          "enum": [
+            "all",
+            "one"
+          ]
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SubstitutionMember"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "selection",
+        "members"
+      ],
+      "additionalProperties": false
+    },
+    "CreateProduct": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "create_product"
+        },
+        "local_ref": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manufacturer_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "brand_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "local_ref",
+        "name",
+        "manufacturer_id",
+        "brand_id"
+      ],
+      "additionalProperties": false
+    },
+    "CreateVariant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "create_variant"
+        },
+        "local_ref": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "product_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "spec_original": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spec_normalized": {
+          "type": "string",
+          "minLength": 1
+        },
+        "barcode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "local_ref",
+        "product_ref",
+        "spec_original",
+        "spec_normalized",
+        "barcode"
+      ],
+      "additionalProperties": false
+    },
+    "CreateSupplierItem": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "create_supplier_item"
+        },
+        "local_ref": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "variant_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "supplier_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "supplier_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sales_unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "local_ref",
+        "variant_ref",
+        "supplier_id",
+        "supplier_code",
+        "sales_unit"
+      ],
+      "additionalProperties": false
+    },
+    "SetPrice": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "set_price"
+        },
+        "supplier_item_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "value": {
+          "$ref": "#/$defs/PriceValue"
+        },
+        "period": {
+          "$ref": "#/$defs/Period"
+        },
+        "reason": {
+          "$ref": "#/$defs/Reason"
+        },
+        "supersedes_fact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "supplier_item_ref",
+        "value",
+        "period",
+        "reason",
+        "supersedes_fact_id"
+      ],
+      "additionalProperties": false
+    },
+    "SetAvailability": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "set_availability"
+        },
+        "supplier_item_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "temporarily_unavailable",
+            "supply_ended",
+            "unknown"
+          ]
+        },
+        "period": {
+          "$ref": "#/$defs/Period"
+        },
+        "reason": {
+          "$ref": "#/$defs/Reason"
+        },
+        "supersedes_fact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "supplier_item_ref",
+        "status",
+        "period",
+        "reason",
+        "supersedes_fact_id"
+      ],
+      "additionalProperties": false
+    },
+    "SetProductStatus": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "set_product_status"
+        },
+        "product_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "discontinued",
+            "unknown"
+          ]
+        },
+        "period": {
+          "$ref": "#/$defs/Period"
+        },
+        "reason": {
+          "$ref": "#/$defs/Reason"
+        },
+        "supersedes_fact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "product_ref",
+        "status",
+        "period",
+        "reason",
+        "supersedes_fact_id"
+      ],
+      "additionalProperties": false
+    },
+    "SetSubstitution": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "set_substitution"
+        },
+        "original_supplier_item_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "mapping_status": {
+          "type": "string",
+          "enum": [
+            "confirmed",
+            "unresolved"
+          ]
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SubstitutionGroup"
+          },
+          "minItems": 0
+        },
+        "description_original": {
+          "type": "string",
+          "minLength": 1
+        },
+        "period": {
+          "$ref": "#/$defs/Period"
+        },
+        "reason": {
+          "$ref": "#/$defs/Reason"
+        },
+        "supersedes_fact_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "original_supplier_item_ref",
+        "mapping_status",
+        "groups",
+        "description_original",
+        "period",
+        "reason",
+        "supersedes_fact_id"
+      ],
+      "additionalProperties": false
+    },
+    "Operation": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CreateProduct"
+        },
+        {
+          "$ref": "#/$defs/CreateVariant"
+        },
+        {
+          "$ref": "#/$defs/CreateSupplierItem"
+        },
+        {
+          "$ref": "#/$defs/SetPrice"
+        },
+        {
+          "$ref": "#/$defs/SetAvailability"
+        },
+        {
+          "$ref": "#/$defs/SetProductStatus"
+        },
+        {
+          "$ref": "#/$defs/SetSubstitution"
+        }
+      ]
+    },
+    "ChangeItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "operation": {
+          "$ref": "#/$defs/Operation"
+        },
+        "field_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldEvidence"
+          },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "required": [
+        "id",
+        "operation",
+        "field_evidence"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

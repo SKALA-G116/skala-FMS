@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: food
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: food_agent
+    volumes: [food-db:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U food -d food_agent]
+      interval: 5s
+      retries: 10
+  api:
+    build: {context: ., dockerfile: Dockerfile.food}
+    ports: ["127.0.0.1:8100:8100"]
+    environment: &app-env
+      DATABASE_URL: postgresql://food:${POSTGRES_PASSWORD}@db:5432/food_agent
+      FOOD_DATA_DIR: /data/assets
+      FOOD_CREDENTIAL_KEY_FILE: /data/assets/.credential.key
+      FOOD_SEED_PASSWORD: ${FOOD_SEED_PASSWORD:?set FOOD_SEED_PASSWORD}
+      FOOD_ANALYSIS_MODE: ${FOOD_ANALYSIS_MODE:-agent}
+      FOOD_MODEL_URL: ${FOOD_MODEL_URL:-http://host.docker.internal:11434}
+      FOOD_MODEL_NAME: ${FOOD_MODEL_NAME:-qwen3:8b}
+      FOOD_MODEL_CONCURRENCY: ${FOOD_MODEL_CONCURRENCY:-1}
+      FOOD_OCR_ENABLED: ${FOOD_OCR_ENABLED:-false}
+    volumes: [food-assets:/data/assets]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    depends_on: {db: {condition: service_healthy}}
+  worker:
+    build: {context: ., dockerfile: Dockerfile.food}
+    command: [python, -m, backend.app.domains.jobs.worker]
+    environment: *app-env
+    volumes: [food-assets:/data/assets]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    depends_on: {db: {condition: service_healthy}}
+volumes:
+  food-db:
+  food-assets:

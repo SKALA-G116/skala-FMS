@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "openapi_version": "3.1.0",
+  "path_count": 38,
+  "operation_count": 42,
+  "schema_count": 81,
+  "resolved_local_references": 538,
+  "valid_fixture_count": 12,
+  "rejected_invalid_fixture_count": 6,
+  "checks": [
+    "local references",
+    "unique operation IDs",
+    "path parameters",
+    "CSRF/idempotency headers",
+    "example schema subset",
+    "fixture cross-links and approval versions",
+    "future effective date",
+    "bbox geometry",
+    "Markdown local links"
+  ],
+  "limitations": [
+    "Not a complete OpenAPI/JSON Schema validator",
+    "No server or Vue implementation tested",
+    "No OCR engine or real source file accuracy measured",
+    "No DB transaction, concurrency, or worker recovery test executed"
+  ]
+}

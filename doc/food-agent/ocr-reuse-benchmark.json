@@ -1,0 +1,19 @@
+{
+  "source_asset_id": "25e80272-eb78-41d2-a54b-3eefd9cca43b",
+  "runs": [
+    {
+      "run": 1,
+      "seconds": 12.879,
+      "rows": 90,
+      "pid": 9873
+    },
+    {
+      "run": 2,
+      "seconds": 10.347,
+      "rows": 90,
+      "pid": 9873
+    }
+  ],
+  "same_worker": true,
+  "db_written": false
+}

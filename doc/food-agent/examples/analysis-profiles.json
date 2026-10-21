@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "id": "auto",
+      "label": "자동 선택",
+      "description": "호스트가 문서·segment 유형으로 분석 절차를 선택",
+      "prompt_versions": {
+        "analyze_food_notice": "notice-v1-fixture",
+        "analyze_price_table": "price-table-v1-fixture",
+        "review_change_evidence": "review-evidence-v1-fixture"
+      },
+      "policy_version": "food-policy-v1",
+      "schema_version": "food-change-v1",
+      "enabled": true
+    },
+    {
+      "id": "notice",
+      "label": "공지 분석",
+      "description": "중단·재개·사유·대체 사건 추출",
+      "prompt_versions": {
+        "analyze_food_notice": "notice-v1-fixture",
+        "analyze_price_table": "price-table-v1-fixture",
+        "review_change_evidence": "review-evidence-v1-fixture"
+      },
+      "policy_version": "food-policy-v1",
+      "schema_version": "food-change-v1",
+      "enabled": true
+    },
+    {
+      "id": "price_table",
+      "label": "단가표 분석",
+      "description": "규격·단위·금액·기간 추출",
+      "prompt_versions": {
+        "analyze_food_notice": "notice-v1-fixture",
+        "analyze_price_table": "price-table-v1-fixture",
+        "review_change_evidence": "review-evidence-v1-fixture"
+      },
+      "policy_version": "food-policy-v1",
+      "schema_version": "food-change-v1",
+      "enabled": true
+    }
+  ]
+}
