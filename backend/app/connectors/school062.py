@@ -1,4 +1,47 @@
-"""Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+school062.py - 허용된 식품 사이트 수집 어댑터
+==============================================================================
+설명:
+    - 허용된 식품 사이트 수집 어댑터
+입력·출력 명세:
+    - 입력: 게시판/게시글 ID·회원 연결 설정·HTTP client
+    - 출력: 본문·첨부·게시 정보·접근 오류
+실행 가정:
+    - 허용된 HTTPS 호스트만 사용하고 로그인 실패를 데이터로 오인하지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/connectors/school062.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 from urllib.parse import urljoin,urlparse,parse_qs,urlencode,unquote
 from pathlib import Path
 from datetime import datetime

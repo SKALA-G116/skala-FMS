@@ -1,3 +1,32 @@
+<!--
+==============================================================================
+FMS_FILE_SPEC
+Dashboard.vue - 업무 집계와 주요 화면 진입
+==============================================================================
+설명:
+    - 업무 집계와 주요 화면 진입
+입력·출력 명세:
+    - 입력: 라우트·사용자 입력·API 조회 DTO
+    - 출력: 사용자 여정에 맞는 화면과 명시적 API 요청
+실행 가정:
+    - 미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- frontend/src/views/Dashboard.vue
+    공통 규칙: doc/file-header-policy.md
+==============================================================================
+-->
 <script setup>
 import {ref,onMounted,computed} from 'vue';import {get} from '../api/client';import StatusBadge from '../components/StatusBadge.vue';import {ArrowUpRight,ArrowRight,ClipboardCheck,Clock3,TriangleAlert,CalendarDays,FileText,Package,Upload,ReceiptText,Activity,Plus} from 'lucide-vue-next';
 const stats=ref({}),proposals=ref([]),docs=ref([]),jobs=ref([]),error=ref('');onMounted(async()=>{try{[stats.value,{items:proposals.value},{items:docs.value},{items:jobs.value}]=await Promise.all([get('/dashboard'),get('/proposals?limit=12'),get('/documents?limit=5'),get('/jobs?limit=5')])}catch(e){error.value=e.message}});const inbox=computed(()=>proposals.value.filter(p=>['ready','draft','on_hold','conflict'].includes(p.summary.status)).slice(0,4));const cards=[['관리 중인 식품','food_count',Package,'/products'],['보관된 자료','document_count',FileText,'/documents'],['반영 준비','review_ready_count',ClipboardCheck,'/reviews'],['확인 필요한 작업','failed_job_count',TriangleAlert,'/jobs']];const jobTitle={collect:'사이트 자료 수집',analyze:'자료 분석',apply:'식품 정보 반영'};

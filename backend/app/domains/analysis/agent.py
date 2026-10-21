@@ -1,6 +1,48 @@
-"""LLM plans and interprets source facts; host resolves catalog and stages changes.
-Evidence-bound facts and review artifacts remain available even for unresolved data.
 """
+==============================================================================
+FMS_FILE_SPEC
+agent.py - LLM 계획·추출과 근거 연결
+==============================================================================
+설명:
+    - LLM 계획·추출과 근거 연결
+입력·출력 명세:
+    - 입력: 분할 원문 구간·JSON 스키마·분석 실행 ID
+    - 출력: 표준 식품 변경 후보·근거·모델 호출 기록
+실행 가정:
+    - 모델 후보는 승인이나 DB 반영을 대신하지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    LLM plans and interprets source facts; host resolves catalog and stages changes.
+    Evidence-bound facts and review artifacts remain available even for unresolved data.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import json
 import re
 import asyncio

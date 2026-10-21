@@ -1,5 +1,48 @@
-"""Resumable incremental collection with short DB transactions, per-post commit,
-revisit of recent known posts, immutable revisions and durable analysis handoff."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+collection.py - 게시글·첨부 수집과 변경 감지
+==============================================================================
+설명:
+    - 게시글·첨부 수집과 변경 감지
+입력·출력 명세:
+    - 입력: 허용된 source·게시판·수집 옵션·진행 콜백
+    - 출력: 원본 revision·첨부 asset·수집 결과·분석 작업 참조
+실행 가정:
+    - 동일 원본 중복 수집을 구분하고 접근 실패를 숨기지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/ingestion/collection.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Resumable incremental collection with short DB transactions, per-post commit,
+    revisit of recent known posts, immutable revisions and durable analysis handoff.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import hashlib
 import json
 from datetime import datetime

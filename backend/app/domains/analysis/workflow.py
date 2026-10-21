@@ -1,4 +1,47 @@
-"""Small durable LangGraph state: IDs only; source bodies live in storage."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+workflow.py - LangGraph 분석 흐름
+==============================================================================
+설명:
+    - LangGraph 분석 흐름
+입력·출력 명세:
+    - 입력: 분석 실행 ID·원본 revision ID·저장된 checkpoint
+    - 출력: 추출·계획·해석·연결·Excel 단계의 결과 ID
+실행 가정:
+    - 큰 원문은 저장소에 두고 checkpoint는 ID 위주로 유지
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/analysis/workflow.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Small durable LangGraph state: IDs only; source bodies live in storage.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import re
 import time
 import asyncio

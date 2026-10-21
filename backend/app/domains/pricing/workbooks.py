@@ -1,7 +1,49 @@
-"""Source workbook reader. Never writes authoritative product/price facts.
-Read-only streaming import; values, sheet/row/cell coordinates and formula absence
-are retained. Queries, compound filters, ordering and pagination run in PostgreSQL.
 """
+==============================================================================
+FMS_FILE_SPEC
+workbooks.py - 원본 단가표·시트·열 조회
+==============================================================================
+설명:
+    - 원본 단가표·시트·열 조회
+입력·출력 명세:
+    - 입력: workbook/asset ID·시트·헤더 행·필터·정렬·페이지 조건
+    - 출력: 원본 열 metadata와 페이지 행 DTO
+실행 가정:
+    - 원본 자료 가격을 승인된 공급 단가와 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/pricing/workbooks.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Source workbook reader. Never writes authoritative product/price facts.
+    Read-only streaming import; values, sheet/row/cell coordinates and formula absence
+    are retained. Queries, compound filters, ordering and pagination run in PostgreSQL.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import json
 import re
 import zipfile

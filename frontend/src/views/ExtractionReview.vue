@@ -1,3 +1,32 @@
+<!--
+==============================================================================
+FMS_FILE_SPEC
+ExtractionReview.vue - 품목 선택·원문 대조·수정·최종 반영
+==============================================================================
+설명:
+    - 품목 선택·원문 대조·수정·최종 반영
+입력·출력 명세:
+    - 입력: 라우트·사용자 입력·API 조회 DTO
+    - 출력: 사용자 여정에 맞는 화면과 명시적 API 요청
+실행 가정:
+    - 미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- frontend/src/views/ExtractionReview.vue
+    공통 규칙: doc/file-header-policy.md
+==============================================================================
+-->
 <script setup>
 import {ref,computed,onMounted,onBeforeUnmount,nextTick,watch,inject} from 'vue';import {useRoute,onBeforeRouteLeave} from 'vue-router';import {get,api} from '../api/client';import SourceComparison from '../components/SourceComparison.vue';import FoodRecordForm from '../components/FoodRecordForm.vue';import FoodRecordTable from '../components/FoodRecordTable.vue';
 import {reviewStatus,reviewName,draftSnapshot,filterReviewItems,nextPendingItem,requiredReviewFields} from '../utils/reviewJourney';

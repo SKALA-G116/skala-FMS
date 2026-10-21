@@ -1,4 +1,47 @@
-"""Automatic, evidence-linked review workbook; source strings are never formulas."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+export.py - 근거를 포함한 검토 Excel 생성
+==============================================================================
+설명:
+    - 근거를 포함한 검토 Excel 생성
+입력·출력 명세:
+    - 입력: 분석 보고서·검토된 식품 후보·원문 근거
+    - 출력: Excel bytes 또는 저장한 export asset 참조
+실행 가정:
+    - 원문 문자열을 수식으로 실행하지 않고 DB 승인과 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/analysis/export.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Automatic, evidence-linked review workbook; source strings are never formulas.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 from io import BytesIO
 from contextlib import nullcontext
 from openpyxl import Workbook

@@ -1,6 +1,48 @@
-"""One nullable FoodRecord contract for extraction, review, storage and catalog views.
-Unknown is None; zero is a number; no allergen statement never means allergen-free.
 """
+==============================================================================
+FMS_FILE_SPEC
+record.py - 표준 FoodRecord DTO와 정규화
+==============================================================================
+설명:
+    - 표준 FoodRecord DTO와 정규화
+입력·출력 명세:
+    - 입력: 업체별 표 행·본문 추출값·규격·알레르기 문구
+    - 출력: food-record-v2의 nullable 식품 정보와 필드 근거
+실행 가정:
+    - 공란과 0, 알레르기 후보와 함유 표시를 구분
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/catalog/record.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    One nullable FoodRecord contract for extraction, review, storage and catalog views.
+    Unknown is None; zero is a number; no allergen statement never means allergen-free.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import re
 import copy
 from decimal import Decimal

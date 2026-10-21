@@ -1,4 +1,47 @@
-"""Source credentials/cookies encrypted at rest; API never returns secrets."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+connections.py - 사이트 연결 정보의 암호화 보관
+==============================================================================
+설명:
+    - 사이트 연결 정보의 암호화 보관
+입력·출력 명세:
+    - 입력: source ID·사용자가 입력한 회원 연결 설정
+    - 출력: 암호화 저장 정보 또는 비밀을 제거한 공개 상태
+실행 가정:
+    - 실제 계정과 암호화 키를 Git·응답·로그에 노출하지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/ingestion/connections.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Source credentials/cookies encrypted at rest; API never returns secrets.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import os
 import json
 from pathlib import Path
