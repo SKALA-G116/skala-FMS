@@ -1,6 +1,6 @@
 # 파일별 명세와 이력 목록
 
-작성자·이메일·라이선스는 모두 미지정입니다. 파일 내 헤더는 초기 명세이며 실제 변경 이력의 기준은 Git입니다.
+사용자 승인에 따라 수정 코드·문서의 작성자·이메일은 김재현(Finn)·penguin.klg@gmail.com입니다. 원저자 미확인 파일과 라이선스는 미지정입니다. 파일 내 헤더는 초기 명세이며 실제 변경 이력의 기준은 Git입니다.
 
 JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy 원본은 내용 보존을 위해 외부 명세로 관리합니다. 상세 입력·출력·가정과 Git 기록은 [file-manifest.json](file-manifest.json)의 해당 경로에 있습니다.
 
@@ -16,12 +16,6 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [README.md](../README.md) | 프로젝트 문서 README | 파일 상단 헤더 + 외부 목록 |
 | [backend/__init__.py](../backend/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/__init__.py](../backend/app/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/ai/__init__.py](../backend/app/ai/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/ai/agent.py](../backend/app/ai/agent.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/ai/export.py](../backend/app/ai/export.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/ai/provider.py](../backend/app/ai/provider.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/ai/review.py](../backend/app/ai/review.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/ai/schemas.py](../backend/app/ai/schemas.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/api/__init__.py](../backend/app/api/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/api/assets.py](../backend/app/api/assets.py) | 프로젝트 설정 assets.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/api/http.py](../backend/app/api/http.py) | HTTP 공통 DTO와 응답 보조 함수 | 파일 상단 헤더 + 외부 목록 |
@@ -30,14 +24,14 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/api/routing.py](../backend/app/api/routing.py) | 명시적 FastAPI 도메인 라우터 생성 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/api/transport.py](../backend/app/api/transport.py) | 공통 HTTP 보안·트랜잭션 경계 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/connectors/school062.py](../backend/app/connectors/school062.py) | 허용된 식품 사이트 수집 어댑터 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/db.py](../backend/app/db.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/domain/proposals.py](../backend/app/domain/proposals.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/__init__.py](../backend/app/domains/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/__init__.py](../backend/app/domains/analysis/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/agent.py](../backend/app/domains/analysis/agent.py) | LLM 계획·추출과 근거 연결 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/api.py](../backend/app/domains/analysis/api.py) | analysis 도메인 HTTP 유스케이스 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/consolidation.py](../backend/app/domains/analysis/consolidation.py) | 원본 표 정규화·추출 후보 중복 통합 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/export.py](../backend/app/domains/analysis/export.py) | 근거를 포함한 검토 Excel 생성 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/analysis/matching.py](../backend/app/domains/analysis/matching.py) | 프로젝트 설정 matching.py | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/analysis/planning.py](../backend/app/domains/analysis/planning.py) | 프로젝트 설정 planning.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/provider.py](../backend/app/domains/analysis/provider.py) | Ollama 비동기 구조화 추론 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/reconciliation.py](../backend/app/domains/analysis/reconciliation.py) | 완료 분석의 이력 보존형 재정리 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/schemas.py](../backend/app/domains/analysis/schemas.py) | LLM 계획·추출 응답 스키마 | 파일 상단 헤더 + 외부 목록 |
@@ -73,8 +67,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/domains/review/inbox.py](../backend/app/domains/review/inbox.py) | 자료별 최신 분석 검수함 조회 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/items.py](../backend/app/domains/review/items.py) | 추출 품목의 사용자 검토와 반영 준비 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/proposals.py](../backend/app/domains/review/proposals.py) | 변경안 검증과 승인 상태 전이 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/food/__init__.py](../backend/app/food/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/food/record.py](../backend/app/food/record.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/review/staging.py](../backend/app/domains/review/staging.py) | 프로젝트 설정 staging.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/infrastructure/__init__.py](../backend/app/infrastructure/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/infrastructure/contracts.py](../backend/app/infrastructure/contracts.py) | 프로젝트 설정 contracts.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/infrastructure/database.py](../backend/app/infrastructure/database.py) | PostgreSQL 연결·저장 공통 함수 | 파일 상단 헤더 + 외부 목록 |
@@ -86,22 +79,12 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/runtime/execution.py](../backend/app/runtime/execution.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/runtime/limits.py](../backend/app/runtime/limits.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/seed.py](../backend/app/seed.py) | 가상 예제·초기 계정 명시적 생성 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/archives.py](../backend/app/services/archives.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/catalog.py](../backend/app/services/catalog.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/collection.py](../backend/app/services/collection.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/connections.py](../backend/app/services/connections.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/documents.py](../backend/app/services/documents.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/jobs.py](../backend/app/services/jobs.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/purge.py](../backend/app/services/purge.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/table_proposals.py](../backend/app/services/table_proposals.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/services/workbooks.py](../backend/app/services/workbooks.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/workers/main.py](../backend/app/workers/main.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
-| [backend/app/workflows/analysis.py](../backend/app/workflows/analysis.py) | 기존 모듈 경로 호환 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/requirements-ocr.lock.txt](../backend/requirements-ocr.lock.txt) | Python 의존성 명세 | 외부 명세 (원본 보존) |
 | [backend/requirements.lock.txt](../backend/requirements.lock.txt) | Python 의존성 명세 | 외부 명세 (원본 보존) |
 | [backend/requirements.txt](../backend/requirements.txt) | Python 의존성 명세 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/conftest.py](../backend/tests/conftest.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_agent.py](../backend/tests/test_agent.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
+| [backend/tests/test_agent_routing.py](../backend/tests/test_agent_routing.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_async_runtime.py](../backend/tests/test_async_runtime.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_consolidation.py](../backend/tests/test_consolidation.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_domain_architecture.py](../backend/tests/test_domain_architecture.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
@@ -118,6 +101,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/file-specs.md](../doc/file-specs.md) | 프로젝트 문서 file-specs | 외부 명세 (원본 보존) |
 | [doc/food-agent/README.md](../doc/food-agent/README.md) | 프로젝트 문서 README | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/acceptance.md](../doc/food-agent/acceptance.md) | 프로젝트 문서 acceptance | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/agent-rebuild.md](../doc/food-agent/agent-rebuild.md) | 프로젝트 문서 agent-rebuild | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/agent-update.md](../doc/food-agent/agent-update.md) | 프로젝트 문서 agent-update | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/api-guide.md](../doc/food-agent/api-guide.md) | 프로젝트 문서 api-guide | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/architecture-audit-v3.md](../doc/food-agent/architecture-audit-v3.md) | 프로젝트 문서 architecture-audit-v3 | 파일 상단 헤더 + 외부 목록 |
@@ -138,6 +122,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/examples/proposal-ready.json](../doc/food-agent/examples/proposal-ready.json) | 프로젝트 문서 proposal-ready | 외부 명세 (원본 보존) |
 | [doc/food-agent/examples/source.json](../doc/food-agent/examples/source.json) | 프로젝트 문서 source | 외부 명세 (원본 보존) |
 | [doc/food-agent/extraction-consolidation.md](../doc/food-agent/extraction-consolidation.md) | 프로젝트 문서 extraction-consolidation | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/extraction-normalization.md](../doc/food-agent/extraction-normalization.md) | 프로젝트 문서 extraction-normalization | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/frontend-spec.md](../doc/food-agent/frontend-spec.md) | 프로젝트 문서 frontend-spec | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/implementation-status.md](../doc/food-agent/implementation-status.md) | 프로젝트 문서 implementation-status | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/implementation-verification.json](../doc/food-agent/implementation-verification.json) | 프로젝트 문서 implementation-verification | 외부 명세 (원본 보존) |
@@ -206,37 +191,6 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/views/Sources.vue](../frontend/src/views/Sources.vue) | 사이트 연결·업데이트 수집 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/reviewJourney.test.js](../frontend/tests/reviewJourney.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/vite.config.js](../frontend/vite.config.js) | Vue 애플리케이션 vite.config | 파일 상단 헤더 + 외부 목록 |
-| [legacy/README.md](../legacy/README.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/.env.example](../legacy/incident_agent/.env.example) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/__init__.py](../legacy/incident_agent/agent/__init__.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/deps.py](../legacy/incident_agent/agent/deps.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/fake_llm.py](../legacy/incident_agent/agent/fake_llm.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/graph.py](../legacy/incident_agent/agent/graph.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/mcp_client.py](../legacy/incident_agent/agent/mcp_client.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/ollama_llm.py](../legacy/incident_agent/agent/ollama_llm.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/openai_llm.py](../legacy/incident_agent/agent/openai_llm.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/retry.py](../legacy/incident_agent/agent/retry.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/session_store.py](../legacy/incident_agent/agent/session_store.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/agent/supervisor_v1.py](../legacy/incident_agent/agent/supervisor_v1.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/monitoring.json](../legacy/incident_agent/data/monitoring.json) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/runbooks/cpu-spike.md](../legacy/incident_agent/data/runbooks/cpu-spike.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/runbooks/db-down.md](../legacy/incident_agent/data/runbooks/db-down.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/runbooks/disk-full.md](../legacy/incident_agent/data/runbooks/disk-full.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/runbooks/high-latency.md](../legacy/incident_agent/data/runbooks/high-latency.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/runbooks/memory-leak.md](../legacy/incident_agent/data/runbooks/memory-leak.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/data/runbooks/network-timeout.md](../legacy/incident_agent/data/runbooks/network-timeout.md) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/mcp_server.py](../legacy/incident_agent/mcp_server.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/mcp_server_docs.py](../legacy/incident_agent/mcp_server_docs.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/requirements.txt](../legacy/incident_agent/requirements.txt) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/server.py](../legacy/incident_agent/server.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/sh/make_student_zip.sh](../legacy/incident_agent/sh/make_student_zip.sh) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/sh/run_agent_ollma.sh](../legacy/incident_agent/sh/run_agent_ollma.sh) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/sh/run_agent_openai.sh](../legacy/incident_agent/sh/run_agent_openai.sh) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/sh/run_frontend.sh](../legacy/incident_agent/sh/run_frontend.sh) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/sh/setup_ollama.sh](../legacy/incident_agent/sh/setup_ollama.sh) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/sh/setup_venv.sh](../legacy/incident_agent/sh/setup_venv.sh) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/web_chat.html](../legacy/incident_agent/web_chat.html) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
-| [legacy/incident_agent/web_demo_server.py](../legacy/incident_agent/web_demo_server.py) | 제공 ZIP 원본 참조 | 외부 명세 (원본 보존) |
 | [mcp_server.py](../mcp_server.py) | 식품 도메인 MCP stdio 제공 | 파일 상단 헤더 + 외부 목록 |
 | [migrations/001_initial.sql](../migrations/001_initial.sql) | DB 스키마 001_initial | 파일 상단 헤더 + 외부 목록 |
 | [migrations/002_price_workbooks.sql](../migrations/002_price_workbooks.sql) | DB 스키마 002_price_workbooks | 파일 상단 헤더 + 외부 목록 |
@@ -252,6 +206,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [run.sh](../run.sh) | 개발·운영 보조 run | 파일 상단 헤더 + 외부 목록 |
 | [scripts/demo-preflight.py](../scripts/demo-preflight.py) | 개발·운영 보조 demo-preflight | 파일 상단 헤더 + 외부 목록 |
 | [scripts/dev.sh](../scripts/dev.sh) | 개발·운영 보조 dev | 파일 상단 헤더 + 외부 목록 |
+| [scripts/evaluate-agent-model.py](../scripts/evaluate-agent-model.py) | 개발·운영 보조 evaluate-agent-model | 파일 상단 헤더 + 외부 목록 |
 | [scripts/example-notice.txt](../scripts/example-notice.txt) | 개발·운영 보조 example-notice | 외부 명세 (원본 보존) |
 | [scripts/example-price.csv](../scripts/example-price.csv) | 개발·운영 보조 example-price | 외부 명세 (원본 보존) |
 | [scripts/file-specs.py](../scripts/file-specs.py) | 파일 명세·변경 이력 관리 | 파일 상단 헤더 + 외부 목록 |

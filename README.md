@@ -11,8 +11,8 @@ README.md - 프로젝트 문서 README
 실행 가정:
     - 계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-20 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -22,6 +22,8 @@ README.md - 프로젝트 문서 README
     --------------------------------------------------------------------
     2026-10-20  미지정      v0.1.0   최초 Git 등록 6dbae100
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- README.md
     공통 규칙: doc/file-header-policy.md
@@ -58,7 +60,7 @@ README.md - 프로젝트 문서 README
 | Vue 3 / Vite / Node 22 | View에서 사용자 여정을 조합하고 표·폼·근거 컴포넌트 재사용 | 복잡한 검수 상태와 저장 전 변경을 별도로 관리해야 함 |
 | FastAPI / Python | API와 수집·파싱·AI 코드를 같은 언어로 연결 | DB·OCR 같은 동기 작업의 실행 위치를 제한해야 함 |
 | LangGraph | 분석 단계를 명시하고 checkpoint·작업 재개 지원 | 현재는 고정 흐름이며 범용 자율 Agent가 아님 |
-| Ollama / qwen3:8b | 로컬에서 구조화 추출, 외부 모델 API 키 없이 개발 | 모델 RAM/VRAM과 생성 지연이 큼 |
+| Ollama / Qwen3 4B·8B | 로컬에서 구조화 추출, 외부 모델 API 키 없이 개발 | 모델 RAM/VRAM과 생성 지연이 큼 |
 | PaddleOCR | 한국어 이미지·스캔 PDF의 텍스트 추출 | 모델 설치와 메모리 부담, 표 구조·양식별 정확도 한계 |
 | PostgreSQL 17 / JSONB | 관계·버전·승인 트랜잭션과 가변 식품 속성을 함께 저장 | 일부 조회의 개발용 상한과 저장 계층 개선이 남음 |
 | MCP / FastMCP | 조회 실행(Tool), 근거·정책(Resource), 작업 안내(Prompt) 구분 | 기본 worker는 도메인을 직접 호출하며 MCP 실행 루프와 분리 |
@@ -86,7 +88,7 @@ flowchart LR
 
 백엔드는 `backend/app/domains/`의 **identity, ingestion, catalog, pricing, analysis, review, jobs, reporting**으로 나눈 모듈형 모놀리스입니다. 공통 HTTP 경계는 인증·권한·CSRF·중복 요청 방지·트랜잭션을 담당합니다. 식품 읽기와 승인된 DB 쓰기의 책임을 분리했습니다.
 
-LLM은 계획과 식품 사실 후보를 만들고, 서버는 정규화·근거·기존 품목·업무 규칙을 검사합니다. 사용자가 반영을 결정합니다. 기본 MCP 서버에는 승인·DB 반영·임의 SQL 도구가 없습니다. [도메인 상세](readmd.md), [초기 리팩토링 내역](doc/food-agent/initial-refactor.md).
+Agent가 자료별 처리 도구와 이유를 결정하고 실행기가 그 선택을 따릅니다. 표 매핑·텍스트 의미 추출·상품 영역별 이미지 추출·원문 확인 요청을 구별하며 선택한 경우에만 DB 후보를 조회합니다. 서버는 공통 DTO·근거·업무 규칙을 검사합니다. 사용자가 반영을 결정합니다. 기본 MCP 서버에는 승인·DB 반영·임의 SQL 도구가 없습니다. [도메인 상세](readmd.md), [초기 리팩토링 내역](doc/food-agent/initial-refactor.md).
 
 ## 5. 주요 구현 기능
 
@@ -99,7 +101,7 @@ LLM은 계획과 식품 사실 후보를 만들고, 서버는 정규화·근거�
 7. 자료/식품 삭제·복구, 승인 근거를 보호하는 조건부 자료 영구 삭제
 8. 검토용 Excel, 작업 진행·취소·재시도, 제한된 OCR/LLM 자원 사용
 
-챗봇, 신규 OpenAI 식품 어댑터, 자유로운 MCP 도구 계획 루프는 기본 기능에 포함하지 않습니다.
+이번 리빌드는 [Agent 중심 실행 명세](doc/food-agent/agent-rebuild.md)를 따릅니다. 추출은 검토본만 만들고 확인 이후에 승인용 변경안을 준비합니다. 챗봇과 제한 없는 임의 도구·SQL 실행은 제공하지 않습니다.
 
 ## 6. 프로그램 실행 방법
 
@@ -116,6 +118,7 @@ cp .env.food.example .env.food
 ```sh
 ./scripts/start-postgres.sh
 .venv/bin/python -m backend.app.seed
+ollama pull qwen3:4b
 ollama pull qwen3:8b
 bash run.sh
 ```
@@ -141,7 +144,7 @@ bash run.sh
 
 | 대상 | Before | After | 검증 범위 |
 |---|---|---|---|
-| 제공 실습의 목적 | 장애 문의를 분류하고 답변 생성 | 식품 사실을 추출하고 검토·승인 후 저장 | legacy 원본과 현재 도메인 코드 |
+| 제공 실습의 목적 | 장애 문의를 분류하고 답변 생성 | 식품 사실을 추출하고 검토·승인 후 저장 | 이전 Git 커밋과 현재 도메인 코드 |
 | 식품 API 구조 | 단일 API 파일에 업무 분기 집중 | 도메인 라우터와 공통 전송 경계 분리 | 도메인 소유권·역의존 테스트 |
 | 검수 화면 | 전체 표와 긴 폼이 함께 노출 | 품목 선택·원문 대조·최종 반영 단계 | 화면 캡처와 검토 흐름 테스트 |
 | 모델·OCR 실행 | 동기 모델 HTTP, OCR 초기화 반복 | 비동기 모델 HTTP, OCR 프로세스 재사용 | 동시성·재사용·정리 테스트 |
@@ -183,4 +186,4 @@ bash run.sh
 
 ## 파일별 명세와 변경 이력
 
-모든 추적 파일의 역할·입력·출력·가정·작성 정보·Git 기록은 [파일별 목록](doc/file-specs.md)과 [관리 규칙](doc/file-header-policy.md)에서 확인합니다. 지원 형식의 작업 소스에는 상단 헤더와 Python 모듈 metadata를 추가하고, 원본 데이터·JSON·잠금 파일·legacy는 내용을 유지한 외부 명세로 관리합니다. 작성자·이메일·라이선스는 미지정입니다.
+모든 추적 파일의 역할·입력·출력·가정·작성 정보·Git 기록은 [파일별 목록](doc/file-specs.md)과 [관리 규칙](doc/file-header-policy.md)에서 확인합니다. 지원 형식의 작업 소스에는 상단 헤더와 Python 모듈 metadata를 추가하고, 원본 데이터·JSON·잠금 파일·legacy는 내용을 유지한 외부 명세로 관리합니다. 수정 코드·문서에는 사용자 승인 정보인 김재현(Finn)·penguin.klg@gmail.com을 적용하며 라이선스는 미지정입니다.

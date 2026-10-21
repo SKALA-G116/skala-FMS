@@ -11,8 +11,8 @@ workflow.py - LangGraph 분석 흐름
 실행 가정:
     - 큰 원문은 저장소에 두고 checkpoint는 ID 위주로 유지
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ workflow.py - LangGraph 분석 흐름
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ workflow.py - LangGraph 분석 흐름
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -160,6 +162,11 @@ def propose(state):
         doc=get(c,'document',r['document_id']);doc['proposal_count']+=1;doc['analysis_status']='completed';put(c,'document',doc)
     return {'proposal_id':p['summary']['id']}
 
+def route_after_tools(state):
+    with tx() as c:report=get(c,'agent_report',state['agent_report_id'])
+    return 'match' if 'match_catalog' in report['plan']['tasks'] else 'export'
+
+
 def run_analysis(runid,rid):
     return asyncio.run(arun_analysis(runid,rid))
 
@@ -170,12 +177,15 @@ async def arun_analysis(runid,rid):
         if mode=='rules':
             graph.add_node('propose',propose);nodes=['extract','propose']
         else:
-            from backend.app.domains.analysis.agent import plan; from backend.app.domains.analysis.agent import interpret; from backend.app.domains.analysis.agent import resolve_and_stage
+            from backend.app.domains.analysis.agent import plan; from backend.app.domains.analysis.agent import interpret; from backend.app.domains.analysis.matching import match_candidates
             from backend.app.domains.analysis.export import export_review
-            for name,fn in [('plan',plan),('interpret',interpret),('resolve',resolve_and_stage),('export',export_review)]:graph.add_node(name,fn)
-            nodes=['extract','plan','interpret','resolve','export']
+            for name,fn in [('plan',plan),('execute_tools',interpret),('match',match_candidates),('export',export_review)]:graph.add_node(name,fn)
+            nodes=['extract','plan','execute_tools','match','export']
         graph.add_edge(START,nodes[0])
-        for first,second in zip(nodes,nodes[1:]):graph.add_edge(first,second)
+        for first,second in zip(nodes,nodes[1:]):
+            if mode!='rules' and first=='execute_tools':
+                graph.add_conditional_edges(first,route_after_tools,{'match':'match','export':'export'})
+            else:graph.add_edge(first,second)
         graph.add_edge(nodes[-1],END)
         token=ATTEMPT_START.set(time.monotonic())
         try:return await graph.compile(checkpointer=checkpointer).ainvoke({'run_id':runid,'revision_id':rid},{'configurable':{'thread_id':f'analysis:{runid}'}})

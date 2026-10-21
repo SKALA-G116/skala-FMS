@@ -11,8 +11,8 @@ reconciliation.py - 완료 분석의 이력 보존형 재정리
 실행 가정:
     - 기존 검토와 승인된 식품·단가를 덮어쓰지 않고 동일 정리 요청을 재사용
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -21,6 +21,10 @@ reconciliation.py - 완료 분석의 이력 보존형 재정리
     DATE        AUTHOR      VERSION  DESCRIPTION
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  미지정      v0.1.0   재정규화 시 오래된 파서 값의 재유입 방지
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/reconciliation.py
     공통 규칙: doc/file-header-policy.md
@@ -31,8 +35,8 @@ reconciliation.py - 완료 분석의 이력 보존형 재정리
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -58,7 +62,10 @@ def preview(c,run_id):
         raise Problem(409,'SOURCE_CHANGED','추출 원문이 분석 자료와 일치하지 않습니다.')
     segments=enrich_tables(extraction['segments'])
     rows=[table_event(s) for s in segments if s.get('food_record')]
-    candidates=deepcopy(original['events'])
+    represented={eid for row in rows for eid in row.get('evidence_ids',[])}
+    # Old parser output is a derived cache, not another source of facts. Reusing it
+    # would restore fields deliberately corrected/removed by the current parser.
+    candidates=deepcopy([e for e in original['events'] if not (e.get('extraction_origin')=='parser' and e.get('evidence_ids') and set(e['evidence_ids'])<=represented)])
     for item in candidates:
         # Decisions are retained on the original report; the new revision requires review.
         for key in ('review','proposal_id','matched_product_id','matched_supplier_item_id','match_status'):

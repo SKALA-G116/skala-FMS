@@ -11,8 +11,8 @@ record.py - 표준 FoodRecord DTO와 정규화
 실행 가정:
     - 공란과 0, 알레르기 후보와 함유 표시를 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -25,6 +25,10 @@ record.py - 표준 FoodRecord DTO와 정규화
 
     2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
 
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/record.py
     공통 규칙: doc/file-header-policy.md
 
@@ -35,8 +39,8 @@ record.py - 표준 FoodRecord DTO와 정규화
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -88,13 +92,26 @@ def allergens_from_text(raw,name=None):
         if key:result[key]=list(dict.fromkeys((result[key] or [])+codes));result['review_status']='source_declared'
     return result
 
+def attribute_tokens(raw):
+    """Tokenize separators outside parentheses/brackets without losing source tokens."""
+    result=[];current=[];depth=0
+    for char in raw or '':
+        if char in '([（［':depth+=1
+        elif char in ')]）］':depth=max(0,depth-1)
+        if char in ',/\n' and depth==0:
+            if ''.join(current).strip():result.append(''.join(current).strip())
+            current=[]
+        else:current.append(char)
+    if ''.join(current).strip():result.append(''.join(current).strip())
+    return result
+
+
 def attributes(raw):
     out=empty_record()['attributes'];out['original_text']=text(raw)
     if not raw:return out
     other=[];ingredients=[]
-    for token in re.split(r'[/\n]',raw):
-        token=token.strip()
-        if not token:continue
+    # Split only outside brackets so ingredient origins and compound descriptions survive.
+    for token in attribute_tokens(raw):
         recognized=False
         m=re.search(r'([특상중하1-9]+등급)',token)
         if m:out['quality_grade']=m[1];recognized=True
@@ -102,9 +119,12 @@ def attributes(raw):
         if m:out['size_grade']=m[1];recognized=True
         if '용' in token and any(x in token for x in ('급식','조리','튀김','샐러드')):out['intended_use']=token;recognized=True
         if '표시기준' in token:out['labeling_requirement']=token;recognized=True
-        m=re.search(r'(국산|국내산)\s*(원유|대두|밀|쌀)\s*(\d+(?:\.\d+)?)\s*%',token)
-        if m:ingredients.append({'name':m[2],'percentage':m[3],'origin_country':'KR','original_text':m[0]});recognized=True
+        # Percentages identify an ingredient declaration, independent of ingredient name.
+        if re.search(r'\d+(?:\.\d+)?\s*%',token):
+            ingredients.extend(ingredient_details(token) or []);recognized=True
         if token in ('국산','국내산'):out['origin_country']='KR';recognized=True
+        # Specification tokens already have dedicated DTO fields; raw text remains intact.
+        if re.fullmatch(r'\d+(?:\.\d+)?\s*(?:kg|g|ml|l)|EA\(개\)|개|통|봉|팩',token,re.I):recognized=True
         if not recognized:other.append(token)
     out['ingredients']=ingredients or None;out['other']=other or None
     return out
@@ -128,7 +148,7 @@ def specification(raw=None,quantity=None,unit=None,sales_unit=None,normalized=No
 ALIASES={
  'food_code':['공통식품코드','통식품코드','식품코드','공통코드'], 'food_name':['공통식품명','식품명','품명','제품명','상품명','품목명'],
  'attributes':['공통식품속성','식품속성','제품설명','상품설명','상세설명'], 'quantity':['규격수','규격수량','내용량'], 'unit':['규격'], 'normalized':['규격(kg.l)','규격(kg,l)','규격(kg/l)'], 'sales_unit':['단위','판매단위','포장단위'],
- 'raw_spec':['제품규격','포장규격'], 'ingredients':['원재료','원재료명','원재료및함량'], 'description':['맛&구별','제품특징'], 'flavor':['맛','맛·종류','종류'], 'supply_price':['학교가','납품가','공급가','판매가','단가'],
+ 'raw_spec':['제품규격','포장규격'], 'ingredients':['원재료','원재료명','원재료및함량','원재료함량'], 'description':['맛&구별','제품특징','제품특성','보관','보관방법'], 'flavor':['맛','맛·종류','종류'], 'supply_price':['학교가','납품가','공급가','판매가','단가'],
  'source_applied':['적용가','적용단가'],'survey_1':['조사가1'],'survey_2':['조사가2'],'survey_3':['조사가3'], 'supplier_group':['업체군'],'eco_classification':['친환경구분'],'note':['비고','메모'], 'allergens':['알레르기','알레르기정보','알레르기유발물질'],'company_name':['업체','업체명','공급처','공급업체','판매사','제조사','제조업체','브랜드']}
 
 def company_display(value):
@@ -140,16 +160,17 @@ def company_display(value):
 def ingredient_details(raw):
     """Keep each ingredient's raw token; ingredient origins are not product origins."""
     result=[]
-    for token in re.split(r',(?=[^\]]*(?:\[|$))',raw):
+    for token in attribute_tokens(raw):
         token=token.strip()
         if not token:continue
         percent=re.search(r'(\d+(?:\.\d+)?)\s*%',token)
         name=re.sub(r'\s*\d+(?:\.\d+)?\s*%','',token).strip()
+        name=re.sub(r'^(?:국내산|국산)\s*','',name).strip()
         result.append({'name':name,'percentage':percent[1] if percent else None,'origin_country':'KR' if re.search(r'국산|국내산',token) else None,'original_text':token})
     return result[:100] or None
 
 
-def header_key(v):return re.sub(r'\s+','',str(v or '')).casefold()
+def header_key(v):return re.sub(r'\s+','',re.sub(r'_x[0-9a-fA-F]{4}_','',str(v or ''))).casefold()
 
 def header_mapping(row):
     found={}
@@ -188,7 +209,7 @@ def split_name(raw):
             total=totals[-1]
             # A sole 100g*10 describes pieces, not a 100g total package.
             if len(totals)>1 or not piece:spec.update(quantity=number(total[1]),unit=total[2].lower())
-        sales=re.search(r'/\s*(EA|개|봉|팩|BOX|PACK|BAG)\b',rawspec,re.I)
+        sales=re.search(r'/\s*(EA|개|봉|팩|통|병|포|캔|BOX|PACK|BAG)\b',rawspec,re.I)
         if sales:spec['sales_unit']=sales[1]
         spec['original_text']=rawspec
     name=re.sub(r'\s+',' ',name).strip(' _/')
@@ -211,8 +232,11 @@ def from_table_row(row,mapping,locator,company_name=None):
     record=empty_record();record.update(record_type='common_food' if text(get('food_code')) else 'commercial_product',food_code=text(get('food_code')),food_name=text(get('food_name')),company_name=company_display(text(get('company_name')) or company_name),supplier_group=text(get('supplier_group')),eco_classification=text(get('eco_classification')),note=text(get('note')))
     if isinstance(get('food_code'),(int,float)) and float(get('food_code')).is_integer():record['food_code']=str(int(get('food_code')))
     record['attributes']=attributes(text(get('attributes')));record['specification']=specification(raw=text(get('raw_spec')),quantity=get('quantity'),unit=get('unit'),sales_unit=get('sales_unit'),normalized=text(get('normalized')))
-    if record['specification']['quantity'] and record['specification']['unit']:record['specification']['original_text']=record['specification']['quantity']+record['specification']['unit']
+    if not record['specification']['original_text'] and record['specification']['quantity'] and record['specification']['unit']:record['specification']['original_text']=record['specification']['quantity']+record['specification']['unit']
     apply_name(record,text(get('food_name')))
+    package=split_name('식품('+str(get('raw_spec'))+')')['specification'] if text(get('raw_spec')) else {}
+    for key in ('piece_quantity','piece_unit','pack_count'):
+        if package.get(key):record['specification'][key]=package[key]
     if text(get('ingredients')):record['attributes']['ingredients']=ingredient_details(text(get('ingredients')))
     if text(get('description')):record['attributes']['other']=list(dict.fromkeys((record['attributes']['other'] or [])+[text(get('description'))]))
     if text(get('flavor')):record['attributes']['flavor']=text(get('flavor'))

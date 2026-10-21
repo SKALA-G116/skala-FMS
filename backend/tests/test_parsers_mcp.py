@@ -11,8 +11,8 @@ test_parsers_mcp.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -25,14 +25,16 @@ test_parsers_mcp.py - 기능·경계·회귀 검증
 
     2026-10-21  미지정      v0.1.0   첨부 진행·취소와 완료 건수 회귀 검증 추가
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_parsers_mcp.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -64,11 +66,12 @@ def test_stdio_mcp_capability_boundary():
     async def run(host):
         transport=StdioTransport(command=sys.executable,args=['-m','backend.app.mcp.server']+(['--host'] if host else []),cwd=str(ROOT),env=dict(os.environ))
         async with Client(transport) as c:
-            tools=await c.list_tools();assert len(tools)==(6 if host else 3)
+            tools=await c.list_tools();assert len(tools)==(7 if host else 4)
             assert not any(t.name in ['approve','apply','delete','execute_sql'] for t in tools)
             templates=await c.list_resource_templates();assert len(templates)==5
             prompts=await c.list_prompts();assert len(prompts)==3
             result=await c.read_resource('food://schemas/food-change-v1');assert result
+            assert await c.read_resource('food://agent/tools')
             found=await c.call_tool('find_product_candidates',{'query':'두부','limit':2});assert not found.is_error
     asyncio.run(run(False));asyncio.run(run(True))
 

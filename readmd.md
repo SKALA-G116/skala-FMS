@@ -11,8 +11,8 @@ readmd.md - 프로젝트 문서 readmd
 실행 가정:
     - 계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -22,6 +22,8 @@ readmd.md - 프로젝트 문서 readmd
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- readmd.md
     공통 규칙: doc/file-header-policy.md
@@ -33,7 +35,7 @@ readmd.md - 프로젝트 문서 readmd
 
 학교급식 식품 공지와 단가표에서 정보를 모아 **같은 형식의 식품 정보로 정리하고, 원문과 비교한 뒤 승인한 내용만 DB에 반영**하는 서비스입니다. 게시글의 텍스트, 이미지 OCR, Excel·PDF 첨부를 다루며 품절·공급 재개·단가 변경·신규 식품 정보와 근거 이력을 관리합니다.
 
-현재 단계는 실행 가능한 개발 MVP입니다. 기본 모델은 로컬 Ollama의 `qwen3:8b`입니다. 모델이 분석 계획과 구조화 추출을 수행하고, 서버가 규격·품목 연결 및 변경안 검증을 담당합니다. **LLM이 임의 SQL을 실행하거나 승인을 대신하지 않습니다.**
+현재 단계는 실행 가능한 개발 MVP입니다. 로컬 Ollama의 `qwen3:4b`는 처리 도구 선택에, `qwen3:8b`는 비정형 정보 추출에 사용합니다. 모델이 분석 계획과 구조화 추출을 수행하고, 서버가 규격·품목 연결 및 변경안 검증을 담당합니다. **LLM이 임의 SQL을 실행하거나 승인을 대신하지 않습니다.**
 
 자료를 수집한 결과가 곧 최신 식품 DB라는 뜻은 아닙니다. 원본 자료, AI 추출 결과, 사람의 검토, 승인된 업무 사실을 구분합니다. 미확인 정보는 공란으로 유지합니다.
 
@@ -114,11 +116,11 @@ backend/app/
 | AI 모델 연동 | `domains/analysis/provider.py` | 재사용 HTTP 연결, 비동기 호출, 동시성 제한·출력 검증 |
 | 데이터 접근 | `infrastructure/database.py` | PostgreSQL 연결 풀, 공통 레코드 접근 |
 
-읽기 코드에 승인된 변경의 반영 함수를 두지 않습니다. 기존 `services/`, `ai/`, `food/`, `domain/`, `workflows/`, `workers/`, `db.py` 경로에는 기존 호출부를 위한 호환 진입점이 있으며 신규 도메인은 이 호환 경로를 import하지 않습니다. 완전한 ORM/Repository 재작성이나 모든 업무 객체의 DDD 전환까지 수행한 것은 아닙니다.
+읽기 코드에 승인된 변경의 반영 함수를 두지 않습니다. 사용하지 않는 `services/`, `ai/`, `food/`, `domain/`, `workflows/`, `workers/`, `db.py` 호환 경로를 제거했으며 도메인 경로만 사용합니다. 완전한 ORM/Repository 재작성이나 모든 업무 객체의 DDD 전환까지 수행한 것은 아닙니다.
 
 ## 5. 제공 ZIP에서 재사용·변경한 부분
 
-원본 장애 진단 프로젝트는 `legacy/incident_agent/`에 보존했습니다. 새 식품 서비스의 실행 경로와 분리되어 있습니다.
+원본 장애 진단 프로젝트와 사용하지 않는 호환 모듈을 제거했습니다. 실습 구조 비교용 원본은 이전 Git 커밋에서 확인할 수 있습니다.
 
 | 제공 구성 | 식품 서비스에서의 활용 |
 |---|---|
@@ -126,39 +128,39 @@ backend/app/
 | `server.py` | FastAPI 재사용; 현재 파일은 신규 `api/main.py`를 노출하는 ASGI 진입점 |
 | `agent/graph.py` | LangGraph 재사용; 식품 흐름은 `domains/analysis/workflow.py`로 재구성 |
 | `agent/ollama_llm.py` | 로컬 모델 연동 개념 재사용; 신규 식품 프롬프트·JSON 스키마·비동기 provider 구현 |
-| `agent/openai_llm.py` | 원본 코드는 legacy에 보존. 신규 기본 경로는 Ollama이며 OpenAI 전환은 추가 어댑터 작업 필요 |
+| `agent/openai_llm.py` | 원본 코드는 Git 이력에서 확인 가능. 신규 기본 경로는 Ollama이며 OpenAI 전환은 추가 어댑터 작업 필요 |
 | `agent/fake_llm.py` | 운영 모델로 쓰지 않음; 신규 테스트는 명시적인 TestModel과 HTTP mock 사용 |
 | `agent/session_store.py` | SQLite 채팅 기록은 기본 업무 저장소로 쓰지 않음; PostgreSQL에 작업·추출·검토·승인·이력 저장 |
 | `mcp_server.py` | 식품 Tool·Resource·Prompt를 제공하는 신규 stdio 진입점으로 교체 |
-| `agent/mcp_client.py` | 원본은 legacy 보존. 신규 MCP 전송 검증은 FastMCP Client를 사용 |
-| `data/` | 장애 샘플은 legacy로 이동. 신규 시드는 가상 식품·단가·공지이며 실제 회원 정보와 수집 자료는 포함하지 않음 |
+| `agent/mcp_client.py` | 원본은 Git 이력에서 확인 가능. 신규 MCP 전송 검증은 FastMCP Client를 사용 |
+| `data/` | 장애 샘플은 제거. 신규 시드는 가상 식품·단가·공지이며 실제 회원 정보와 수집 자료는 포함하지 않음 |
 
 ## 6. Agent·LLM·전처리·DB의 역할
 
 기본 분석 흐름은 다음과 같습니다.
 
 ```text
-자료 등록/수집 → 영속 analyze 작업 → LangGraph
-extract → plan → interpret → resolve → export
-                                  ↓
-                          검토용 DTO·변경안·Excel
-                                  ↓
-                      사람 확인 → 승인 → apply 작업
+등록·수집 → 영속 analyze 작업 → 원문 관찰(일반 읽기·OCR, 근거 보존)
+  → Agent가 자료별 도구·이유 결정
+      ├ normalize_table: 읽은 표 → DTO
+      ├ extract_text: 비정형 텍스트 → LLM → DTO
+      ├ extract_image_regions: OCR 좌표 → 상품 영역 판단 → 영역별 LLM → DTO
+      └ request_review: 원문 확인 요청
+  → 공통 DTO 정규화·근거 검사·중복 통합
+  → Agent가 match_catalog를 선택한 경우에만 읽기 전용 DB 후보 조회
+  → 한 검토본·Excel → 사용자 수정·확인
+  → 확인한 품목의 변경안 준비 → 명시적 승인 → apply 작업 → DB·이력
 ```
 
-| 단계 | 담당 | 내용 |
-|---|---|---|
-| extract | 일반 파서·OCR | 본문/텍스트 PDF/Excel은 일반 파싱, 이미지/스캔 PDF는 PaddleOCR. 근거 구간·셀·좌표 보존 |
-| plan | LLM | 자료 유형과 필요한 추출 작업을 스키마에 맞춰 제안 |
-| interpret | LLM + 서버 검증 | 작은 구간별 식품·규격·단가·공급 변경 추출. 중요한 공지 사실은 추가 대조 검증 |
-| resolve | 서버 도메인 서비스 | 식품명·규격 정규화, 기존 품목 후보 연결, 날짜·금액·근거 검사, 검토 초안 생성 |
-| export | 서버 | 검토용 식품 정보·원문 근거·모델 실행 정보 Excel 생성 |
-| 검토·승인 | 실제 사용자 | 원문 대조, 잘못된 필드 수정, 반영/제외 결정 |
-| apply | 반영 worker | 승인 revision/원문/대상 버전과 기간 검사 후 원자적 저장 |
+Agent의 도구 선택 결과가 실제 실행기를 제어합니다. 도구를 생략하거나 사용할 수 없는 도구를 선택하면 검증 오류로 중단합니다. 이미지에서는 첫 네 줄을 모든 상품의 공통 정보로 강제 사용하지 않습니다. OCR 좌표 기반 영역 판단에서 상품 근거·공통 범례·미분류 원문을 구별합니다. 미분류 구간은 경고·근거 보기·Excel에 남기며 처리 완료 구간으로 계산하지 않습니다.
 
-현재는 **미리 정한 LangGraph 흐름 안에서 LLM이 계획·추출을 수행하는 구조**입니다. LLM이 자유롭게 MCP 도구를 선택해 반복 실행하는 범용 자율 Agent는 아닙니다. 기본 worker는 도메인 서비스를 직접 호출하며 MCP 자식 프로세스를 거쳐 실행하지 않습니다. MCP 어댑터와 기본 실행 경로를 혼동하지 않아야 합니다.
+추출 Agent는 승인용 변경안이나 확정 식품을 생성하지 않습니다. 검토에서 확인한 DTO만 review 도메인의 staging으로 넘기고, application이 승인된 변경을 원자적으로 반영합니다. 같은 모델로 추출 결과를 다시 생성하는 전수 2차 호출은 제거했습니다. 형식·금액·근거·단종 표현 등의 서버 검증과 사용자 검토는 유지합니다.
 
-`FOOD_ANALYSIS_MODE=rules`는 `item CODE | 상태 | 날짜 | 사유` 같은 명시 형식의 테스트·데모 경로입니다. 자유 형식 식품 공지의 운영 기본값이 아닙니다. 모델 오류를 규칙 처리로 숨기지 않습니다.
+원문은 저장소에 보관하고 LangGraph checkpoint에는 ID만 전달합니다. 실행 재개 정보는 근거 ID·문자 범위를 저장하며 원문 전체를 중복 저장하지 않습니다. 완료한 도구와 이미지 영역 계획은 저장하여 이어서 처리할 때 재호출하지 않습니다.
+
+현재 로컬 모델은 텍스트 모델이므로 이미지 내용을 관찰하기 위한 최초 OCR은 필요합니다. 상품 영역은 이 OCR의 좌표와 텍스트로 판단합니다. 원본 픽셀을 직접 보는 멀티모달 모델이나 영역 crop 재인식까지 구현됐다는 뜻은 아닙니다. 이 한계와 실제 모델 검증 범위는 [리빌드 명세](doc/food-agent/agent-rebuild.md)에 구분했습니다.
+
+`FOOD_ANALYSIS_MODE=rules`는 명시 형식의 자동 테스트용 대역입니다. 운영 기본값은 Agent이며 모델 오류를 규칙 처리로 숨기지 않습니다. MCP는 동일 도메인 기능의 외부 Tool·Resource·Prompt 어댑터이고, 내부 실행은 매번 MCP 자식 프로세스를 띄우지 않습니다.
 
 ## 7. 표준 DTO와 데이터 저장
 
@@ -219,6 +221,7 @@ cp .env.food.example .env.food
 # 가상 예제 계정/식품을 최초 한 번 명시적으로 생성
 .venv/bin/python -m backend.app.seed
 # 실제 AI 분석을 사용하려면 Ollama를 실행하고 모델을 준비
+ollama pull qwen3:4b
 ollama pull qwen3:8b
 # Ollama 서비스가 실행 중인 상태에서 API+worker 시작
 bash run.sh

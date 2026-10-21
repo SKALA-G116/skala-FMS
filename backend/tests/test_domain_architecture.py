@@ -11,8 +11,8 @@ test_domain_architecture.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ test_domain_architecture.py - 기능·경계·회귀 검증
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_domain_architecture.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ test_domain_architecture.py - 기능·경계·회귀 검증
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -91,10 +93,10 @@ def test_catalog_queries_do_not_own_catalog_mutations():
     assert callable(apply)
 
 
-def test_legacy_module_paths_share_database_and_model_instances():
-    assert importlib.import_module('backend.app.db') is importlib.import_module('backend.app.infrastructure.database')
-    assert importlib.import_module('backend.app.ai.provider') is importlib.import_module('backend.app.domains.analysis.provider')
-    assert importlib.import_module('backend.app.food.record') is importlib.import_module('backend.app.domains.catalog.record')
+def test_legacy_runtime_modules_are_removed():
+    root=Path(__file__).parents[1]/'app'
+    for path in ['ai','food','domain','services','workflows','workers','db.py']:
+        assert not (root/path).exists()
 
 
 def test_response_headers_are_not_shared_between_requests():

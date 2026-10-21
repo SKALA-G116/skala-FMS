@@ -11,8 +11,8 @@ test_consolidation.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -21,6 +21,10 @@ test_consolidation.py - 기능·경계·회귀 검증
     DATE        AUTHOR      VERSION  DESCRIPTION
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
     상세 Git 이력: git log --follow -- backend/tests/test_consolidation.py
     공통 규칙: doc/file-header-policy.md
@@ -31,8 +35,8 @@ test_consolidation.py - 기능·경계·회귀 검증
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -109,3 +113,12 @@ def test_unspecified_spec_stays_ambiguous_when_two_sizes_exist():
     kept,archive=consolidate([event(spec='25g',id='a'),event(spec='35g',id='b'),event(spec=None,id='c')])
     assert len(kept)==3 and not archive
     assert next(e for e in kept if e['id']=='c')['uncertainties']
+
+
+def test_cached_table_records_are_reparsed_with_original_revision_provenance():
+    old=segments();old[2]['food_record']=from_event({'product_name':'팥 찰보리빵'})
+    old[2]['food_record']['field_sources']['ingredients']={'document_revision_id':'original-revision'}
+    result=enrich_tables(old)[2]['food_record']
+    assert result['attributes']['ingredients'][0]['percentage']=='38'
+    assert result['field_sources']['ingredients']['evidence_ids']==['E2']
+    assert result['field_sources']['ingredients']['document_revision_id']=='original-revision'

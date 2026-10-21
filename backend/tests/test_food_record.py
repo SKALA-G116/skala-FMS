@@ -11,8 +11,8 @@ test_food_record.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,14 +23,18 @@ test_food_record.py - 기능·경계·회귀 검증
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   원본 속성 누락 복구·재정리 API·검토 동선 개선
+
+    2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_food_record.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -105,3 +109,28 @@ def test_text_description_uses_the_same_nullable_contract():
     validate_record(r)
     assert set(r)==set(empty_record()) and r['company_name']=='CJ씨푸드'
     assert r['specification']['pack_count']=='10' and r['allergens']['contains']==['milk']
+
+
+def test_fish_sauce_attributes_preserve_ingredients_process_and_zero_prices():
+    header=['공통식품코드','공통식품명','공통식품속성','규격수','규격','규격_x000D_\n(kg.l)','단위','적용가','조사가1','비고']
+    raw='1300ml/통/식품표시기준:내용준수/국산생멸치75%,천일염25%,2년숙성'
+    row=['4170030001','간장(어간장)',raw,1300,'ml','1.30l','통',0,22900,'바다천지']
+    record=from_table_row(row,header_mapping(header),{'kind':'spreadsheet','sheet_name':'조사','cell_range':'A5:J5'})
+    validate_record(record)
+    assert [(i['name'],i['percentage'],i['origin_country']) for i in record['attributes']['ingredients']]==[('생멸치','75','KR'),('천일염','25',None)]
+    assert record['attributes']['other']==['2년숙성']
+    assert record['attributes']['original_text']==raw and record['attributes']['origin_country'] is None
+    assert record['company_name'] is None and record['note']=='바다천지'
+    assert record['prices']['survey_1']=='22900' and record['prices']['source_applied']=='0'
+    assert record['specification']['normalized_quantity']=='1.3'
+    assert record['field_sources']['normalized']['raw_value']=='1.30l'
+    assert record['allergens']['contains'] is None
+
+
+def test_ingredient_origin_brackets_and_generic_names_do_not_split_or_infer_allergens():
+    raw='돼지고기(국산, 제주) 70%, 정제수 20%, 전분 10%'
+    record=from_event({'product_name':'가공식품','attributes_text':raw})
+    validate_record(record)
+    assert len(record['attributes']['ingredients'])==3
+    assert record['attributes']['ingredients'][0]['name']=='돼지고기(국산, 제주)'
+    assert record['allergens']['candidates']==['pork'] and record['allergens']['contains'] is None

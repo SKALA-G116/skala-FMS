@@ -1,6 +1,6 @@
 {
   "schema_version": "file-spec-v1",
-  "identity_policy": "미지정: 예시의 개인 정보·라이선스를 복사하지 않음",
+  "identity_policy": "사용자 승인 정보: 김재현(Finn), penguin.klg@gmail.com. 수정 코드·문서에 적용; 원저자 미확인 파일과 라이선스는 미지정 유지",
   "history_policy": "Git 이력은 생성 시점 snapshot; 최신 이력은 git log --follow로 조회",
   "files": {
     ".dockerignore": {
@@ -88,7 +88,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "6093c448b6de376e0042ab908266c8c0f928ae09d2e4e8aa4787dd982abff9ab"
+      "sha256": "a0cff670b3c6ce3743f6e10804c6436172b1afa1728fbc3942f910fe1bde8fce"
     },
     ".github/workflows/ci.yml": {
       "spec": [
@@ -214,8 +214,8 @@
         "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -243,7 +243,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "177422a7b0e79b05a830fd7ecf669dd66b3f60f24a2d68311d885f04e4bac722"
+      "sha256": "4e14e57f43138d6fce85acb157aac418db719efa017c68825f679b786acd865e"
     },
     "backend/__init__.py": {
       "spec": [
@@ -302,185 +302,6 @@
         }
       ],
       "sha256": "06735ff1fdfc829bd847add818a36c0badad9c65315a3d4301a95dcef8968f2f"
-    },
-    "backend/app/ai/__init__.py": {
-      "spec": [
-        "Python 패키지 진입점",
-        "패키지 import",
-        "패키지 namespace와 모듈 metadata",
-        "업무 처리와 실제 I/O는 해당 하위 모듈에서 수행"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "sha256": "2719a70f2183841f6714a963b01fa8d3c25c1a93490b3e1c185348abc0ff35b6"
-    },
-    "backend/app/ai/agent.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.analysis.agent.",
-      "sha256": "6babfe8f71d34b4ffecfbfd94613ca6aea62d7ac67e29d05b99c179e97e29bbb"
-    },
-    "backend/app/ai/export.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.analysis.export.",
-      "sha256": "63fea0d4226146f07e2027a102bf532298d752b632c15336350b3bba26ceef67"
-    },
-    "backend/app/ai/provider.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.analysis.provider.",
-      "sha256": "f63291fad593962a3e0d36ccec5486e407c92251c54ba2b24d0f254875fe077a"
-    },
-    "backend/app/ai/review.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.review.items.",
-      "sha256": "901dc8766cbd5bc9f7b8001bdaea3933bcfac73d63c63fb2ef51d4567fb0584f"
-    },
-    "backend/app/ai/schemas.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.analysis.schemas.",
-      "sha256": "9db05f8ac0a6fd5d7e77211e0a7b6bdcd9d5064f14470d29eef69cfc110f431d"
     },
     "backend/app/api/__init__.py": {
       "spec": [
@@ -626,6 +447,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "original_docstring": "Explicit domain ownership: no request writes outside the shared transaction.",
@@ -669,8 +495,8 @@
         "업로드 크기·동시성·CSRF·Idempotency-Key를 검사"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -689,7 +515,7 @@
         }
       ],
       "original_docstring": "HTTP guards, bounded body ingestion and transaction/idempotency boundary.",
-      "sha256": "589553e45bf4c73318f74ff2139fda3d3f1e70b0028f88c16850fddc4fa7d51b"
+      "sha256": "432d66ffe7040ba86ee5e66dd1d3b74276397bea1d46d43472681c9b0d19f898"
     },
     "backend/app/connectors/school062.py": {
       "spec": [
@@ -725,66 +551,6 @@
       ],
       "original_docstring": "Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts.",
       "sha256": "f0111be04f5d33c620cab94af1ad0e0353a1ac8179ceee02f0703fb005ea650c"
-    },
-    "backend/app/db.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses infrastructure.database.",
-      "sha256": "246bede099254db4398b808ce1211907baf8c1e36e82af14b46543580e38a569"
-    },
-    "backend/app/domain/proposals.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.review.proposals.",
-      "sha256": "d644cb88a732ad53da313db26bb474ad2818a74b1b042e48a5071aa9f0d4f35c"
     },
     "backend/app/domains/__init__.py": {
       "spec": [
@@ -852,8 +618,8 @@
         "모델 후보는 승인이나 DB 반영을 대신하지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -877,7 +643,7 @@
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "b6aca40a04891bd8bb9c1b78e945d6d94e29ad785d51cb8cb7ff896661fa0382"
+      "sha256": "125c1d992ca35030d6fff2d5ea580a740ce68d15031fe581cc98448f0509c3cf"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -887,8 +653,8 @@
         "공통 transport가 소유한 같은 DB 트랜잭션을 사용"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -907,7 +673,7 @@
         }
       ],
       "original_docstring": "Analysis HTTP use cases. The transport owns authentication and the transaction.",
-      "sha256": "c5da11b1013f38edec56876a023f385a7cfdd3dd29f2aa15982ca0ecae54667e"
+      "sha256": "f54ee86c94982f2f1979446438b69bb01c1814456c152ce30d67d8a71b1194bc"
     },
     "backend/app/domains/analysis/consolidation.py": {
       "spec": [
@@ -917,8 +683,8 @@
         "OCR/LLM을 호출하지 않고 모호한 업체·규격·가격·기간을 합치지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -932,7 +698,7 @@
         }
       ],
       "original_docstring": "Deterministic table recovery and conservative, provenance-preserving candidate merging.",
-      "sha256": "ad8e73e2a858aacdddc16d8214f01949ab2b745a154e693a01443c071ac99ca3"
+      "sha256": "01ccef96f613c6d7f53a76b3091e6a4bbe1cda58bacc38463f099bdd623c4cf3"
     },
     "backend/app/domains/analysis/export.py": {
       "spec": [
@@ -942,8 +708,8 @@
         "원문 문자열을 수식으로 실행하지 않고 DB 승인과 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -962,7 +728,45 @@
         }
       ],
       "original_docstring": "Automatic, evidence-linked review workbook; source strings are never formulas.",
-      "sha256": "901b2ee560c10af0f866951c5d6023bbde0b1afbbb8610e5ade89949eb47be9f"
+      "sha256": "0f5a10e6c640076dda3aa0977eadec127d9cbc3ec5762b143dec305f4a7e6771"
+    },
+    "backend/app/domains/analysis/matching.py": {
+      "spec": [
+        "프로젝트 설정 matching.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Bounded read-only catalog tool selected by the Agent; no draft or catalog writes.",
+      "sha256": "57718c63f16179adbb31de3e73e1039892bf9bf661ea884592c8e22b95463a42"
+    },
+    "backend/app/domains/analysis/planning.py": {
+      "spec": [
+        "프로젝트 설정 planning.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Agent-selected source tools; the host validates capabilities and complete coverage.",
+      "sha256": "2366b8740e694ccf190bca795b2142dfdf3b6456403d1e3ec2f58c46bc5d8403"
     },
     "backend/app/domains/analysis/provider.py": {
       "spec": [
@@ -992,7 +796,7 @@
         }
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
-      "sha256": "fe087d8b1d755a30b1901bc977d0201fe26eb10a98e2368d1b0eb7e40f124d7b"
+      "sha256": "b8232b906c3dbff4570bb5a7817d6cde9be13c20eeefcd1e8092054180941b6b"
     },
     "backend/app/domains/analysis/reconciliation.py": {
       "spec": [
@@ -1002,8 +806,8 @@
         "기존 검토와 승인된 식품·단가를 덮어쓰지 않고 동일 정리 요청을 재사용"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1017,7 +821,7 @@
         }
       ],
       "original_docstring": "Create a new review revision from saved extraction; preserve all previous decisions.",
-      "sha256": "6809dbf3a999d976a9422adb13a1d2d0195cfc293a3e3ab26557a374193576c4"
+      "sha256": "e24859c745a29f93cff6c88ecc6ca739abfbd91217b8f0d5bd01482c101646eb"
     },
     "backend/app/domains/analysis/schemas.py": {
       "spec": [
@@ -1086,8 +890,8 @@
         "큰 원문은 저장소에 두고 checkpoint는 ID 위주로 유지"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1106,7 +910,7 @@
         }
       ],
       "original_docstring": "Small durable LangGraph state: IDs only; source bodies live in storage.",
-      "sha256": "3ae4dc9ed17f5e4b1b5473a5395f91c3e8ce9d3a95c3dc501a8eec8d5df0a022"
+      "sha256": "27adef81d1b9770a3ea3886bfd0bb77bf36c5f40c77e00bb5454466c09d6ecad"
     },
     "backend/app/domains/catalog/__init__.py": {
       "spec": [
@@ -1204,8 +1008,8 @@
         "공란과 0, 알레르기 후보와 함유 표시를 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1229,7 +1033,7 @@
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
-      "sha256": "f236a5154c96452c0dde19f9bdbd788746944db1a448c313f8d399900cb3a191"
+      "sha256": "08cdbf87db9f8958a3bee81eb2dd7c1486bb2f497b3e0cf7f996e51cd9284f70"
     },
     "backend/app/domains/identity/__init__.py": {
       "spec": [
@@ -1888,6 +1692,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "original_docstring": "Review HTTP use cases. The transport owns authentication and the transaction.",
@@ -1937,7 +1746,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
+        }
+      ],
       "original_docstring": "A review inbox lists completed analysis results, not internal application batches.",
       "sha256": "f795f106d86253cbb2d21c2bbb9524051e2a41d7f188f1d21529ad86f99b01ab"
     },
@@ -1949,8 +1764,8 @@
         "품목 확인 저장은 최종 승인·DB 반영과 다름"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1969,7 +1784,7 @@
         }
       ],
       "original_docstring": "Versioned, field-editable FoodChangeDTO review. No model calls during review.",
-      "sha256": "47cc971ae655cb746ed2232079cc2ae4f793f858e44f466bcd4286fd99b2db63"
+      "sha256": "8146b6fcc0dbaa41c841037b4f756f2b33b42e21feb7ac3656793fc68343bb62"
     },
     "backend/app/domains/review/proposals.py": {
       "spec": [
@@ -2000,64 +1815,24 @@
       ],
       "sha256": "32be40c02277a66758138bc6301ad93db5dc9f9376935ef6a9c82595f24d1e52"
     },
-    "backend/app/food/__init__.py": {
+    "backend/app/domains/review/staging.py": {
       "spec": [
-        "Python 패키지 진입점",
-        "패키지 import",
-        "패키지 namespace와 모듈 metadata",
-        "업무 처리와 실제 I/O는 해당 하위 모듈에서 수행"
+        "프로젝트 설정 staging.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
-      "created": "2026-10-21",
+      "created": "2026-10-22",
       "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "sha256": "30ae8520562b92ec957ec5ff73e06414378ce3fba06fc607aefba7c297dda22a"
-    },
-    "backend/app/food/record.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.catalog.record.",
-      "sha256": "5ff356b00ef7ce217bbe39de60db2a3d98b10c0c4adf4a2723d61e626d71710e"
+      "git_history": [],
+      "original_docstring": "Build approval drafts from explicitly confirmed DTOs; never called by extraction.",
+      "sha256": "f8b22cc085e25a45f6ff5c4555d40501d0497efebc07b26e6b7142fba631e49c"
     },
     "backend/app/infrastructure/__init__.py": {
       "spec": [
@@ -2155,8 +1930,8 @@
         "기본 서버에 승인·최종 반영·임의 SQL을 노출하지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2175,7 +1950,7 @@
         }
       ],
       "original_docstring": "Local stdio adapter. Default mode exposes only read tools to model clients.\nHost-only tools are registered only with --host, in a separate trusted process.\nNever pass the host server to the model's tool registry.\n",
-      "sha256": "48af5ec4aab1214416bc341b789fe94a48a706c4d0f8c4f22b81b16c981ec96a"
+      "sha256": "78b2ffba0cd49638aeb29ade7f75f3e73539ec0f27a22f4278dfa5328a09104b"
     },
     "backend/app/parsers/documents.py": {
       "spec": [
@@ -2390,336 +2165,6 @@
       "original_docstring": "Explicit local demo seed. Never run automatically on API startup.",
       "sha256": "3e59507f8de9e4d660d20923dec381bdd1ffbc986ce70be83594ec0906b36b42"
     },
-    "backend/app/services/archives.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.ingestion.archives.",
-      "sha256": "f5b2c181729153902ca12700909987f527c67789b9aa7124dd211abb4f27bf17"
-    },
-    "backend/app/services/catalog.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.catalog.queries.",
-      "sha256": "903aeed0e6f33853fc21135f5c74f56aeb744eb9780046ca92b4ccc6808604ab"
-    },
-    "backend/app/services/collection.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.ingestion.collection.",
-      "sha256": "6f00fc9def0eda31bb0531a3a6aef42d4f7322491e6793a7febb3071ae9c526d"
-    },
-    "backend/app/services/connections.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.ingestion.connections.",
-      "sha256": "7f1aa95aabbfc34a701dcfa884d3cd78bcfe929b93e03592c3dbce77c555f2a3"
-    },
-    "backend/app/services/documents.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.ingestion.documents.",
-      "sha256": "bd021dc0c0a87235c0ddaeb2ddf098008b5a8e332c05bdcae58359d3e2a8d545"
-    },
-    "backend/app/services/jobs.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.jobs.service.",
-      "sha256": "d8c0dcbfe5d904ed1f7526d633e21c83bb7fdfefad1625154f9bee37264d21c3"
-    },
-    "backend/app/services/purge.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.ingestion.purge.",
-      "sha256": "1347756b45e6770376413a3992ac5b3986d6733c54ec2338a0ab00a45fcdd558"
-    },
-    "backend/app/services/table_proposals.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.pricing.proposals.",
-      "sha256": "400e9c3ba9a09a2c44a9656064c6f5f5acc6c4f9bb34371d7ac886b5fd4f2fe8"
-    },
-    "backend/app/services/workbooks.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.pricing.workbooks.",
-      "sha256": "2a2c0ba086914105f5a5ca1b0100e7fc343bdbd78de85d47f517e4e64754b413"
-    },
-    "backend/app/workers/main.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.jobs.worker.",
-      "sha256": "a72e5ce8a6a083c5a1170bf06bd323e466bbafb8a4e980150c36ca34a97b9fa2"
-    },
-    "backend/app/workflows/analysis.py": {
-      "spec": [
-        "기존 모듈 경로 호환 진입점",
-        "이전 import 경로 또는 공개 호출",
-        "canonical 도메인 모듈과 공개 인터페이스",
-        "새 업무 로직을 이 호환 계층에 추가하지 않음"
-      ],
-      "style": "python",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "original_docstring": "Compatibility entry point; new code uses domains.analysis.workflow.",
-      "sha256": "a398ef1b73419c5d6c759c437e7fa2e87660b98cbf5e6eb3662085df14fb59e8"
-    },
     "backend/requirements-ocr.lock.txt": {
       "spec": [
         "Python 의존성 명세",
@@ -2835,8 +2280,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2855,7 +2300,26 @@
         }
       ],
       "original_docstring": "Deterministic integration tests use an explicit test double; live results are separate.",
-      "sha256": "1bfa94db8f41e45615a5c37641e7d94676e066d214d8536c8f55210420326e93"
+      "sha256": "ca5366de53e45b95ab7b72196294433cf53d82fcf5c906c3a96171acb7a24848"
+    },
+    "backend/tests/test_agent_routing.py": {
+      "spec": [
+        "기능·경계·회귀 검증",
+        "테스트 fixture·가상 입력·명시적 mock/테스트 대역",
+        "assert 결과와 실패 사유",
+        "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "original_docstring": "Agent decisions must change actual tools, preserve evidence, and stay bounded.",
+      "sha256": "d7a67a4ba5bf1650650b4dcb0ac0bb7188983339556343ca2a72b4b99393c8d6"
     },
     "backend/tests/test_async_runtime.py": {
       "spec": [
@@ -2865,8 +2329,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2884,7 +2348,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "2e298f4ddd47cd14c9d496988a8e2e2c125106e18c562d6d14a005ee80988bab"
+      "sha256": "004c4f07de10f36ad85b8f577bdbffd3b5a454de51ec5a350ef1125f5c155f09"
     },
     "backend/tests/test_consolidation.py": {
       "spec": [
@@ -2894,8 +2358,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2909,7 +2373,7 @@
         }
       ],
       "original_docstring": "Verify lossless, conservative merging of vendor tables and repeated OCR facts.",
-      "sha256": "a2b8b9bce1c17b882b3f4cd3c1c3e840fcd5d2ed367ed54251e5c7f4611d3bbb"
+      "sha256": "08a92af095c4796e5f16b85396eb7587ed2243ab61da239a23c435dc2e3e1bbf"
     },
     "backend/tests/test_domain_architecture.py": {
       "spec": [
@@ -2919,8 +2383,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2939,7 +2403,7 @@
         }
       ],
       "original_docstring": "Keep domain routing and dependency boundaries intact as the service grows.",
-      "sha256": "70a387b48759512ee53e0ff4b0932484550ef4465c2324ce90f5f0e0a46f6e4a"
+      "sha256": "bb0beaf973445241a0b95ac91676bf024c2ffe9e470a11e4fa5b6613feb2ba44"
     },
     "backend/tests/test_file_specs.py": {
       "spec": [
@@ -2964,7 +2428,7 @@
         }
       ],
       "original_docstring": "Check that documenting source files preserves executable code and original inputs.",
-      "sha256": "9ae3d46cae34b41413ff72559f005adfc6eb08bb87615ed752f00ea6a66db18e"
+      "sha256": "c9a1834455d2e0bd6dacea46d62c09b4a744ac49c4c537913bfbda45677e997f"
     },
     "backend/tests/test_food_record.py": {
       "spec": [
@@ -2974,8 +2438,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2993,7 +2457,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "676a49e5d0387e2c1904b3f7742d6cdab9cc7eeb1aaa196088a12f5e918e700f"
+      "sha256": "2e5b926d7c48664d3e855b4348c9125631966dff3fb47e92e7241c9df1d49c56"
     },
     "backend/tests/test_parsers_mcp.py": {
       "spec": [
@@ -3003,8 +2467,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -3027,7 +2491,7 @@
           "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
-      "sha256": "bfd81798554c5e86c4cab0b69c38a14af06e34c312b4d21471c4adb17281fa2b"
+      "sha256": "6f2d0f2e6d26b048a66d8643bb9e78722e3539abd86e021db4d783ff4633d76c"
     },
     "backend/tests/test_workflow.py": {
       "spec": [
@@ -3037,8 +2501,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -3064,10 +2528,15 @@
           "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
           "date": "2026-10-21T20:33:38+09:00",
           "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "a00287d8f84aeca1a837f29eb1a71d4ec4fe0fb046dd9104600d7ee537747a62"
+      "sha256": "1b2c78a2b8eea159c7396be47ef9b5fa36d1955673a098bcb3c1534334891fea"
     },
     "compose.food.yml": {
       "spec": [
@@ -3183,8 +2652,8 @@
         "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -3197,7 +2666,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "370f3aecc578c02b07dea24ff3e2f51049911d513e88ea661b2e71dcf21c44fc"
+      "sha256": "fced76591cc734acfbdf901d0c951d08038fb812aaaca152a736b9b912de22d9"
     },
     "doc/file-manifest.json": {
       "spec": [
@@ -3234,6 +2703,11 @@
           "commit": "7e921ab51f22c46ebc43961225f82835f0d8de00",
           "date": "2026-10-21T20:35:45+09:00",
           "subject": "fix: 이전·최신 검토 결과 간 이동 시 화면 재조회 및 수정 보호"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "sha256": null
@@ -3263,6 +2737,11 @@
           "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
           "date": "2026-10-21T20:33:38+09:00",
           "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "sha256": null
@@ -3324,6 +2803,24 @@
         }
       ],
       "sha256": "a257cd34e1dd88e3ba87d0667250f1816ad8aae48967013972ad3108c15ab9d3"
+    },
+    "doc/food-agent/agent-rebuild.md": {
+      "spec": [
+        "프로젝트 문서 agent-rebuild",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "sha256": "bd48b9b0227c1fee2370ec1078ac64355c0997ed8ea1526a02ef89c793e55d29"
     },
     "doc/food-agent/agent-update.md": {
       "spec": [
@@ -3830,6 +3327,24 @@
       ],
       "sha256": "dc6873e78eef2cdf4d97633c8f8f0aa4a5ac891e42f2d713550e8dec27b58d62"
     },
+    "doc/food-agent/extraction-normalization.md": {
+      "spec": [
+        "프로젝트 문서 extraction-normalization",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "sha256": "a528461a174e362461893b65c89986dab8ca62d97d682d20780d93560473b7f9"
+    },
     "doc/food-agent/frontend-spec.md": {
       "spec": [
         "프로젝트 문서 frontend-spec",
@@ -3867,8 +3382,8 @@
         "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -3886,7 +3401,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "aa5f7d46241eea7ee110962120dfc2e0cb4f5286f6acf0e64aa52ffaefafc8db"
+      "sha256": "d1bc76ab09371da10892a40b3d08ba86296406cbecd86ed47f3ea74c904730b6"
     },
     "doc/food-agent/implementation-verification.json": {
       "spec": [
@@ -4038,9 +3553,14 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
-      "sha256": "9dacaeefaf3eef5234b263868dc6c6cfe56b290651ae41fc01d483a267aea0a2"
+      "sha256": "b3d294baf5783bf3f211f71ecb39f2734d3c66c129eb3060f1d9097d019293a8"
     },
     "doc/food-agent/operational-update.md": {
       "spec": [
@@ -4365,7 +3885,13 @@
       "status": "Development",
       "created": "2026-10-21",
       "documented": "2026-10-21",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
+        }
+      ],
       "sha256": "26f2387ead34e51ea0004840b5ba9a1056f4ce4906029b30e8049495f2f27ab6"
     },
     "doc/food-agent/review-journey.md": {
@@ -5005,8 +4531,8 @@
         "업무 반영은 권한 있는 API를 통해 수행하고 컴포넌트가 직접 DB에 접근하지 않음"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5024,7 +4550,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "c322f25d40b8688d38b6a61ce5979ce2b1dfb118181df593ed03a8b4a6338b7a"
+      "sha256": "50b4fd50893a79a018c709d10a64dfc94191fff4ab3336f9696cd0c0b31bb870"
     },
     "frontend/src/components/FoodRecordTable.vue": {
       "spec": [
@@ -5450,8 +4976,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5479,7 +5005,7 @@
           "subject": "fix: 이전·최신 검토 결과 간 이동 시 화면 재조회 및 수정 보호"
         }
       ],
-      "sha256": "7a714d13a4f09d9e3030fa27b9e04b5ae59b8fe44b00bb8e67ebf87967c08e3a"
+      "sha256": "90766046ff6f833febd245588cdb4bb813dd1f1b7fb64d09fcfc64972f3d46c3"
     },
     "frontend/src/views/FoodCatalog.vue": {
       "spec": [
@@ -5518,8 +5044,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5542,7 +5068,7 @@
           "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
         }
       ],
-      "sha256": "83589d23521c713daf39f9af01d6788981c8e406cc57ee89f69688085b49844a"
+      "sha256": "b45f78d6ecfc30ca49b2a593436d6d1e2323595fe418d6773f15e9e440868dc8"
     },
     "frontend/src/views/Prices.vue": {
       "spec": [
@@ -5627,6 +5153,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "sha256": "d8709310d95e9933110a88e95929e2e06503e2506ba1a6c9778910afb53d0e6e"
@@ -5717,750 +5248,6 @@
         }
       ],
       "sha256": "e948016ed366bf72822aa7240fa7898b6d8f76e7cf4dc228e25a1efc8b5e65d1"
-    },
-    "legacy/README.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "e06ccf9336f759b0f1ece419e43fa09b7922fc2e15195eb43df63a61c028ed29"
-    },
-    "legacy/incident_agent/.env.example": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "c92b8c8d6ca4c6415d914467f87a0cea4529e6ec02b940ec4c4063a28cad5e22"
-    },
-    "legacy/incident_agent/agent/__init__.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "legacy/incident_agent/agent/deps.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "05e2a41c5a4af655e2544292c015047bd9447d7d47bd2f067515f50042ad4d69"
-    },
-    "legacy/incident_agent/agent/fake_llm.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "8af6ae5c4c804053c6365ff1e54a7e549077a393e4803325cb3021fc2fe977c7"
-    },
-    "legacy/incident_agent/agent/graph.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "a28da5c2a9e24b84b4e23b721a9a2421e16125430c8b80afbdf404bc92b3e3dd"
-    },
-    "legacy/incident_agent/agent/mcp_client.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "eadff6c7bf2c5c69834b78d064b4a059934cc8aac14253da578edbf8e0b27542"
-    },
-    "legacy/incident_agent/agent/ollama_llm.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "5358994cde09c7f337bc11c1713995ab701f91175437238103b86dd1b5de46bb"
-    },
-    "legacy/incident_agent/agent/openai_llm.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "1f7b41e6a71df516f152cee1f371dd6a9b9ea9c02b82aee09ed9644db538f647"
-    },
-    "legacy/incident_agent/agent/retry.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "d2524552348c9faa08b5ce446434bf593677c7028fb38c9e11b03de8839d2a3a"
-    },
-    "legacy/incident_agent/agent/session_store.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "cd1f61396ccd815d940be5a3d8929199648273c360c82fbd722163644b7356a6"
-    },
-    "legacy/incident_agent/agent/supervisor_v1.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "6080b4b8c3a6bd56c617a560a64d644d5f1e5e2721ad65324a09886a2df6cab8"
-    },
-    "legacy/incident_agent/data/monitoring.json": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "44cf849b6ea4c64bb2ff6911fd99add291cc7a7bb94f56dc1ce562e527be8224"
-    },
-    "legacy/incident_agent/data/runbooks/cpu-spike.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "30796f7b5c1d0bc09acfb2518b240e3a07b04136e84fe41397802a3bf2bff22d"
-    },
-    "legacy/incident_agent/data/runbooks/db-down.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "a2d4f4d3bc89984348976e9012518ceba32f389a35bf5ee7da4c19f7e1de9be5"
-    },
-    "legacy/incident_agent/data/runbooks/disk-full.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "72b9d4f006490887ccba981531129e5a42c0d7b8c789208db391fdc5acc566c7"
-    },
-    "legacy/incident_agent/data/runbooks/high-latency.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "0df4846e66993b0b9312327a3f51fe6de663d701c64c2c7c10a9e2c35e9e63a3"
-    },
-    "legacy/incident_agent/data/runbooks/memory-leak.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "085f00e9bba5effbb54e97a82d5f0b7032e027dac29816021729932a5e9a9ee1"
-    },
-    "legacy/incident_agent/data/runbooks/network-timeout.md": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "ed68d1bc775138e7e66cfb50698949856bf27d5e11afefff6e5826223e063596"
-    },
-    "legacy/incident_agent/mcp_server.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "a0ebe98254b12a8732be104094c2ddf91c182a69d9a3ff6ce3f49fb858d2369f"
-    },
-    "legacy/incident_agent/mcp_server_docs.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "cdf5211f4273c035f4143e8d32b27498f7932528c987358ec30a2e26185514bc"
-    },
-    "legacy/incident_agent/requirements.txt": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "9bad2c000146ac435ef3a3876f0e23d169de4521c1ccb86237f532eb4e25c59e"
-    },
-    "legacy/incident_agent/server.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "8d2868a145e034b6444a4203b3fe2ed1cceb2581fa02a17cd30aa3a81491a5f5"
-    },
-    "legacy/incident_agent/sh/make_student_zip.sh": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "b03144ed801a5534851cdf3a85a7f1a053f1d6711c89ea2224b09ded5df1e45c"
-    },
-    "legacy/incident_agent/sh/run_agent_ollma.sh": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "8e9233c5ee814de8c36e88d12b0c95dc6f9d63cb1901689ea886699ec667b10b"
-    },
-    "legacy/incident_agent/sh/run_agent_openai.sh": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "15d8fecb75c94251a4864a7e9d5b70a9b6774a2e4924dba22b0420d8fbe6734f"
-    },
-    "legacy/incident_agent/sh/run_frontend.sh": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "7d9c748c4f7747fb6cdb852e274bfd45b6235a6deaa3162d39e9e6b1a4a6d9b0"
-    },
-    "legacy/incident_agent/sh/setup_ollama.sh": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "80ca5807a75217f4e4adccc2052b53b99b05f3a877ed66028053937f31cebc67"
-    },
-    "legacy/incident_agent/sh/setup_venv.sh": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "63237827de7b0b29f43b43d108878abb006d73d15677f9328c8211f7d593387e"
-    },
-    "legacy/incident_agent/web_chat.html": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "188f844d55a2dbac24eb1a30f92f062bd4ff94332f1a8fe0ec8f8e78a0ccc023"
-    },
-    "legacy/incident_agent/web_demo_server.py": {
-      "spec": [
-        "제공 ZIP 원본 참조",
-        "기존 장애 진단 실습 코드·예제",
-        "원본 참조 자료",
-        "신규 식품 서비스 기본 실행 경로에서 분리한 원본이므로 내용 유지"
-      ],
-      "style": "external",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        }
-      ],
-      "sha256": "6b002df3cd1ba0b7cb6ae6d0a34d3ea5b173654755c9e9c8626f40463ce28b91"
     },
     "mcp_server.py": {
       "spec": [
@@ -6761,8 +5548,8 @@
         "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -6785,7 +5572,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "53b3cfb083c5513945cc430949543f4544060758831053d379b309cb797836a2"
+      "sha256": "9d2e209045fd1407155a036bf12e9ee1ef1050b3e39983c5c0850d5278612336"
     },
     "requirements.txt": {
       "spec": [
@@ -6904,6 +5691,24 @@
       ],
       "sha256": "01a0931dc99dae801324235fb08ab083844d71a98f1b39b5c4a0a2832f7ccdd6"
     },
+    "scripts/evaluate-agent-model.py": {
+      "spec": [
+        "개발·운영 보조 evaluate-agent-model",
+        "CLI 인자·실행 환경·선택 입력 파일",
+        "명령 결과·검증 기록·실행 프로세스",
+        "실제 작업과 읽기 전용 점검의 범위를 해당 CLI에서 확인"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-21",
+      "git_history": [],
+      "sha256": "95bbbaf8f58d8e3045282a963b3444b08060c3873112d578c986d61be027adb2"
+    },
     "scripts/example-notice.txt": {
       "spec": [
         "개발·운영 보조 example-notice",
@@ -6960,8 +5765,8 @@
         "원본·잠금·엄격한 데이터 형식을 보존하고 실명 정보를 추정하지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -6977,10 +5782,15 @@
           "commit": "a6a19ee211de378c4034baa9ecd33d107ec874ea",
           "date": "2026-10-21T20:33:38+09:00",
           "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
+        },
+        {
+          "commit": "82ee3fdf6ff1ef08d452a4c5444c9b5edad8922e",
+          "date": "2026-10-21T21:10:26+09:00",
+          "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
       "original_docstring": "Apply source headers and maintain a format-safe file specification inventory.",
-      "sha256": "b2af30a3507edfcfc1b610d69e3876c635767d0c2632791fe5308b2be941a823"
+      "sha256": "83e3eaeb0e99b30fbbd7489ab6782c372a55b94db9b14ce935f95ce8a90dc378"
     },
     "scripts/import-price-workbook.py": {
       "spec": [
