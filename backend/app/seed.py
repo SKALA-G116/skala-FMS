@@ -1,4 +1,47 @@
-"""Explicit local demo seed. Never run automatically on API startup."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+seed.py - 가상 예제·초기 계정 명시적 생성
+==============================================================================
+설명:
+    - 가상 예제·초기 계정 명시적 생성
+입력·출력 명세:
+    - 입력: 초기 비밀번호·빈 개발 DB
+    - 출력: 가상 식품·단가·계정·예제 작업
+실행 가정:
+    - API 시작 시 자동 실행하지 않고 기존 사용자가 있으면 덮어쓰지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/seed.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Explicit local demo seed. Never run automatically on API startup.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import os
 from argon2 import PasswordHasher
 from psycopg.types.json import Jsonb

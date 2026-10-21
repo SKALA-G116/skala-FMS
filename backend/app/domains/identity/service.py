@@ -1,4 +1,47 @@
-"""Session authentication and role checks shared by domain endpoints."""
+"""
+==============================================================================
+FMS_FILE_SPEC
+service.py - 세션 인증·로그인과 역할 검사
+==============================================================================
+설명:
+    - 세션 인증·로그인과 역할 검사
+입력·출력 명세:
+    - 입력: 요청 쿠키·CSRF·로그인 입력·역할 목록
+    - 출력: 인증된 사용자·세션 응답 또는 인증 오류
+실행 가정:
+    - 비밀번호 해시를 검사하고 공개 사용자 정보에서 해시를 제거
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- backend/app/domains/identity/service.py
+    공통 규칙: doc/file-header-policy.md
+
+기존 모듈 설명:
+    Session authentication and role checks shared by domain endpoints.
+==============================================================================
+"""
+
+# FMS_MODULE_METADATA_BEGIN
+__author__ = "미지정"
+__email__ = "미지정"
+__version__ = "0.1.0"
+__status__ = "Development"
+# FMS_MODULE_METADATA_END
+
+# ---------------------------------------------------------------------------
+# 1. Imports / Module implementation
+# ---------------------------------------------------------------------------
+
 import hashlib
 import secrets
 from datetime import datetime

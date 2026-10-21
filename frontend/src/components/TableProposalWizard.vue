@@ -1,3 +1,32 @@
+<!--
+==============================================================================
+FMS_FILE_SPEC
+TableProposalWizard.vue - 표 행에서 가격 변경안 준비
+==============================================================================
+설명:
+    - 표 행에서 가격 변경안 준비
+입력·출력 명세:
+    - 입력: props·표준 DTO·상위 화면 상태
+    - 출력: 표시 결과와 emit 이벤트
+실행 가정:
+    - 업무 반영은 권한 있는 API를 통해 수행하고 컴포넌트가 직접 DB에 접근하지 않음
+작성 정보:
+    - 작성자: 미지정
+    - 이메일: 미지정
+    - 작성일: 2026-10-21 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
+    2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    상세 Git 이력: git log --follow -- frontend/src/components/TableProposalWizard.vue
+    공통 규칙: doc/file-header-policy.md
+==============================================================================
+-->
 <script setup>
 import {ref,onMounted,computed} from 'vue';import {get,api} from '../api/client';const props=defineProps({sheet:Object,workbook:Object});const emit=defineEmits(['close']);const suppliers=ref([]),supplierName=ref(''),error=ref(''),busy=ref(false),result=ref(null);const form=ref({supplier_id:'',name_column:'',spec_columns:[],price_column:'',unit_column:'',effective_from:'',tax:'unknown',include_zero:false,replace_existing:false});onMounted(async()=>{try{suppliers.value=(await get('/suppliers?limit=100')).items;const c=props.sheet.columns;form.value.name_column=c.find(x=>/식품명|제품명|품명/.test(x.label))?.key||'';form.value.spec_columns=c.filter(x=>['규격수','규격'].includes(x.label)).map(x=>x.key);form.value.unit_column=c.find(x=>x.label==='단위')?.key||''}catch(e){error.value=e.message}});async function stage(){error.value='';busy.value=true;try{if(!form.value.supplier_id){if(!supplierName.value.trim())throw new Error('공급처를 선택하거나 새 업체명을 입력하세요.');const s=await api('/suppliers',{method:'POST',body:{name:supplierName.value.trim()}});form.value.supplier_id=s.data.id}result.value=(await api('/price-sheets/'+props.sheet.id+'/proposals',{method:'POST',body:form.value})).data}catch(e){error.value=e.message}finally{busy.value=false}}
 </script><template><div class="modal-backdrop" @click.self="emit('close')"><section class="modal cell-detail wizard"><button class="close" @click="emit('close')" aria-label="닫기">×</button><div class="eyebrow">PREPARE PRICE CHANGES</div><h2>표에서 단가 변경안 준비</h2><p class="muted small">{{sheet.name}} · {{sheet.row_count}}행. 가격 기준을 지정하면 검토 가능한 묶음으로 나눕니다. 승인 전에는 단가 조회에 반영되지 않습니다.</p><p v-if="error" class="error">{{error}}</p><template v-if="!result"><form @submit.prevent="stage" class="manual-form nested-form"><label>공급처<select v-model="form.supplier_id"><option value="">새 업체명 직접 입력</option><option v-for="s in suppliers" :value="s.id">{{s.name}}</option></select></label><input v-if="!form.supplier_id" v-model="supplierName" placeholder="이 단가를 공급하는 실제 업체명" aria-label="새 공급처명" required><div class="two-col compact-cols"><label>식품명 열<select v-model="form.name_column" required><option value="">선택</option><option v-for="c in sheet.columns" :value="c.key">{{c.label}}</option></select></label><label>반영할 가격 열<select v-model="form.price_column" required><option value="">가격 기준을 선택하세요</option><option v-for="c in sheet.columns" :value="c.key">{{c.label}}</option></select></label></div><label>규격 열 (여러 개 선택 가능)<select v-model="form.spec_columns" multiple size="4" required><option v-for="c in sheet.columns" :value="c.key">{{c.label}}</option></select></label><div class="two-col compact-cols"><label>판매 단위 열<select v-model="form.unit_column" required><option value="">선택</option><option v-for="c in sheet.columns" :value="c.key">{{c.label}}</option></select></label><label>적용 시작일<input v-model="form.effective_from" type="date" required></label></div><label>세금 기준<select v-model="form.tax"><option value="unknown">원문 미기재 / 미확인</option><option value="included">부가세 포함</option><option value="excluded">부가세 별도</option></select></label><label class="inline-label"><input type="checkbox" v-model="form.include_zero">0원 행도 변경안에 포함</label><label class="inline-label"><input type="checkbox" v-model="form.replace_existing">같은 공급 품목의 기존 가격을 적용일부터 정정</label><div class="notice">각 행의 판매 단위 1개 기준 단가로 준비합니다. 공급처·규격·단위가 다르면 별도 품목입니다. 잘못된 값이나 중복 행은 제외 사유를 표시합니다.</div><button class="primary" :disabled="busy">{{busy?'변경안 준비 중…':'변경안 만들기 →'}}</button></form></template><template v-else><div class="success">{{result.prepared_count}}행을 {{result.proposals.length}}개 변경안으로 준비했습니다. 제외 {{result.skipped_count}}행.</div><RouterLink v-for="p in result.proposals" :to="'/reviews/'+p.id" class="compact-row"><span class="grow">{{p.title}}</span>검토 →</RouterLink><details v-if="result.skipped_count"><summary>제외한 행과 사유 {{result.skipped_count}}개</summary><p v-for="s in result.skipped_rows" class="small">{{s.row_number}}행 · {{s.message}}</p></details><RouterLink to="/reviews" class="primary">변경안 검토함 열기 →</RouterLink></template></section></div></template>
