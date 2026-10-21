@@ -36,8 +36,10 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/domains/analysis/__init__.py](../backend/app/domains/analysis/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/agent.py](../backend/app/domains/analysis/agent.py) | LLM 계획·추출과 근거 연결 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/api.py](../backend/app/domains/analysis/api.py) | analysis 도메인 HTTP 유스케이스 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/analysis/consolidation.py](../backend/app/domains/analysis/consolidation.py) | 원본 표 정규화·추출 후보 중복 통합 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/export.py](../backend/app/domains/analysis/export.py) | 근거를 포함한 검토 Excel 생성 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/provider.py](../backend/app/domains/analysis/provider.py) | Ollama 비동기 구조화 추론 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/analysis/reconciliation.py](../backend/app/domains/analysis/reconciliation.py) | 완료 분석의 이력 보존형 재정리 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/schemas.py](../backend/app/domains/analysis/schemas.py) | LLM 계획·추출 응답 스키마 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/service.py](../backend/app/domains/analysis/service.py) | 영속 분석 작업 등록 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/workflow.py](../backend/app/domains/analysis/workflow.py) | LangGraph 분석 흐름 | 파일 상단 헤더 + 외부 목록 |
@@ -100,6 +102,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/tests/conftest.py](../backend/tests/conftest.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_agent.py](../backend/tests/test_agent.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_async_runtime.py](../backend/tests/test_async_runtime.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
+| [backend/tests/test_consolidation.py](../backend/tests/test_consolidation.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_domain_architecture.py](../backend/tests/test_domain_architecture.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_file_specs.py](../backend/tests/test_file_specs.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_food_record.py](../backend/tests/test_food_record.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
@@ -133,6 +136,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/examples/proposal-new-product-bundle.json](../doc/food-agent/examples/proposal-new-product-bundle.json) | 프로젝트 문서 proposal-new-product-bundle | 외부 명세 (원본 보존) |
 | [doc/food-agent/examples/proposal-ready.json](../doc/food-agent/examples/proposal-ready.json) | 프로젝트 문서 proposal-ready | 외부 명세 (원본 보존) |
 | [doc/food-agent/examples/source.json](../doc/food-agent/examples/source.json) | 프로젝트 문서 source | 외부 명세 (원본 보존) |
+| [doc/food-agent/extraction-consolidation.md](../doc/food-agent/extraction-consolidation.md) | 프로젝트 문서 extraction-consolidation | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/frontend-spec.md](../doc/food-agent/frontend-spec.md) | 프로젝트 문서 frontend-spec | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/implementation-status.md](../doc/food-agent/implementation-status.md) | 프로젝트 문서 implementation-status | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/implementation-verification.json](../doc/food-agent/implementation-verification.json) | 프로젝트 문서 implementation-verification | 외부 명세 (원본 보존) |
@@ -250,6 +254,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [scripts/example-price.csv](../scripts/example-price.csv) | 개발·운영 보조 example-price | 외부 명세 (원본 보존) |
 | [scripts/file-specs.py](../scripts/file-specs.py) | 파일 명세·변경 이력 관리 | 파일 상단 헤더 + 외부 목록 |
 | [scripts/import-price-workbook.py](../scripts/import-price-workbook.py) | 개발·운영 보조 import-price-workbook | 파일 상단 헤더 + 외부 목록 |
+| [scripts/reconcile-extraction.py](../scripts/reconcile-extraction.py) | 저장된 추출 결과 재정리 CLI | 파일 상단 헤더 + 외부 목록 |
 | [scripts/start-postgres.sh](../scripts/start-postgres.sh) | 개발·운영 보조 start-postgres | 파일 상단 헤더 + 외부 목록 |
 | [server.py](../server.py) | 프로젝트 설정 server.py | 파일 상단 헤더 + 외부 목록 |
 

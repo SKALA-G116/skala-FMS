@@ -23,6 +23,8 @@ ExtractionReview.vue - 품목 선택·원문 대조·수정·최종 반영
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
+
     상세 Git 이력: git log --follow -- frontend/src/views/ExtractionReview.vue
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -79,6 +81,7 @@ const prepared=computed(()=>report.value?.review_prepared&&proposals.value.lengt
       </nav>
     </section>
     <div v-if="report.latest_analysis_run_id&&report.latest_analysis_run_id!==route.params.id" class="warning">더 최근에 분석한 결과가 있습니다. <RouterLink :to="'/analysis-runs/'+report.latest_analysis_run_id+'/review'">최신 결과 보기 →</RouterLink></div>
+    <div v-if="report.consolidation" class="notice small"><b>원문 후보 {{report.consolidation.input_events}}개 → 검토 항목 {{report.consolidation.review_items}}개</b><p>중복 근거는 품목별로 함께 연결했습니다. 업체·규격·가격·적용 기간이 충돌하는 항목은 별도로 남깁니다.</p><RouterLink v-if="report.consolidation.source_analysis_run_id" :to="'/analysis-runs/'+report.consolidation.source_analysis_run_id+'/review'">이전 추출 결과·검토 기록 보기 →</RouterLink></div>
     <div v-if="locked" class="locked-banner"><span><b>{{applied?'검토한 정보가 장부에 반영되었습니다.':'이 결과는 승인·반영 단계에 있습니다.'}}</b> 원문과 검토 내용을 조회할 수 있습니다.</span><RouterLink to="/products">식품 목록 →</RouterLink></div>
 
     <template v-if="stage==='review'&&report.events.length">
@@ -101,7 +104,7 @@ const prepared=computed(()=>report.value?.review_prepared&&proposals.value.lengt
               <label>어떤 정보인가요?<select v-model="draft.kind"><option v-for="(label,value) in names" :key="value" :value="value">{{label}}</option></select></label>
               <FoodRecordForm v-model="draft.food_record" :companies="suppliers" compact>
               <section class="change-fields" v-if="!['food_profile','new_product'].includes(draft.kind)"><h4>변경 내용</h4>
-                <div v-if="draft.kind==='price'" class="price-grid"><label>단가(원)<input v-model="draft.amount" inputmode="decimal" aria-label="추출 단가"></label><label>기준 수량<input v-model="draft.quantity" inputmode="decimal" aria-label="가격 기준 수량"></label><label>단위<select v-model="draft.unit"><option :value="null">선택</option><option v-for="u in ['g','kg','ml','l','ea','bag','box','pack']" :key="u" :value="u">{{u}}</option></select></label><p class="muted">AI 추출값: {{(active.ai_original||active).amount??'미기재'}}원</p></div>
+                <div v-if="draft.kind==='price'" class="price-grid"><label>단가(원)<input v-model="draft.amount" inputmode="decimal" aria-label="추출 단가"></label><label>기준 수량<input v-model="draft.quantity" inputmode="decimal" aria-label="가격 기준 수량"></label><label>단위<select v-model="draft.unit"><option :value="null">선택</option><option v-for="u in ['g','kg','ml','l','ea','bag','box','pack']" :key="u" :value="u">{{u}}</option></select></label><p class="muted">원문 추출값: {{(active.ai_original||active).amount??'미기재'}}원</p></div>
                 <div class="two-col"><label>적용 시작일<input v-model="draft.effective_from" type="date" aria-label="추출 적용 시작일"></label><label>종료일 <span class="optional">선택</span><input v-model="draft.effective_to" type="date"></label></div>
                 <label>원문에 적힌 사유<textarea v-model="draft.reason" rows="2" aria-label="추출 사유" placeholder="원문에 사유가 없으면 공란"></textarea></label>
               </section>

@@ -23,6 +23,8 @@ documents.py - 원본 텍스트·표·PDF·이미지 파싱
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
+
     상세 Git 이력: git log --follow -- backend/app/parsers/documents.py
     공통 규칙: doc/file-header-policy.md
 
@@ -108,6 +110,7 @@ def parse(path,filename):
                 for i,row in enumerate(rows,1):
                     cells+=sum(v is not None and v!='' for v in row)
                     if i>20000 or cells>200000:raise Problem(422,'SHEET_LIMIT','표의 행·셀 제한을 초과했습니다.')
+                    if not any(v is not None and str(v).strip() for v in row):continue
                     locator={'kind':'spreadsheet','sheet_name':name,'cell_range':f'A{i}:{column(len(row))}{i}'}
                     detected=header_mapping(row);metadata={}
                     if detected:mapping=detected;metadata['structured_table_header']=True
