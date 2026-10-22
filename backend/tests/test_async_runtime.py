@@ -27,6 +27,8 @@ test_async_runtime.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   모델 생성 스키마·원본 검증·HTTP 오류 분류 회귀 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 정상 종료·native 충돌 격리 및 재시작 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_async_runtime.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -107,6 +109,38 @@ def test_ocr_timeout_stops_process_and_clears_resources():
         with pytest.raises(Problem) as exc:worker.request('fake',timeout=.05)
         assert exc.value.code=='OCR_TIMEOUT' and worker.process is None
     finally:worker.close()
+
+
+def test_ocr_idle_close_uses_shutdown_protocol_without_sigterm():
+    script="import sys,json,signal,os\nsignal.signal(signal.SIGTERM,lambda *_:os._exit(47))\nfor line in sys.stdin:\n if json.loads(line).get('shutdown'): sys.exit(0)\n print(json.dumps({'ok':True,'rows':[]}),flush=True)"
+    worker=OCRProcess([sys.executable,'-u','-c',script])
+    try:
+        worker.request('fake');process=worker.process;worker.close()
+        assert process.returncode==0 and worker.responses is None
+    finally:worker.close()
+
+
+def test_ocr_unexpected_exit_is_distinct_and_next_request_can_recover():
+    from backend.app.infrastructure.database import Problem
+    worker=OCRProcess([sys.executable,'-u','-c','import os;os._exit(23)'])
+    try:
+        with pytest.raises(Problem) as exc:worker.request('fake')
+        assert exc.value.code=='OCR_PROCESS_EXIT' and exc.value.details==[{'exit_code':23}]
+        assert worker.process is None and worker.responses is None
+        worker.command=[sys.executable,'-u','-c',"import sys,json\nfor line in sys.stdin:\n if json.loads(line).get('shutdown'):break\n print(json.dumps({'ok':True,'rows':[]}),flush=True)"]
+        assert worker.request('fake')==[]
+    finally:worker.close()
+
+
+def test_ocr_engine_owns_signal_handling_and_limits_cpu_threads(monkeypatch):
+    import types
+    from backend.app.parsers import ocr
+    calls=[]
+    monkeypatch.setitem(sys.modules,'paddle',types.SimpleNamespace(disable_signal_handler=lambda:calls.append('disable')))
+    monkeypatch.setitem(sys.modules,'paddleocr',types.SimpleNamespace(PaddleOCR=lambda **kw:calls.append(kw)))
+    ocr.engine()
+    assert calls[0]=='disable'
+    assert calls[1]['cpu_threads']==2 and calls[1]['device']=='cpu' and calls[1]['enable_mkldnn'] is False
 
 
 def test_agent_does_not_have_a_redundant_verification_pass():

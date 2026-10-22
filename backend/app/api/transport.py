@@ -29,6 +29,8 @@ transport.py - 공통 HTTP 보안·트랜잭션 경계
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/api/transport.py
     공통 규칙: doc/file-header-policy.md
 
@@ -59,6 +61,7 @@ from starlette.background import BackgroundTask
 from starlette.concurrency import run_in_threadpool
 from psycopg.types.json import Jsonb
 from backend.app.infrastructure.database import Problem
+from backend.app.runtime.limits import MAX_FILE_BYTES,MAX_UPLOAD_REQUEST_BYTES
 from backend.app.infrastructure.database import tx
 from backend.app.domains.identity.service import user
 from backend.app.domains.identity.service import permit
@@ -70,7 +73,7 @@ async def process_request(path:str,req:Request):
     if path=='auth/csrf':return await run_in_threadpool(csrf,req)
     method=req.method;mutating=method!='GET';q=dict(req.query_params);payload={};status=200;headers={}
     extra_archive=bool(re.fullmatch(r'(foods|documents)/[^/]+(?:/restore)?',path)) and ((method=='DELETE' and not path.endswith('/restore')) or (method=='POST' and path.endswith('/restore')))
-    if mutating and int(req.headers.get('content-length','0'))>21*1024*1024:raise Problem(413,'REQUEST_TOO_LARGE','요청 크기가 너무 큽니다.')
+    if mutating and int(req.headers.get('content-length','0'))>MAX_UPLOAD_REQUEST_BYTES:raise Problem(413,'REQUEST_TOO_LARGE','요청 크기가 너무 큽니다.')
     if mutating:
         token=req.headers.get('x-csrf-token','')
         if not token or not hmac.compare_digest(token,req.cookies.get('food_csrf','')):raise Problem(403,'CSRF_INVALID','보안 토큰이 만료되었습니다. 새로고침해 주세요.')
@@ -82,8 +85,8 @@ async def process_request(path:str,req:Request):
             async with req.form() as form:
                 upload=form.get('file')
                 if not upload:raise Problem(422,'FILE_REQUIRED','파일을 선택하세요.')
-                content=await upload.read(20*1024*1024+1)
-                if len(content)>20*1024*1024:raise Problem(413,'FILE_TOO_LARGE','파일은 20MB까지 지원합니다.')
+                content=await upload.read(MAX_FILE_BYTES+1)
+                if len(content)>MAX_FILE_BYTES:raise Problem(413,'FILE_TOO_LARGE','파일은 25MB까지 지원합니다.')
                 payload={'title':str(form.get('title') or upload.filename),'filename':upload.filename,'sha256':hashlib.sha256(content).hexdigest()}
             return await run_in_threadpool(dispatch_request,path,req,method,mutating,q,payload,content,extra_archive)
     return await run_in_threadpool(dispatch_request,path,req,method,mutating,q,payload,None,extra_archive)

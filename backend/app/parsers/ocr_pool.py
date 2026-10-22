@@ -11,8 +11,8 @@ ocr_pool.py - 격리 OCR 실행과 프로세스 수명 관리
 실행 가정:
     - 가중치 재사용·직렬 요청·유휴 종료·임시 자원 정리
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ ocr_pool.py - 격리 OCR 실행과 프로세스 수명 관리
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 정상 종료·native 충돌 격리 및 재시작 검증
+
     상세 Git 이력: git log --follow -- backend/app/parsers/ocr_pool.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ ocr_pool.py - 격리 OCR 실행과 프로세스 수명 관리
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -58,13 +60,19 @@ from backend.app.runtime.limits import OCR_MAX_REQUESTS
 class OCRProcess:
     def __init__(self,command=None):
         self.command=command;self.lock=threading.Lock();self.process=None;self.responses=None;self.requests=0;self.last_used=0
-    def _stop(self):
-        process=self.process;self.process=None;self.requests=0
+    def _stop(self,graceful=True):
+        process=self.process;self.process=None;self.responses=None;self.requests=0
         if process:
             if process.poll() is None:
-                process.terminate()
-                try:process.wait(timeout=2)
-                except subprocess.TimeoutExpired:process.kill();process.wait(timeout=2)
+                if graceful:
+                    try:
+                        process.stdin.write('{"shutdown":true}\n');process.stdin.flush()
+                        process.wait(timeout=2)
+                    except (OSError,subprocess.TimeoutExpired):pass
+                if process.poll() is None:
+                    process.terminate()
+                    try:process.wait(timeout=2)
+                    except subprocess.TimeoutExpired:process.kill();process.wait(timeout=2)
             for pipe in (process.stdin,process.stdout):
                 if pipe:
                     try:pipe.close()
@@ -95,14 +103,18 @@ class OCRProcess:
             try:
                 self.process.stdin.write(json.dumps({'source':str(path),'page':page})+'\n');self.process.stdin.flush()
                 line=self.responses.get(timeout=timeout)
-                if line is None:raise ValueError('OCR worker exited')
+                if line is None:
+                    try:code=self.process.wait(timeout=.2)
+                    except subprocess.TimeoutExpired:code=None
+                    self._stop(graceful=False)
+                    raise Problem(422,'OCR_PROCESS_EXIT','OCR 엔진이 예기치 않게 종료됐습니다. 다시 시도하면 새 작업자로 처리합니다.',[{'exit_code':code}])
                 result=json.loads(line)
                 if not result.get('ok'):raise ValueError('OCR prediction failed')
                 rows=result['rows']
                 if not isinstance(rows,list) or len(rows)>2000:raise ValueError('OCR result limit')
                 self.requests+=1;return rows
             except queue.Empty:
-                self._stop();raise Problem(422,'OCR_TIMEOUT','OCR 처리 시간을 초과했습니다. 이미지 크기나 페이지 수를 줄여 주세요.')
+                self._stop(graceful=False);raise Problem(422,'OCR_TIMEOUT','OCR 처리 시간을 초과했습니다. 이미지 크기나 페이지 수를 줄여 주세요.')
             except (ValueError,OSError,KeyError,TypeError):
                 self._stop();raise Problem(422,'OCR_FAILED','OCR 작업자를 다시 시작했습니다. 재시도해 주세요.')
             finally:self.last_used=time.monotonic()

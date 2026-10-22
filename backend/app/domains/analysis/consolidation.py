@@ -28,6 +28,8 @@ consolidation.py - 원본 표 정규화·추출 후보 중복 통합
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/consolidation.py
     공통 규칙: doc/file-header-policy.md
 
@@ -158,6 +160,7 @@ def _merge(target,source):
     # The structured row stays authoritative. Only empty fields are supplemented.
     before=target['food_record'];extra=source['food_record']
     merged=merge_profile(extra,before)
+    if not before['allergens'].get('original_text') and extra['allergens'].get('original_text'):merged['allergens']=deepcopy(extra['allergens'])
     quotes=deepcopy(before['prices'].get('source_columns') or [])
     for quote in extra['prices'].get('source_columns') or []:
         if not any((q['basis'],q['quantity'],q['unit'])==(quote['basis'],quote['quantity'],quote['unit']) for q in quotes):quotes.append(deepcopy(quote))

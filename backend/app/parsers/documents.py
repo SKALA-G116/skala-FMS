@@ -27,6 +27,8 @@ documents.py - 원본 텍스트·표·PDF·이미지 파싱
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/parsers/documents.py
     공통 규칙: doc/file-header-policy.md
 
@@ -54,11 +56,11 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from PIL import Image
 from backend.app.infrastructure.database import Problem
+from backend.app.runtime.limits import MAX_FILE_BYTES
 
-MAX_BYTES=20*1024*1024
 
 def parse(path,filename):
-    if path.stat().st_size>MAX_BYTES:raise Problem(422,'FILE_TOO_LARGE','파일은 20MB까지 지원합니다.')
+    if path.stat().st_size>MAX_FILE_BYTES:raise Problem(422,'FILE_TOO_LARGE','파일은 25MB까지 지원합니다.')
     ext=Path(filename).suffix.lower();out=[]
     def block(text,locator,confidence=None,**metadata):
         text=str(text).strip()
@@ -135,6 +137,28 @@ def parse(path,filename):
         finally:
             if ext=='.xlsx':book.close();excel_stream.close()
             else:book.release_resources()
+        if ext=='.xlsx':
+            import tempfile
+            from backend.app.parsers.xlsx_images import inventory,read_image
+            try:images=inventory(path)
+            except Problem as ex:
+                images=[]
+                block('삽입 이미지 확인 필요: '+ex.message,{'kind':'html','block_id':'embedded-images'},embedded_image_issue={'code':ex.code})
+            for image in images:
+                location={k:image[k] for k in ('sheet_name','row_start','row_end')}
+                if image['index']>40:
+                    block(f"삽입 이미지 {len(images)-40}개는 자동 분석 한도 초과로 원문 확인이 필요합니다.",{'kind':'html','block_id':'embedded-image-limit'},embedded_image_issue={'code':'XLSX_IMAGE_LIMIT','unprocessed_images':len(images)-40})
+                    break
+                try:
+                    if os.getenv('FOOD_OCR_ENABLED','false').lower()!='true':raise Problem(422,'OCR_NOT_CONFIGURED','삽입 이미지의 라벨 정보를 읽으려면 OCR가 필요합니다.')
+                    _,content,_=read_image(path,image['index'],images)
+                    with tempfile.TemporaryDirectory() as directory:
+                        image_path=Path(directory)/Path(image['member']).name;image_path.write_bytes(content)
+                        rows=ocr_result(image_path)
+                    if not rows:raise Problem(422,'XLSX_IMAGE_EMPTY','삽입 이미지에서 텍스트를 읽지 못했습니다.')
+                    for row in rows:block(row['text'],{**row['locator'],'embedded_image':image['index'],**location},row['confidence'])
+                except Problem as ex:
+                    block(f"삽입 이미지 {image['index']} 확인 필요: {ex.message}",{'kind':'html','block_id':f"embedded-image-{image['index']}"},embedded_image_issue={'code':ex.code,**location})
     elif ext=='.pdf':
         from pypdf import PdfReader
         reader=PdfReader(path)

@@ -77,6 +77,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/parsers/documents.py](../backend/app/parsers/documents.py) | 원본 텍스트·표·PDF·이미지 파싱 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/parsers/ocr.py](../backend/app/parsers/ocr.py) | 격리 OCR 실행과 프로세스 수명 관리 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/parsers/ocr_pool.py](../backend/app/parsers/ocr_pool.py) | 격리 OCR 실행과 프로세스 수명 관리 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/parsers/xlsx_images.py](../backend/app/parsers/xlsx_images.py) | XLSX 삽입 이미지·셀 anchor 추출 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/parsers/xlsx_merges.py](../backend/app/parsers/xlsx_merges.py) | 프로젝트 설정 xlsx_merges.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/runtime/__init__.py](../backend/app/runtime/__init__.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/runtime/execution.py](../backend/app/runtime/execution.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
@@ -112,6 +113,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/auth-session.md](../doc/food-agent/auth-session.md) | 프로젝트 문서 auth-session | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/capability-design.md](../doc/food-agent/capability-design.md) | 프로젝트 문서 capability-design | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/design-review-report.json](../doc/food-agent/design-review-report.json) | 프로젝트 문서 design-review-report | 외부 명세 (원본 보존) |
+| [doc/food-agent/embedded-table-images.md](../doc/food-agent/embedded-table-images.md) | 프로젝트 문서 embedded-table-images | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/examples/analysis-profiles.json](../doc/food-agent/examples/analysis-profiles.json) | 프로젝트 문서 analysis-profiles | 외부 명세 (원본 보존) |
 | [doc/food-agent/examples/analysis-run.json](../doc/food-agent/examples/analysis-run.json) | 프로젝트 문서 analysis-run | 외부 명세 (원본 보존) |
 | [doc/food-agent/examples/application-accepted.json](../doc/food-agent/examples/application-accepted.json) | 프로젝트 문서 application-accepted | 외부 명세 (원본 보존) |
@@ -135,6 +137,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/memory-checklist.md](../doc/food-agent/memory-checklist.md) | 프로젝트 문서 memory-checklist | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/model-errors.md](../doc/food-agent/model-errors.md) | 프로젝트 문서 model-errors | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/ocr-reuse-benchmark.json](../doc/food-agent/ocr-reuse-benchmark.json) | 프로젝트 문서 ocr-reuse-benchmark | 외부 명세 (원본 보존) |
+| [doc/food-agent/ocr-stability.md](../doc/food-agent/ocr-stability.md) | 프로젝트 문서 ocr-stability | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/openapi.json](../doc/food-agent/openapi.json) | 프로젝트 문서 openapi | 외부 명세 (원본 보존) |
 | [doc/food-agent/operational-update.md](../doc/food-agent/operational-update.md) | 프로젝트 문서 operational-update | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/pdf-review-provenance.json](../doc/food-agent/pdf-review-provenance.json) | 프로젝트 문서 pdf-review-provenance | 외부 명세 (원본 보존) |
@@ -148,6 +151,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/prompts/price-table-v1.md](../doc/food-agent/prompts/price-table-v1.md) | 프로젝트 문서 price-table-v1 | 외부 명세 (원본 보존) |
 | [doc/food-agent/prompts/review-evidence-v1.md](../doc/food-agent/prompts/review-evidence-v1.md) | 프로젝트 문서 review-evidence-v1 | 외부 명세 (원본 보존) |
 | [doc/food-agent/review-checklist.json](../doc/food-agent/review-checklist.json) | 프로젝트 문서 review-checklist | 외부 명세 (원본 보존) |
+| [doc/food-agent/review-evidence-contract.md](../doc/food-agent/review-evidence-contract.md) | 프로젝트 문서 review-evidence-contract | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/review-inbox.md](../doc/food-agent/review-inbox.md) | 프로젝트 문서 review-inbox | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/review-journey.md](../doc/food-agent/review-journey.md) | 프로젝트 문서 review-journey | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/runtime-policy.json](../doc/food-agent/runtime-policy.json) | 프로젝트 문서 runtime-policy | 외부 명세 (원본 보존) |
@@ -160,10 +164,29 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/validate_contract.py](../doc/food-agent/validate_contract.py) | 프로젝트 문서 validate_contract | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/validate_design.py](../doc/food-agent/validate_design.py) | 프로젝트 문서 validate_design | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/validation-report.json](../doc/food-agent/validation-report.json) | 프로젝트 문서 validation-report | 외부 명세 (원본 보존) |
+| [doc/submission/background-sources.md](../doc/submission/background-sources.md) | 프로젝트 문서 background-sources | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/before-after.md](../doc/submission/before-after.md) | 프로젝트 문서 before-after | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/before-after/01-table-preservation.md](../doc/submission/before-after/01-table-preservation.md) | 프로젝트 문서 01-table-preservation | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/before-after/02-ocr-lifecycle.md](../doc/submission/before-after/02-ocr-lifecycle.md) | 프로젝트 문서 02-ocr-lifecycle | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/before-after/03-review-contract.md](../doc/submission/before-after/03-review-contract.md) | 프로젝트 문서 03-review-contract | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/before-after/04-embedded-labels.md](../doc/submission/before-after/04-embedded-labels.md) | 프로젝트 문서 04-embedded-labels | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/benchmark-view.html](../doc/submission/benchmark-view.html) | 프로젝트 문서 benchmark-view | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/demo-guide.md](../doc/submission/demo-guide.md) | 프로젝트 문서 demo-guide | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/presentation-5min.md](../doc/submission/presentation-5min.md) | 프로젝트 문서 presentation-5min | 파일 상단 헤더 + 외부 목록 |
-| [doc/submission/requirements-audit.md](../doc/submission/requirements-audit.md) | Python 의존성 명세 | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/requirements-audit.md](../doc/submission/requirements-audit.md) | 프로젝트 문서 requirements-audit | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/screenshots/01-documents.jpg](../doc/submission/screenshots/01-documents.jpg) | 프로젝트 문서 01-documents | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/03-agent-log.jpg](../doc/submission/screenshots/03-agent-log.jpg) | 프로젝트 문서 03-agent-log | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/04-price-table.jpg](../doc/submission/screenshots/04-price-table.jpg) | 프로젝트 문서 04-price-table | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/05-table-filter.jpg](../doc/submission/screenshots/05-table-filter.jpg) | 프로젝트 문서 05-table-filter | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/06-review.jpg](../doc/submission/screenshots/06-review.jpg) | 프로젝트 문서 06-review | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/07-food-db.jpg](../doc/submission/screenshots/07-food-db.jpg) | 프로젝트 문서 07-food-db | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/08-food-edit.jpg](../doc/submission/screenshots/08-food-edit.jpg) | 프로젝트 문서 08-food-edit | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/09-before-after.jpg](../doc/submission/screenshots/09-before-after.jpg) | 프로젝트 문서 09-before-after | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/10-history-evidence.jpg](../doc/submission/screenshots/10-history-evidence.jpg) | 프로젝트 문서 10-history-evidence | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/11-table-agent-log.jpg](../doc/submission/screenshots/11-table-agent-log.jpg) | 프로젝트 문서 11-table-agent-log | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/12-model-calls.jpg](../doc/submission/screenshots/12-model-calls.jpg) | 프로젝트 문서 12-model-calls | 외부 명세 (원본 보존) |
+| [doc/submission/table-demo-result.json](../doc/submission/table-demo-result.json) | 프로젝트 문서 table-demo-result | 외부 명세 (원본 보존) |
+| [doc/submission/table-preservation-benchmark.json](../doc/submission/table-preservation-benchmark.json) | 프로젝트 문서 table-preservation-benchmark | 외부 명세 (원본 보존) |
 | [frontend/index.html](../frontend/index.html) | Vue 애플리케이션 index | 파일 상단 헤더 + 외부 목록 |
 | [frontend/package-lock.json](../frontend/package-lock.json) | Vue 애플리케이션 package-lock | 외부 명세 (원본 보존) |
 | [frontend/package.json](../frontend/package.json) | Vue 애플리케이션 package | 외부 명세 (원본 보존) |
@@ -209,9 +232,12 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [migrations/007_record_archives.sql](../migrations/007_record_archives.sql) | DB 스키마 007_record_archives | 파일 상단 헤더 + 외부 목록 |
 | [migrations/008_asset_cleanup.sql](../migrations/008_asset_cleanup.sql) | DB 스키마 008_asset_cleanup | 파일 상단 헤더 + 외부 목록 |
 | [migrations/009_job_fairness.sql](../migrations/009_job_fairness.sql) | DB 스키마 009_job_fairness | 파일 상단 헤더 + 외부 목록 |
+| [output/presentation/food-ledger-5min.pdf](../output/presentation/food-ledger-5min.pdf) | 프로젝트 설정 food-ledger-5min.pdf | 외부 명세 (원본 보존) |
+| [output/presentation/food-ledger-5min.pptx](../output/presentation/food-ledger-5min.pptx) | 프로젝트 설정 food-ledger-5min.pptx | 외부 명세 (원본 보존) |
 | [readmd.md](../readmd.md) | 프로젝트 문서 readmd | 파일 상단 헤더 + 외부 목록 |
 | [requirements.txt](../requirements.txt) | Python 의존성 명세 | 파일 상단 헤더 + 외부 목록 |
 | [run.sh](../run.sh) | 개발·운영 보조 run | 파일 상단 헤더 + 외부 목록 |
+| [scripts/benchmark-table-preservation.py](../scripts/benchmark-table-preservation.py) | 개발·운영 보조 benchmark-table-preservation | 파일 상단 헤더 + 외부 목록 |
 | [scripts/demo-preflight.py](../scripts/demo-preflight.py) | 개발·운영 보조 demo-preflight | 파일 상단 헤더 + 외부 목록 |
 | [scripts/dev.sh](../scripts/dev.sh) | 개발·운영 보조 dev | 파일 상단 헤더 + 외부 목록 |
 | [scripts/evaluate-agent-model.py](../scripts/evaluate-agent-model.py) | 개발·운영 보조 evaluate-agent-model | 파일 상단 헤더 + 외부 목록 |

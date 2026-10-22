@@ -27,10 +27,18 @@ readmd.md - 프로젝트 문서 readmd
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   실제 화면·비교 근거·5분 발표 자료 작성
+
     상세 Git 이력: git log --follow -- readmd.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 -->
+
+> **README 중심 5분 발표**는 [README.md](README.md), [발표 흐름](doc/submission/presentation-5min.md), [Before/After](doc/submission/before-after.md)를 기준으로 합니다. 이 문서는 설치·상세 구현 참고용입니다.
+
+
+> 2026-10-22 제출·발표 최신 요약은 [README](README.md)를 기준으로 합니다. 실제 화면, Backend 142개·Frontend 14개 검증, 동일 단가표 비교, [5분 PDF](output/presentation/food-ledger-5min.pdf)와 [PPTX](output/presentation/food-ledger-5min.pptx), [300초 대본](doc/submission/presentation-5min.md)을 추가했습니다. 아래의 과거 측정·리팩토링 기록은 해당 시점의 결과입니다.
+
 
 > 현재 사용자 흐름: **자료 가져오기 → Agent 도구 선택·LangGraph 처리 → 검수·승인 → 식품 DB**. 주요 메뉴는 네 개이며 수동 JSON 변경안 작성·별도 대시보드를 제거했습니다. 최신 API·알레르기 번호·식품 수정 정책은 [서비스 흐름 명세](doc/food-agent/service-workflow.md)를 우선 참고하세요.
 
@@ -304,7 +312,7 @@ DB와 원본 assets는 영속 볼륨으로 보관합니다. 기본 Docker 이미
 | 분석 상태 | LangGraph checkpoint에는 ID 위주로 저장; 큰 원문과 추출 결과는 저장소에 보관 |
 | 장시간 작업 | 기본 600초 시간 구간 뒤 진행 상태를 보존하고 재등록; 취소·정상 종료 시 이어서 처리 |
 | OCR | 별도 프로세스 1개 직렬 재사용, 기본 60초 유휴 해제·20회 처리 후 재시작 |
-| 파일/추출 | 업로드 20MB, PDF 20페이지, 이미지 1,600만 픽셀, 추출 구간/텍스트·결과 크기 제한 |
+| 파일/추출 | 업로드 25MB, PDF 20페이지, 이미지 1,600만 픽셀, 추출 구간/텍스트·결과 크기 제한 |
 | Excel | read-only 행 순회, workbook/스트림 닫기, 셀·압축 해제 크기 제한, 페이지 조회 |
 | DB | 프로세스당 최대 6개 연결. 업로드 동시 진입 2개, HTTP 동기 작업 스레드 8개 |
 

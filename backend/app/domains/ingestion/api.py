@@ -11,8 +11,8 @@ api.py - ingestion 도메인 HTTP 유스케이스
 실행 가정:
     - 공통 transport가 소유한 같은 DB 트랜잭션을 사용
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ api.py - ingestion 도메인 HTTP 유스케이스
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/domains/ingestion/api.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ api.py - ingestion 도메인 HTTP 유스케이스
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -151,6 +153,12 @@ def handle(ctx):
             expected = hmac.new(ASSET_SIGN_KEY, f"{id}:{u['id']}:{exp}".encode(), hashlib.sha256).hexdigest()
             if int(exp) < datetime.now(timezone.utc).timestamp() or not hmac.compare_digest(sig, expected):
                 raise Problem(403, 'ASSET_LINK_EXPIRED', '다운로드 링크가 만료되었습니다. 새 링크를 요청하세요.')
+            if q.get('embedded_image'):
+                from fastapi.responses import Response
+                from backend.app.parsers.xlsx_images import read_image
+                if not asset['filename'].lower().endswith('.xlsx') or not q['embedded_image'].isdigit():raise Problem(422,'XLSX_IMAGE_INPUT','엑셀 삽입 이미지 번호를 확인하세요.')
+                _,content,mime=read_image(DATA/asset['storage_key'],int(q['embedded_image']))
+                return Response(content,media_type=mime,headers={'X-Content-Type-Options':'nosniff','Cache-Control':'private, no-store'})
             return FileResponse(DATA / asset['storage_key'], media_type=asset['content_type'], filename=asset['filename'], content_disposition_type='inline' if q.get('preview') == 'true' and asset['content_type'] in ('image/png', 'image/jpeg', 'image/webp', 'image/gif', 'application/pdf') else 'attachment')
         else:
             raise Problem(404, 'NOT_FOUND', '파일을 찾을 수 없습니다.')

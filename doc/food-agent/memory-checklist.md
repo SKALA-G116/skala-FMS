@@ -66,7 +66,7 @@ memory-checklist.md - 프로젝트 문서 memory-checklist
          + PostgreSQL·파일 버퍼·운영 여유
 ```
 
-페이지 작업 메모리는 압축 파일 크기가 아니라 decoded width×height×channels와 전처리 복사본·추론 tensor의 영향을 받는다. base64는 대략 원본 바이트의 4/3이고 JSON/문자열/복사본은 추가 비용이다. 따라서 ‘첨부 20MiB 이하’만으로 메모리를 제한했다고 볼 수 없다.
+페이지 작업 메모리는 압축 파일 크기가 아니라 decoded width×height×channels와 전처리 복사본·추론 tensor의 영향을 받는다. base64는 대략 원본 바이트의 4/3이고 JSON/문자열/복사본은 추가 비용이다. 따라서 ‘첨부 25MiB 이하’만으로 메모리를 제한했다고 볼 수 없다.
 
 프로세스당 한 번 생성은 전체 배포에서 한 개라는 뜻이 아니다. Uvicorn worker 4개에 OCR을 각각 로딩하면 4개 모델이 생긴다. v0.2는 API에 OCR을 로딩하지 않고 OCR 작업자 1개부터 시작한다. 로컬 LLM을 사용하면 그 모델 메모리도 OCR과 함께 예산에 넣는다. 서버 사양 미확정이므로 필요한 GB나 GPU 사용 여부를 보장하지 않는다.
 
@@ -76,7 +76,7 @@ memory-checklist.md - 프로젝트 문서 memory-checklist
 
 | 대상 | 초기 정책 | 초과 시 |
 |---|---|---|
-| 업로드 | 파일 20MiB | 413, 분할/지원 범위 안내 |
+| 업로드 | 파일 25MiB | 413, 분할/지원 범위 안내 |
 | 문서 | 20페이지, 이미지 16MP, 엑셀 2만 행/20만 비어 있지 않은 셀 | 분석 거절 또는 명시적 분할 작업. 조용히 자르지 않음 |
 | OCR | 작업자 1개, 한 작업자당 1페이지 작업 | 큐 대기, worker 수는 메모리 측정 후 증가 |
 | 네트워크/LLM | source당 네트워크 1개, 호스트당 LLM 2개 | semaphore와 backpressure |

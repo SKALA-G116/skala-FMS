@@ -11,8 +11,8 @@ SourceComparison.vue - 원본 이미지·추출 텍스트 비교
 실행 가정:
     - 업무 반영은 권한 있는 API를 통해 수행하고 컴포넌트가 직접 DB에 접근하지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ SourceComparison.vue - 원본 이미지·추출 텍스트 비교
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- frontend/src/components/SourceComparison.vue
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -30,7 +32,7 @@ SourceComparison.vue - 원본 이미지·추출 텍스트 비교
 <script setup>
 import {ref,watch,computed} from 'vue';import {get} from '../api/client';
 const emit=defineEmits(['ready']);const props=defineProps({ids:{type:Array,default:()=>[]}});const evidence=ref([]),images=ref([]),error=ref(''),loading=ref(false),mode=ref('preview'),zoom=ref(false),marks=ref(true);const sourceUrl=computed(()=>evidence.value.find(e=>e.source_url)?.source_url);let serial=0;
-watch(()=>props.ids,async ids=>{const version=++serial;zoom.value=false;loading.value=true;evidence.value=[];images.value=[];emit('ready',false);error.value='';try{const rows=await Promise.all(ids.map(id=>get('/evidence/'+id)));if(version!==serial)return;evidence.value=rows;const groups=new Map();for(const ev of rows){const l=ev.locator;if(!['image','pdf'].includes(l.kind))continue;const key=l.asset_id+':'+l.page_number;if(!groups.has(key))groups.set(key,{key,kind:l.kind,asset:l.asset_id,page:l.page_number,regions:[]});if(l.bbox)groups.get(key).regions.push(l.bbox)}const previews=await Promise.all([...groups.values()].map(async g=>({...g,url:(await get('/assets/'+g.asset+'/access')).url+'&preview=true'})));if(version===serial){images.value=previews;if(!previews.length)mode.value='text';emit('ready',rows.length>0)}}catch(e){if(version===serial)error.value=e.message}finally{if(version===serial)loading.value=false}},{immediate:true});
+watch(()=>props.ids,async ids=>{const version=++serial;zoom.value=false;loading.value=true;evidence.value=[];images.value=[];emit('ready',false);error.value='';try{const rows=await Promise.all(ids.map(id=>get('/evidence/'+id)));if(version!==serial)return;evidence.value=rows;const groups=new Map();for(const ev of rows){const l=ev.locator;if(!['image','pdf'].includes(l.kind))continue;const key=l.asset_id+':'+l.page_number+':'+(l.embedded_image||'');if(!groups.has(key))groups.set(key,{key,kind:l.kind,asset:l.asset_id,page:l.page_number,embedded:l.embedded_image,sheet:l.sheet_name,rowStart:l.row_start,rowEnd:l.row_end,regions:[]});if(l.bbox)groups.get(key).regions.push(l.bbox)}const previews=await Promise.all([...groups.values()].map(async g=>({...g,url:(await get('/assets/'+g.asset+'/access')).url+'&preview=true'+(g.embedded?'&embedded_image='+g.embedded:'')})));if(version===serial){images.value=previews;if(!previews.length)mode.value='text';emit('ready',rows.length>0)}}catch(e){if(version===serial)error.value=e.message}finally{if(version===serial)loading.value=false}},{immediate:true});
 const region=b=>({left:b[0]*100+'%',top:b[1]*100+'%',width:(b[2]-b[0])*100+'%',height:(b[3]-b[1])*100+'%'});
 </script>
 <template>
@@ -43,7 +45,7 @@ const region=b=>({left:b[0]*100+'%',top:b[1]*100+'%',width:(b[2]-b[0])*100+'%',h
       <template v-if="mode==='preview'&&images.length">
         <div class="preview-controls"><label><input type="checkbox" v-model="marks">근거 위치 표시</label><button :aria-pressed="zoom" @click="zoom=!zoom">{{zoom?'화면에 맞추기':'크게 보기 ＋'}}</button></div>
         <p class="source-help">원문의 강조된 부분과 추출된 정보를 대조해 주세요.</p>
-        <article v-for="g in images" :key="g.key" class="preview-page"><div class="source-caption">{{g.kind==='image'?'이미지':'PDF'}} · {{g.page}}페이지</div><div class="preview-scroll"><div v-if="g.kind==='image'" class="evidence-image" :class="{zoomed:zoom}"><img :src="g.url" alt="선택한 품목의 원문 이미지"><template v-if="marks"><div v-for="(box,i) in g.regions" :key="i" class="evidence-region" :style="region(box)"></div></template></div><iframe v-else :src="g.url+'#page='+g.page" title="선택 품목의 원본 PDF 페이지"></iframe></div></article>
+        <article v-for="g in images" :key="g.key" class="preview-page"><div class="source-caption">{{g.embedded?g.sheet+' · 삽입 이미지 '+g.embedded:(g.kind==='image'?'이미지':'PDF')+' · '+g.page+'페이지'}}</div><div class="preview-scroll"><div v-if="g.kind==='image'" class="evidence-image" :class="{zoomed:zoom}"><img :src="g.url" alt="선택한 품목의 원문 이미지"><template v-if="marks"><div v-for="(box,i) in g.regions" :key="i" class="evidence-region" :style="region(box)"></div></template></div><iframe v-else :src="g.url+'#page='+g.page" title="선택 품목의 원본 PDF 페이지"></iframe></div></article>
         <button class="read-text-button" @click="mode='text'">읽기 어려우신가요? 추출 텍스트 보기 →</button>
       </template>
       <template v-if="mode==='text'||!images.length">

@@ -39,6 +39,10 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   다중 원문 근거 승인·검증 오류 표시·조회 재사용 개선
+
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -993,3 +997,94 @@ def test_approved_same_size_flavors_keep_separate_catalog_variants(client,monkey
     with tx() as c:
         rows=c.execute("SELECT fp.variant_id,fp.data#>>'{attributes,flavor}' flavor FROM food_profiles fp WHERE fp.data->>'food_name'=%s",(name,)).fetchall()
         assert len(rows)==2 and {row['flavor'] for row in rows}=={'오리지널','매콤'}
+
+
+def test_review_approval_preserves_more_than_twenty_source_references(client,monkeypatch):
+    from backend.app.domains.analysis import agent
+    from test_agent import TestModel
+    name='다중 근거 승인 '+uid()
+    class Model(TestModel):
+        def generate(self,task,payload,schema):
+            if 'routes' in schema['properties']:return {'document_type':'notice','summary':'다중 원문','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_text','reason':'원문 해석'} for s in payload['sources']]}
+            event={k:None for k in ['company_name','food_code','attributes_text','allergen_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
+            return {'events':[{**event,'kind':'food_profile','product_name':name,'replacements':[],'uncertainties':[],'source_ids':[payload['segments'][0]['id']]}]}
+    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setattr(agent,'LocalModel',Model);login(client)
+    imported=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('refs.txt',name.encode())},data={'title':name}).json();assert once()
+    runid=imported['analysis_job']['analysis_run_id'];rid=imported['revision']['id']
+    with tx() as c:
+        run=get(c,'analysis_run',runid);report=get(c,'agent_report',run['agent_report_id']);item=report['events'][0]
+        template=get(c,'evidence',item['evidence_ids'][0]);refs=list(item['evidence_ids'])
+        for _ in range(40):
+            ev={**template,'id':uid()};put(c,'evidence',ev);refs.append(ev['id'])
+        item['evidence_ids']=refs;put(c,'agent_report',report)
+    report=client.get('/api/v1/analysis-runs/'+runid+'/report').json();item=report['events'][0]
+    checked=client.patch('/api/v1/analysis-runs/'+runid+'/items/'+item['id'],json={'version':report['version'],'status':'confirmed','fields':{},'reason':'모든 원문 대조 완료'},headers={'Idempotency-Key':uid()});assert checked.status_code==200,checked.text
+    approved=post(client,'/analysis-runs/'+runid+'/approve',{'version':checked.json()['version']});assert approved.status_code==202,approved.text
+    for pid in approved.json()['proposal_ids']:
+        proposal=client.get('/api/v1/proposals/'+pid).json()
+        assert all(set(fe['evidence_ids'])==set(refs) for ch in proposal['changes'] for fe in ch['field_evidence'])
+    assert once()
+    with tx() as c:
+        profile=c.execute("SELECT variant_id FROM food_profiles WHERE data->>'food_name'=%s",(name,)).fetchone()
+        audit=c.execute("SELECT data FROM app_records WHERE kind='audit' AND data->>'kind'='set_food_profile' AND data->>'entity_id'=%s",(str(profile['variant_id']),)).fetchone()['data']
+        assert set(audit['evidence_ids'])==set(refs)
+
+
+def test_contract_validation_limits_do_not_echo_input_values():
+    from backend.app.infrastructure.contracts import schema_check,SPEC
+    from backend.app.infrastructure.database import Problem
+    refs=[uid() for _ in range(2000)]
+    valid={'field_path':'/profile','evidence_ids':refs,'origin':'extracted','reviewer_justification':None}
+    schema_check('FieldEvidence',valid)
+    with pytest.raises(Problem) as exc:schema_check('FieldEvidence',{**valid,'evidence_ids':refs+[uid()]})
+    assert len(str(exc.value.details))<400
+    assert refs[0] not in str(exc.value.details)
+    with pytest.raises(Problem):schema_check('FieldEvidence',{**valid,'evidence_ids':[refs[0],refs[0]]})
+    with pytest.raises(Problem):schema_check('FieldEvidence',{**valid,'evidence_ids':['invalid-uuid']})
+
+
+def test_document_upload_accepts_exactly_25mb_and_rejects_one_more_byte(client):
+    from backend.app.runtime.limits import MAX_FILE_BYTES
+    login(client);body=b'x'*MAX_FILE_BYTES
+    response=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('boundary.txt',body)},data={'title':'25MB 경계 검증'})
+    assert response.status_code==201,response.text
+    assert response.json()['revision']['assets'][0]['size_bytes']==MAX_FILE_BYTES
+    assert post(client,'/jobs/'+response.json()['analysis_job']['id']+'/cancel').status_code==200
+    too_large=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('too-large.txt',body+b'x')},data={'title':'상한 초과'})
+    assert too_large.status_code==413 and too_large.json()['error']['code']=='FILE_TOO_LARGE'
+
+
+def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(client,monkeypatch):
+    import io,openpyxl
+    from PIL import Image
+    from openpyxl.drawing.image import Image as ExcelImage
+    from backend.app.domains.analysis import agent
+    from test_agent import TestModel
+    name='이미지 라벨 검증 '+uid()
+    image=io.BytesIO();Image.new('RGB',(200,100),'white').save(image,format='PNG');image.seek(0)
+    wb=openpyxl.Workbook();ws=wb.active;ws.append(['제품명','규격','학교가']);ws.append([name,'50g',1200]);ws.add_image(ExcelImage(image),'D2');output=io.BytesIO();wb.save(output);wb.close()
+    class LabelModel(TestModel):
+        def generate(self,task,payload,schema):
+            if 'routes' in schema['properties']:
+                return {'document_type':'price_table','summary':'표와 삽입 라벨','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_image_regions' if s['location']['kind']=='image' else 'normalize_table','reason':'표 셀과 라벨 이미지'} for s in payload['sources']]}
+            assert 'regions' not in schema['properties'],'명확한 행 anchor에 영역 분류를 다시 호출하면 안 됩니다.'
+            assert '해당 상품의 원재료' in payload['instructions']
+            event={k:None for k in ['company_name','food_code','attributes_text','allergen_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
+            return {'events':[{**event,'kind':'food_profile','product_name':'라벨상 다른 이름','spec':'999g','attributes_text':'우유10%','allergen_text':'우유 함유','replacements':[],'uncertainties':[],'source_ids':[payload['segments'][0]['id']]}]}
+    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setenv('FOOD_OCR_ENABLED','true');monkeypatch.setattr(agent,'LocalModel',LabelModel)
+    monkeypatch.setattr('backend.app.parsers.documents.ocr_result',lambda *args:[{'text':'원재료 우유10% / 우유 함유','confidence':.95,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1],'image_width':200,'image_height':100}}])
+    login(client);response=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('label.xlsx',output.getvalue())},data={'title':'삽입 라벨 대조'});assert response.status_code==201,response.text
+    imported=response.json();assert once();job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']=='succeeded',job
+    report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json();assert len(report['events'])==1,report['events']
+    event=report['events'][0];record=event['food_record']
+    assert record['food_name']==name and record['specification']['original_text']=='50g'
+    assert record['allergens']['contains']==['milk'] and record['allergens']['review_status']=='source_declared'
+    assert record['attributes']['ingredients'][0]['name']=='우유'
+    assert record['field_sources']['allergens']['origin']=='ocr_llm'
+    assert len(event['evidence_ids'])==2
+    trace=next(t for t in report['tool_executions'] if t['tool']=='extract_image_regions');assert trace['layout']['method']=='explicit_spreadsheet_anchor'
+    aid=imported['revision']['assets'][0]['id'];access=client.get('/api/v1/assets/'+aid+'/access').json()['url']
+    preview=client.get(access+'&embedded_image=1');assert preview.status_code==200 and preview.headers['content-type']=='image/png'
+    assert client.get(access+'&embedded_image=999').status_code==404
+    assert client.get('/api/v1/assets/'+aid+'/content?exp=9999999999&sig=invalid&embedded_image=1').status_code==403
+    assert report['proposal_ids']==[]

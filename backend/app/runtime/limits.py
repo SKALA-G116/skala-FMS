@@ -11,8 +11,8 @@ limits.py - 실행 예산과 중단·메모리 제어
 실행 가정:
     - worker RSS와 별도 Ollama/OCR 메모리를 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ limits.py - 실행 예산과 중단·메모리 제어
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/runtime/limits.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ limits.py - 실행 예산과 중단·메모리 제어
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -51,6 +53,9 @@ def integer(name,default,minimum,maximum):
     except ValueError:return default
 
 MODEL_CONCURRENCY=integer('FOOD_MODEL_CONCURRENCY',1,1,2)
+
+MAX_FILE_BYTES=25*1024*1024
+MAX_UPLOAD_REQUEST_BYTES=MAX_FILE_BYTES+1024*1024
 
 MODEL_TIMEOUT=integer('FOOD_MODEL_TIMEOUT_SECONDS',240,10,600)
 

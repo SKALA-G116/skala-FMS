@@ -1,0 +1,33 @@
+<!--
+==============================================================================
+FMS_FILE_SPEC
+benchmark-view.html - 프로젝트 문서 benchmark-view
+==============================================================================
+설명:
+    - 프로젝트 문서 benchmark-view
+입력·출력 명세:
+    - 입력: 설계·구현·측정·검증 근거
+    - 출력: 설명·명세·예제·검증 또는 발표 안내
+실행 가정:
+    - 계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인
+작성 정보:
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
+    - 작성일: 2026-10-22 (최초 Git 등록일 기준)
+    - 라이선스: 미지정
+    - 버전: 0.1.0
+    - 상태: Development
+변경 이력 (Revision History):
+    DATE        AUTHOR      VERSION  DESCRIPTION
+    --------------------------------------------------------------------
+    2026-10-22  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-22  김재현(Finn) v0.1.0   실제 화면·비교 근거·5분 발표 자료 작성
+
+    2026-10-22  김재현(Finn) v0.1.0   발표·비교 자료 및 바이너리 외부 명세 지원
+
+    상세 Git 이력: git log --follow -- doc/submission/benchmark-view.html
+    공통 규칙: doc/file-header-policy.md
+==============================================================================
+-->
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>동일 단가표 Before / After 재실행</title><style>body{margin:60px auto;max-width:1100px;font-family:"Apple SD Gothic Neo",sans-serif;color:#17392f;background:#f6f8f5}h1{font-size:42px}p{font-size:22px;line-height:1.5}table{border-collapse:collapse;width:100%;font-size:26px;background:white}th,td{padding:20px;text-align:left;border-bottom:1px solid #d6e0d8}thead{background:#174e40;color:white}small{display:block;font-size:17px;line-height:1.5;margin-top:24px;color:#4d6259}</style><h1>동일 단가표 Before / After</h1><p>코주부2학기신제품 18행을 이전·현재 파서와 통합 코드로 재실행했습니다.</p><table><thead><tr><th>비교 항목</th><th>Before</th><th>After</th></tr></thead><tbody><tr><th>입력에서 읽은 상품 행</th><td>18</td><td>18</td></tr><tr><th>통합 후 남은 검토 행</th><td>8</td><td>18</td></tr><tr><th>맛·종류를 구분한 행</th><td>0</td><td>18</td></tr><tr><th>검토본에 남은 숫자 가격 값</th><td>9</td><td>19</td></tr><tr><th>행 추출 LLM 호출</th><td>0</td><td>0</td></tr></tbody></table><p>동일 크기의 서로 다른 맛과 가격을 한 상품으로 합치던 문제를 수정했습니다.</p><small>재실행 결과 보고서 · 2026-10-22 · 입력 SHA-256 2eb96a3f807393edf17835e28212c6ca30df5a571d69f47ad0f3f5c5d95b5679<br>Before 13e4847 / After 5a8ff51 · DTO helper는 현재 코드 공유 · DB·모델 실행 제외<br>단일 파일의 행·가격 보존 검증입니다. 전체 추출 정확도·전체 Agent 속도 개선율을 뜻하지 않습니다.</small></html>
