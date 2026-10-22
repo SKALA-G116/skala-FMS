@@ -296,9 +296,14 @@
           "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
           "date": "2026-10-22T13:21:04+09:00",
           "subject": "Explain agent tools and actual LangGraph execution with examples"
+        },
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
-      "sha256": "bd93d6e6f33a713f6f78ff5452dfff2ecf03909cd12cb8eb8414f312d14162f9"
+      "sha256": "402edce1cb55fec059c1faa8e4171ab955cc25f7e22d5ed3abc26b74a6f887a7"
     },
     "backend/__init__.py": {
       "spec": [
@@ -748,7 +753,7 @@
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "12145a61ba5060fa807dc56abb57b6824f7228a0b3cd1bb46e9959a5f3696325"
+      "sha256": "296c4453d9dbfa113dd0901e89d79bede7c46b9463c802d2b2ecf314fb56c573"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -1042,7 +1047,7 @@
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
-      "sha256": "42a8367d8e775d645d97247ad947f020ec4a966312939d3ab62cbc59e01da176"
+      "sha256": "c10671c0f6ba31510fe0e816a21748d481d9a32cf6927869fe864aa8bf36d7e1"
     },
     "backend/app/domains/analysis/service.py": {
       "spec": [
@@ -1290,7 +1295,7 @@
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
-      "sha256": "913a399ddffd8e1ae2e2d86e6464cc0704882e2d2902616250e4b7429f61546e"
+      "sha256": "19d33e7921260ca5fe7353618601e17178a5874d416a3e7927b2d5c79707bcd3"
     },
     "backend/app/domains/identity/__init__.py": {
       "spec": [
@@ -3001,7 +3006,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "625a17fdcdc3f093622de419e7c282d35a4709d178da8f723bd45eadea91a665"
+      "sha256": "5bec7d239786ef5e9d710ed84e71829fadfdc0f02bf0588eacc5e9054f062b12"
     },
     "backend/tests/test_parsers_mcp.py": {
       "spec": [
@@ -3130,7 +3135,7 @@
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "2e5e9aae96ec5ebe1397d224af55499e9d9a6280e6a7d5acee30423d881c8264"
+      "sha256": "5068b42699d5d63b243a181b8c74075123f2f173e0688d58de9caf0f51a456d8"
     },
     "compose.food.yml": {
       "spec": [
@@ -3362,6 +3367,11 @@
           "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
           "date": "2026-10-22T13:21:04+09:00",
           "subject": "Explain agent tools and actual LangGraph execution with examples"
+        },
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
       "sha256": null
@@ -3436,6 +3446,11 @@
           "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
           "date": "2026-10-22T13:21:04+09:00",
           "subject": "Explain agent tools and actual LangGraph execution with examples"
+        },
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
       "sha256": null
@@ -4234,6 +4249,24 @@
         }
       ],
       "sha256": "ddbbe0616142e7bfb25876fe1341d9b95676d9c01de8febbf84871c4ef00a430"
+    },
+    "doc/food-agent/ingredient-extraction.md": {
+      "spec": [
+        "프로젝트 문서 ingredient-extraction",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "9806c517509a79c8c7d37a8383e3a7d85ff086fab53d6520129bb411027614d0"
     },
     "doc/food-agent/initial-refactor.md": {
       "spec": [
@@ -5366,7 +5399,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
+        }
+      ],
       "sha256": "d5b9ec38b7e1a146f5f4e33fe2436fa9dbe8814b498280dce25f629828baba97"
     },
     "doc/submission/current-code-review.md": {
@@ -5384,7 +5423,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
+        }
+      ],
       "sha256": "1dfba8127e7e4e9d794866a93377362c11eedd579e3e742fa2bc37686041776c"
     },
     "doc/submission/demo-guide.md": {
@@ -5417,6 +5462,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
       "sha256": "af1540bf32e61dda1723eef93fcc26e0f55924c9b77f59e35404bb1786e587f7"
@@ -5461,6 +5511,11 @@
           "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
           "date": "2026-10-22T13:21:04+09:00",
           "subject": "Explain agent tools and actual LangGraph execution with examples"
+        },
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
       "sha256": "85195f0144a20f48e067c7fa34be48ba8c4893d8b9d75e27c0fb5c22dc930dbb"
@@ -5500,6 +5555,11 @@
           "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
           "date": "2026-10-22T13:14:07+09:00",
           "subject": "Include imported materials in review inbox and link unified row DTOs"
+        },
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
       "sha256": "fbebb5c0507ebd74e35f65067ef13d3edd8952a6ea29065481d8f640cd9c65e2"
@@ -5783,7 +5843,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
+        }
+      ],
       "sha256": "793e3a905bb9a8d824be00649bbfd62cd8a849962158c48be2cb9b395cc09b5c"
     },
     "doc/submission/screenshots/current/02-table-dto.png": {
@@ -5801,7 +5867,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
+        }
+      ],
       "sha256": "a69d6ed9bc68a87de2bac555db6c0aca0254be2284fc02ade78dc0b2f8e84d4e"
     },
     "doc/submission/screenshots/current/03-label-review.png": {
@@ -5819,7 +5891,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
+        }
+      ],
       "sha256": "2dbaefb00fe04e97bece84db5c8c864ab6af67f45e05cd6ac7921981bb8bca0d"
     },
     "doc/submission/screenshots/current/04-agent-tools.png": {
@@ -5837,7 +5915,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
+          "date": "2026-10-22T13:30:14+09:00",
+          "subject": "docs: refresh presentation with current code and service evidence"
+        }
+      ],
       "sha256": "271fac91eb134566eb99e4ea7c30798e9750eaa7e87c46c613a208533e893b83"
     },
     "doc/submission/table-demo-result.json": {
