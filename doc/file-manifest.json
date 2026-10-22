@@ -286,9 +286,14 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
-      "sha256": "4cb9aea23d2d7ab126c9142ab326f24acf535e1eccbcf625eeacb213d1ff483d"
+      "sha256": "305b206c681f2d76a387f4171d244801199b24554643fd0506e1958d3c76f017"
     },
     "backend/__init__.py": {
       "spec": [
@@ -1866,6 +1871,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "original_docstring": "Source workbook reader. Never writes authoritative product/price facts.\nRead-only streaming import; values, sheet/row/cell coordinates and formula absence\nare retained. Queries, compound filters, ordering and pagination run in PostgreSQL.\n",
@@ -2073,6 +2083,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "original_docstring": "A review inbox lists completed analysis results, not internal application batches.",
@@ -3102,6 +3117,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
@@ -3327,6 +3347,11 @@
           "commit": "aaac35efdee362a8fcd9f3d7bbf73bc2fe9b3a2b",
           "date": "2026-10-22T12:46:48+09:00",
           "subject": "Record successful resume of reported extraction failure"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": null
@@ -3391,6 +3416,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": null
@@ -3476,6 +3506,24 @@
         }
       ],
       "sha256": "bd48b9b0227c1fee2370ec1078ac64355c0997ed8ea1526a02ef89c793e55d29"
+    },
+    "doc/food-agent/agent-tools-langgraph.md": {
+      "spec": [
+        "프로젝트 문서 agent-tools-langgraph",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "d478a8d7a63ae493db6b4e9000032232cd96fbd59b04753b1ead429486113a19"
     },
     "doc/food-agent/agent-update.md": {
       "spec": [
@@ -4365,6 +4413,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": "f7372fbb307b276a9bbf3266c87108951e1a7261401bd5982a5ae7765001906b"
@@ -4558,6 +4611,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": "2c7e5a2914aed1712bf33b22d03cd40ad9276906adb93a67c4238816745daec6"
@@ -4779,7 +4837,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
+        }
+      ],
       "sha256": "80cc27e0549db395f43ae246fbd8d82417a1224601bdb92727e754ecd9735dcf"
     },
     "doc/food-agent/runtime-policy.json": {
@@ -5108,6 +5172,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": "385e75c23c7ed20344b3a22b79a83b56dc8ca0d844d6feb8377a26c64b1c62e0"
@@ -5325,9 +5394,14 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
-      "sha256": "5b72a04b5a711e80e4eaaa0f80bba06bc3f7fcfdf9e68c06224ace708b5672e5"
+      "sha256": "4d453e6a711b646c5467c27e87f70c558ffb6cc6b5dbe621583f1a63935a2628"
     },
     "doc/submission/requirements-audit.md": {
       "spec": [
@@ -5359,6 +5433,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": "85e944e0d313abb0483f95b52ed46c53e665c09160a0f91ef308734e601c16c1"
@@ -6194,6 +6273,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": "b2d350a50de26506de765de397833ee13444ca6cc77544c8ae1db13822e950c9"
@@ -6666,6 +6750,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
+          "date": "2026-10-22T13:14:07+09:00",
+          "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
       "sha256": "9d268233d0aeb07027bd0ca02a00b44345e6d51505cff54d9d98903b99007ee7"

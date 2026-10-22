@@ -106,6 +106,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/README.md](../doc/food-agent/README.md) | 프로젝트 문서 README | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/acceptance.md](../doc/food-agent/acceptance.md) | 프로젝트 문서 acceptance | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/agent-rebuild.md](../doc/food-agent/agent-rebuild.md) | 프로젝트 문서 agent-rebuild | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/agent-tools-langgraph.md](../doc/food-agent/agent-tools-langgraph.md) | 프로젝트 문서 agent-tools-langgraph | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/agent-update.md](../doc/food-agent/agent-update.md) | 프로젝트 문서 agent-update | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/api-guide.md](../doc/food-agent/api-guide.md) | 프로젝트 문서 api-guide | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/architecture-audit-v3.md](../doc/food-agent/architecture-audit-v3.md) | 프로젝트 문서 architecture-audit-v3 | 파일 상단 헤더 + 외부 목록 |
