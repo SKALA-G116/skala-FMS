@@ -45,6 +45,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
 
+    2026-10-22  김재현(Finn) v0.1.0   자료 상태별 검수 대기 및 표 행의 동일 검토 DTO 연결
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -1087,6 +1089,8 @@ def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(
     report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json();assert len(report['events'])==1,report['events']
     event=report['events'][0];record=event['food_record']
     assert record['food_name']==name and record['specification']['original_text']=='50g'
+    inbox=client.get('/api/v1/review-inbox?status=ready&q=삽입%20라벨%20대조').json()['items']
+    assert any(x['analysis_run_id']==job['analysis_run_id'] and x['review_ready'] for x in inbox)
     if label_error:
         assert report['status']=='completed' and report['export_asset_id'] and report['proposal_ids']==[]
         failure=report['extraction_failures'][0]
@@ -1106,3 +1110,49 @@ def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(
     assert client.get(access+'&embedded_image=999').status_code==404
     assert client.get('/api/v1/assets/'+aid+'/content?exp=9999999999&sig=invalid&embedded_image=1').status_code==403
     assert report['proposal_ids']==[]
+    table=next(t for t in report['tool_executions'] if t['tool']=='normalize_table')['registered_table_id']
+    workbook=client.get('/api/v1/price-workbooks/'+table).json();assert workbook['review']['review_ready']
+    path='/api/v1/price-sheets/'+workbook['sheets'][0]['id']+'/rows'
+    original=client.get(path).json()['items'][0]
+    assert original['review_items'][0]['food_record']['allergens']['contains']==['milk']
+    assert original['review_items'][0]['id']==event['id']
+    record['attributes']['origin_country']='뉴질랜드'
+    saved=client.patch('/api/v1/analysis-runs/'+job['analysis_run_id']+'/items/'+event['id'],headers={'Idempotency-Key':uid()},json={'version':report['version'],'status':'pending','fields':{'food_record':record},'reason':'원산지 대조'})
+    assert saved.status_code==200,saved.text
+    current=client.get(path).json()['items'][0]
+    assert current['cells']==original['cells']
+    assert current['review_items'][0]['food_record']['attributes']['origin_country']=='뉴질랜드'
+    assert current['review_items'][0]['review_status']=='pending'
+    with tx() as c:
+        stored=get(c,'agent_report',report['id'])
+        for field,value in [('asset_id',uid()),('sheet_name','다른 시트')]:
+            other=copy.deepcopy(event);other['id']=uid()
+            other['food_record']['field_sources']['food_name']['locator'][field]=value
+            stored['events'].append(other)
+        put(c,'agent_report',stored)
+    assert len(client.get(path).json()['items'][0]['review_items'])==1
+
+
+@pytest.mark.parametrize('analysis_status',[None,'queued','running','failed','partial','succeeded'])
+def test_imported_material_stays_in_pending_inbox_through_analysis_states(client,analysis_status):
+    from backend.app.domains.ingestion.documents import import_document
+    name='검수함 생애주기 '+uid();login(client)
+    with tx() as c:
+        imported=import_document(c,name,b'food record','source.txt')
+        doc=imported['document'];rid=imported['revision']['id'];run_id=uid();report_id=uid()
+        completed=analysis_status in ('partial','succeeded')
+        if analysis_status:
+            put(c,'agent_report',{'id':report_id,'status':'completed' if completed else 'interpreting','events':[{'id':uid()}],'proposal_ids':[]})
+            put(c,'analysis_run',{'id':run_id,'document_revision_id':rid,'agent_report_id':report_id,'status':analysis_status,'job_id':uid(),'created_at':now()})
+    rows=client.get('/api/v1/review-inbox',params={'q':name,'status':'ready'}).json()['items']
+    assert len(rows)==1
+    item=rows[0];assert item['document_id']==doc['id'] and item['review_ready']==completed
+    assert item['item_count']==(1 if completed else None)
+    assert item['pending_count']==(1 if completed else None)
+    assert item['href'].startswith('/analysis-runs/' if completed else '/jobs/' if analysis_status else '/documents/')
+    if analysis_status=='succeeded':
+        with tx() as c:
+            revision=copy.deepcopy(imported['revision']);revision['id']=uid();put(c,'revision',revision)
+            doc['latest_revision_id']=revision['id'];put(c,'document',doc)
+        latest=client.get('/api/v1/review-inbox',params={'q':name,'status':'ready'}).json()['items'][0]
+        assert latest['analysis_run_id'] is None and not latest['review_ready']

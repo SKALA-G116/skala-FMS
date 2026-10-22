@@ -288,7 +288,7 @@
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
-      "sha256": "98bb5b8fff375f31a43c031a0e46bdff84d27e4f85090e7b402059ad5d522692"
+      "sha256": "4cb9aea23d2d7ab126c9142ab326f24acf535e1eccbcf625eeacb213d1ff483d"
     },
     "backend/__init__.py": {
       "spec": [
@@ -1869,7 +1869,7 @@
         }
       ],
       "original_docstring": "Source workbook reader. Never writes authoritative product/price facts.\nRead-only streaming import; values, sheet/row/cell coordinates and formula absence\nare retained. Queries, compound filters, ordering and pagination run in PostgreSQL.\n",
-      "sha256": "599576b78f1bb4544fc6dd1042cd5670eb1f304f83e44c177a84f65e0871553f"
+      "sha256": "6152436f4b47ad4accaf591811fd72836391ac96ca4df4b46c133c65b53bcdff"
     },
     "backend/app/domains/reporting/__init__.py": {
       "spec": [
@@ -2076,7 +2076,7 @@
         }
       ],
       "original_docstring": "A review inbox lists completed analysis results, not internal application batches.",
-      "sha256": "86bcea9811bb3ad4a1b545f3b0a5b3313f6632a583690feb686b00a89d5b9645"
+      "sha256": "54ecdf730285a09b97591e86f554193aaecb0d98d96aff765a0a139d829babe0"
     },
     "backend/app/domains/review/items.py": {
       "spec": [
@@ -3105,7 +3105,7 @@
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "f3c684fc3a6a752a90e50bc872715ef9004a31ba8a8f4808a3391fecfd512799"
+      "sha256": "2e5e9aae96ec5ebe1397d224af55499e9d9a6280e6a7d5acee30423d881c8264"
     },
     "compose.food.yml": {
       "spec": [
@@ -3322,6 +3322,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "aaac35efdee362a8fcd9f3d7bbf73bc2fe9b3a2b",
+          "date": "2026-10-22T12:46:48+09:00",
+          "subject": "Record successful resume of reported extraction failure"
         }
       ],
       "sha256": null
@@ -4362,7 +4367,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "5e9caf92760a6f0f31337636c8a9d9b7136bafa920b7a5690856c93f2b490ffa"
+      "sha256": "f7372fbb307b276a9bbf3266c87108951e1a7261401bd5982a5ae7765001906b"
     },
     "doc/food-agent/operational-update.md": {
       "spec": [
@@ -4555,7 +4560,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "1cb5ddb7a126eef4331ce83b2395ea60e57e06a5b173ae264057391ab1f39452"
+      "sha256": "2c7e5a2914aed1712bf33b22d03cd40ad9276906adb93a67c4238816745daec6"
     },
     "doc/food-agent/product-spec.md": {
       "spec": [
@@ -4758,6 +4763,24 @@
         }
       ],
       "sha256": "26dd0109c9a319aa176d18d9d9a2587d1eef101389d25b8b01ad685b879917e4"
+    },
+    "doc/food-agent/review-material-flow.md": {
+      "spec": [
+        "프로젝트 문서 review-material-flow",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "80cc27e0549db395f43ae246fbd8d82417a1224601bdb92727e754ecd9735dcf"
     },
     "doc/food-agent/runtime-policy.json": {
       "spec": [
@@ -5087,7 +5110,7 @@
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
-      "sha256": "6c98d116a18cb15df67ee89903eaf1b46e9557503e2aa91453656e5a069c8505"
+      "sha256": "385e75c23c7ed20344b3a22b79a83b56dc8ca0d844d6feb8377a26c64b1c62e0"
     },
     "doc/submission/before-after/01-table-preservation.md": {
       "spec": [
@@ -5205,6 +5228,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "aaac35efdee362a8fcd9f3d7bbf73bc2fe9b3a2b",
+          "date": "2026-10-22T12:46:48+09:00",
+          "subject": "Record successful resume of reported extraction failure"
         }
       ],
       "sha256": "3c69052210855ecfd3a1a3092e739103314f64fac0b0d738d1f342f176d35c5e"
@@ -5299,7 +5327,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "603b48a752525d127e115b6a2d4d1d0c91c06899edda6e917450762773a3dde8"
+      "sha256": "5b72a04b5a711e80e4eaaa0f80bba06bc3f7fcfdf9e68c06224ace708b5672e5"
     },
     "doc/submission/requirements-audit.md": {
       "spec": [
@@ -5333,7 +5361,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "4c2595c1a18430b674a47fc6ed400e810e34bf8d3d074f592d8592acdd447619"
+      "sha256": "85e944e0d313abb0483f95b52ed46c53e665c09160a0f91ef308734e601c16c1"
     },
     "doc/submission/screenshots/01-documents.jpg": {
       "spec": [
@@ -6168,7 +6196,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "56c215c909df4949f216240104d39e65aef9a64ddecb5b032aaa5fce769b5fb9"
+      "sha256": "b2d350a50de26506de765de397833ee13444ca6cc77544c8ae1db13822e950c9"
     },
     "frontend/src/composables/useJob.js": {
       "spec": [
@@ -6640,7 +6668,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "33922aea88d44c4b65621ebbc269f4e71dd28b181341c542667e3cb74f1cec16"
+      "sha256": "9d268233d0aeb07027bd0ca02a00b44345e6d51505cff54d9d98903b99007ee7"
     },
     "frontend/src/views/Sources.vue": {
       "spec": [

@@ -154,6 +154,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/review-evidence-contract.md](../doc/food-agent/review-evidence-contract.md) | 프로젝트 문서 review-evidence-contract | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/review-inbox.md](../doc/food-agent/review-inbox.md) | 프로젝트 문서 review-inbox | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/review-journey.md](../doc/food-agent/review-journey.md) | 프로젝트 문서 review-journey | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/review-material-flow.md](../doc/food-agent/review-material-flow.md) | 프로젝트 문서 review-material-flow | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/runtime-policy.json](../doc/food-agent/runtime-policy.json) | 프로젝트 문서 runtime-policy | 외부 명세 (원본 보존) |
 | [doc/food-agent/schemas/food-change-dto-v1.json](../doc/food-agent/schemas/food-change-dto-v1.json) | 프로젝트 문서 food-change-dto-v1 | 외부 명세 (원본 보존) |
 | [doc/food-agent/schemas/food-change-v1.json](../doc/food-agent/schemas/food-change-v1.json) | 프로젝트 문서 food-change-v1 | 외부 명세 (원본 보존) |
