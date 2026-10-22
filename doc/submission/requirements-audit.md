@@ -31,6 +31,8 @@ requirements-audit.md - 최종 제출 요구사항 점검
 
     2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
 
+    2026-10-22  김재현(Finn) v0.1.0   향후 개선 목표·Agent 선택 도구 요약 및 300초 진행안 반영
+
     상세 Git 이력: git log --follow -- doc/submission/requirements-audit.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -47,9 +49,9 @@ requirements-audit.md - 최종 제출 요구사항 점검
 | 기능별 실행 캡처 | README4절·screenshots/current/ | 대표 화면3장: 검수함·라벨 검수·승인 단가, 추가 표·로그 화면 별도 |
 | Before/After | before-after.md와5개 사례 파일 | 동일 입력 회귀 비교/실제 관찰/모의 테스트 구분 |
 | 검증 | README5절·검증 안내 | Backend179/Frontend18, Vite 빌드, 현재 저장 결과20회, 과거1회 기록 별도 |
-| 어려움·회고·향후 개선·기대효과 | README5~6절 | 정보 보존·OCR 종료·승인 계약·이미지 누락 |
+| 어려움·회고·향후 개선·기대효과 | README5~7절 | 정보 보존·OCR 종료·승인 계약·이미지 누락 |
 | 실행 방법 | README 하단, readmd.md | DB·Ollama·OCR 별도 설정 |
-| 5분 발표 | presentation-5min.md | 청중 공유용 README6구간, 별도 진행안300초, 시연 결과 공유110초, PPT 불필요 |
+| 5분 발표 | presentation-5min.md | 청중 공유용 README7구간, 별도 진행안300초, 시연 결과 공유110초, PPT 불필요 |
 
 이번 OCR 개선은 격리 DB·모의 OCR/LLM의 백엔드179개와 프론트엔드18개 테스트 및 Vite 빌드로 검증합니다. 실제 AI 정확도·전체 지연시간 측정과 구분합니다. [OCR 검증 범위](../food-agent/ocr-spatial-evidence.md)
 

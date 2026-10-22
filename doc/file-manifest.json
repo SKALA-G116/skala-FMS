@@ -306,9 +306,14 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
-      "sha256": "4415cbc9d5c41710bc72119f6d9c3f51d0caf186b5094304cca1082024ddfefe"
+      "sha256": "c11a8bbf7b691e60b2f8b74bd9f0b0d2723cda3fbdddc0eeea1a50ef4a064034"
     },
     "backend/__init__.py": {
       "spec": [
@@ -760,6 +765,11 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
@@ -940,6 +950,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "original_docstring": "Agent-selected source tools; the host validates capabilities and complete coverage.",
@@ -1060,6 +1075,11 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": "05a994e157ac53b1594a1fc7dc3831dcd42b47543094734da3038823b1cec892"
@@ -1109,7 +1129,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        }
+      ],
       "original_docstring": "Preserve OCR ownership and field evidence without extra model calls.",
       "sha256": "aacf25097f7afd1154a4f1bf0abac11c986f62ba42450625fdbf41bc46baf67f"
     },
@@ -1341,6 +1367,11 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
@@ -2854,6 +2885,11 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "original_docstring": "Agent decisions must change actual tools, preserve evidence, and stay bounded.",
@@ -3126,7 +3162,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        }
+      ],
       "original_docstring": "Adversarial OCR ownership, coordinate and field-reference regressions.",
       "sha256": "5cdc6f8c1a25d9e8c2272aa58eae68715809474a30faa33f239c7f964af57286"
     },
@@ -3215,6 +3257,11 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
@@ -3465,6 +3512,11 @@
           "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
           "date": "2026-10-22T13:56:12+09:00",
           "subject": "fix: show approved prices in food catalog and detail"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": null
@@ -3554,6 +3606,11 @@
           "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
           "date": "2026-10-22T13:56:12+09:00",
           "subject": "fix: show approved prices in food catalog and detail"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": null
@@ -3660,6 +3717,11 @@
           "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
           "date": "2026-10-22T13:21:04+09:00",
           "subject": "Explain agent tools and actual LangGraph execution with examples"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": "3387ef3709bd247644a6f8dbcb403dba8f12b4e5da5306360609c9ce457bf215"
@@ -4551,7 +4613,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        }
+      ],
       "sha256": "362f6567e0181afaa1204c7726a54244852e8e7bbb42686633b8ba663abbea86"
     },
     "doc/food-agent/ocr-stability.md": {
@@ -5618,6 +5686,11 @@
           "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
           "date": "2026-10-22T13:30:14+09:00",
           "subject": "docs: refresh presentation with current code and service evidence"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": "f05080e75a852ac89ad2bd203824ac59136a6c7f022f3aa5e9130b0ce53c700c"
@@ -5667,9 +5740,14 @@
           "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
           "date": "2026-10-22T13:30:14+09:00",
           "subject": "docs: refresh presentation with current code and service evidence"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
-      "sha256": "eb3d6256394f77da743e2697bf947db1797a3a55d03288adce91a91cd1ab1a73"
+      "sha256": "5f5a581ab7fe6619e39e4d6ab24fb503b1335c21d353dced44489a64cb37c488"
     },
     "doc/submission/requirements-audit.md": {
       "spec": [
@@ -5711,9 +5789,14 @@
           "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
           "date": "2026-10-22T13:30:14+09:00",
           "subject": "docs: refresh presentation with current code and service evidence"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
-      "sha256": "3c21d2bf683832a4712ef72e68a96831ca754f77b7e1238b7bfcd31d5371401d"
+      "sha256": "5d2c56cf8996e2c0d5a4348c1881fe85319cc098dad034550638164293e79464"
     },
     "doc/submission/screenshots/01-documents.jpg": {
       "spec": [
@@ -6114,7 +6197,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        }
+      ],
       "sha256": "40475ae97f7036be56fd8e432bcb8e193c4e402169a443fa1092631a61aa466f"
     },
     "doc/submission/table-demo-result.json": {
@@ -6621,6 +6710,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": "29377d6e1474a55b854fa78027d4a34621615207fb373d46fe19981f63eeb407"
@@ -6863,7 +6957,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        }
+      ],
       "sha256": "b025f9c47db38afc3fbd2ce98947892d681102172369049ded722346fb51612b"
     },
     "frontend/src/utils/reviewJourney.js": {
@@ -7028,6 +7128,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
         }
       ],
       "sha256": "a807a2c23e1eb7f567b3d4766e568b5aed97bede2fd7d7e0716da460d4099174"
@@ -7329,7 +7434,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
+          "date": "2026-10-22T14:14:44+09:00",
+          "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        }
+      ],
       "sha256": "156e2abede4b77d9278d66ad821dfe598fd23c8dd904f861ff23e69ed6309efe"
     },
     "frontend/tests/reviewJourney.test.js": {
