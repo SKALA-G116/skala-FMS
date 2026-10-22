@@ -281,6 +281,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "98bb5b8fff375f31a43c031a0e46bdff84d27e4f85090e7b402059ad5d522692"
@@ -725,6 +730,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
@@ -950,6 +960,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
@@ -1010,6 +1025,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "42a8367d8e775d645d97247ad947f020ec4a966312939d3ab62cbc59e01da176"
@@ -1717,6 +1737,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "original_docstring": "Durable queue consumer. Single worker by default; database claim/fencing prevents duplicates.",
@@ -2795,6 +2820,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "51b2980bcc319909c1ef5eaab304af05c58a1b38b1bc6c4877f9ecb5bdd6d04c"
@@ -3067,6 +3097,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
@@ -3282,6 +3317,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": null
@@ -3341,6 +3381,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": null
@@ -5035,6 +5080,11 @@
           "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
           "date": "2026-10-22T12:29:23+09:00",
           "subject": "Improve extraction reliability and document README-led five-minute demo"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "6c98d116a18cb15df67ee89903eaf1b46e9557503e2aa91453656e5a069c8505"
@@ -5150,8 +5200,14 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
-      "sha256": "ad53da89243ab918f8304ac67f9c56a1df6599547f2560f3352984acd41ae14e"
+      "git_history": [
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        }
+      ],
+      "sha256": "3c69052210855ecfd3a1a3092e739103314f64fac0b0d738d1f342f176d35c5e"
     },
     "doc/submission/benchmark-view.html": {
       "spec": [
@@ -6231,6 +6287,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "a355448a3834be0383c81db4eb56c4852bc11897f49e5be77cdeb486239f64ba"
@@ -6470,6 +6531,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "cb80c00ad884427ecc20c7290933f4181d8e248e28e220e58b157f9446a042df"
@@ -6630,6 +6696,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
+          "date": "2026-10-22T12:45:53+09:00",
+          "subject": "Recover schema-invalid extraction batches and constrain label supplements"
         }
       ],
       "sha256": "6c0b6f5155abf6b87a068fbea0675bfe137f481edd7518dd09fc364c688d9025"
