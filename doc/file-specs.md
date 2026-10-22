@@ -106,6 +106,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/api-guide.md](../doc/food-agent/api-guide.md) | 프로젝트 문서 api-guide | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/architecture-audit-v3.md](../doc/food-agent/architecture-audit-v3.md) | 프로젝트 문서 architecture-audit-v3 | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/architecture.md](../doc/food-agent/architecture.md) | 프로젝트 문서 architecture | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/auth-session.md](../doc/food-agent/auth-session.md) | 프로젝트 문서 auth-session | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/capability-design.md](../doc/food-agent/capability-design.md) | 프로젝트 문서 capability-design | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/design-review-report.json](../doc/food-agent/design-review-report.json) | 프로젝트 문서 design-review-report | 외부 명세 (원본 보존) |
 | [doc/food-agent/examples/analysis-profiles.json](../doc/food-agent/examples/analysis-profiles.json) | 프로젝트 문서 analysis-profiles | 외부 명세 (원본 보존) |
@@ -162,6 +163,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/package-lock.json](../frontend/package-lock.json) | Vue 애플리케이션 package-lock | 외부 명세 (원본 보존) |
 | [frontend/package.json](../frontend/package.json) | Vue 애플리케이션 package | 외부 명세 (원본 보존) |
 | [frontend/src/App.vue](../frontend/src/App.vue) | Vue 애플리케이션 App | 파일 상단 헤더 + 외부 목록 |
+| [frontend/src/api/auth.js](../frontend/src/api/auth.js) | Vue 애플리케이션 auth | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/api/client.js](../frontend/src/api/client.js) | 프런트 공통 API client | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/components/ArchiveDialog.vue](../frontend/src/components/ArchiveDialog.vue) | 삭제 보관·복구 결정 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/components/CursorPager.vue](../frontend/src/components/CursorPager.vue) | 커서 기반 페이지 이동 | 파일 상단 헤더 + 외부 목록 |
@@ -189,6 +191,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/views/Reference.vue](../frontend/src/views/Reference.vue) | 원본 자료·근거·표 조회 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Reviews.vue](../frontend/src/views/Reviews.vue) | 검토할 변경안 목록 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Sources.vue](../frontend/src/views/Sources.vue) | 사이트 연결·업데이트 수집 | 파일 상단 헤더 + 외부 목록 |
+| [frontend/tests/auth.test.js](../frontend/tests/auth.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/reviewJourney.test.js](../frontend/tests/reviewJourney.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/vite.config.js](../frontend/vite.config.js) | Vue 애플리케이션 vite.config | 파일 상단 헤더 + 외부 목록 |
 | [mcp_server.py](../mcp_server.py) | 식품 도메인 MCP stdio 제공 | 파일 상단 헤더 + 외부 목록 |

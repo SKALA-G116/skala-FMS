@@ -10,8 +10,8 @@
 # 실행 가정:
 #     - 실제 비밀값과 로컬 실행 데이터는 Git에서 제외
 # 작성 정보:
-#     - 작성자: 미지정
-#     - 이메일: 미지정
+#     - 작성자: 김재현(Finn)
+#     - 이메일: penguin.klg@gmail.com
 #     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
 #     - 라이선스: 미지정
 #     - 버전: 0.1.0
@@ -22,7 +22,9 @@
 #     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
 #     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 #
-#     상세 Git 이력: git log --follow -- .github/workflows/ci.yml
+#     2026-10-22  김재현(Finn) v0.1.0   세션 복원·만료·로그아웃 경계와 접근 제어 검증
+
+    상세 Git 이력: git log --follow -- .github/workflows/ci.yml
 #     공통 규칙: doc/file-header-policy.md
 # ==============================================================================
 name: FMS checks
@@ -66,6 +68,6 @@ jobs:
       - run: python -m pip install -r backend/requirements.lock.txt
       - run: npm --prefix frontend ci
       - run: npm --prefix frontend run build
-      - run: node --test frontend/tests/reviewJourney.test.js
+      - run: node --test frontend/tests/*.test.js
       - run: python scripts/file-specs.py --check
       - run: python -m pytest backend/tests -q

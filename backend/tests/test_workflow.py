@@ -33,6 +33,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   세션 복원·만료·로그아웃 경계와 접근 제어 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -773,3 +775,21 @@ def test_agent_review_route_does_not_call_extractor_or_catalog_or_stage(client,m
     assert report['coverage']['processed_segments']==0 and report['coverage']['manual_segments']==1
     assert [t['tool'] for t in report['tool_executions']]==['request_review']
     assert client.get('/api/v1/documents/'+imported['document']['id']).json()['analysis_status']=='partial'
+
+
+def test_browser_session_cookie_rotation_expiry_and_logout(client):
+    login(client)
+    old=client.cookies.get('food_session')
+    response=post(client,'/auth/session',{'username':'admin','password':'local-food-2026'})
+    assert response.status_code==200,response.text
+    client.headers['X-CSRF-Token']=response.json()['csrf_token']
+    assert 'max-age' not in response.headers['set-cookie'].lower()
+    assert client.get('/api/v1/auth/me',headers={'Cookie':'food_session='+old}).status_code==401
+    assert client.get('/api/v1/products',headers={'Cookie':'food_session=invalid'}).status_code==401
+    assert client.get('/api/v1/products').status_code==200
+    assert client.delete('/api/v1/auth/session').status_code==204
+    assert client.get('/api/v1/auth/me').status_code==401
+    login(client)
+    with tx() as c:c.execute("UPDATE sessions SET expires_at=now()-interval '1 second'")
+    assert client.get('/api/v1/auth/me').status_code==401
+    assert client.get('/api/v1/products').status_code==401
