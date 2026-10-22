@@ -29,6 +29,8 @@ requirements-audit.md - 최종 제출 요구사항 점검
 
     2026-10-22  김재현(Finn) v0.1.0   최신 main 코드·저장 결과·현재 화면 기준 발표 근거 갱신
 
+    2026-10-22  김재현(Finn) v0.1.0   첫 청중 대상 README·발표 진행안과 검증 근거 동기화
+
     상세 Git 이력: git log --follow -- doc/submission/requirements-audit.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -39,16 +41,16 @@ requirements-audit.md - 최종 제출 요구사항 점검
 |---|---|---|
 | 주제·배경·학교 수 | README1절, background-sources.md | 공식 공개자료 설명 기준155+91+68=314,2025-11-09 |
 | 주요 Task | README2절 | 수집·Agent 처리·검수 승인·식품 DB |
-| 실제 Agent·도구·LangGraph | README3절과 접힌 명세 | LLM 판단/도구 처리/그래프 제어 분리, 코드 링크 |
-| 기술 적용 여부 | README3절 기술 표 | MCP·경량 DI·모듈화·테스트 적용, Multi-Agent·RAG·LangSmith 미적용 |
+| 실제 Agent·도구·LangGraph | README3절의 쉬운 설명과 접힌 구현 상세 | LLM 판단/도구 처리/그래프 제어 분리, 코드 링크 |
+| 기술 적용 여부 | README 하단의 접힌 기술 선택 표 | MCP·경량 DI·모듈화·테스트 적용, Multi-Agent·RAG·LangSmith 미적용 |
 | 시연 파이프라인·결과 | README4절, demo-guide.md, JSON | 현재 main 코드·저장된 맘스케익 분석 읽기 전용 조회, current-code-evidence.json |
 | 기능별 실행 캡처 | README4절·screenshots/ | 현재 캡처4장: 검수함·통합 표·라벨 검수·Agent 도구 로그 |
 | Before/After | before-after.md와5개 사례 파일 | 동일 입력 회귀 비교/실제 관찰/모의 테스트 구분 |
-| 검증 | README5절·검증 안내 | Backend165/Frontend16, Vite 빌드, 현재 저장 결과20회, 과거1회 기록 별도 |
+| 검증 | README5절·검증 안내 | Backend171/Frontend16, Vite 빌드, 현재 저장 결과20회, 과거1회 기록 별도 |
 | 어려움·회고·향후 개선 | README5~6절 | 정보 보존·OCR 종료·승인 계약·이미지 누락 |
 | 실행 방법 | README 하단, readmd.md | DB·Ollama·OCR 별도 설정 |
 | 5분 발표 | presentation-5min.md | 청중 공유용 README6구간, 별도 진행안300초, 시연 결과 공유105초, PPT 불필요 |
 
-문서 갱신 시 현재 코드의 백엔드165개·프론트엔드16개 테스트와 Vite 빌드를 다시 통과했습니다. 백엔드는 운영 DB와 분리한 `food_fms_refactor_test` DB·규칙 모드를 사용했으므로 실제 LLM 정확도 검증은 아닙니다. 현재 화면4장과 읽기 전용 집계는 [코드 대조 기록](current-code-review.md)에 연결했습니다.
+원재료 수정 시 백엔드171개 테스트를 통과했고 프론트엔드16개와 Vite 빌드는 앞선 검증 기록입니다. 이번 발표 문구 변경에서는 코드 테스트를 반복하지 않고 문서 링크와 명세를 검사했습니다. 백엔드는 운영 DB와 분리한 `food_fms_refactor_test` DB·규칙 모드를 사용했으므로 실제 LLM 정확도 검증은 아닙니다. 현재 화면4장과 읽기 전용 집계는 [코드 대조 기록](current-code-review.md)에 연결했습니다.
 
 공개자료 수치는 이용 학교·담당자 수가 아닙니다. 업무 시간 절감률·현재 전체 파이프라인 지연시간은 미측정입니다. 현재13개는 검토 후보로, 안내 문장 오인식과 알레르기 원문 오분류가 남아 있습니다. 실제 라벨 자료의 조회·화면 확인과 합성 OCR/LLM 회귀 테스트를 구분합니다. 과거18행·6.027초 기록은 이력 비교용으로 보관합니다. Zoom·발표자 리허설은 별도입니다.
