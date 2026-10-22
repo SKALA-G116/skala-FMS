@@ -11,8 +11,8 @@ provider.py - Ollama 비동기 구조화 추론
 실행 가정:
     - 추론 동시성·입력 크기·timeout을 제한하고 HTTP client를 정리
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ provider.py - Ollama 비동기 구조화 추론
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   생성 문법 반복 확장 제한 회피·모델 오류 원인 분리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/provider.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ provider.py - Ollama 비동기 구조화 추론
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -56,6 +58,30 @@ from backend.app.runtime.limits import MODEL_INPUT_BYTES
 
 _GATE=threading.BoundedSemaphore(MODEL_CONCURRENCY)
 
+def generation_schema(schema):
+    """Avoid expanding bounded array repetitions in llama.cpp's grammar compiler.
+
+    The original schema still validates every response in decode(); token and
+    response byte limits also remain in force. Only generation-time maxItems
+    is omitted, preserving types, required fields and source-ID enums.
+    """
+    if isinstance(schema, list):return [generation_schema(item) for item in schema]
+    if not isinstance(schema, dict):return schema
+    return {key:generation_schema(value) for key,value in schema.items()
+            if not (key=='maxItems' and schema.get('type')=='array')}
+
+
+def model_error(ex):
+    # Do not expose the provider body: it can contain source text or local paths.
+    if isinstance(ex,httpx.HTTPStatusError):
+        status=ex.response.status_code
+        if status==404:return Problem(503,'MODEL_NOT_INSTALLED','설정한 AI 모델을 찾을 수 없습니다. 모델 설치와 이름을 확인하세요.',{'provider_status':status})
+        if 400<=status<500:return Problem(502,'MODEL_REQUEST_REJECTED','AI 서버가 요청 형식을 거절했습니다. 모델 요청 설정을 확인하세요.',{'provider_status':status})
+        return Problem(503,'MODEL_UNAVAILABLE','로컬 AI 서버에서 처리 오류가 발생했습니다. 잠시 후 다시 시도하세요.',{'provider_status':status})
+    if isinstance(ex,httpx.TimeoutException):return Problem(504,'MODEL_TIMEOUT','AI 응답 대기 시간을 초과했습니다. 자료 크기와 모델 실행 상태를 확인하세요.')
+    return Problem(503,'MODEL_UNAVAILABLE','로컬 AI 모델에 연결할 수 없습니다. 모델 실행 상태를 확인하세요.')
+
+
 class LocalModel:
     def __init__(self):
         self.name=os.getenv('FOOD_MODEL_NAME','qwen3:8b');self.base=os.getenv('FOOD_MODEL_URL','http://127.0.0.1:11434').rstrip('/');self.calls=[];self._client=None
@@ -71,7 +97,7 @@ class LocalModel:
                 'DB 수정/승인 권한은 없다. JSON 스키마를 준수하라.\n작업: '+task)
         content=json.dumps(payload,ensure_ascii=False)
         if len((system+content+json.dumps(schema,ensure_ascii=False)).encode())>MODEL_INPUT_BYTES:raise Problem(422,'MODEL_INPUT_BUDGET','AI 입력 예산을 초과했습니다. 더 작은 구간으로 나눠 주세요.')
-        return {'model':self.name,'stream':False,'think':False,'format':schema,'keep_alive':('0' if getattr(self,'role',None)=='planner' and self.name!=os.getenv('FOOD_EXTRACTION_MODEL_NAME',os.getenv('FOOD_MODEL_NAME','qwen3:8b')) else os.getenv('FOOD_MODEL_KEEP_ALIVE','2m')),'options':{'temperature':0,'num_ctx':8192 if getattr(self,'role',None)=='planner' else 16384,'num_predict':2048 if getattr(self,'role',None)=='planner' else 4096},'messages':[{'role':'system','content':system},{'role':'user','content':content}]}
+        return {'model':self.name,'stream':False,'think':False,'format':generation_schema(schema),'keep_alive':('0' if getattr(self,'role',None)=='planner' and self.name!=os.getenv('FOOD_EXTRACTION_MODEL_NAME',os.getenv('FOOD_MODEL_NAME','qwen3:8b')) else os.getenv('FOOD_MODEL_KEEP_ALIVE','2m')),'options':{'temperature':0,'num_ctx':8192 if getattr(self,'role',None)=='planner' else 16384,'num_predict':2048 if getattr(self,'role',None)=='planner' else 4096},'messages':[{'role':'system','content':system},{'role':'user','content':content}]}
     def decode(self,response,task,schema,started,queued,transport="sync"):
         response.raise_for_status()
         if len(response.content)>1024*1024:raise Problem(422,'MODEL_RESPONSE_LIMIT','AI 응답 크기 제한을 초과했습니다.')
@@ -89,7 +115,7 @@ class LocalModel:
         try:
             if self._client is None:self._client=httpx.AsyncClient(timeout=httpx.Timeout(MODEL_TIMEOUT,connect=10),limits=httpx.Limits(max_connections=MODEL_CONCURRENCY,max_keepalive_connections=MODEL_CONCURRENCY))
             return self.decode(await self._client.post(self.base+'/api/chat',json=request),task,schema,started,started-waiting,transport='async')
-        except httpx.HTTPError as ex:raise Problem(503,'MODEL_UNAVAILABLE','로컬 AI 모델에 연결할 수 없습니다. 모델 실행 상태를 확인하세요.') from ex
+        except httpx.HTTPError as ex:raise model_error(ex) from ex
         finally:_GATE.release()
     async def aclose(self):
         if self._client is not None:await self._client.aclose();self._client=None
@@ -100,4 +126,4 @@ class LocalModel:
             started=time.monotonic()
             try:
                 with httpx.Client(timeout=httpx.Timeout(MODEL_TIMEOUT,connect=10)) as client:return self.decode(client.post(self.base+'/api/chat',json=request),task,schema,started,started-waiting)
-            except httpx.HTTPError as ex:raise Problem(503,'MODEL_UNAVAILABLE','로컬 AI 모델에 연결할 수 없습니다. 모델 실행 상태를 확인하세요.') from ex
+            except httpx.HTTPError as ex:raise model_error(ex) from ex

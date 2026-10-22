@@ -11,8 +11,8 @@ test_file_specs.py - 기능·경계·회귀 검증
 실행 가정:
     - DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -31,8 +31,8 @@ test_file_specs.py - 기능·경계·회귀 검증
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -79,3 +79,11 @@ def test_marker_literal_does_not_hide_missing_header():
 def test_external_formats_preserve_raw_and_legacy_contracts():
     for path in ['doc/food-agent/prompts/notice-v1.md', 'doc/food-agent/policies/food-policy-v1.md', 'data/raw.json', 'data/raw.csv', 'frontend/package-lock.json', 'legacy/incident_agent/server.py', 'doc/submission/demo/notice.txt']:
         assert file_specs.style(path) == 'external'
+
+
+def test_ci_header_is_valid_yaml_and_runs_all_frontend_regressions():
+    import yaml
+    root=Path(__file__).resolve().parents[2]
+    workflow=yaml.safe_load((root/'.github/workflows/ci.yml').read_text())
+    steps=workflow['jobs']['test']['steps']
+    assert any(step.get('run')=='node --test frontend/tests/*.test.js' for step in steps)
