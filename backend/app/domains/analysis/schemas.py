@@ -27,6 +27,8 @@ schemas.py - LLM 계획·추출 응답 스키마
 
     2026-10-22  김재현(Finn) v0.1.0   원재료 전용 추출·함량 없는 표시사항 보존·OCR 근거 연결 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/schemas.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -58,8 +60,10 @@ EVENT_FIELDS={
  'price_basis':nullable('string'),'uncertainties':{'type':'array','maxItems':8,'items':{'type':'string'}},
  'source_ids':{'type':'array','minItems':1,'maxItems':12,'items':{'type':'string'}}}
 
-def event_schema(ids):
+def event_schema(ids,spatial=False):
+    from backend.app.domains.analysis.spatial import field_evidence_schema
     properties={**EVENT_FIELDS,'ingredients_text':nullable('string'),'source_ids':{'type':'array','minItems':1,'maxItems':12,'items':{'type':'string','enum':ids}}}
+    if spatial:properties['field_evidence']=field_evidence_schema(ids)
     event={'type':'object','additionalProperties':False,'properties':properties,'required':list(EVENT_FIELDS)}
     return {'type':'object','additionalProperties':False,'properties':{'events':{'type':'array','maxItems':24,'items':event}},'required':['events']}
 
@@ -67,6 +71,8 @@ def event_schema(ids):
 def label_schema(ids):
     """One row's label supplements attributes, never proposes products or prices."""
     fields={key:EVENT_FIELDS[key] for key in ('attributes_text','allergen_text')}
+    from backend.app.domains.analysis.spatial import field_evidence_schema
+    fields['field_evidence']=field_evidence_schema(ids)
     fields['ingredients_text']=nullable('string')
     fields['source_ids']={'type':'array','minItems':1,'maxItems':min(12,len(ids)),'uniqueItems':True,'items':{'type':'string','enum':ids}}
     return {'type':'object','additionalProperties':False,'properties':fields,'required':['attributes_text','allergen_text','source_ids']}

@@ -35,6 +35,8 @@ ExtractionReview.vue - 품목 선택·원문 대조·수정·최종 반영
 
     2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- frontend/src/views/ExtractionReview.vue
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -123,7 +125,7 @@ const prepared=computed(()=>report.value?.review_prepared&&proposals.value.lengt
       <div v-if="active" class="selected-context"><div><span class="context-label">선택한 품목 · {{currentIndex+1}} / {{report.events.length}}</span><h2>{{draft.food_record?.food_name||'식품명 확인 필요'}}</h2></div><div class="row"><button class="nav-button" aria-label="이전 품목" :disabled="busy||currentIndex<=0" @click="selectItem(report.events[currentIndex-1]?.id)">←</button><button class="nav-button" aria-label="다음 품목" :disabled="busy||currentIndex>=report.events.length-1" @click="selectItem(report.events[currentIndex+1]?.id)">→</button></div></div>
       <div class="mobile-pane-switch" aria-label="검토 화면 전환"><button :aria-pressed="mobilePane==='source'" @click="mobilePane='source'">원문 보기</button><button :aria-pressed="mobilePane==='fields'" @click="mobilePane='fields'">{{locked?'검토한 정보':'정보 확인·수정'}}</button></div>
       <div v-if="active" class="review-desk" :class="'mobile-'+mobilePane">
-        <SourceComparison :ids="active.evidence_ids" @ready="sourceReady=$event"/>
+        <SourceComparison :ids="active.evidence_ids" :field-sources="active.review?.fields?.food_record?.field_sources||active.food_record?.field_sources||{}" @ready="sourceReady=$event"/>
         <section class="review-editor">
           <div class="desk-heading"><div><span class="context-label">{{locked?'저장된 검토 내용':'추출된 표준 정보'}}</span><h3>{{locked?'확인한 식품 정보':'확인하고 수정해 주세요'}}</h3></div><span class="state-pill" :class="dirty?'pending':reviewStatus(active)">{{dirty?'저장 전':statusLabel(reviewStatus(active))}}</span></div>
           <div class="editor-scroll" :key="selected">

@@ -26,6 +26,8 @@ test_agent_routing.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- backend/tests/test_agent_routing.py
     공통 규칙: doc/file-header-policy.md
 
@@ -99,17 +101,18 @@ def test_window_references_resume_without_copying_source_text_into_checkpoint():
     assert ''.join(s['text'] for g in restored for s in g)==''.join(s['text'] for s in rows)
 
 
-def test_compact_product_region_preserves_all_ocr_evidence_without_per_line_overhead():
+def test_product_region_preserves_line_ids_boxes_and_input_budget():
     from backend.app.domains.analysis.agent import model_mapping,extraction_payload
     from backend.app.domains.analysis.provider import LocalModel
     from backend.app.domains.analysis.schemas import event_schema
     rows=[{'text':'상품 원재료 규격 정보 '+str(i),'evidence_id':'E'+str(i),'region_label':'하나의 상품','locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1]}} for i in range(41)]
     mapping=model_mapping(rows)
-    assert list(mapping)==['S1']
-    assert mapping['S1']['text']=='\n'.join(row['text'] for row in rows)
-    assert [mapping['S1']['evidence_id'],*mapping['S1']['related_evidence_ids']]==[row['evidence_id'] for row in rows]
-    assert len(extraction_payload({'title':'상품','assets':[]},'marketing',mapping)['segments'])==1
-    LocalModel().request('extract',extraction_payload({'title':'상품','assets':[]},'marketing',mapping),event_schema(list(mapping)))
+    assert len(mapping)==41
+    payload=extraction_payload({'title':'상품','assets':[]},'marketing',mapping)
+    assert payload['segments'][0]['bbox']==[0,0,1000,1000]
+    assert [s['text'] for s in payload['segments']]==[s['text'] for s in rows]
+    assert [s['evidence_id'] for s in mapping.values()]==[s['evidence_id'] for s in rows]
+    LocalModel().request('extract',payload,event_schema(list(mapping),spatial=True))
 
 
 def test_redundant_unassigned_ids_keep_valid_region_assignment():

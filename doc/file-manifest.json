@@ -308,7 +308,7 @@
           "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
-      "sha256": "402edce1cb55fec059c1faa8e4171ab955cc25f7e22d5ed3abc26b74a6f887a7"
+      "sha256": "4415cbc9d5c41710bc72119f6d9c3f51d0caf186b5094304cca1082024ddfefe"
     },
     "backend/__init__.py": {
       "spec": [
@@ -763,7 +763,7 @@
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "296c4453d9dbfa113dd0901e89d79bede7c46b9463c802d2b2ecf314fb56c573"
+      "sha256": "9f14e656b34c14b3b7d56f14ae0ff9a4e17d19cc34acd2a13b8e0e5cc1c43565"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -943,7 +943,7 @@
         }
       ],
       "original_docstring": "Agent-selected source tools; the host validates capabilities and complete coverage.",
-      "sha256": "06659f9a30385c1450af8a9da831c4c971e793941e9287592e09621e2590f9a2"
+      "sha256": "53b148521d43570bb4a5f8bc48ef89ad2ca2ec313f7db8cabf2bdba78067ac54"
     },
     "backend/app/domains/analysis/provider.py": {
       "spec": [
@@ -1062,7 +1062,7 @@
           "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
-      "sha256": "c10671c0f6ba31510fe0e816a21748d481d9a32cf6927869fe864aa8bf36d7e1"
+      "sha256": "05a994e157ac53b1594a1fc7dc3831dcd42b47543094734da3038823b1cec892"
     },
     "backend/app/domains/analysis/service.py": {
       "spec": [
@@ -1093,6 +1093,25 @@
       ],
       "original_docstring": "Register durable analysis without calling an LLM inside the HTTP transaction.",
       "sha256": "73038c4fa0b8692f90e6b4cbc8800aac653239dc7532279ae1262779d277c342"
+    },
+    "backend/app/domains/analysis/spatial.py": {
+      "spec": [
+        "프로젝트 설정 spatial.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "original_docstring": "Preserve OCR ownership and field evidence without extra model calls.",
+      "sha256": "aacf25097f7afd1154a4f1bf0abac11c986f62ba42450625fdbf41bc46baf67f"
     },
     "backend/app/domains/analysis/workflow.py": {
       "spec": [
@@ -1228,6 +1247,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "original_docstring": "Manual canonical food edits with optimistic locking and an append-only audit.",
@@ -1258,6 +1282,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "sha256": "f4526c99d00d550c352fbe454ca7f000ce475fecb54b3d66f8a751821752ace7"
@@ -1315,7 +1344,7 @@
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
-      "sha256": "19d33e7921260ca5fe7353618601e17178a5874d416a3e7927b2d5c79707bcd3"
+      "sha256": "a8cf33ff34fd4dcc4a639332ec3e43e763ae3f4f4eb0b8db3de375f0a839de6e"
     },
     "backend/app/domains/identity/__init__.py": {
       "spec": [
@@ -2785,6 +2814,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "original_docstring": "Deterministic integration tests use an explicit test double; live results are separate.",
@@ -2823,7 +2857,7 @@
         }
       ],
       "original_docstring": "Agent decisions must change actual tools, preserve evidence, and stay bounded.",
-      "sha256": "6b7d0d5ae92f61b5f9bc867a332932c5c0c5fa9d10d17c04f4eed94d8e4db8c8"
+      "sha256": "5b3c8fa1339380648d37e067edaa9c19cfd625948008f649eae8e2548cc6ddcb"
     },
     "backend/tests/test_async_runtime.py": {
       "spec": [
@@ -3077,6 +3111,25 @@
       ],
       "sha256": "5c4857dd9be86e0169b70191729e7e6512cfb2408fe8c46c72d4676a16b14eda"
     },
+    "backend/tests/test_spatial_evidence.py": {
+      "spec": [
+        "기능·경계·회귀 검증",
+        "테스트 fixture·가상 입력·명시적 mock/테스트 대역",
+        "assert 결과와 실패 사유",
+        "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "original_docstring": "Adversarial OCR ownership, coordinate and field-reference regressions.",
+      "sha256": "5cdc6f8c1a25d9e8c2272aa58eae68715809474a30faa33f239c7f964af57286"
+    },
     "backend/tests/test_workflow.py": {
       "spec": [
         "기능·경계·회귀 검증",
@@ -3165,7 +3218,7 @@
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "5068b42699d5d63b243a181b8c74075123f2f173e0688d58de9caf0f51a456d8"
+      "sha256": "49ab2aeb713bc96d342125e675c99a472908a8db3c034b31b98856e2124a361f"
     },
     "compose.food.yml": {
       "spec": [
@@ -3407,6 +3460,11 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "sha256": null
@@ -3491,6 +3549,11 @@
           "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
           "date": "2026-10-22T13:37:36+09:00",
           "subject": "fix: preserve ingredient declarations without percentage values"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "sha256": null
@@ -3599,7 +3662,7 @@
           "subject": "Explain agent tools and actual LangGraph execution with examples"
         }
       ],
-      "sha256": "d478a8d7a63ae493db6b4e9000032232cd96fbd59b04753b1ead429486113a19"
+      "sha256": "3387ef3709bd247644a6f8dbcb403dba8f12b4e5da5306360609c9ce457bf215"
     },
     "doc/food-agent/agent-update.md": {
       "spec": [
@@ -3679,7 +3742,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
+        }
+      ],
       "sha256": "88f5bcfb292a8f10ed0cb056b70128fb44ef98cd3004d2c97f5e4030e3024835"
     },
     "doc/food-agent/architecture-audit-v3.md": {
@@ -4466,6 +4535,24 @@
         }
       ],
       "sha256": "e34638a09f793bcffb564866366d59fdb848e0a2dd88ee61689c73760ffcce73"
+    },
+    "doc/food-agent/ocr-spatial-evidence.md": {
+      "spec": [
+        "프로젝트 문서 ocr-spatial-evidence",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "362f6567e0181afaa1204c7726a54244852e8e7bbb42686633b8ba663abbea86"
     },
     "doc/food-agent/ocr-stability.md": {
       "spec": [
@@ -5533,7 +5620,7 @@
           "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
-      "sha256": "af1540bf32e61dda1723eef93fcc26e0f55924c9b77f59e35404bb1786e587f7"
+      "sha256": "f05080e75a852ac89ad2bd203824ac59136a6c7f022f3aa5e9130b0ce53c700c"
     },
     "doc/submission/presentation-5min.md": {
       "spec": [
@@ -5582,7 +5669,7 @@
           "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
-      "sha256": "85195f0144a20f48e067c7fa34be48ba8c4893d8b9d75e27c0fb5c22dc930dbb"
+      "sha256": "eb3d6256394f77da743e2697bf947db1797a3a55d03288adce91a91cd1ab1a73"
     },
     "doc/submission/requirements-audit.md": {
       "spec": [
@@ -5626,7 +5713,7 @@
           "subject": "docs: refresh presentation with current code and service evidence"
         }
       ],
-      "sha256": "fbebb5c0507ebd74e35f65067ef13d3edd8952a6ea29065481d8f640cd9c65e2"
+      "sha256": "3c21d2bf683832a4712ef72e68a96831ca754f77b7e1238b7bfcd31d5371401d"
     },
     "doc/submission/screenshots/01-documents.jpg": {
       "spec": [
@@ -6003,8 +6090,32 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
+        }
+      ],
       "sha256": "2b537191bbce49c37cf0044a721c2cfedb2bfb5ad3e1f59223a17c857584ca7b"
+    },
+    "doc/submission/screenshots/current/06-field-evidence-picker.png": {
+      "spec": [
+        "프로젝트 문서 06-field-evidence-picker",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "40475ae97f7036be56fd8e432bcb8e193c4e402169a443fa1092631a61aa466f"
     },
     "doc/submission/table-demo-result.json": {
       "spec": [
@@ -6243,7 +6354,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
+        }
+      ],
       "sha256": "58bfba9b8f7fb00bd09bcf25e78fac125ce774eafc446521e0311c8c8c715bb3"
     },
     "frontend/src/components/ArchiveDialog.vue": {
@@ -6397,6 +6514,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "sha256": "4f8e4a51c31036328ff932b872d5e635fac6da6db71dbf99943c4bc07ead898f"
@@ -6501,7 +6623,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "a1e84121af62178c0eb97a42996477af01b105948d6ccc8b5880246431b842f7"
+      "sha256": "29377d6e1474a55b854fa78027d4a34621615207fb373d46fe19981f63eeb407"
     },
     "frontend/src/components/StatusBadge.vue": {
       "spec": [
@@ -6726,6 +6848,24 @@
       ],
       "sha256": "a355448a3834be0383c81db4eb56c4852bc11897f49e5be77cdeb486239f64ba"
     },
+    "frontend/src/utils/fieldEvidence.js": {
+      "spec": [
+        "Vue 애플리케이션 fieldEvidence",
+        "애플리케이션·라우트·상태·빌드 설정",
+        "화면·공유 상태·빌드 산출물",
+        "설치 의존성과 생성 lock 파일은 원본 형식을 유지"
+      ],
+      "style": "block",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "b025f9c47db38afc3fbd2ce98947892d681102172369049ded722346fb51612b"
+    },
     "frontend/src/utils/reviewJourney.js": {
       "spec": [
         "Vue 애플리케이션 reviewJourney",
@@ -6790,6 +6930,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "sha256": "76f7d5edfa7e5d788832ee86c6975abafb1e21c494045f5447e21d43bec6df37"
@@ -6885,7 +7030,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "b92823ae40a9e6e9edc1f06a8b708629c2d4a87a90f4644d075107eeddf98e9c"
+      "sha256": "a807a2c23e1eb7f567b3d4766e568b5aed97bede2fd7d7e0716da460d4099174"
     },
     "frontend/src/views/FoodCatalog.vue": {
       "spec": [
@@ -6917,6 +7062,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "16c82977e7cac58050eed9b7534aef9853e32762",
+          "date": "2026-10-22T13:56:12+09:00",
+          "subject": "fix: show approved prices in food catalog and detail"
         }
       ],
       "sha256": "bbdd30fe7d04617f668bbc96c2a555551e3213d30f5893da15ac1f214fc63edc"
@@ -7163,6 +7313,24 @@
         }
       ],
       "sha256": "d149b9a729d71931c085adf3df025a8497afedff69e94b01061df8d34488f58e"
+    },
+    "frontend/tests/fieldEvidence.test.js": {
+      "spec": [
+        "기능·경계·회귀 검증",
+        "테스트 fixture·가상 입력·명시적 mock/테스트 대역",
+        "assert 결과와 실패 사유",
+        "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
+      ],
+      "style": "block",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "156e2abede4b77d9278d66ad821dfe598fd23c8dd904f861ff23e69ed6309efe"
     },
     "frontend/tests/reviewJourney.test.js": {
       "spec": [

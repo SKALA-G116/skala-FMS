@@ -36,6 +36,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/domains/analysis/reconciliation.py](../backend/app/domains/analysis/reconciliation.py) | 완료 분석의 이력 보존형 재정리 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/schemas.py](../backend/app/domains/analysis/schemas.py) | LLM 계획·추출 응답 스키마 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/service.py](../backend/app/domains/analysis/service.py) | 영속 분석 작업 등록 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/analysis/spatial.py](../backend/app/domains/analysis/spatial.py) | 프로젝트 설정 spatial.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/analysis/workflow.py](../backend/app/domains/analysis/workflow.py) | LangGraph 분석 흐름 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/catalog/__init__.py](../backend/app/domains/catalog/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/catalog/api.py](../backend/app/domains/catalog/api.py) | catalog 도메인 HTTP 유스케이스 | 파일 상단 헤더 + 외부 목록 |
@@ -95,6 +96,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/tests/test_file_specs.py](../backend/tests/test_file_specs.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_food_record.py](../backend/tests/test_food_record.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_parsers_mcp.py](../backend/tests/test_parsers_mcp.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
+| [backend/tests/test_spatial_evidence.py](../backend/tests/test_spatial_evidence.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [backend/tests/test_workflow.py](../backend/tests/test_workflow.py) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [compose.food.yml](../compose.food.yml) | 프로젝트 설정 compose.food.yml | 파일 상단 헤더 + 외부 목록 |
 | [demo/notice.txt](../demo/notice.txt) | 개인정보 없는 가상 시연 입력 | 외부 명세 (원본 보존) |
@@ -140,6 +142,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/memory-checklist.md](../doc/food-agent/memory-checklist.md) | 프로젝트 문서 memory-checklist | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/model-errors.md](../doc/food-agent/model-errors.md) | 프로젝트 문서 model-errors | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/ocr-reuse-benchmark.json](../doc/food-agent/ocr-reuse-benchmark.json) | 프로젝트 문서 ocr-reuse-benchmark | 외부 명세 (원본 보존) |
+| [doc/food-agent/ocr-spatial-evidence.md](../doc/food-agent/ocr-spatial-evidence.md) | 프로젝트 문서 ocr-spatial-evidence | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/ocr-stability.md](../doc/food-agent/ocr-stability.md) | 프로젝트 문서 ocr-stability | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/openapi.json](../doc/food-agent/openapi.json) | 프로젝트 문서 openapi | 외부 명세 (원본 보존) |
 | [doc/food-agent/operational-update.md](../doc/food-agent/operational-update.md) | 프로젝트 문서 operational-update | 파일 상단 헤더 + 외부 목록 |
@@ -197,6 +200,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/submission/screenshots/current/03-label-review.png](../doc/submission/screenshots/current/03-label-review.png) | 프로젝트 문서 03-label-review | 외부 명세 (원본 보존) |
 | [doc/submission/screenshots/current/04-agent-tools.png](../doc/submission/screenshots/current/04-agent-tools.png) | 프로젝트 문서 04-agent-tools | 외부 명세 (원본 보존) |
 | [doc/submission/screenshots/current/05-approved-price.png](../doc/submission/screenshots/current/05-approved-price.png) | 프로젝트 문서 05-approved-price | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/current/06-field-evidence-picker.png](../doc/submission/screenshots/current/06-field-evidence-picker.png) | 프로젝트 문서 06-field-evidence-picker | 외부 명세 (원본 보존) |
 | [doc/submission/table-demo-result.json](../doc/submission/table-demo-result.json) | 프로젝트 문서 table-demo-result | 외부 명세 (원본 보존) |
 | [doc/submission/table-preservation-benchmark.json](../doc/submission/table-preservation-benchmark.json) | 프로젝트 문서 table-preservation-benchmark | 외부 명세 (원본 보존) |
 | [frontend/index.html](../frontend/index.html) | Vue 애플리케이션 index | 파일 상단 헤더 + 외부 목록 |
@@ -221,6 +225,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/main.js](../frontend/src/main.js) | Vue 애플리케이션 main | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/style.css](../frontend/src/style.css) | Vue 애플리케이션 style | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/utils/agentLogs.js](../frontend/src/utils/agentLogs.js) | Vue 애플리케이션 agentLogs | 파일 상단 헤더 + 외부 목록 |
+| [frontend/src/utils/fieldEvidence.js](../frontend/src/utils/fieldEvidence.js) | Vue 애플리케이션 fieldEvidence | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/utils/reviewJourney.js](../frontend/src/utils/reviewJourney.js) | Vue 애플리케이션 reviewJourney | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Catalog.vue](../frontend/src/views/Catalog.vue) | 식품 상세·규격·연결 정보 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Documents.vue](../frontend/src/views/Documents.vue) | 자료 등록·선택·삭제·복구·영구 삭제 | 파일 상단 헤더 + 외부 목록 |
@@ -233,6 +238,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/views/Sources.vue](../frontend/src/views/Sources.vue) | 사이트 연결·업데이트 수집 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/agentLogs.test.js](../frontend/tests/agentLogs.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/auth.test.js](../frontend/tests/auth.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
+| [frontend/tests/fieldEvidence.test.js](../frontend/tests/fieldEvidence.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/reviewJourney.test.js](../frontend/tests/reviewJourney.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/vite.config.js](../frontend/vite.config.js) | Vue 애플리케이션 vite.config | 파일 상단 헤더 + 외부 목록 |
 | [mcp_server.py](../mcp_server.py) | 식품 도메인 MCP stdio 제공 | 파일 상단 헤더 + 외부 목록 |
