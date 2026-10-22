@@ -130,6 +130,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/initial-refactor.md](../doc/food-agent/initial-refactor.md) | 프로젝트 문서 initial-refactor | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/mcp-capabilities.json](../doc/food-agent/mcp-capabilities.json) | 프로젝트 문서 mcp-capabilities | 외부 명세 (원본 보존) |
 | [doc/food-agent/memory-checklist.md](../doc/food-agent/memory-checklist.md) | 프로젝트 문서 memory-checklist | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/model-errors.md](../doc/food-agent/model-errors.md) | 프로젝트 문서 model-errors | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/ocr-reuse-benchmark.json](../doc/food-agent/ocr-reuse-benchmark.json) | 프로젝트 문서 ocr-reuse-benchmark | 외부 명세 (원본 보존) |
 | [doc/food-agent/openapi.json](../doc/food-agent/openapi.json) | 프로젝트 문서 openapi | 외부 명세 (원본 보존) |
 | [doc/food-agent/operational-update.md](../doc/food-agent/operational-update.md) | 프로젝트 문서 operational-update | 파일 상단 헤더 + 외부 목록 |

@@ -125,6 +125,11 @@
           "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
           "date": "2026-10-22T09:13:16+09:00",
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        },
+        {
+          "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
+          "date": "2026-10-22T09:16:03+09:00",
+          "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
         }
       ],
       "sha256": "aa5839714b56893112ee24842ce1929052a4346ffbcde6c152bf9f6c99e725dd"
@@ -668,7 +673,7 @@
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "125c1d992ca35030d6fff2d5ea580a740ce68d15031fe581cc98448f0509c3cf"
+      "sha256": "fb9fc04cfdf1c7d01880eaa52b28777dc1719754a275249acc96b70ae26db245"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -828,8 +833,8 @@
         "추론 동시성·입력 크기·timeout을 제한하고 HTTP client를 정리"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -853,7 +858,7 @@
         }
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
-      "sha256": "b8232b906c3dbff4570bb5a7817d6cde9be13c20eeefcd1e8092054180941b6b"
+      "sha256": "dd29738457ac45b29d31370e80402ab3319bf282a685505322e0897051e5f0bc"
     },
     "backend/app/domains/analysis/reconciliation.py": {
       "spec": [
@@ -2457,7 +2462,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "004c4f07de10f36ad85b8f577bdbffd3b5a454de51ec5a350ef1125f5c155f09"
+      "sha256": "aed8540fe58396662656ed023f600691061e4df0ea2c28d200444e8e7ab525c5"
     },
     "backend/tests/test_consolidation.py": {
       "spec": [
@@ -2549,6 +2554,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
+          "date": "2026-10-22T09:16:03+09:00",
+          "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
         }
       ],
       "original_docstring": "Check that documenting source files preserves executable code and original inputs.",
@@ -2680,7 +2690,7 @@
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "4154da9e45c7a79a0f39b224070a53c452e11594b5e1361516ce5a6323dc3d69"
+      "sha256": "a5e75d2f2f1b0edcbb2cf933044d9255247f7d22283667ee0d07266d984dc6ad"
     },
     "compose.food.yml": {
       "spec": [
@@ -2867,6 +2877,11 @@
           "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
           "date": "2026-10-22T09:13:16+09:00",
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        },
+        {
+          "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
+          "date": "2026-10-22T09:16:03+09:00",
+          "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
         }
       ],
       "sha256": null
@@ -3133,6 +3148,11 @@
           "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
           "date": "2026-10-22T09:13:16+09:00",
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        },
+        {
+          "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
+          "date": "2026-10-22T09:16:03+09:00",
+          "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
         }
       ],
       "sha256": "1352ab3acd0c2ba725a327eec0ca721f7aa1562d0d905ddbd48b8703216b2c76"
@@ -3718,6 +3738,24 @@
         }
       ],
       "sha256": "1373ef9735c10d94c225559231f0046795dab27571d34800391c8b92c8dae371"
+    },
+    "doc/food-agent/model-errors.md": {
+      "spec": [
+        "프로젝트 문서 model-errors",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "32704ea6462f79415b4c348c202f07ac31ce55963402e5980f34a4b2c84fc8f2"
     },
     "doc/food-agent/ocr-reuse-benchmark.json": {
       "spec": [

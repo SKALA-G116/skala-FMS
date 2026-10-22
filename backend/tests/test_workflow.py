@@ -35,6 +35,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   세션 복원·만료·로그아웃 경계와 접근 제어 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   이미지 예산 초과 자료 격리·나머지 결과 및 Excel 보존 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -793,3 +795,32 @@ def test_browser_session_cookie_rotation_expiry_and_logout(client):
     with tx() as c:c.execute("UPDATE sessions SET expires_at=now()-interval '1 second'")
     assert client.get('/api/v1/auth/me').status_code==401
     assert client.get('/api/v1/products').status_code==401
+
+
+@pytest.mark.parametrize('budget_code',['IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET'])
+def test_image_budget_failure_preserves_other_source_results(client,monkeypatch,budget_code):
+    from backend.app.domains.analysis import agent,planning,workflow
+    from backend.app.infrastructure.database import Problem
+    from test_agent import TestModel
+    class Model(TestModel):
+        def generate(self,task,payload,schema):
+            if 'routes' in schema['properties']:
+                return {'document_type':'mixed','summary':'이미지와 공지','tasks':['extract_prices'],
+                        'routes':[{'source_id':s['id'],'tool':'extract_image_regions' if s['location']['kind']=='image' else 'extract_text','reason':'내용별 도구'} for s in payload['sources']]}
+            return super().generate(task,payload,schema)
+    async def oversized(*args):raise Problem(422,budget_code,'이미지 예산 초과')
+    monkeypatch.setattr(planning,'image_regions',oversized)
+    monkeypatch.setattr(agent,'LocalModel',Model);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent')
+    monkeypatch.setattr(workflow,'parse',lambda *args:[
+        {'text':'이미지 상품 원문','confidence':.9,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1]}},
+        {'text':'AI 검증 전복 500g 72000원 2038-11-01 원물 상승','confidence':1,'locator':{'kind':'html','block_id':'notice'}}])
+    login(client)
+    response=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('budget.txt',b'test')},data={'title':'부분 원문 확인'})
+    assert response.status_code==201,response.text
+    jobid=response.json()['analysis_job']['id'];assert once()
+    job=client.get('/api/v1/jobs/'+jobid).json();assert job['status']=='succeeded',job
+    report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json()
+    assert len(report['manual_evidence_ids'])==1
+    assert report['tool_executions'][0]['review_required']['code']==budget_code
+    assert len(report['events'])==1 and report['events'][0]['amount']=='72000'
+    assert report['export_asset_id'] and report['proposal_ids']==[]

@@ -27,6 +27,8 @@ agent.py - LLM 계획·추출과 근거 연결
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   이미지 예산 초과 자료 격리·나머지 자료 처리 지속
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -191,8 +193,16 @@ async def interpret(state):
                 if leftovers:manual.extend(s['evidence_id'] for s in leftovers)
             elif route['tool']=='extract_text':groups.extend(batches(source['segments']))
             elif route['tool']=='extract_image_regions':
-                region_groups,unassigned,layout=await image_regions(source,call)
-                groups.extend(region_groups);manual.extend(unassigned);trace['layout']=layout
+                try:
+                    region_groups,unassigned,layout=await image_regions(source,call)
+                    groups.extend(region_groups);manual.extend(unassigned);trace['layout']=layout
+                except Problem as error:
+                    if error.code not in ('IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET'):raise
+                    # A source too large for bounded inference stays available for
+                    # manual review; it must not discard all other source results.
+                    manual.extend(trace['evidence_ids'])
+                    trace['review_required']={'code':error.code,'message':error.message}
+                    report['warnings'].append(f"{route['source_id']}: {error.message}")
             else:manual.extend(s['evidence_id'] for s in source['segments'])
             execution.append(trace)
             report.setdefault('tool_results',{})[route['source_id']]={'trace':trace,'groups':group_references(groups[before_groups:]),'manual':manual[before_manual:]}
