@@ -25,6 +25,8 @@ test_agent.py - 기능·경계·회귀 검증
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   승인 단가 조회·참고 가격 표시 분리 및 승인 후 연결 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -183,6 +185,18 @@ def editable_review_pipeline(client,monkeypatch):
     rebuilt=post(client,'/analysis-runs/'+runid+'/review-proposals',{'version':edited.json()['version']});assert rebuilt.status_code==200,rebuilt.text
     p=client.get('/api/v1/proposals/'+rebuilt.json()['proposal_ids'][0]);body=p.json()
     p,tag=approve(client,body,p.headers['etag']);assert apply(client,p,tag)['status']=='succeeded'
+    approved_rows=client.get('/api/v1/foods?q=품목%20검토%20테스트%20전복&as_of=2040-11-01').json()['items']
+    assert len(approved_rows)==1
+    food=approved_rows[0]
+    assert [p['value']['amount'] for p in food['approved_prices']]==['70000']
+    assert food['approved_prices'][0]['value']['quantity']=='500'
+    record=food['food_record'];record['prices']['survey_1']='30000'
+    edited_profile=client.patch('/api/v1/foods/'+food['id'],json={'food_record':record,'reason':'원본 조사가 정정'},headers={'Idempotency-Key':uid(),'If-Match':'"'+str(food['version'])+'"'})
+    assert edited_profile.status_code==200,edited_profile.text
+    assert edited_profile.json()['food_record']['prices']['survey_1']=='30000'
+    assert [p['value']['amount'] for p in edited_profile.json()['approved_prices']]==['70000']
+    approved_rows=client.get('/api/v1/foods?q=품목%20검토%20테스트%20전복&as_of=2040-11-01').json()['items']
+    assert [p['value']['amount'] for p in approved_rows[0]['approved_prices']]==['70000']
     report=client.get('/api/v1/analysis-runs/'+runid+'/report').json()
     locked=client.patch(endpoint,json={'version':report['version'],'status':'confirmed','fields':values,'reason':'변경'},headers={'Idempotency-Key':uid()});assert locked.status_code==409
     assert client.get('/api/v1/products?q=품목%20검토%20테스트%20생선').json()['items']==[]

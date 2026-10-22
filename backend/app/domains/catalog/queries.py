@@ -23,6 +23,8 @@ queries.py - 식품·규격·단가의 시점별 조회
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   승인 단가 조회·참고 가격 표시 분리 및 승인 후 연결 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/queries.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -77,10 +79,13 @@ def product_detail(c,id,as_of=None):
     facts=active_facts(c,id,'set_product_status',as_of)
     return {**p,'status':facts[0]['status'] if facts else p['status'],'variants':vs[:20],'supplier_items':its[:20],'variants_next_cursor':None,'supplier_items_next_cursor':None}
 
-def prices(c,as_of=None,scheduled=False):
+def prices(c,as_of=None,scheduled=False,variant_ids=None):
     out=[]
     archived={str(r['record_id']) for r in c.execute("SELECT record_id FROM record_archives WHERE record_kind='food' AND archived")}
-    for item in entities(c,'supplier_item'):
+    if variant_ids is None:items=entities(c,'supplier_item')
+    elif not variant_ids:return []
+    else:items=[{**r['data'],'id':str(r['id']),'version':r['version']} for r in c.execute("SELECT id,data,version FROM catalog_entities WHERE kind='supplier_item' AND data->>'variant_id'=ANY(%s::text[])",(list(variant_ids),))]
+    for item in items:
         if item['variant_id'] in archived:continue
         v=entity(c,item['variant_id']);p=entity(c,v['product_id'])
         for f in active_facts(c,item['id'],'set_price',as_of,scheduled):
@@ -109,8 +114,15 @@ def foods(c,q):
       AND (%s='' OR strpos(lower(coalesce(fp.data::text,'')||p.data::text||v.data::text||coalesce(s.data->>'name','')),lower(%s))>0)
       ORDER BY v.id LIMIT %s""",(archived,cursor,cursor,search,search,limit+1)).fetchall()
     more=len(rows)>limit;out=[]
+    as_of=q.get('as_of') or today()
+    from datetime import date
+    try:date.fromisoformat(as_of)
+    except ValueError:raise Problem(422,'PRICE_DATE','단가 기준일을 확인해 주세요.')
+    approved={}
+    for price in prices(c,as_of,scheduled=True,variant_ids=[str(row['id']) for row in rows[:limit]]):
+        approved.setdefault(price['variant_id'],[]).append(price)
     for row in rows[:limit]:
         p=row['product'];v=row['variant'];record=row['profile'] or from_event({'product_name':p['name'],'spec':v['spec_original']})
         if not row['profile'] and row['company_name']:record.update(company_name=row['company_name'],company_id=str(row['company_id']))
-        out.append({'id':str(row['id']),'product_id':p['id'],'version':row['profile_version'] or v['version'],'food_record':record,'status':p['status'],'evidence_ids':v.get('evidence_ids',[]),'has_stored_profile':bool(row['profile']),'archived':row['archived'],'archive_version':row['archive_version']})
+        out.append({'id':str(row['id']),'product_id':p['id'],'version':row['profile_version'] or v['version'],'food_record':record,'status':p['status'],'evidence_ids':v.get('evidence_ids',[]),'has_stored_profile':bool(row['profile']),'approved_prices':approved.get(str(row['id']),[]),'archived':row['archived'],'archive_version':row['archive_version']})
     return {'items':out,'next_cursor':out[-1]['id'] if more else None,'has_more':more}
