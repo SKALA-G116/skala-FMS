@@ -29,6 +29,8 @@ test_async_runtime.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   OCR 정상 종료·native 충돌 격리 및 재시작 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- backend/tests/test_async_runtime.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -212,3 +214,20 @@ def test_provider_timeout_and_connection_error_are_distinct():
     request=httpx.Request('POST','http://model/api/chat')
     assert provider.model_error(httpx.ReadTimeout('private',request=request)).code=='MODEL_TIMEOUT'
     assert provider.model_error(httpx.ConnectError('private',request=request)).code=='MODEL_UNAVAILABLE'
+
+
+@pytest.mark.parametrize('content,keyword',[
+    ('{"values":["a","b"]}','maxItems'),
+    ('{"values":["INVENTED_PRIVATE_VALUE"]}','enum'),
+    ('not valid JSON PRIVATE_SOURCE_TEXT','json'),
+])
+def test_model_validation_diagnostics_do_not_expose_raw_output(content,keyword):
+    schema={'type':'object','properties':{'values':{'type':'array','maxItems':1,'items':{'enum':['a','b']}}},'required':['values'],'additionalProperties':False}
+    model=provider.LocalModel();request=model.request('bounded',{},schema)
+    assert request['format']['properties']['values']['maxItems']==1
+    response=httpx.Response(200,json={'message':{'content':content},'eval_count':9},request=httpx.Request('POST','http://model/api/chat'))
+    with pytest.raises(provider.Problem) as error:model.decode(response,'bounded',schema,time.monotonic(),0)
+    assert error.value.code=='MODEL_SCHEMA_INVALID' and error.value.details['validation']['keyword']==keyword
+    assert model.calls[0]['outcome']=='invalid' and model.calls[0]['output_tokens']==9
+    assert 'PRIVATE' not in json.dumps(error.value.details) and 'PRIVATE' not in json.dumps(model.calls)
+    assert error.value.__suppress_context__

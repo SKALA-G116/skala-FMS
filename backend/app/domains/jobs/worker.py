@@ -27,6 +27,8 @@ worker.py - 수집·분석·반영 작업 소비
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- backend/app/domains/jobs/worker.py
     공통 규칙: doc/file-header-policy.md
 
@@ -109,11 +111,15 @@ def once(job_types=None):
             lock=c.execute('SELECT status,fence FROM jobs WHERE id=%s FOR UPDATE',(job['id'],)).fetchone()
             if lock['fence']!=fence or lock['status']=='cancelled':return True
             issues=job['issues'];job=getjob(c,job['id'],True);job['issues']=issues
+            if job['type']=='analyze' and output.get('agent_report_id'):
+                report=get(c,'agent_report',output['agent_report_id'])
+                unresolved=[f for f in report.get('extraction_failures',[]) if f.get('resolution')=='manual_review']
+                if unresolved:job['issues'].append({'code':'EXTRACTION_REVIEW_REQUIRED','message':f'{len(unresolved)}개 구간의 자동 추출을 보류했습니다. 완료한 품목과 원문을 검수할 수 있습니다.','retryable':False})
             count=len(output.get('document_ids',[])) if job['type']=='collect' and not output.get('connected') else job.get('total_count') or 1
             actionable=[issue for issue in job['issues'] if issue['code']!='SCAN_CONTINUES']
             job.update(status='partial' if actionable else 'succeeded',stage='일부 확인 필요' if actionable else '완료',finished_at=now(),processed_count=count,total_count=count,result=output,allowed_actions=[]);savejob(c,job)
             if job['analysis_run_id']:
-                run=get(c,'analysis_run',job['analysis_run_id']);run.update(status='succeeded',finished_at=now());put(c,'analysis_run',run)
+                run=get(c,'analysis_run',job['analysis_run_id']);run.update(status=job['status'],finished_at=now());put(c,'analysis_run',run)
     except AnalysisYield:
         with tx() as c:
             row=c.execute('SELECT status,fence FROM jobs WHERE id=%s FOR UPDATE',(job['id'],)).fetchone()

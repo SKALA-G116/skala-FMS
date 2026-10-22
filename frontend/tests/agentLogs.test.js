@@ -24,6 +24,8 @@ agentLogs.test.js - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- frontend/tests/agentLogs.test.js
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -42,4 +44,12 @@ test('도구 선택·실행 중·입력 준비·검수 필요를 서로 구분�
  assert.deepEqual(agentSteps(report).map(s=>s.state),['prepared','running','review']);
  report.status='completed';delete report.active_tool;
  assert.deepEqual(agentSteps(report).map(s=>s.state),['completed','pending','review']);
+});
+
+test('중단한 작업은 처리 중으로 표시하지 않고 일부 완료는 검수 경계를 안내한다',async()=>{
+ const {analysisResultState}=await import('../src/utils/agentLogs.js');
+ assert.equal(analysisResultState({status:'interpreting'},{status:'failed'}).title,'처리가 중단되었습니다');
+ assert.equal(analysisResultState({status:'interpreting'},{status:'cancelled'}).title,'처리가 중단되었습니다');
+ assert.match(analysisResultState({status:'completed'},{status:'partial'}).description,/일부 구간/);
+ assert.equal(analysisResultState({status:'interpreting'},{status:'running'}).title,'Agent가 자료를 처리하고 있습니다');
 });

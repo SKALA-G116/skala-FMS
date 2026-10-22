@@ -33,6 +33,8 @@ agent.py - LLM 계획·추출과 근거 연결
 
     2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -281,23 +283,32 @@ async def interpret(state):
         table_context=next((s for s in segments if s.get('table_context')),None)
         schema=event_schema(list(mapping))
         if table_context:
-            payload['instructions']+=' 이 이미지는 함께 제공한 엑셀 행 상품의 라벨이다. 해당 상품의 원재료·함량·알레르기·원산지 속성만 보완하고 상품을 새로 나누거나 표의 제품명·규격·가격을 변경하지 마라.'
-            schema['properties']['events']['maxItems']=1
-            schema['properties']['events']['items']['properties']['kind']={'const':'food_profile'}
+            payload={'title':r['title'],'segments':payload['segments'],'instructions':'이 이미지는 함께 제공한 엑셀 행 상품의 라벨이다. 해당 상품의 원재료·함량·알레르기·원산지 속성만 보완하라. attributes_text와 allergen_text는 해당 원문 그대로이며 없으면 null이다. 상품·규격·가격은 추출하지 마라. source_ids는 제공된 ID만 사용하라.'}
+            from backend.app.domains.analysis.schemas import label_schema
+            schema=label_schema(list(mapping))
         try:
-            data=await model_call(model,'추출 자료를 해석해 실제 식품별 사실을 JSON events로 반환하라. 단순 회사명·연락처·안내 제목은 품목이 아니다.',payload,schema,state)
+            task='한 상품 라벨의 원재료·함량·원산지와 알레르기 표시 원문만 반환하라. 상품·규격·단가는 추출하지 마라.' if table_context else '추출 자료를 해석해 실제 식품별 사실을 JSON events로 반환하라. 단순 회사명·연락처·안내 제목은 품목이 아니다.'
+            data=await model_call(model,task,payload,schema,state)
+            if table_context:
+                from backend.app.domains.analysis.schemas import EVENT_FIELDS
+                data={'events':[{**{key:None for key in EVENT_FIELDS},**data,'kind':'food_profile','product_name':table_context['food_record']['food_name'],'replacements':[],'uncertainties':[]}]}
             if len(data['events'])>=24:raise Problem(422,'EVENT_WINDOW_CAPACITY','AI 추출 항목 상한에 도달했습니다. 누락 방지를 위해 더 작은 구간으로 재처리해야 합니다.')
         except Problem as error:
-            if error.code not in ('MODEL_OUTPUT_LIMIT','EVENT_WINDOW_CAPACITY','MODEL_INPUT_BUDGET'):raise
+            if error.code not in ('MODEL_SCHEMA_INVALID','MODEL_OUTPUT_LIMIT','EVENT_WINDOW_CAPACITY','MODEL_INPUT_BUDGET'):raise
             report['model_calls'].extend(model.calls);model.calls=[]
+            failure={'batch':i+1,'code':error.code,'evidence_ids':list(dict.fromkeys(s['evidence_id'] for s in segments))}
+            if isinstance(error.details,dict) and error.details.get('validation'):failure['validation']=error.details['validation']
             if len(segments)>1 and not any(s.get('region_label') for s in segments) and len(groups)+2<=budget:
                 middle=len(segments)//2
                 groups[i]=[];groups.extend([segments[:middle],segments[middle:]])
-                report['warnings'].append('AI 출력 예산을 넘은 구간을 원본 행 경계로 나누어 재처리했습니다.')
+                report['warnings'].append('AI 출력 형식·예산 오류 구간을 원본 행 경계로 나누어 재처리했습니다: '+error.code)
+                failure['resolution']='split'
             else:
                 report['manual_evidence_ids']=list(dict.fromkeys(report.get('manual_evidence_ids',[])+[s['evidence_id'] for s in segments]))
-                report['warnings'].append('자동 추출 예산을 넘은 원문은 검토 대상으로 보존했습니다: '+error.code)
+                report['warnings'].append('자동 추출 형식·예산 오류 원문은 검토 대상으로 보존했습니다: '+error.code)
+                failure['resolution']='manual_review'
                 groups[i]=[]
+            report.setdefault('extraction_failures',[]).append(failure)
             report['execution_groups']=group_references(groups)
             report['batches_completed']=i+1;report['coverage']['total_batches']=len(groups)
             with tx() as c:save_report(c,report,state)

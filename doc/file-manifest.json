@@ -276,9 +276,14 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "a4a9842141ccab0fa6429f20a4f22424c699182feca6f00d89b93edbdf22580a"
+      "sha256": "98bb5b8fff375f31a43c031a0e46bdff84d27e4f85090e7b402059ad5d522692"
     },
     "backend/__init__.py": {
       "spec": [
@@ -557,6 +562,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "HTTP guards, bounded body ingestion and transaction/idempotency boundary.",
@@ -597,6 +607,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts.",
@@ -705,10 +720,15 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "6fb910fae1386aecfd35040c7a846ca51a9ffc1811fc65de05dd38f01146c361"
+      "sha256": "12145a61ba5060fa807dc56abb57b6824f7228a0b3cd1bb46e9959a5f3696325"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -785,6 +805,11 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Deterministic table recovery and conservative, provenance-preserving candidate merging.",
@@ -875,6 +900,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Agent-selected source tools; the host validates capabilities and complete coverage.",
@@ -923,7 +953,7 @@
         }
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
-      "sha256": "59240ab18324ffe366359977d38f631c7a447400e9c6d2cf272a9025930d6d8a"
+      "sha256": "7545371602c911acca4f177a4fa0328e60dcab249960a2e482c513cd5709b1d0"
     },
     "backend/app/domains/analysis/reconciliation.py": {
       "spec": [
@@ -963,8 +993,8 @@
         "스키마 적합성이 식품 사실의 정확성을 보장하지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -982,7 +1012,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "d5cbf5f2185eb41a90fcfecf8319c26310be40a1d998f3875cb5d19c649e47eb"
+      "sha256": "42a8367d8e775d645d97247ad947f020ec4a966312939d3ab62cbc59e01da176"
     },
     "backend/app/domains/analysis/service.py": {
       "spec": [
@@ -1054,6 +1084,11 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Small durable LangGraph state: IDs only; source bodies live in storage.",
@@ -1375,6 +1410,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Ingestion HTTP use cases. The transport owns authentication and the transaction.",
@@ -1505,6 +1545,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "e590bea81a72aa620e7ee2f25a1a9acf9ccdd6bc3927cddf19834fbe17633aa9"
@@ -1675,7 +1720,7 @@
         }
       ],
       "original_docstring": "Durable queue consumer. Single worker by default; database claim/fencing prevents duplicates.",
-      "sha256": "44a19546491c081a6758bde4ae74aea9592a0d6f970a8a4b14b3216bba799f87"
+      "sha256": "1743b4a2bccccf4d3ec7c39b089e3f42442a5d9c7790f35cd1814b4c0488ef9d"
     },
     "backend/app/domains/pricing/__init__.py": {
       "spec": [
@@ -2068,6 +2113,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "a2957ca1ec18c49cccd5681201e027e362ad73f78979ba19a8d1a848f2ef5c40"
@@ -2156,6 +2206,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Versioned JSON contracts shared by HTTP, MCP and application services.",
@@ -2265,6 +2320,11 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Bounded synchronous parsing, executed only in the worker process.",
@@ -2295,6 +2355,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Isolated PaddleOCR adapter; --serve reuses one model across bounded requests.",
@@ -2325,6 +2390,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "One serialized OCR subprocess: reuse weights, recycle, release idle native memory.",
@@ -2345,7 +2415,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "original_docstring": "Bounded XLSX drawing inventory with explicit cell anchors and safe media reads.",
       "sha256": "6953d9399c059589c5df7dcdf55a31c2846af1defe8832c10c05bebd29931082"
     },
@@ -2462,6 +2538,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Bounded resources shared by HTTP, inference and queue workers.",
@@ -2709,9 +2790,14 @@
           "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
           "date": "2026-10-22T09:34:26+09:00",
           "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "9b34890057b14ba8e185f133cbdae70499c08756b6cb93a2f4641a7fac0a256f"
+      "sha256": "51b2980bcc319909c1ef5eaab304af05c58a1b38b1bc6c4877f9ecb5bdd6d04c"
     },
     "backend/tests/test_consolidation.py": {
       "spec": [
@@ -2902,6 +2988,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "5c4857dd9be86e0169b70191729e7e6512cfb2408fe8c46c72d4676a16b14eda"
@@ -2971,10 +3062,15 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "3a1b803dbd0458c7c11e65ccc8e26d549e703c2f75e3547f64738a5924e32bc9"
+      "sha256": "f3c684fc3a6a752a90e50bc872715ef9004a31ba8a8f4808a3391fecfd512799"
     },
     "compose.food.yml": {
       "spec": [
@@ -3181,6 +3277,11 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": null
@@ -3235,6 +3336,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": null
@@ -3375,6 +3481,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "7092caf4d11bcffc2172607c51ecb128da7041e52771afcbca2d8b2ebe5c94ad"
@@ -3544,7 +3655,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "bb13c5a1a3fe80ad7abb3bc29304a027ca38406d01fb7c0f1a2b4dd134c659f4"
     },
     "doc/food-agent/examples/analysis-profiles.json": {
@@ -3966,6 +4083,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "c373b53540be3c8ca4ab879a8a0f1277265c030ab8fde0a33d3053baee2609a1"
@@ -4072,6 +4194,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "6d9327b410002d645a47dc8e020e57c3090cb2d5cee6e04b25c00512d8824527"
@@ -4139,7 +4266,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "d5d8538e123e18662a494e760ff5f09f00ef4c05d4f5f326fa6c8f1c9372a09d"
     },
     "doc/food-agent/openapi.json": {
@@ -4177,6 +4310,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "5e9caf92760a6f0f31337636c8a9d9b7136bafa920b7a5690856c93f2b490ffa"
@@ -4206,6 +4344,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "e5958416b7fe132b353f9fdb5b887b7970e2825f2b42bcb87eb65bd9c96a790e"
@@ -4360,6 +4503,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "1cb5ddb7a126eef4331ce83b2395ea60e57e06a5b173ae264057391ab1f39452"
@@ -4504,7 +4652,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "a281f0af403212ecb82ee5090ec61edd9a4840a9101c884d319333d468098dba"
     },
     "doc/food-agent/review-inbox.md": {
@@ -4628,6 +4782,11 @@
           "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
           "date": "2026-10-21T18:51:31+09:00",
           "subject": "refactor: initialize food service with domain-based backend and delivery guide"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "87a73fc9f4865c9a94a0b2e37cba2eb7a3d0edc249dba2e7e5b066ea70275ee7"
@@ -4837,7 +4996,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "9d04fa4532782c35f3d72b83d4a2aa2c96b8dc62271936b2b31b4dd0326e8658"
     },
     "doc/submission/before-after.md": {
@@ -4865,9 +5030,14 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "a629fa2fe380feb3e8078889fcc281268dc5d1bf0c33ec86e9007acc97ef27ca"
+      "sha256": "6c98d116a18cb15df67ee89903eaf1b46e9557503e2aa91453656e5a069c8505"
     },
     "doc/submission/before-after/01-table-preservation.md": {
       "spec": [
@@ -4884,7 +5054,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "08d77463f11c9a4fc0c6e640e6eb21154509a496535491dd1e54637e8908eb1a"
     },
     "doc/submission/before-after/02-ocr-lifecycle.md": {
@@ -4902,7 +5078,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "45e233b98e0b52e748eee7d3b0a9c750cde55379af20268c7065aafb87c3062a"
     },
     "doc/submission/before-after/03-review-contract.md": {
@@ -4920,7 +5102,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "7d994ac8883cd2da2ffa1268b1d5663272978449500362c3b896b204f24dc6e0"
     },
     "doc/submission/before-after/04-embedded-labels.md": {
@@ -4938,8 +5126,32 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "bfef2ea777fd89690824d53c3732347af956c0136320f27e155e5f53940c2e70"
+    },
+    "doc/submission/before-after/05-model-schema-recovery.md": {
+      "spec": [
+        "프로젝트 문서 05-model-schema-recovery",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "ad53da89243ab918f8304ac67f9c56a1df6599547f2560f3352984acd41ae14e"
     },
     "doc/submission/benchmark-view.html": {
       "spec": [
@@ -4956,7 +5168,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "0a34a79e3eed3049c8ece8ca7a18415418d2ccbb68782cb9c011946fc5eb34ec"
     },
     "doc/submission/demo-guide.md": {
@@ -4984,6 +5202,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "9dd9bdb3a1cc417e6a1115122c213a4c617d3084343029643fc941f3d3cb2ddd"
@@ -5013,6 +5236,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "603b48a752525d127e115b6a2d4d1d0c91c06899edda6e917450762773a3dde8"
@@ -5042,6 +5270,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "4c2595c1a18430b674a47fc6ed400e810e34bf8d3d074f592d8592acdd447619"
@@ -5061,7 +5294,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "228684eb3db3ca3065d157da0195ebfc2b34bec7d473305dcc2d047106efa50e"
     },
     "doc/submission/screenshots/03-agent-log.jpg": {
@@ -5079,7 +5318,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "b08c5c25a5c8d026dc37fd9b3fe9b2acb31278931513775f0d928f1e445ebcd3"
     },
     "doc/submission/screenshots/04-price-table.jpg": {
@@ -5097,7 +5342,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "4dadbc9e49a7df9da6593389bd4132a1bc80c9134aad7837a5baa45aca30ee73"
     },
     "doc/submission/screenshots/05-table-filter.jpg": {
@@ -5115,7 +5366,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "f852b86e451bf063eb1ac4b971f2e34a1eead1dbf5c40d18ef4850458ecb1f32"
     },
     "doc/submission/screenshots/06-review.jpg": {
@@ -5133,7 +5390,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "8bd5601fbcae80dcd789c07f775a95a623bfb0c8ee7711ee18ebeb4e0a288060"
     },
     "doc/submission/screenshots/07-food-db.jpg": {
@@ -5151,7 +5414,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "ae58a4ee08ae4a0f9ca3b43cf75fa706d63c3f34eba8457718cbf0bac2b8e485"
     },
     "doc/submission/screenshots/08-food-edit.jpg": {
@@ -5169,7 +5438,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "25b5d5e46424630cb8a4838867fb9adbe98e2979e25f5a1a07966225867a5093"
     },
     "doc/submission/screenshots/09-before-after.jpg": {
@@ -5187,7 +5462,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "afdc3259e1bc9ed1d39be929203891170aff73f2f908eb6afea811334708f9ae"
     },
     "doc/submission/screenshots/10-history-evidence.jpg": {
@@ -5205,7 +5486,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "f6063c5d32d3c21bb013f04842afb8db1fd37e0db80c30c5f0f58d0a0d8d710a"
     },
     "doc/submission/screenshots/11-table-agent-log.jpg": {
@@ -5223,7 +5510,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "e80c63015ddabc8c957d9d3c20c1897239c3616d2a8fe7cef29201ece8413901"
     },
     "doc/submission/screenshots/12-model-calls.jpg": {
@@ -5241,7 +5534,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "734352ff1d1a76dee6ca0d3cc5b9f71706b0258bffffbbd83dfe4b68d1f2b27d"
     },
     "doc/submission/table-demo-result.json": {
@@ -5259,7 +5558,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "42a45f3c26dc097ea5b992ce065066f415cb83d7837101742051115fcaa5efe5"
     },
     "doc/submission/table-preservation-benchmark.json": {
@@ -5277,7 +5582,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "b9e03bb0714cc975090078c21ffef10b28c144592a144c5ff9a0cc47b95b4cc8"
     },
     "frontend/index.html": {
@@ -5702,6 +6013,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "a1e84121af62178c0eb97a42996477af01b105948d6ccc8b5880246431b842f7"
@@ -5789,6 +6105,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "56c215c909df4949f216240104d39e65aef9a64ddecb5b032aaa5fce769b5fb9"
@@ -5912,7 +6233,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "90fb86b1c748c2f58ac9f00a3df53bfd8d17da58ca9bacb753df42f00aa4b473"
+      "sha256": "a355448a3834be0383c81db4eb56c4852bc11897f49e5be77cdeb486239f64ba"
     },
     "frontend/src/utils/reviewJourney.js": {
       "spec": [
@@ -5939,6 +6260,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "ba307e6e2cf32bf3cf1fe7d2a5f46909424195ffcb7cac2f36b73bc67cc97567"
@@ -6007,6 +6333,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "83b3f1726bb236d1060953d50a4acbf41592a2ec2561dbf08ee50f1e0df31f74"
@@ -6056,6 +6387,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "b92823ae40a9e6e9edc1f06a8b708629c2d4a87a90f4644d075107eeddf98e9c"
@@ -6136,7 +6472,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "eb5ee5cd2da996681c73a7ce3b607c25a0f299dab24a7885b43344182dd1e994"
+      "sha256": "cb80c00ad884427ecc20c7290933f4181d8e248e28e220e58b157f9446a042df"
     },
     "frontend/src/views/Prices.vue": {
       "spec": [
@@ -6296,7 +6632,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "397cad7338e49687697d8556d3b2f4e0bb2e11d837d991c28690e8a197d2075b"
+      "sha256": "6c0b6f5155abf6b87a068fbea0675bfe137f481edd7518dd09fc364c688d9025"
     },
     "frontend/tests/auth.test.js": {
       "spec": [
@@ -6347,6 +6683,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "59d5bccc64775e3bfcee69bca2be2d3b4dc1a93931f1004d6a787e1ca307bbe5"
@@ -6686,7 +7027,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "c51859fe06af283e39f29f3d96510958bf0d4ac86067ba5579e0e0cd71c8ef10"
     },
     "output/presentation/food-ledger-5min.pptx": {
@@ -6704,7 +7051,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "sha256": "61001e2bafc4dda99547529daa1192cce2f2f00883151796f0cba28e6049c263"
     },
     "readmd.md": {
@@ -6747,6 +7100,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "sha256": "c4fc8adaa249717bdc9fc92b4bc1fe680e86d3015fca1c5a3b79e25f908191a9"
@@ -6824,7 +7182,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
+        }
+      ],
       "original_docstring": "Replay a local XLSX against previous and current table mapping/merge code.\n\nRead-only. No model calls, DB access, or workbook upload. The record DTO helper is\nshared from the current checkout, so this isolates parser/consolidation changes.\n",
       "sha256": "eab319e1c2b5c2d97fbeeb7ba6ca82247eed1fe8da3c5f92157c5e69de3492e0"
     },
@@ -6994,6 +7358,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "853d50085d57d2fbda43de474cf7135ed55e5f54",
+          "date": "2026-10-22T12:29:23+09:00",
+          "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
       "original_docstring": "Apply source headers and maintain a format-safe file specification inventory.",

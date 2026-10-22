@@ -191,7 +191,9 @@ Agent가 `normalize_table`을 선택했고, 인식된 표 행에는 별도 추�
 
 ![동일 파일의 이전·현재 파서 결과 비교](doc/submission/screenshots/09-before-after.jpg)
 
-전체 **백엔드 153개·프론트 15개 테스트와 Vite 빌드 통과**를 2026-10-22 확인했습니다. 테스트 통과 수는 실제 자료의 추출 정확도가 아닙니다. [재현 범위·테스트·성과 근거](doc/submission/before-after.md)
+[추가 문제 해결: 모델 형식 오류의 원인·범용 복구·실제 입력 재현](doc/submission/before-after/05-model-schema-recovery.md). 한 라벨을 원재료·알레르기 보완 객체로 축소하고, 분할할 수 없는 오류 구간은 원문 검수로 보존해 나머지 검토본을 생성합니다.
+
+전체 **백엔드 159개·프론트 16개 테스트와 Vite 빌드 통과**를 2026-10-22 확인했습니다. 테스트 통과 수는 실제 자료의 추출 정확도가 아닙니다. [재현 범위·테스트·성과 근거](doc/submission/before-after.md)
 
 ## 6. 한계와 다음 단계
 

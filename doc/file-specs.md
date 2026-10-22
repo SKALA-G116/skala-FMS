@@ -170,6 +170,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/submission/before-after/02-ocr-lifecycle.md](../doc/submission/before-after/02-ocr-lifecycle.md) | 프로젝트 문서 02-ocr-lifecycle | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/before-after/03-review-contract.md](../doc/submission/before-after/03-review-contract.md) | 프로젝트 문서 03-review-contract | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/before-after/04-embedded-labels.md](../doc/submission/before-after/04-embedded-labels.md) | 프로젝트 문서 04-embedded-labels | 파일 상단 헤더 + 외부 목록 |
+| [doc/submission/before-after/05-model-schema-recovery.md](../doc/submission/before-after/05-model-schema-recovery.md) | 프로젝트 문서 05-model-schema-recovery | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/benchmark-view.html](../doc/submission/benchmark-view.html) | 프로젝트 문서 benchmark-view | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/demo-guide.md](../doc/submission/demo-guide.md) | 프로젝트 문서 demo-guide | 파일 상단 헤더 + 외부 목록 |
 | [doc/submission/presentation-5min.md](../doc/submission/presentation-5min.md) | 프로젝트 문서 presentation-5min | 파일 상단 헤더 + 외부 목록 |

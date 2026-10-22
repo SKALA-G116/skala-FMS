@@ -11,8 +11,8 @@ schemas.py - LLM 계획·추출 응답 스키마
 실행 가정:
     - 스키마 적합성이 식품 사실의 정확성을 보장하지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,14 +23,16 @@ schemas.py - LLM 계획·추출 응답 스키마
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/schemas.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -58,3 +60,10 @@ def event_schema(ids):
     properties={**EVENT_FIELDS,'source_ids':{'type':'array','minItems':1,'maxItems':12,'items':{'type':'string','enum':ids}}}
     event={'type':'object','additionalProperties':False,'properties':properties,'required':list(properties)}
     return {'type':'object','additionalProperties':False,'properties':{'events':{'type':'array','maxItems':24,'items':event}},'required':['events']}
+
+
+def label_schema(ids):
+    """One row's label supplements attributes, never proposes products or prices."""
+    fields={key:EVENT_FIELDS[key] for key in ('attributes_text','allergen_text')}
+    fields['source_ids']={'type':'array','minItems':1,'maxItems':min(12,len(ids)),'uniqueItems':True,'items':{'type':'string','enum':ids}}
+    return {'type':'object','additionalProperties':False,'properties':fields,'required':list(fields)}
