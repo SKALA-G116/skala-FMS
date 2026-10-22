@@ -124,6 +124,11 @@ def _compatible(source,target,allow_alias=False):
     a,b=source['food_record'],target['food_record']
     if a.get('food_code') and b.get('food_code') and a['food_code']!=b['food_code']:return False
     if a.get('company_name') and b.get('company_name') and canonical(a['company_name'])!=canonical(b['company_name']):return False
+    for left in a['prices'].get('source_columns') or []:
+        for right in b['prices'].get('source_columns') or []:
+            if (left['basis'],left['quantity'],left['unit'])!=(right['basis'],right['quantity'],right['unit']):continue
+            if left['amount']!=right['amount'] or left['amount'] is None and canonical(left['original_text'])!=canonical(right['original_text']):return False
+            if left['tax_included'] is not None and right['tax_included'] is not None and left['tax_included']!=right['tax_included']:return False
     an,bn=canonical(a['food_name']),canonical(b['food_name'])
     if an!=bn and not (allow_alias and len(an)>=3 and an in bn):return False
     if a['attributes']['flavor'] and b['attributes']['flavor'] and a['attributes']['flavor']!=b['attributes']['flavor']:return False
@@ -153,6 +158,10 @@ def _merge(target,source):
     # The structured row stays authoritative. Only empty fields are supplemented.
     before=target['food_record'];extra=source['food_record']
     merged=merge_profile(extra,before)
+    quotes=deepcopy(before['prices'].get('source_columns') or [])
+    for quote in extra['prices'].get('source_columns') or []:
+        if not any((q['basis'],q['quantity'],q['unit'])==(quote['basis'],quote['quantity'],quote['unit']) for q in quotes):quotes.append(deepcopy(quote))
+    merged['prices']['source_columns']=quotes or None
     for key in ('field_sources',):
         merged[key]=deepcopy(before[key])
         for field,origin in extra[key].items():

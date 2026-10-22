@@ -93,7 +93,7 @@ def extract(state):
         run=get(c,'analysis_run',state['run_id']);check_running(c,run);r=get(c,'revision',state['revision_id']);a=get(c,'asset',r['snapshot_asset_id'])
         if run.get('extraction_id'):
             previous=get(c,'extraction',run['extraction_id'])
-            if previous.get('parser_version')=='food-parser-v5' or previous.get('parser_version')=='food-parser-v4' and run.get('agent_report_id'):return {'extraction_id':run['extraction_id']}
+            if previous.get('parser_version')=='food-parser-v6' or previous.get('parser_version') in ('food-parser-v4','food-parser-v5') and run.get('agent_report_id'):return {'extraction_id':run['extraction_id']}
     blocks=[];parse_issues=[];eid=uid();started=time.monotonic();extracted_bytes=0
     for index,asset in enumerate(r['assets']):
         with tx() as c:
@@ -131,7 +131,7 @@ def extract(state):
                     related=row_evidence.get((b['asset_id'],loc.get('sheet_name'),anchor[0])) if anchor and source.get('origin')=='merged_cell' else None
                     source.update(evidence_ids=list(dict.fromkeys([ev['id']]+([related] if related else []))),document_revision_id=r['id'])
                     source['locator']['asset_id']=b['asset_id']
-        put(c,'extraction',{'id':eid,'revision_id':r['id'],'segments':blocks,'parser_version':'food-parser-v5','issues':parse_issues,'created_at':now()})
+        put(c,'extraction',{'id':eid,'revision_id':r['id'],'segments':blocks,'parser_version':'food-parser-v6','issues':parse_issues,'created_at':now()})
         run=get(c,'analysis_run',state['run_id'],True);run['extraction_id']=eid;put(c,'analysis_run',run)
         r['extraction_ids']=[eid];r['segment_manifest_id']=eid;r['parse_issues']=parse_issues;put(c,'revision',r)
     return {'extraction_id':eid}

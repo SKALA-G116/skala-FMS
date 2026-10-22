@@ -971,3 +971,25 @@ def test_vendor_workbook_registers_and_normalizes_without_row_llm(client,monkeyp
     registered=client.get('/api/v1/price-workbooks/'+matching['id']).json()
     assert registered['sheets'][0]['header_row']==2
     assert report['proposal_ids']==[]
+
+
+def test_approved_same_size_flavors_keep_separate_catalog_variants(client,monkeypatch):
+    from backend.app.domains.analysis import agent,workflow
+    from backend.app.domains.catalog.record import empty_record,specification
+    class TableModel:
+        def __init__(self):self.name='TEST';self.calls=[]
+        def generate(self,task,payload,schema):return {'document_type':'price_table','summary':'맛별 품목','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'normalize_table','reason':'표 행'} for s in payload['sources']]}
+    name='맛 구분 검증 '+uid();records=[]
+    for flavor in ['오리지널','매콤']:
+        record=empty_record();record.update(food_name=name,raw_food_name=name);record['attributes']['flavor']=flavor;record['specification']=specification('50g');records.append(record)
+    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setattr(agent,'LocalModel',TableModel)
+    monkeypatch.setattr(workflow,'parse',lambda *args:[{'text':name+' '+r['attributes']['flavor'],'confidence':1,'locator':{'kind':'html','block_id':str(i)},'food_record':r} for i,r in enumerate(records)])
+    login(client);r=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('flavor.txt',b'test')},data={'title':'맛별 SKU'})
+    assert once();runid=r.json()['analysis_job']['analysis_run_id'];report=client.get('/api/v1/analysis-runs/'+runid+'/report').json();assert len(report['events'])==2
+    for item in list(report['events']):
+        checked=client.patch('/api/v1/analysis-runs/'+runid+'/items/'+item['id'],json={'version':report['version'],'status':'confirmed','fields':{},'reason':'맛 구분 확인'},headers={'Idempotency-Key':uid()});assert checked.status_code==200,checked.text;report=checked.json()
+    approved=post(client,'/analysis-runs/'+runid+'/approve',{'version':report['version']});assert approved.status_code==202,approved.text
+    assert once()
+    with tx() as c:
+        rows=c.execute("SELECT fp.variant_id,fp.data#>>'{attributes,flavor}' flavor FROM food_profiles fp WHERE fp.data->>'food_name'=%s",(name,)).fetchall()
+        assert len(rows)==2 and {row['flavor'] for row in rows}=={'오리지널','매콤'}

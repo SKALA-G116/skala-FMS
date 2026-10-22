@@ -127,3 +127,13 @@ def test_job_stage_log_is_bounded_and_does_not_repeat_heartbeat_updates():
     for i in range(150):job['stage']='처리 '+str(i);stamp_stage(job)
     assert len(job['stage_history'])==100
     assert job['stage_history'][0]['stage']=='처리 50' and job['stage_history'][-1]['stage']=='처리 149'
+
+
+def test_merged_cell_memory_budget_is_shared_across_sheets(tmp_path,monkeypatch):
+    import openpyxl
+    from backend.app.parsers import xlsx_merges
+    book=openpyxl.Workbook();book.active.merge_cells('A1:B3');book.create_sheet('두번째').merge_cells('A1:B3')
+    path=tmp_path/'merged.xlsx';book.save(path);book.close()
+    monkeypatch.setattr(xlsx_merges,'MAX_MERGE_CELLS',10)
+    with pytest.raises(Problem) as error:xlsx_merges.merge_anchors(path)
+    assert error.value.code=='SHEET_LIMIT'

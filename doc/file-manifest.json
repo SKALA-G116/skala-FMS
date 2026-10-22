@@ -753,7 +753,7 @@
         }
       ],
       "original_docstring": "Deterministic table recovery and conservative, provenance-preserving candidate merging.",
-      "sha256": "22a3bc7bf7b8fdd5790058c845c3038d5af972f73d753ae57c85a0ed66c5412a"
+      "sha256": "a73dce3950314c56466387570b33496e1e89e25d492228f2b9e121e85b2b5026"
     },
     "backend/app/domains/analysis/export.py": {
       "spec": [
@@ -1002,7 +1002,7 @@
         }
       ],
       "original_docstring": "Small durable LangGraph state: IDs only; source bodies live in storage.",
-      "sha256": "a927e0b852a43bf74b85f4f04f6f66141dd7c4051f4ee95c7db8fd4aad272f83"
+      "sha256": "401e474f6dad479a565f742d15f05033d3a9da439c33224b2be507f1920bb984"
     },
     "backend/app/domains/catalog/__init__.py": {
       "spec": [
@@ -1149,7 +1149,7 @@
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
-      "sha256": "99ef5a738858bda344bbecf4b2fb54dbbd08735428724e9c215ba545d2e5ea21"
+      "sha256": "913a399ddffd8e1ae2e2d86e6464cc0704882e2d2902616250e4b7429f61546e"
     },
     "backend/app/domains/identity/__init__.py": {
       "spec": [
@@ -1983,7 +1983,7 @@
         }
       ],
       "original_docstring": "Build approval drafts from explicitly confirmed DTOs; never called by extraction.",
-      "sha256": "f8b22cc085e25a45f6ff5c4555d40501d0497efebc07b26e6b7142fba631e49c"
+      "sha256": "a5f3e29c23a0a11a964526464217859054a1b60b6e31d64b8834e5c29752f9f9"
     },
     "backend/app/infrastructure/__init__.py": {
       "spec": [
@@ -2141,7 +2141,7 @@
         }
       ],
       "original_docstring": "Bounded synchronous parsing, executed only in the worker process.",
-      "sha256": "7cbf3679416365529b7f78c758695a5a71dce9ef8a4dcc16ad27f95a3c6c3baa"
+      "sha256": "da3392e831f3247d7aa7f0f05cd540766489a11c1b01203192be22d189e0059c"
     },
     "backend/app/parsers/ocr.py": {
       "spec": [
@@ -2220,7 +2220,7 @@
       "documented": "2026-10-22",
       "git_history": [],
       "original_docstring": "Read explicit XLSX merge anchors without loading the workbook into memory.",
-      "sha256": "fa1c1e9ffa0640ef340252418700477817d1d07da8a6858af502b608060446e1"
+      "sha256": "d0e267985a7b2f8da5b3ab8fe952d4332e0d27bb0811a3da7fb2ebe09cf39835"
     },
     "backend/app/runtime/__init__.py": {
       "spec": [
@@ -2505,7 +2505,7 @@
         }
       ],
       "original_docstring": "Agent decisions must change actual tools, preserve evidence, and stay bounded.",
-      "sha256": "1b67709d45e4844edbb62ef505757c4418d532fd8018c80e647a71e15e32cfba"
+      "sha256": "6b7d0d5ae92f61b5f9bc867a332932c5c0c5fa9d10d17c04f4eed94d8e4db8c8"
     },
     "backend/tests/test_async_runtime.py": {
       "spec": [
@@ -2574,7 +2574,7 @@
         }
       ],
       "original_docstring": "Verify lossless, conservative merging of vendor tables and repeated OCR facts.",
-      "sha256": "08a92af095c4796e5f16b85396eb7587ed2243ab61da239a23c435dc2e3e1bbf"
+      "sha256": "1c1165b54350e8df1c6874693cde567363fe60b9cadd860fc5c56c1de8eb2cbe"
     },
     "backend/tests/test_domain_architecture.py": {
       "spec": [
@@ -2787,7 +2787,7 @@
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "4878629941dfd731ac719a8410608e783a0f0cf32c97aa9d76a0d7bb1e5fa0a6"
+      "sha256": "0550ef4d94723749d8609728ce5d5e15c84aaf4f613234b0ff8ee0420a6c068e"
     },
     "compose.food.yml": {
       "spec": [
@@ -4435,7 +4435,7 @@
       "created": "2026-10-22",
       "documented": "2026-10-22",
       "git_history": [],
-      "sha256": "366c593f5090d488ae3299920f40dd6357c5fb05fb1b7f089c56c3d87c64d9cd"
+      "sha256": "8e1cdb155f36c6bc99a446c7d9e89cf10980bb0c90584d8711d4a11dd2adc454"
     },
     "doc/food-agent/technology-review.md": {
       "spec": [

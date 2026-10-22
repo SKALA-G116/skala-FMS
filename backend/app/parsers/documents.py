@@ -121,9 +121,9 @@ def parse(path,filename):
                     if detected:
                         mapping=detected;headers=expanded;metadata['structured_table_header']=True
                         name_col=mapping.get('food_name')
-                        if name_col is not None and 'description' not in mapping:
+                        if name_col is not None and 'variant_label' not in mapping:
                             for col,anchor in merged_sources.items():
-                                if expanded[col]==expanded[name_col] and col!=name_col:mapping['description']=col;break
+                                if expanded[col]==expanded[name_col] and col!=name_col:mapping['variant_label']=col;break
                     elif mapping:
                         record=from_table_row(expanded,mapping,locator,headers=headers)
                         if record:

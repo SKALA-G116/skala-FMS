@@ -273,6 +273,10 @@ def from_table_row(row,mapping,locator,company_name=None,headers=None):
         if package.get(key):record['specification'][key]=package[key]
     if text(get('ingredients')):record['attributes']['ingredients']=ingredient_details(text(get('ingredients')))
     if text(get('description')):record['attributes']['other']=list(dict.fromkeys((record['attributes']['other'] or [])+[text(get('description'))]))
+    if text(get('variant_label')):
+        detail=text(get('variant_label'));label=re.split(r'[（(]',detail,maxsplit=1)[0].strip()
+        if re.search(r'[가-힣]',label):record['attributes']['flavor']=label
+        record['attributes']['other']=list(dict.fromkeys((record['attributes']['other'] or [])+[detail]))
     if text(get('flavor')):record['attributes']['flavor']=text(get('flavor'))
     if text(get('supply_price')):record['prices']['source_applied']=number(get('supply_price'))
     if record['specification']['sales_unit'] in ('개','EA','ea','EA(개)') and record['specification']['quantity']:

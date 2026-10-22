@@ -57,6 +57,7 @@ def stage_confirmed(state,connection):
         report=get(c,'agent_report',state['agent_report_id'],True);r=get(c,'revision',state['revision_id']);doc=get(c,'document',r['document_id'])
         if report['proposal_ids']:return {'proposal_ids':report['proposal_ids']}
         products=entities(c,'product');variants=entities(c,'variant');items=entities(c,'supplier_item')
+        flavors={str(row['variant_id']):row['flavor'] for row in c.execute("SELECT variant_id,data#>>'{attributes,flavor}' flavor FROM food_profiles WHERE variant_id=ANY(%s::uuid[])",([v['id'] for v in variants],))}
         supplier=None;base_supplier=None
         bundles=[];pending=[];pending_events=[];local_products={};local_variants={};local_items={}
         def finish():
@@ -94,8 +95,10 @@ def stage_confirmed(state,connection):
             spec=event['spec'] or '규격 미기재 · 검토 필요'
             if not event['spec']:event['review_reasons'].append('규격이 원문에 명확하지 않습니다.')
             normalized_spec=('common:'+record['food_code']+':'+canonical(spec)) if record.get('food_code') else spec
-            vfound=[v for v in variants if product and v['product_id']==product['id'] and (v['spec_normalized']==normalized_spec or (not record.get('food_code') and canonical(v['spec_original'])==canonical(spec)))]
-            vkey=(pkey,canonical(spec));variant=vfound[0] if len(vfound)==1 else None
+            flavor=canonical(record['attributes'].get('flavor'))
+            if flavor:normalized_spec+='|variant:'+flavor
+            vfound=[v for v in variants if canonical(flavors.get(v['id']))==flavor and product and v['product_id']==product['id'] and (v['spec_normalized']==normalized_spec or (not record.get('food_code') and canonical(v['spec_original'])==canonical(spec)))]
+            vkey=(pkey,canonical(spec),flavor);variant=vfound[0] if len(vfound)==1 else None
             if variant:vref={'id':variant['id']}
             elif vkey in local_variants:vref={'local_ref':local_variants[vkey]}
             else:

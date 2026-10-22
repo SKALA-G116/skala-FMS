@@ -50,8 +50,10 @@ from openpyxl.utils.cell import range_boundaries,get_column_letter
 from backend.app.infrastructure.database import Problem
 
 
+MAX_MERGE_CELLS=200000
+
 def merge_anchors(path):
-    result={}
+    result={};total=0
     with zipfile.ZipFile(path) as archive:
         if len(archive.infolist())>5000 or sum(i.file_size for i in archive.infolist())>100*1024*1024:
             raise Problem(422,'EXPANDED_LIMIT','압축 해제 크기가 너무 큽니다.')
@@ -70,8 +72,9 @@ def merge_anchors(path):
                 for _,element in ET.iterparse(stream,events=('end',)):
                     if element.tag==main+'mergeCell':
                         left,top,right,bottom=range_boundaries(element.attrib['ref'])
-                        if bottom>20000 or right>100 or len(anchors)+(bottom-top+1)*(right-left+1)>200000:
+                        if bottom>20000 or right>100 or total+(bottom-top+1)*(right-left+1)>MAX_MERGE_CELLS:
                             raise Problem(422,'SHEET_LIMIT','병합 셀 범위가 처리 한도를 초과했습니다.')
+                        total+=(bottom-top+1)*(right-left+1)
                         for row in range(top,bottom+1):
                             for col in range(left,right+1):anchors[(row,col)]=(top,left)
                     element.clear()
