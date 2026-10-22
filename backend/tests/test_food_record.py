@@ -29,6 +29,8 @@ test_food_record.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   원재료 전용 추출·함량 없는 표시사항 보존·OCR 근거 연결 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_food_record.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -181,3 +183,27 @@ def test_legacy_food_price_dto_without_source_columns_remains_valid():
     record=empty_record();record['food_name']='기존 식품'
     record['prices'].pop('source_columns')
     validate_record(record)
+
+
+@pytest.mark.parametrize('raw',[
+    '원재료명: 밀가루, 설탕, 정제수\n보관방법: 냉동',
+    '원재료명 및 함량\n밀가루, 설탕, 정제수\n알레르기: 밀 함유',
+])
+def test_labelled_ingredients_without_percentages(raw):
+    record=from_event({'product_name':'빵','attributes_text':raw})
+    validate_record(record)
+    assert [i['name'] for i in record['attributes']['ingredients']]==['밀가루','설탕','정제수']
+    assert all(i['percentage'] is None for i in record['attributes']['ingredients'])
+
+
+def test_dedicated_ingredient_text_preserves_unquantified_and_foreign_origin():
+    record=from_event({'product_name':'만두','ingredients_text':'밀가루(미국산) 30%, 대두유, 마늘','evidence_ids':['E1']})
+    validate_record(record)
+    assert [i['name'] for i in record['attributes']['ingredients']]==['밀가루(미국산)','대두유','마늘']
+    assert record['attributes']['ingredients'][0]['origin_country'] is None
+    assert record['field_sources']['ingredients']['evidence_ids']==['E1']
+
+
+def test_storage_description_is_not_an_ingredient_declaration():
+    record=from_event({'product_name':'빵','attributes_text':'냉장/냉동'})
+    assert record['attributes']['ingredients'] is None

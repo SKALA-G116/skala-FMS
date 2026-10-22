@@ -133,6 +133,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/frontend-spec.md](../doc/food-agent/frontend-spec.md) | 프로젝트 문서 frontend-spec | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/implementation-status.md](../doc/food-agent/implementation-status.md) | 프로젝트 문서 implementation-status | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/implementation-verification.json](../doc/food-agent/implementation-verification.json) | 프로젝트 문서 implementation-verification | 외부 명세 (원본 보존) |
+| [doc/food-agent/ingredient-extraction.md](../doc/food-agent/ingredient-extraction.md) | 프로젝트 문서 ingredient-extraction | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/initial-refactor.md](../doc/food-agent/initial-refactor.md) | 프로젝트 문서 initial-refactor | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/mcp-capabilities.json](../doc/food-agent/mcp-capabilities.json) | 프로젝트 문서 mcp-capabilities | 외부 명세 (원본 보존) |
 | [doc/food-agent/memory-checklist.md](../doc/food-agent/memory-checklist.md) | 프로젝트 문서 memory-checklist | 파일 상단 헤더 + 외부 목록 |

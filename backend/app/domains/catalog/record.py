@@ -31,6 +31,8 @@ record.py - 표준 FoodRecord DTO와 정규화
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   원재료 전용 추출·함량 없는 표시사항 보존·OCR 근거 연결 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/record.py
     공통 규칙: doc/file-header-policy.md
 
@@ -136,10 +138,24 @@ def attribute_tokens(raw):
     return result
 
 
+def ingredient_section(raw):
+    """Read an explicitly labelled declaration, ending before other label fields."""
+    value=text(raw)
+    if not value:return None
+    heading=r'원\s*재\s*료(?:\s*명)?(?:\s*(?:및|·|/)?\s*함\s*량)?|성분\s*및\s*함량'
+    match=re.search(r'(?:^|[\n;|])\s*(?:'+heading+r')(?=\s*[:：\n]|\s*$)\s*[:：]?\s*',value)
+    if not match:return None
+    remainder=value[match.end():]
+    stop=re.search(r'(?:[\n;|]\s*(?:알레르기|알러지|보관(?:방법)?|소비기한|유통기한|영양정보|제조원|판매원|포장재질|주의사항|식품유형|내용량)\s*[:：]?|(?:우유|밀|대두|계란)[^\n;|]*함유\s*$)',remainder)
+    return text(remainder[:stop.start()] if stop else remainder)
+
+
 def attributes(raw):
     out=empty_record()['attributes'];out['original_text']=text(raw)
     if not raw:return out
-    other=[];ingredients=[]
+    declared=ingredient_section(raw)
+    other=[];ingredients=ingredient_details(declared) or []
+    declared_tokens=set(attribute_tokens(declared))
     # Split only outside brackets so ingredient origins and compound descriptions survive.
     for token in attribute_tokens(raw):
         recognized=False
@@ -151,11 +167,12 @@ def attributes(raw):
         if '표시기준' in token:out['labeling_requirement']=token;recognized=True
         # Percentages identify an ingredient declaration, independent of ingredient name.
         if re.search(r'\d+(?:\.\d+)?\s*%',token):
-            ingredients.extend(ingredient_details(token) or []);recognized=True
+            if not declared:ingredients.extend(ingredient_details(token) or [])
+            recognized=True
         if token in ('국산','국내산'):out['origin_country']='KR';recognized=True
         # Specification tokens already have dedicated DTO fields; raw text remains intact.
         if re.fullmatch(r'\d+(?:\.\d+)?\s*(?:kg|g|ml|l)|EA\(개\)|개|통|봉|팩',token,re.I):recognized=True
-        if not recognized:other.append(token)
+        if not recognized and not (declared and token in declared_tokens):other.append(token)
     out['ingredients']=ingredients or None;out['other']=other or None
     return out
 
@@ -196,7 +213,7 @@ def ingredient_details(raw):
         percent=re.search(r'(\d+(?:\.\d+)?)\s*%',token)
         name=re.sub(r'\s*\d+(?:\.\d+)?\s*%','',token).strip()
         name=re.sub(r'^(?:국내산|국산)\s*','',name).strip()
-        result.append({'name':name,'percentage':percent[1] if percent else None,'origin_country':'KR' if re.search(r'국산|국내산',token) else None,'original_text':token})
+        result.append({'name':name,'percentage':percent[1] if percent else None,'origin_country':'KR' if re.search(r'(?<![가-힣])(?:국산|국내산)',token) else None,'original_text':token})
     return result[:100] or None
 
 
@@ -301,6 +318,10 @@ def from_table_row(row,mapping,locator,company_name=None,headers=None):
 def from_event(event):
     if event.get('food_record'):return copy.deepcopy(event['food_record'])
     result=empty_record();result['company_name']=text(event.get('company_name'));result['food_name']=text(event.get('product_name'));result['food_code']=text(event.get('food_code'));result['record_type']='common_food' if result['food_code'] else 'commercial_product';result['attributes']=attributes(text(event.get('attributes_text')));result['specification']=specification(event.get('spec'));result['allergens']=allergens_from_text(allergen_evidence(text(event.get('allergen_text')) or text(event.get('attributes_text')),event.get('product_name')),event.get('product_name'));apply_name(result,event.get('product_name'))
+    declared=text(event.get('ingredients_text')) or ingredient_section(event.get('attributes_text'))
+    if declared:
+        result['attributes']['ingredients']=ingredient_details(declared)
+        result['field_sources']['ingredients']={'evidence_ids':event.get('evidence_ids',[]),'raw_value':declared,'origin':'llm'}
     rawspec=text(event.get('spec'))
     if rawspec:
         parts=split_name('식품('+rawspec+')')['specification']
