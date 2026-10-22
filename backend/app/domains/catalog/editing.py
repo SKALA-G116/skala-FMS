@@ -24,6 +24,8 @@ editing.py - 프로젝트 설정 editing.py
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   승인 단가 조회·참고 가격 표시 분리 및 승인 후 연결 검증
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/editing.py
     공통 규칙: doc/file-header-policy.md
 
@@ -92,4 +94,6 @@ def update_food(c,id,payload,request,actor):
     c.execute("UPDATE catalog_entities SET version=version+1,data=jsonb_set(data,'{version}',to_jsonb(version+1)) WHERE id=%s",(id,))
     c.execute('INSERT INTO food_profiles(variant_id,product_id,food_code,schema_version,version,data) VALUES(%s,%s,%s,%s,%s,%s) ON CONFLICT(variant_id) DO UPDATE SET food_code=excluded.food_code,schema_version=excluded.schema_version,version=excluded.version,data=excluded.data,updated_at=now()', (id,variant['product_id'],record['food_code'],record['schema_version'],version,Jsonb(record)))
     audit=put(c,'audit',{'id':uid(),'application_id':None,'proposal_id':None,'product_id':variant['product_id'],'kind':'edit_food_profile','entity_id':id,'before':before,'after':{**record,'id':id,'version':version},'evidence_ids':variant.get('evidence_ids',[]),'actor':actor,'recorded_at':now(),'reason':reason.strip(),'changed_fields':changes,'period':None})
-    return {'id':id,'product_id':variant['product_id'],'version':version,'food_record':record,'evidence_ids':variant.get('evidence_ids',[]),'archived':False,'archive_version':state(c,'food',id)['archive_version'],'status':product['status'],'has_stored_profile':True,'audit_event_id':audit['id']}
+    from backend.app.domains.catalog.queries import prices
+    approved_prices=prices(c,scheduled=True,variant_ids=[id])
+    return {'approved_prices':approved_prices,'id':id,'product_id':variant['product_id'],'version':version,'food_record':record,'evidence_ids':variant.get('evidence_ids',[]),'archived':False,'archive_version':state(c,'food',id)['archive_version'],'status':product['status'],'has_stored_profile':True,'audit_event_id':audit['id']}

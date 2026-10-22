@@ -301,6 +301,11 @@
           "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
           "date": "2026-10-22T13:30:14+09:00",
           "subject": "docs: refresh presentation with current code and service evidence"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "sha256": "402edce1cb55fec059c1faa8e4171ab955cc25f7e22d5ed3abc26b74a6f887a7"
@@ -750,6 +755,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
@@ -1045,6 +1055,11 @@
           "commit": "0f8d9f23d0229c984aead42e18148e3451bf2f59",
           "date": "2026-10-22T12:45:53+09:00",
           "subject": "Recover schema-invalid extraction batches and constrain label supplements"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "sha256": "c10671c0f6ba31510fe0e816a21748d481d9a32cf6927869fe864aa8bf36d7e1"
@@ -1216,7 +1231,7 @@
         }
       ],
       "original_docstring": "Manual canonical food edits with optimistic locking and an append-only audit.",
-      "sha256": "47993c0495d0048d6467a7b6f70238e50d1e15627ec7a6f80df8b0e528ec8bf6"
+      "sha256": "a2ee19f0728487c0d46e42e4c72686b7d3b1ea1ae5efc73ae0f13aa7f8a57d31"
     },
     "backend/app/domains/catalog/queries.py": {
       "spec": [
@@ -1245,7 +1260,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "2a6187b245eed987e10593ee25532cd9488996834b5692f26030beab940b2ec0"
+      "sha256": "f4526c99d00d550c352fbe454ca7f000ce475fecb54b3d66f8a751821752ace7"
     },
     "backend/app/domains/catalog/record.py": {
       "spec": [
@@ -1292,6 +1307,11 @@
           "commit": "5a8ff51acfb24096cb4515e291fb4796cd677064",
           "date": "2026-10-22T10:36:37+09:00",
           "subject": "fix: preserve table flavors and price bases through approval"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
@@ -2768,7 +2788,7 @@
         }
       ],
       "original_docstring": "Deterministic integration tests use an explicit test double; live results are separate.",
-      "sha256": "ca5366de53e45b95ab7b72196294433cf53d82fcf5c906c3a96171acb7a24848"
+      "sha256": "95d610aa8c3a2bc589f5cfd5510e3f8f59408cc760964152c588dd89376aabfa"
     },
     "backend/tests/test_agent_routing.py": {
       "spec": [
@@ -3004,6 +3024,11 @@
           "commit": "13e484758efe54acf50bf591bf8e27aab5295a42",
           "date": "2026-10-22T10:24:40+09:00",
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "sha256": "5bec7d239786ef5e9d710ed84e71829fadfdc0f02bf0588eacc5e9054f062b12"
@@ -3132,6 +3157,11 @@
           "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
           "date": "2026-10-22T13:14:07+09:00",
           "subject": "Include imported materials in review inbox and link unified row DTOs"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
@@ -3372,6 +3402,11 @@
           "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
           "date": "2026-10-22T13:30:14+09:00",
           "subject": "docs: refresh presentation with current code and service evidence"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "sha256": null
@@ -3451,6 +3486,11 @@
           "commit": "a9cfd0724545005f64fe991cbd98ae60bf24e966",
           "date": "2026-10-22T13:30:14+09:00",
           "subject": "docs: refresh presentation with current code and service evidence"
+        },
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
         }
       ],
       "sha256": null
@@ -3623,6 +3663,24 @@
         }
       ],
       "sha256": "7092caf4d11bcffc2172607c51ecb128da7041e52771afcbca2d8b2ebe5c94ad"
+    },
+    "doc/food-agent/approved-price-readmodel.md": {
+      "spec": [
+        "프로젝트 문서 approved-price-readmodel",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "88f5bcfb292a8f10ed0cb056b70128fb44ef98cd3004d2c97f5e4030e3024835"
     },
     "doc/food-agent/architecture-audit-v3.md": {
       "spec": [
@@ -4265,7 +4323,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "55011cca10b2377f95d4eae15ae14980eca5b1eb",
+          "date": "2026-10-22T13:37:36+09:00",
+          "subject": "fix: preserve ingredient declarations without percentage values"
+        }
+      ],
       "sha256": "9806c517509a79c8c7d37a8383e3a7d85ff086fab53d6520129bb411027614d0"
     },
     "doc/food-agent/initial-refactor.md": {
@@ -5924,6 +5988,24 @@
       ],
       "sha256": "271fac91eb134566eb99e4ea7c30798e9750eaa7e87c46c613a208533e893b83"
     },
+    "doc/submission/screenshots/current/05-approved-price.png": {
+      "spec": [
+        "프로젝트 문서 05-approved-price",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "2b537191bbce49c37cf0044a721c2cfedb2bfb5ad3e1f59223a17c857584ca7b"
+    },
     "doc/submission/table-demo-result.json": {
       "spec": [
         "프로젝트 문서 table-demo-result",
@@ -6146,6 +6228,24 @@
       ],
       "sha256": "2000e29b03f50c60753a19b01527a77adb2dd7908527e83d514c22f695d26f07"
     },
+    "frontend/src/components/ApprovedPrices.vue": {
+      "spec": [
+        "ApprovedPrices UI 컴포넌트",
+        "props·표준 DTO·상위 화면 상태",
+        "표시 결과와 emit 이벤트",
+        "업무 반영은 권한 있는 API를 통해 수행하고 컴포넌트가 직접 DB에 접근하지 않음"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "58bfba9b8f7fb00bd09bcf25e78fac125ce774eafc446521e0311c8c8c715bb3"
+    },
     "frontend/src/components/ArchiveDialog.vue": {
       "spec": [
         "삭제 보관·복구 결정",
@@ -6299,7 +6399,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "9042be2b41db9fa8d130656bee3171e52848946c27597698f81377393c208c1a"
+      "sha256": "4f8e4a51c31036328ff932b872d5e635fac6da6db71dbf99943c4bc07ead898f"
     },
     "frontend/src/components/FoodRecordTable.vue": {
       "spec": [
@@ -6692,7 +6792,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "93d1e81ca9963a9b7c0b58b561532be5308b3dc3c88f4e11efd86931215329ac"
+      "sha256": "76f7d5edfa7e5d788832ee86c6975abafb1e21c494045f5447e21d43bec6df37"
     },
     "frontend/src/views/Documents.vue": {
       "spec": [
@@ -6819,7 +6919,7 @@
           "subject": "Rebuild food workflow around agent tools, single approval, catalog edits and action logs"
         }
       ],
-      "sha256": "cb0674d5e97eca5686ea6a4cfc0357d30d6cbbf53f24b60fe1ce690a069d81ec"
+      "sha256": "bbdd30fe7d04617f668bbc96c2a555551e3213d30f5893da15ac1f214fc63edc"
     },
     "frontend/src/views/Jobs.vue": {
       "spec": [

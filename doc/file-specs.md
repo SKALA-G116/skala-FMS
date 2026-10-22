@@ -109,6 +109,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/agent-tools-langgraph.md](../doc/food-agent/agent-tools-langgraph.md) | 프로젝트 문서 agent-tools-langgraph | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/agent-update.md](../doc/food-agent/agent-update.md) | 프로젝트 문서 agent-update | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/api-guide.md](../doc/food-agent/api-guide.md) | 프로젝트 문서 api-guide | 파일 상단 헤더 + 외부 목록 |
+| [doc/food-agent/approved-price-readmodel.md](../doc/food-agent/approved-price-readmodel.md) | 프로젝트 문서 approved-price-readmodel | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/architecture-audit-v3.md](../doc/food-agent/architecture-audit-v3.md) | 프로젝트 문서 architecture-audit-v3 | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/architecture.md](../doc/food-agent/architecture.md) | 프로젝트 문서 architecture | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/auth-session.md](../doc/food-agent/auth-session.md) | 프로젝트 문서 auth-session | 파일 상단 헤더 + 외부 목록 |
@@ -195,6 +196,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/submission/screenshots/current/02-table-dto.png](../doc/submission/screenshots/current/02-table-dto.png) | 프로젝트 문서 02-table-dto | 외부 명세 (원본 보존) |
 | [doc/submission/screenshots/current/03-label-review.png](../doc/submission/screenshots/current/03-label-review.png) | 프로젝트 문서 03-label-review | 외부 명세 (원본 보존) |
 | [doc/submission/screenshots/current/04-agent-tools.png](../doc/submission/screenshots/current/04-agent-tools.png) | 프로젝트 문서 04-agent-tools | 외부 명세 (원본 보존) |
+| [doc/submission/screenshots/current/05-approved-price.png](../doc/submission/screenshots/current/05-approved-price.png) | 프로젝트 문서 05-approved-price | 외부 명세 (원본 보존) |
 | [doc/submission/table-demo-result.json](../doc/submission/table-demo-result.json) | 프로젝트 문서 table-demo-result | 외부 명세 (원본 보존) |
 | [doc/submission/table-preservation-benchmark.json](../doc/submission/table-preservation-benchmark.json) | 프로젝트 문서 table-preservation-benchmark | 외부 명세 (원본 보존) |
 | [frontend/index.html](../frontend/index.html) | Vue 애플리케이션 index | 파일 상단 헤더 + 외부 목록 |
@@ -203,6 +205,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/App.vue](../frontend/src/App.vue) | Vue 애플리케이션 App | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/api/auth.js](../frontend/src/api/auth.js) | Vue 애플리케이션 auth | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/api/client.js](../frontend/src/api/client.js) | 프런트 공통 API client | 파일 상단 헤더 + 외부 목록 |
+| [frontend/src/components/ApprovedPrices.vue](../frontend/src/components/ApprovedPrices.vue) | ApprovedPrices UI 컴포넌트 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/components/ArchiveDialog.vue](../frontend/src/components/ArchiveDialog.vue) | 삭제 보관·복구 결정 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/components/CursorPager.vue](../frontend/src/components/CursorPager.vue) | 커서 기반 페이지 이동 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/components/DocumentBatchDialog.vue](../frontend/src/components/DocumentBatchDialog.vue) | 선택 자료의 일괄 작업 | 파일 상단 헤더 + 외부 목록 |
