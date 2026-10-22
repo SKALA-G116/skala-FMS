@@ -311,9 +311,19 @@
           "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
           "date": "2026-10-22T14:14:44+09:00",
           "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        },
+        {
+          "commit": "fce470f1bf26aaf740cdd8028e8a626b09a289a9",
+          "date": "2026-10-22T14:23:22+09:00",
+          "subject": "docs: summarize agent capabilities and future improvements"
+        },
+        {
+          "commit": "3753ba6ea0ef201f23d459fdc35dbdfdd65a6d99",
+          "date": "2026-10-22T14:30:13+09:00",
+          "subject": "Update README.md"
         }
       ],
-      "sha256": "c11a8bbf7b691e60b2f8b74bd9f0b0d2723cda3fbdddc0eeea1a50ef4a064034"
+      "sha256": "47393264a8e7917b0079bd0f02dc9a0204c8e62bff32574cdf6c443460eedcb3"
     },
     "backend/__init__.py": {
       "spec": [
@@ -3517,6 +3527,11 @@
           "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
           "date": "2026-10-22T14:14:44+09:00",
           "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        },
+        {
+          "commit": "fce470f1bf26aaf740cdd8028e8a626b09a289a9",
+          "date": "2026-10-22T14:23:22+09:00",
+          "subject": "docs: summarize agent capabilities and future improvements"
         }
       ],
       "sha256": null
@@ -5745,9 +5760,14 @@
           "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
           "date": "2026-10-22T14:14:44+09:00",
           "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        },
+        {
+          "commit": "fce470f1bf26aaf740cdd8028e8a626b09a289a9",
+          "date": "2026-10-22T14:23:22+09:00",
+          "subject": "docs: summarize agent capabilities and future improvements"
         }
       ],
-      "sha256": "5f5a581ab7fe6619e39e4d6ab24fb503b1335c21d353dced44489a64cb37c488"
+      "sha256": "28b9589a9e65d149fae17c7f5dacaeece986c760cc9704bf0a1ab9eb3b57fd8b"
     },
     "doc/submission/requirements-audit.md": {
       "spec": [
@@ -5794,9 +5814,14 @@
           "commit": "6d925eda48cd4b10bfdab78879ecb328380221ad",
           "date": "2026-10-22T14:14:44+09:00",
           "subject": "fix: preserve OCR spatial evidence and simplify presentation README"
+        },
+        {
+          "commit": "fce470f1bf26aaf740cdd8028e8a626b09a289a9",
+          "date": "2026-10-22T14:23:22+09:00",
+          "subject": "docs: summarize agent capabilities and future improvements"
         }
       ],
-      "sha256": "5d2c56cf8996e2c0d5a4348c1881fe85319cc098dad034550638164293e79464"
+      "sha256": "1106999de86a48bda0517dbf49f7f2bfd929867adf08b0912e089820130d9c83"
     },
     "doc/submission/screenshots/01-documents.jpg": {
       "spec": [
@@ -7892,7 +7917,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "c4fc8adaa249717bdc9fc92b4bc1fe680e86d3015fca1c5a3b79e25f908191a9"
+      "sha256": "3b6e548e226d14bcecb85f2c3e82c39539e0ad4a7ecb505a8f7644c9c1413045"
     },
     "requirements.txt": {
       "spec": [

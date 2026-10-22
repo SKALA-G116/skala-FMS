@@ -29,6 +29,8 @@ readmd.md - 프로젝트 문서 readmd
 
     2026-10-22  김재현(Finn) v0.1.0   실제 화면·비교 근거·5분 발표 자료 작성
 
+    2026-10-22  김재현(Finn) v0.1.0   README 결과 보고서 연결과 최신 검증 기록 안내 정리
+
     상세 Git 이력: git log --follow -- readmd.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -37,7 +39,7 @@ readmd.md - 프로젝트 문서 readmd
 > **README 중심 5분 발표**는 [README.md](README.md), [발표 흐름](doc/submission/presentation-5min.md), [Before/After](doc/submission/before-after.md)를 기준으로 합니다. 이 문서는 설치·상세 구현 참고용입니다.
 
 
-> 2026-10-22 제출·발표 최신 요약은 [README](README.md)를 기준으로 합니다. 실제 화면, Backend 142개·Frontend 14개 검증, 동일 단가표 비교, [5분 PDF](output/presentation/food-ledger-5min.pdf)와 [PPTX](output/presentation/food-ledger-5min.pptx), [300초 대본](doc/submission/presentation-5min.md)을 추가했습니다. 아래의 과거 측정·리팩토링 기록은 해당 시점의 결과입니다.
+> 제출·발표 최신 요약과 결과 보고서는 [README](README.md)를 기준으로 합니다. 2026-10-22 최근 코드 검증 기록은 Backend179개·Frontend18개 및 Vite 빌드 통과입니다. 발표는 [300초 진행안](doc/submission/presentation-5min.md)을 따르며, 아래 과거 측정·리팩토링 기록과 구분합니다.
 
 
 > 현재 사용자 흐름: **자료 가져오기 → Agent 도구 선택·LangGraph 처리 → 검수·승인 → 식품 DB**. 주요 메뉴는 네 개이며 수동 JSON 변경안 작성·별도 대시보드를 제거했습니다. 최신 API·알레르기 번호·식품 수정 정책은 [서비스 흐름 명세](doc/food-agent/service-workflow.md)를 우선 참고하세요.
