@@ -25,6 +25,8 @@ workbooks.py - 원본 단가표·시트·열 조회
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   자료 상태별 검수 대기 및 표 행의 동일 검토 DTO 연결
+
     상세 Git 이력: git log --follow -- backend/app/domains/pricing/workbooks.py
     공통 규칙: doc/file-header-policy.md
 
@@ -76,7 +78,9 @@ def metadata(c,wid):
     w=c.execute('SELECT * FROM price_workbooks WHERE id=%s',(wid,)).fetchone()
     if not w:raise Problem(404,'NOT_FOUND','단가표 파일이 없습니다.')
     sheets=c.execute('SELECT * FROM price_sheets WHERE workbook_id=%s ORDER BY position',(wid,)).fetchall()
-    return {'id':str(w['id']),'document_id':str(w['document_id']),'document_revision_id':str(w['revision_id']),'asset_id':str(w['asset_id']) if w['asset_id'] else None,'filename':w['filename'],'content_sha256':w['content_sha256'],'created_at':w['created_at'].isoformat(),'sheets':[{'id':str(s['id']),'name':s['name'],'header_row':s['header_row'],'row_count':s['row_count'],'columns':s['columns']} for s in sheets]}
+    from backend.app.domains.review.inbox import document_reviews
+    reviews=document_reviews(c,str(w['document_id']),str(w['revision_id']))
+    return {'review':reviews[0] if reviews else None,'id':str(w['id']),'document_id':str(w['document_id']),'document_revision_id':str(w['revision_id']),'asset_id':str(w['asset_id']) if w['asset_id'] else None,'filename':w['filename'],'content_sha256':w['content_sha256'],'created_at':w['created_at'].isoformat(),'sheets':[{'id':str(s['id']),'name':s['name'],'header_row':s['header_row'],'row_count':s['row_count'],'columns':s['columns']} for s in sheets]}
 
 def register(c,revision_id,asset_id=None):
     rev=get(c,'revision',revision_id);asset_id=asset_id or rev['snapshot_asset_id']
@@ -184,7 +188,37 @@ def query_rows(c,sheet_id,query):
     sqlwhere=' AND '.join(where)
     count=c.execute('SELECT count(*) n FROM price_sheet_rows WHERE '+sqlwhere,args).fetchone()['n']
     rows=c.execute('SELECT row_number,cells FROM price_sheet_rows WHERE '+sqlwhere+' ORDER BY '+sort+' LIMIT %s OFFSET %s',[*args,limit,offset]).fetchall()
-    return {'sheet_id':str(sheet['id']),'items':[{'row_number':r['row_number'],'cells':r['cells'],'cell_range':f"A{r['row_number']}:{sheet['columns'][-1]['key']}{r['row_number']}"} for r in rows],'total':count,'sheet_row_count':sheet['row_count'],'offset':offset,'limit':limit,'has_more':offset+limit<count}
+    items=[{'row_number':r['row_number'],'cells':r['cells'],'cell_range':f"A{r['row_number']}:{sheet['columns'][-1]['key']}{r['row_number']}",'review_items':[]} for r in rows]
+    review=attach_review_rows(c,sheet,items)
+    return {'sheet_id':str(sheet['id']),'items':items,'review':review,'total':count,'sheet_row_count':sheet['row_count'],'offset':offset,'limit':limit,'has_more':offset+limit<count}
+
+
+def attach_review_rows(c,sheet,items):
+    """Overlay reviewed DTOs using exact source coordinates, never name guesses."""
+    from backend.app.domains.review.inbox import document_reviews
+    w=c.execute('SELECT document_id,revision_id,asset_id FROM price_workbooks WHERE id=%s',(sheet['workbook_id'],)).fetchone()
+    reviews=document_reviews(c,str(w['document_id']),str(w['revision_id']))
+    summary=reviews[0] if reviews else None
+    if not items or not summary or not summary['review_ready']:return summary
+    events=c.execute("SELECT e->>'id' AS id,e->'food_record' AS food_record,e->'review' AS review,e->'evidence_ids' AS evidence_ids FROM app_records p CROSS JOIN LATERAL jsonb_array_elements(p.data->'events') e WHERE p.kind='agent_report' AND p.id=%s",(summary['report_id'],)).fetchall()
+    ids=list(dict.fromkeys(eid for e in events for eid in (e['evidence_ids'] or [])))
+    ids=[eid for eid in ids if isinstance(eid,str) and re.fullmatch(r'[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}',eid)]
+    locators={str(r['id']):r['locator'] for r in c.execute("SELECT id,data->'locator' AS locator FROM app_records WHERE kind='evidence' AND id=ANY(%s::uuid[])",(ids,))}
+    by_row={item['row_number']:item for item in items}
+    for event in events:
+        record=(event['review'] or {}).get('fields',{}).get('food_record') or event['food_record']
+        if not record:continue
+        source=record.get('field_sources',{}).get('food_name',{})
+        locations=[source['locator']] if source.get('locator') else [locators.get(eid,{}) for eid in source.get('evidence_ids',[]) or event['evidence_ids'] or []]
+        matched=set()
+        for loc in locations:
+            if loc.get('kind')!='spreadsheet' or loc.get('asset_id')!=str(w['asset_id']) or loc.get('sheet_name')!=sheet['name']:continue
+            row=re.search(r'\d+',loc.get('cell_range',''))
+            if row and int(row[0]) in by_row:matched.add(int(row[0]))
+        for number in matched:
+            by_row[number]['review_items'].append({'id':event['id'],'food_record':record,'review_status':(event['review'] or {}).get('status','pending'),'href':summary['href']})
+    return summary
+
 
 def set_header(c,sheet_id,header_row):
     if not isinstance(header_row,int) or not 1<=header_row<=20000:raise Problem(422,'HEADER_ROW','제목 행 번호를 확인하세요.')
