@@ -43,6 +43,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -886,7 +888,8 @@ def test_single_review_approval_requires_confirmation_and_reuses_jobs(client,mon
     login(client)
 
 
-def test_truncated_model_output_splits_source_rows_and_preserves_review_boundary(client,monkeypatch):
+@pytest.mark.parametrize('output_error',['MODEL_OUTPUT_LIMIT','MODEL_SCHEMA_INVALID'])
+def test_truncated_model_output_splits_source_rows_and_preserves_review_boundary(client,monkeypatch,output_error):
     from backend.app.domains.analysis import agent,workflow
     from backend.app.infrastructure.database import Problem
     from test_agent import TestModel
@@ -895,7 +898,7 @@ def test_truncated_model_output_splits_source_rows_and_preserves_review_boundary
         def generate(self,task,payload,schema):
             if 'routes' in schema['properties']:return {'document_type':'notice','summary':'원문 행','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_text','reason':'본문'} for s in payload['sources']]}
             calls.append(len(payload['segments']))
-            if len(payload['segments'])>1:raise Problem(422,'MODEL_OUTPUT_LIMIT','출력 상한')
+            if len(payload['segments'])>1:raise Problem(422,output_error,'출력 형식·상한 오류')
             source=payload['segments'][0];event={k:None for k in ['company_name','food_code','attributes_text','allergen_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
             return {'events':[{**event,'kind':'food_profile','product_name':source['text'],'replacements':[],'uncertainties':[],'source_ids':[source['id']]}]}
     monkeypatch.setattr(agent,'LocalModel',Model);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent')
@@ -1054,8 +1057,10 @@ def test_document_upload_accepts_exactly_25mb_and_rejects_one_more_byte(client):
     assert too_large.status_code==413 and too_large.json()['error']['code']=='FILE_TOO_LARGE'
 
 
-def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(client,monkeypatch):
+@pytest.mark.parametrize('label_error',[None,'MODEL_SCHEMA_INVALID','MODEL_OUTPUT_LIMIT'])
+def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(client,monkeypatch,label_error):
     import io,openpyxl
+    from backend.app.infrastructure.database import Problem
     from PIL import Image
     from openpyxl.drawing.image import Image as ExcelImage
     from backend.app.domains.analysis import agent
@@ -1069,15 +1074,28 @@ def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(
                 return {'document_type':'price_table','summary':'표와 삽입 라벨','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_image_regions' if s['location']['kind']=='image' else 'normalize_table','reason':'표 셀과 라벨 이미지'} for s in payload['sources']]}
             assert 'regions' not in schema['properties'],'명확한 행 anchor에 영역 분류를 다시 호출하면 안 됩니다.'
             assert '해당 상품의 원재료' in payload['instructions']
-            event={k:None for k in ['company_name','food_code','attributes_text','allergen_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
-            return {'events':[{**event,'kind':'food_profile','product_name':'라벨상 다른 이름','spec':'999g','attributes_text':'우유10%','allergen_text':'우유 함유','replacements':[],'uncertainties':[],'source_ids':[payload['segments'][0]['id']]}]}
+            assert set(schema['properties'])=={'attributes_text','allergen_text','source_ids'}
+            assert 'kind_definitions' not in payload
+            if label_error:
+                self.calls.append({'task':task,'model':self.name,'input_tokens':10,'output_tokens':20,'elapsed_seconds':1,'actual_model_call':False,'outcome':'invalid'})
+                raise Problem(422,label_error,'모델 출력 오류',{'validation':{'keyword':'maxItems'}})
+            return {'attributes_text':'우유10%','allergen_text':'우유 함유','source_ids':[payload['segments'][0]['id']]}
     monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setenv('FOOD_OCR_ENABLED','true');monkeypatch.setattr(agent,'LocalModel',LabelModel)
     monkeypatch.setattr('backend.app.parsers.documents.ocr_result',lambda *args:[{'text':'원재료 우유10% / 우유 함유','confidence':.95,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1],'image_width':200,'image_height':100}}])
     login(client);response=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('label.xlsx',output.getvalue())},data={'title':'삽입 라벨 대조'});assert response.status_code==201,response.text
-    imported=response.json();assert once();job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']=='succeeded',job
+    imported=response.json();assert once();job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']==('partial' if label_error else 'succeeded'),job
     report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json();assert len(report['events'])==1,report['events']
     event=report['events'][0];record=event['food_record']
     assert record['food_name']==name and record['specification']['original_text']=='50g'
+    if label_error:
+        assert report['status']=='completed' and report['export_asset_id'] and report['proposal_ids']==[]
+        failure=report['extraction_failures'][0]
+        assert failure['code']==label_error and failure['resolution']=='manual_review'
+        assert set(failure['evidence_ids'])<=set(report['manual_evidence_ids'])
+        assert report['model_calls'][-1]['outcome']=='invalid'
+        assert job['issues'][0]['code']=='EXTRACTION_REVIEW_REQUIRED'
+        assert client.get('/api/v1/analysis-runs/'+job['analysis_run_id']).json()['status']=='partial'
+        return
     assert record['allergens']['contains']==['milk'] and record['allergens']['review_status']=='source_declared'
     assert record['attributes']['ingredients'][0]['name']=='우유'
     assert record['field_sources']['allergens']['origin']=='ocr_llm'

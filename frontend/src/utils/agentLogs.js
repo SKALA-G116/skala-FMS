@@ -24,6 +24,8 @@ agentLogs.js - Vue 애플리케이션 agentLogs
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   라벨 응답 축소·형식 오류 격리·안전한 진단 및 부분 완료 검수
+
     상세 Git 이력: git log --follow -- frontend/src/utils/agentLogs.js
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -41,4 +43,10 @@ export function agentSteps(report){
   const result=executed.find(r=>r.source_id===step.source_id);
   return {...step,...result,state:result?.review_required?'review':report.active_tool?.source_id===step.source_id?'running':result?(report.status==='completed'?'completed':'prepared'):'pending'};
  });
+}
+
+export function analysisResultState(report,job){
+ if(['failed','cancelled'].includes(job?.status))return {title:'처리가 중단되었습니다',description:'완료한 추출 결과는 보존되어 있습니다. 실패 원인과 원문을 확인하고 이어서 처리할 수 있습니다.'};
+ if(report?.status==='completed')return {title:'검수할 식품 정보',description:job?.status==='partial'?'일부 구간은 자동 추출을 보류했습니다. 완료한 품목과 확인이 필요한 원문을 검수해 주세요.':'원문과 비교하여 확인한 정보만 DB에 반영하세요.'};
+ return {title:'Agent가 자료를 처리하고 있습니다',description:'선택한 도구로 전처리·추출 중입니다. 완료되면 검수 화면이 열립니다.'};
 }
