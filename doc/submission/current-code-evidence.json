@@ -1,0 +1,88 @@
+{
+  "observed_at": "2026-10-22T13:24:02.201369+09:00",
+  "source_commit": "402f0c7dca19320d91c4c33dd3e8fcdbb012c452",
+  "method": "현재 코드의 읽기 전용 조회. 신규 수집·추론·승인 아님. 저장된 분석은 다른 시점의 실행일 수 있음.",
+  "inbox": [
+    {
+      "title": "♠참조은♠[2026년 12월 전체단가표]- 참조은, 팜앤씨,델리치치즈",
+      "status": "running",
+      "review_ready": false,
+      "item_count": null,
+      "pending_count": null,
+      "analysis_run_id": "f18ff609-c043-406c-b3c0-25f66567fc0c",
+      "href": "/jobs/4ca5373a-841d-4847-9ec3-6dc3eb066071"
+    },
+    {
+      "title": "♠참조은♠[2026년12월 단가표](우리표고품은떡갈비,누릉지옛날반마리치킨,우리쌀크런치아귀튀김,빠네치즈분고기피자,바베큐순살족발S…",
+      "status": "queued",
+      "review_ready": false,
+      "item_count": null,
+      "pending_count": null,
+      "analysis_run_id": "a0831a81-50c4-4158-8403-8a26413a2a21",
+      "href": "/jobs/70d22d38-6379-48e7-89b3-cda3d988ddad"
+    },
+    {
+      "title": "♠참조은♠[2026년 크리스마스기획및 새해기획제품 선발주 할인] - 우리밀 눈꽃트리케익,오폐라 브라우니케익, 초코메리벨 케익,…",
+      "status": "ready",
+      "review_ready": true,
+      "item_count": 7,
+      "pending_count": 7,
+      "analysis_run_id": "9babf9f0-f8af-466c-b611-b0f8b84aa7da",
+      "href": "/analysis-runs/9babf9f0-f8af-466c-b611-b0f8b84aa7da/review"
+    },
+    {
+      "title": "참조은~♠델리치♠[2026년 12월 단가표](모짜렐라치즈-네츄럴(M08),눈꽃치즈-델리치엔젤헤어(X100))",
+      "status": "ready",
+      "review_ready": true,
+      "item_count": 10,
+      "pending_count": 9,
+      "analysis_run_id": "3b5039a5-f4c3-42e5-b53e-b4395ca7ebe8",
+      "href": "/analysis-runs/3b5039a5-f4c3-42e5-b53e-b4395ca7ebe8/review"
+    },
+    {
+      "title": "맘스케익진월단가표...........4.xlsx",
+      "status": "ready",
+      "review_ready": true,
+      "item_count": 13,
+      "pending_count": 12,
+      "analysis_run_id": "edaa7032-b1ca-40a9-a564-69231edc018e",
+      "href": "/analysis-runs/edaa7032-b1ca-40a9-a564-69231edc018e/review"
+    }
+  ],
+  "case": {
+    "title": "맘스케익진월단가표...........4.xlsx",
+    "run_id": "edaa7032-b1ca-40a9-a564-69231edc018e",
+    "report_status": "completed",
+    "parser_version": "food-parser-v7",
+    "events": 13,
+    "confirmed": 0,
+    "manual_segments": 13,
+    "model_calls": 20,
+    "actual_model_calls": 20,
+    "tools": [
+      "extract_image_regions",
+      "normalize_table",
+      "request_review"
+    ],
+    "workbook_id": "e94752f7-a8c3-4121-aa09-fd3e61bd787a",
+    "sheet_id": "946acbdd-604b-4282-b190-95c2e56819d5",
+    "rows_with_unified_dto": 13,
+    "rows_with_allergens": 9,
+    "approval_performed_for_documentation": false,
+    "job_id": "52fdd20b-91d5-400a-9d1f-f35f593f2611",
+    "skipped": 1,
+    "pending": 12
+  },
+  "validation": {
+    "backend_tests": 165,
+    "frontend_tests": 16,
+    "vite_build": "passed",
+    "backend_mode": "isolated test DB; rules mode; not live LLM accuracy test"
+  },
+  "limitations": [
+    "13 candidates include non-food instruction text and ()",
+    "Some allergen raw text contains storage instructions",
+    "9 populated allergen rows is not an accuracy score",
+    "Stored run is not a fresh inference on the documentation baseline commit"
+  ]
+}

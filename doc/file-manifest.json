@@ -291,9 +291,14 @@
           "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
           "date": "2026-10-22T13:14:07+09:00",
           "subject": "Include imported materials in review inbox and link unified row DTOs"
+        },
+        {
+          "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
+          "date": "2026-10-22T13:21:04+09:00",
+          "subject": "Explain agent tools and actual LangGraph execution with examples"
         }
       ],
-      "sha256": "305b206c681f2d76a387f4171d244801199b24554643fd0506e1958d3c76f017"
+      "sha256": "bd93d6e6f33a713f6f78ff5452dfff2ecf03909cd12cb8eb8414f312d14162f9"
     },
     "backend/__init__.py": {
       "spec": [
@@ -3352,6 +3357,11 @@
           "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
           "date": "2026-10-22T13:14:07+09:00",
           "subject": "Include imported materials in review inbox and link unified row DTOs"
+        },
+        {
+          "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
+          "date": "2026-10-22T13:21:04+09:00",
+          "subject": "Explain agent tools and actual LangGraph execution with examples"
         }
       ],
       "sha256": null
@@ -3421,6 +3431,11 @@
           "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
           "date": "2026-10-22T13:14:07+09:00",
           "subject": "Include imported materials in review inbox and link unified row DTOs"
+        },
+        {
+          "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
+          "date": "2026-10-22T13:21:04+09:00",
+          "subject": "Explain agent tools and actual LangGraph execution with examples"
         }
       ],
       "sha256": null
@@ -3522,7 +3537,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
+          "date": "2026-10-22T13:21:04+09:00",
+          "subject": "Explain agent tools and actual LangGraph execution with examples"
+        }
+      ],
       "sha256": "d478a8d7a63ae493db6b4e9000032232cd96fbd59b04753b1ead429486113a19"
     },
     "doc/food-agent/agent-update.md": {
@@ -5330,6 +5351,42 @@
       ],
       "sha256": "0a34a79e3eed3049c8ece8ca7a18415418d2ccbb68782cb9c011946fc5eb34ec"
     },
+    "doc/submission/current-code-evidence.json": {
+      "spec": [
+        "프로젝트 문서 current-code-evidence",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "d5b9ec38b7e1a146f5f4e33fe2436fa9dbe8814b498280dce25f629828baba97"
+    },
+    "doc/submission/current-code-review.md": {
+      "spec": [
+        "프로젝트 문서 current-code-review",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "1dfba8127e7e4e9d794866a93377362c11eedd579e3e742fa2bc37686041776c"
+    },
     "doc/submission/demo-guide.md": {
       "spec": [
         "프로젝트 문서 demo-guide",
@@ -5362,7 +5419,7 @@
           "subject": "Improve extraction reliability and document README-led five-minute demo"
         }
       ],
-      "sha256": "9dd9bdb3a1cc417e6a1115122c213a4c617d3084343029643fc941f3d3cb2ddd"
+      "sha256": "af1540bf32e61dda1723eef93fcc26e0f55924c9b77f59e35404bb1786e587f7"
     },
     "doc/submission/presentation-5min.md": {
       "spec": [
@@ -5399,9 +5456,14 @@
           "commit": "f9a0b3527f1678a212165b5792d40acf06bfa019",
           "date": "2026-10-22T13:14:07+09:00",
           "subject": "Include imported materials in review inbox and link unified row DTOs"
+        },
+        {
+          "commit": "99428d5cb8061d09f28d10fc19dd07d3138e1010",
+          "date": "2026-10-22T13:21:04+09:00",
+          "subject": "Explain agent tools and actual LangGraph execution with examples"
         }
       ],
-      "sha256": "4d453e6a711b646c5467c27e87f70c558ffb6cc6b5dbe621583f1a63935a2628"
+      "sha256": "85195f0144a20f48e067c7fa34be48ba8c4893d8b9d75e27c0fb5c22dc930dbb"
     },
     "doc/submission/requirements-audit.md": {
       "spec": [
@@ -5440,7 +5502,7 @@
           "subject": "Include imported materials in review inbox and link unified row DTOs"
         }
       ],
-      "sha256": "85e944e0d313abb0483f95b52ed46c53e665c09160a0f91ef308734e601c16c1"
+      "sha256": "fbebb5c0507ebd74e35f65067ef13d3edd8952a6ea29065481d8f640cd9c65e2"
     },
     "doc/submission/screenshots/01-documents.jpg": {
       "spec": [
@@ -5705,6 +5767,78 @@
         }
       ],
       "sha256": "734352ff1d1a76dee6ca0d3cc5b9f71706b0258bffffbbd83dfe4b68d1f2b27d"
+    },
+    "doc/submission/screenshots/current/01-review-inbox.png": {
+      "spec": [
+        "프로젝트 문서 01-review-inbox",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "793e3a905bb9a8d824be00649bbfd62cd8a849962158c48be2cb9b395cc09b5c"
+    },
+    "doc/submission/screenshots/current/02-table-dto.png": {
+      "spec": [
+        "프로젝트 문서 02-table-dto",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "a69d6ed9bc68a87de2bac555db6c0aca0254be2284fc02ade78dc0b2f8e84d4e"
+    },
+    "doc/submission/screenshots/current/03-label-review.png": {
+      "spec": [
+        "프로젝트 문서 03-label-review",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "2dbaefb00fe04e97bece84db5c8c864ab6af67f45e05cd6ac7921981bb8bca0d"
+    },
+    "doc/submission/screenshots/current/04-agent-tools.png": {
+      "spec": [
+        "프로젝트 문서 04-agent-tools",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "external",
+      "author": "미지정",
+      "email": "미지정",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "271fac91eb134566eb99e4ea7c30798e9750eaa7e87c46c613a208533e893b83"
     },
     "doc/submission/table-demo-result.json": {
       "spec": [

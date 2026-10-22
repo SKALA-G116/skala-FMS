@@ -27,6 +27,8 @@ demo-guide.md - 프로젝트 문서 demo-guide
 
     2026-10-22  김재현(Finn) v0.1.0   README·결과 공유 중심 300초 발표 및 근거별 문제 해결 문서 구성
 
+    2026-10-22  김재현(Finn) v0.1.0   최신 main 코드·저장 결과·현재 화면 기준 발표 근거 갱신
+
     상세 Git 이력: git log --follow -- doc/submission/demo-guide.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -39,12 +41,12 @@ demo-guide.md - 프로젝트 문서 demo-guide
 
 | 순서·시간 | 화면/결과 | 확인 포인트 |
 |---|---|---|
-| ①20초 | `screenshots/05-table-filter.jpg` | 원본18행,50g 필터3행, 다른 맛·가격 |
-| ②25초 | `screenshots/12-model-calls.jpg` + `table-demo-result.json` | qwen3:4b planner1회·normalize_table·18품목 |
-| ③35초 | `screenshots/06-review.jpg` | 원문/DTO 대조·공란·검토 대기·최종 승인 경계 |
-| ④25초 | `screenshots/10-history-evidence.jpg` | 별도 기존 승인 품목의 공급 상태·원문 근거 |
+| ①20초 | `screenshots/current/01-review-inbox.png` | 분석 전·진행 중·검수 가능 자료를 같은 목록에서 확인 |
+| ②25초 | `screenshots/current/02-table-dto.png` | 원본 셀과 같은 행의 DTO·알레르기·검수 링크 |
+| ③35초 | `screenshots/current/03-label-review.png` | 라벨 근거와 식품 정보 대조·수정·제외·승인 경계 |
+| ④25초 | `screenshots/current/04-agent-tools.png` | 표 정리·이미지 추출·원문 확인 요청의 선택 이유 |
 
-기록된 run `1dc358e6-1cf3-400e-b5f4-e37d94f8ea8a`는 README 갱신 시 현재 DB에서 확인되지 않았습니다. 과거 run URL 대신 보존한 캡처·JSON을 사용합니다. 신규 사이트 수집·OCR·승인까지 이번에 실시간으로 완료한 것처럼 소개하지 않습니다. 예전 캡처의 테스트 수는 촬영 당시 값이며 최신 코드 검증은 Backend153/Frontend15입니다.
+기준 코드는 `402f0c7`이며 [현재 조회 기록](current-code-evidence.json)을 함께 사용합니다. 저장된 맘스케익 분석은 후보13개·원문 확인13구간·실제 모델 호출20회입니다. 후보에는 잘못 인식한 안내 문장도 있어 정확한 식품13개로 소개하지 않습니다. 촬영 당시 제외1개·대기12개이며 최종 승인은 수행하지 않았습니다. 현재 테스트는 Backend165/Frontend16 및 Vite 빌드 통과입니다. 백엔드 테스트는 격리 DB의 규칙 모드로 실행했습니다.
 
 아래 준비 절차는 **선택적인 라이브 승인 시연**을 위한 별도 경로입니다. 아직 완료한 리허설로 표시하지 않습니다. 단순 조회는 현재 서비스의 자료·Agent 로그·검수·식품 DB 메뉴에서 할 수 있습니다.
 
@@ -141,6 +143,8 @@ export FOOD_SEED_PASSWORD='직접_정한_시연용_비밀번호'
 
 이 파일의 체크박스는 준비 절차이며 작성 시점에는 완료하지 않았다. 실제 확인자·시각·커밋·작업 ID를 시연용 로컬 기록에 남긴 뒤 체크한다. Zoom 설정은 발표자의 장치에서 직접 확인해야 한다.
 
-## 2026-10-22 촬영 결과
+## 현재 촬영과 과거 기록의 구분
 
-실제 기수집 코주부 엑셀 첨부를 `[발표 시연] 수집 단가표 재처리`로 재등록했다. run `1dc358e6-1cf3-400e-b5f4-e37d94f8ea8a`는 실제 qwen3:4b planner1회로 normalize_table을 선택하고18개 검토 항목을 만들었다. 작업 시작~완료6.027초, 모델5.765초이며 표 제목1구간은 수동 확인으로 남았다. 식품 DB 승인은 하지 않았다. 캡처11장·모델 기록·동일 파일 비교 결과는 `doc/submission/`에 있다. Zoom·발표자 리허설 체크는 자동 완료하지 않는다.
+현재 화면4장은 `screenshots/current/`에 보관했습니다. 2026-10-22 현재 서비스에서 읽기 전용으로 조회했으며 새 수집·추론·승인은 수행하지 않았습니다. 실행 중인 다른 작업 때문에 목록 상태는 이후 달라질 수 있습니다.
+
+과거 코주부18행·planner1회·6.027초 실행은 `table-demo-result.json`과 기존 JPG 캡처에 남겨 둡니다. 현재 라벨 포함 분석의 속도나 호출 수로 인용하지 않습니다. Zoom·발표자 리허설은 별도로 확인합니다.
