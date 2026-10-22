@@ -11,8 +11,8 @@ school062.py - 허용된 식품 사이트 수집 어댑터
 실행 가정:
     - 허용된 HTTPS 호스트만 사용하고 로그인 실패를 데이터로 오인하지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -25,6 +25,8 @@ school062.py - 허용된 식품 사이트 수집 어댑터
 
     2026-10-21  미지정      v0.1.0   수집 진행 표시·갱신·완료 건수 수정
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/connectors/school062.py
     공통 규칙: doc/file-header-policy.md
 
@@ -34,8 +36,8 @@ school062.py - 허용된 식품 사이트 수집 어댑터
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -147,5 +149,5 @@ class SiteClient:
                 assets.append({'filename':name,'content':content,'source_url':link,'kind':kind,'content_type':mime})
             except (Problem,httpx.HTTPError) as ex:
                 if isinstance(ex,Problem) and ex.code in ('CANCELLED','LEASE_LOST'):raise
-                issues.append({'code':ex.code if isinstance(ex,Problem) else 'ATTACHMENT_FAILED','message':ex.message if isinstance(ex,Problem) else '첨부 다운로드에 실패했습니다.','url':link})
+                issues.append({'code':ex.code if isinstance(ex,Problem) else 'ATTACHMENT_FAILED','message':ex.message if isinstance(ex,Problem) else '첨부 다운로드에 실패했습니다.','url':link,'filename':name})
         return {'url':url,'board':board,'post':post,'title':title,'body':text,'author':author.get_text(' ',strip=True) if author else None,'published_at':published,'assets':assets,'issues':issues}

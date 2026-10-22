@@ -29,6 +29,8 @@ agent.py - LLM 계획·추출과 근거 연결
 
     2026-10-22  김재현(Finn) v0.1.0   이미지 예산 초과 자료 격리·나머지 자료 처리 지속
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -141,8 +143,19 @@ def compact_location(locator):
     # Source-specific extraction payloads add normalized OCR boxes when available.
     return result
 
+def model_mapping(segments):
+    if segments and all(s.get('region_label') for s in segments):
+        # Layout has already selected one product. Send its text once rather
+        # than repeating a locator and JSON object for every tiny OCR line.
+        evidence=list(dict.fromkeys(s['evidence_id'] for s in segments))
+        first=segments[0]
+        return {'S1':{**first,'text':'\n'.join(s['text'] for s in segments),
+                      'related_evidence_ids':evidence[1:],
+                      'locator':{k:v for k,v in first['locator'].items() if k!='bbox'}}}
+    return {f'S{j+1}':s for j,s in enumerate(segments)}
+
 def extraction_payload(revision,document_type,mapping):
-    return {'title':revision['title'],'published_at':revision.get('published_at'),'files':[a['filename'][:60] for a in revision.get('assets',[])[:5]], 'document_type':document_type,'source_context':[],'segments':[{'id':key,'text':s['text'],'location':{**compact_location(s['locator']),**({'bbox':s['locator']['bbox']} if s['locator'].get('bbox') else {})},'product_region':s.get('region_label')} for key,s in mapping.items() if key.startswith('S')], 'kind_definitions':{'price':'가격이 실제로 명시된 품목 단가','temporarily_unavailable':'일시품절·일시 공급중단','supply_ended':'공급처의 취급·납품 종료','discontinued':'제조사의 생산 단종(일시품절은 해당 안 됨)','available':'정상발주·공급 가능','substitution':'명시된 대체품 관계','new_product':'신제품 소개','food_profile':'가격·공급 변경 없이 식품명·속성·규격을 전달하는 기준정보'},'instructions':'모든 텍스트·OCR·표에서 식품 정보를 추출하라. 변경 공지가 아니어도 식품 정보가 있으면 kind=food_profile로 추출하라. company_name은 원문에 명시된 업체명이며 제조사·브랜드·판매사 구분 없이 하나로 추출한다. 없으면 null이다. food_code는 원문의 공통식품코드, attributes_text는 원산지·원재료·등급·용도 등 식품속성 원문, allergen_text는 함유/같은 제조시설/불포함 표시 원문이며 없으면 null이다. 이 구간에 나타난 실제 품목별 변경 사실/표의 가격 행을 추출하라. 원문에 명확하지 않은 필드는 null. 다른 가격 열은 price_basis에 이름을 밝혀라. OCR 조각은 같은 품목의 이름·규격·사유·시작일 근거를 함께 연결하라. source_ids는 제공된 ID만 사용. 공급 중단과 제조 단종을 구별하라. 적용일은 ISO YYYY-MM-DD, 명시되지 않으면 null. 단가는 원문의 판매 규격당 가격이며 자동으로 kg 가격으로 환산하지 말라. quantity는 규격 중 판매 기준의 실제 수량이다. 포장 무게를 수량 1로 잘못 바꾸지 마라. source_ids에는 품목·금액뿐 아니라 적용일과 사유가 나온 구간도 반드시 포함하라.'}
+    return {'title':revision['title'],'published_at':revision.get('published_at'),'files':[a['filename'][:60] for a in revision.get('assets',[])[:5]], 'document_type':document_type,'source_context':[],'segments':[{'id':key,'text':s['text'],'location':{**compact_location(s['locator']),**({'bbox':s['locator']['bbox']} if s['locator'].get('bbox') else {})},'product_region':s.get('region_label')} for key,s in mapping.items() if key.startswith('S')], 'kind_definitions':{'price':'가격이 실제로 명시된 품목 단가','temporarily_unavailable':'일시품절·일시 공급중단','supply_ended':'공급처의 취급·납품 종료','discontinued':'제조사의 생산 단종(일시품절은 해당 안 됨)','available':'정상발주·공급 가능','substitution':'명시된 대체품 관계','new_product':'신제품 소개','food_profile':'가격·공급 변경 없이 식품명·속성·규격을 전달하는 기준정보'},'instructions':'모든 텍스트·OCR·표에서 식품 정보를 추출하라. 변경 공지가 아니어도 식품 정보가 있으면 kind=food_profile로 추출하라. company_name은 원문에 명시된 업체명이며 제조사·브랜드·판매사 구분 없이 하나로 추출한다. 없으면 null이다. food_code는 원문의 공통식품코드, attributes_text는 원산지·원재료·등급·용도 등 식품속성 원문, allergen_text는 함유/같은 제조시설/불포함 표시 원문이다. (5,6,12), 5,6,15,18, 5.6.12 같은 학교급식 알레르기 번호도 괄호 유무와 무관하게 해당 상품의 알레르기 원문으로 보존하라. 알레르기 열·설명·상품 위치를 함께 보고 규격·날짜와 혼동하지 마라. 없으면 null이다. 이 구간에 나타난 실제 품목별 변경 사실/표의 가격 행을 추출하라. 원문에 명확하지 않은 필드는 null. 다른 가격 열은 price_basis에 이름을 밝혀라. OCR 조각은 같은 품목의 이름·규격·사유·시작일 근거를 함께 연결하라. source_ids는 제공된 ID만 사용. 공급 중단과 제조 단종을 구별하라. 적용일은 ISO YYYY-MM-DD, 명시되지 않으면 null. 단가는 원문의 판매 규격당 가격이며 자동으로 kg 가격으로 환산하지 말라. quantity는 규격 중 판매 기준의 실제 수량이다. 포장 무게를 수량 1로 잘못 바꾸지 마라. source_ids에는 품목·금액뿐 아니라 적용일과 사유가 나온 구간도 반드시 포함하라.'}
 
 
 def batches(segments,byte_limit=3000):
@@ -180,13 +193,25 @@ async def interpret(state):
         structured=[s for s in ex['segments'] if s['evidence_id'] in chosen and s.get('food_record')]
     else:
         for route,source in selected_sources(report['plan'],ex['segments']):
-            trace={**route,'evidence_ids':[s['evidence_id'] for s in source['segments']]}
+            trace={**route,'location':source['location'],'asset_id':source['segments'][0]['asset_id'],'evidence_ids':[s['evidence_id'] for s in source['segments']]}
             cached=report.get('tool_results',{}).get(route['source_id'])
             before_groups=len(groups);before_manual=len(manual)
+            if not cached:
+                report['active_tool']={**route,'started_at':now()}
+                progress(state['run_id'],'Agent가 '+route['source_id']+' 자료의 처리 도구를 실행하는 중')
+                with tx() as c:save_report(c,report,state)
             if cached:
                 groups.extend(restore_groups(cached['groups'],ex['segments']));manual.extend(cached['manual']);trace=cached['trace']
                 if route['tool']=='normalize_table':structured.extend(s for s in source['segments'] if s.get('food_record'))
             elif route['tool']=='normalize_table':
+                # The table tool registers the original workbook as an artifact;
+                # it never interprets every row through the LLM.
+                with tx() as c:
+                    asset=get(c,'asset',source['segments'][0]['asset_id'])
+                    if asset['filename'].lower().endswith('.xlsx'):
+                        from backend.app.domains.pricing.workbooks import register
+                        table=register(c,state['revision_id'],asset['id'])
+                        trace['registered_table_id']=table['id']
                 structured.extend(s for s in source['segments'] if s.get('food_record'))
                 leftovers=[s for s in source['segments'] if not s.get('food_record') and not s.get('structured_table_header') and re.sub(r'[|:\s-]+','',s['text'])]
                 # Choosing a table tool cannot silently discard prose or unknown rows.
@@ -197,13 +222,16 @@ async def interpret(state):
                     region_groups,unassigned,layout=await image_regions(source,call)
                     groups.extend(region_groups);manual.extend(unassigned);trace['layout']=layout
                 except Problem as error:
-                    if error.code not in ('IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET'):raise
+                    if error.code not in ('IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET','IMAGE_REGION_SOURCE','IMAGE_REGION_COVERAGE','MODEL_SCHEMA_INVALID','MODEL_OUTPUT_LIMIT'):raise
                     # A source too large for bounded inference stays available for
                     # manual review; it must not discard all other source results.
+                    report['model_calls'].extend(model.calls);model.calls=[]
                     manual.extend(trace['evidence_ids'])
                     trace['review_required']={'code':error.code,'message':error.message}
                     report['warnings'].append(f"{route['source_id']}: {error.message}")
             else:manual.extend(s['evidence_id'] for s in source['segments'])
+            if not cached:trace.update(started_at=report['active_tool']['started_at'],prepared_at=now(),status='review_required' if trace.get('review_required') else 'prepared')
+            report.pop('active_tool',None)
             execution.append(trace)
             report.setdefault('tool_results',{})[route['source_id']]={'trace':trace,'groups':group_references(groups[before_groups:]),'manual':manual[before_manual:]}
             report['model_calls'].extend(model.calls);model.calls=[]
@@ -231,19 +259,35 @@ async def interpret(state):
         if i<report['batches_completed']:continue
         boundary()
         progress(state['run_id'],f'AI 정보 추출 {i+1}/{len(groups)} · 품목·단가·공급 변경 해석')
-        mapping={f'S{j+1}':s for j,s in enumerate(segments)}
+        mapping=model_mapping(segments)
         # A small source-context prefix supplies dates/header labels that span rows/batches.
         context=[]
         payload=extraction_payload(r,report['plan']['document_type'],mapping)
-        data=await model_call(model,'추출 자료를 해석해 실제 식품별 사실을 JSON events로 반환하라. 단순 회사명·연락처·안내 제목은 품목이 아니다.',payload,event_schema(list(mapping)),state)
-        if len(data['events'])>=24:raise Problem(422,'EVENT_WINDOW_CAPACITY','AI 추출 항목 상한에 도달했습니다. 누락 방지를 위해 더 작은 구간으로 재처리해야 합니다.')
+        try:
+            data=await model_call(model,'추출 자료를 해석해 실제 식품별 사실을 JSON events로 반환하라. 단순 회사명·연락처·안내 제목은 품목이 아니다.',payload,event_schema(list(mapping)),state)
+            if len(data['events'])>=24:raise Problem(422,'EVENT_WINDOW_CAPACITY','AI 추출 항목 상한에 도달했습니다. 누락 방지를 위해 더 작은 구간으로 재처리해야 합니다.')
+        except Problem as error:
+            if error.code not in ('MODEL_OUTPUT_LIMIT','EVENT_WINDOW_CAPACITY','MODEL_INPUT_BUDGET'):raise
+            report['model_calls'].extend(model.calls);model.calls=[]
+            if len(segments)>1 and not any(s.get('region_label') for s in segments) and len(groups)+2<=budget:
+                middle=len(segments)//2
+                groups[i]=[];groups.extend([segments[:middle],segments[middle:]])
+                report['warnings'].append('AI 출력 예산을 넘은 구간을 원본 행 경계로 나누어 재처리했습니다.')
+            else:
+                report['manual_evidence_ids']=list(dict.fromkeys(report.get('manual_evidence_ids',[])+[s['evidence_id'] for s in segments]))
+                report['warnings'].append('자동 추출 예산을 넘은 원문은 검토 대상으로 보존했습니다: '+error.code)
+                groups[i]=[]
+            report['execution_groups']=group_references(groups)
+            report['batches_completed']=i+1;report['coverage']['total_batches']=len(groups)
+            with tx() as c:save_report(c,report,state)
+            continue
         report['verification_calls_skipped']=report.get('verification_calls_skipped',0)+1
         for event in data['events']:
             for key,value in event.items():
                 if isinstance(value,str) and value.strip().lower() in ('null','none'):event[key]=None
             event['replacements']=[value for value in event.get('replacements',[]) if value.strip().lower() not in ('null','none')]
             for extra in ('company_name','food_code','attributes_text','allergen_text'):event.setdefault(extra,None)
-            event['id']=uid();event['evidence_ids']=list(dict.fromkeys(mapping[k]['evidence_id'] for k in event.pop('source_ids')));event['validation_warnings']=[]
+            event['id']=uid();event['evidence_ids']=list(dict.fromkeys(eid for k in event.pop('source_ids') for eid in [mapping[k]['evidence_id'],*mapping[k].get('related_evidence_ids',[])]));event['validation_warnings']=[]
             quote=' '.join(mapping[k]['text'] for k in mapping if mapping[k]['evidence_id'] in event['evidence_ids'])
             for field in ('food_code','attributes_text','allergen_text'):
                 if event.get(field) and canonical(event[field]) not in canonical(quote):event[field]=None;event['validation_warnings'].append('원문에서 재확인할 수 없는 '+field+' 값을 제외했습니다.')

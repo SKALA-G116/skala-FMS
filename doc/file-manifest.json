@@ -130,6 +130,16 @@
           "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
           "date": "2026-10-22T09:16:03+09:00",
           "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
+        },
+        {
+          "commit": "ebf1e8e3435595533bfea185965690efc56b2ab5",
+          "date": "2026-10-22T09:35:48+09:00",
+          "subject": "Preserve validated CI configuration and session regression coverage"
         }
       ],
       "sha256": "aa5839714b56893112ee24842ce1929052a4346ffbcde6c152bf9f6c99e725dd"
@@ -263,7 +273,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "4e14e57f43138d6fce85acb157aac418db719efa017c68825f679b786acd865e"
+      "sha256": "4d828b8109dad2846432889ff2ff86d0efd8d426f6228875b699ac6849f09e73"
     },
     "backend/__init__.py": {
       "spec": [
@@ -540,7 +550,7 @@
         }
       ],
       "original_docstring": "HTTP guards, bounded body ingestion and transaction/idempotency boundary.",
-      "sha256": "432d66ffe7040ba86ee5e66dd1d3b74276397bea1d46d43472681c9b0d19f898"
+      "sha256": "9fd089f932b29bd463321dcff3ff174310e08db2e5e94fd63e267eec3fa38108"
     },
     "backend/app/connectors/school062.py": {
       "spec": [
@@ -550,8 +560,8 @@
         "허용된 HTTPS 호스트만 사용하고 로그인 실패를 데이터로 오인하지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -575,7 +585,7 @@
         }
       ],
       "original_docstring": "Authenticated, bounded GNUboard connector. No bypass and no arbitrary hosts.",
-      "sha256": "f0111be04f5d33c620cab94af1ad0e0353a1ac8179ceee02f0703fb005ea650c"
+      "sha256": "947ff801745b8ebcf3bed91ea6c132d51fce59e00e33e8fc1c2b9db7fae7732c"
     },
     "backend/app/domains/__init__.py": {
       "spec": [
@@ -670,10 +680,15 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
         }
       ],
       "original_docstring": "LLM plans and interprets source facts; host resolves catalog and stages changes.\nEvidence-bound facts and review artifacts remain available even for unresolved data.\n",
-      "sha256": "fb9fc04cfdf1c7d01880eaa52b28777dc1719754a275249acc96b70ae26db245"
+      "sha256": "79d370e5378ed34fa66ea3512f08d815887b0690eb512b129aeccddd2893aa1d"
     },
     "backend/app/domains/analysis/api.py": {
       "spec": [
@@ -708,7 +723,7 @@
         }
       ],
       "original_docstring": "Analysis HTTP use cases. The transport owns authentication and the transaction.",
-      "sha256": "f54ee86c94982f2f1979446438b69bb01c1814456c152ce30d67d8a71b1194bc"
+      "sha256": "e5da77a64cd62fdc08f8abfc8bc94f233d8937ba8481f2b2460cfedf74bba1ae"
     },
     "backend/app/domains/analysis/consolidation.py": {
       "spec": [
@@ -738,7 +753,7 @@
         }
       ],
       "original_docstring": "Deterministic table recovery and conservative, provenance-preserving candidate merging.",
-      "sha256": "01ccef96f613c6d7f53a76b3091e6a4bbe1cda58bacc38463f099bdd623c4cf3"
+      "sha256": "a73dce3950314c56466387570b33496e1e89e25d492228f2b9e121e85b2b5026"
     },
     "backend/app/domains/analysis/export.py": {
       "spec": [
@@ -823,7 +838,7 @@
         }
       ],
       "original_docstring": "Agent-selected source tools; the host validates capabilities and complete coverage.",
-      "sha256": "2366b8740e694ccf190bca795b2142dfdf3b6456403d1e3ec2f58c46bc5d8403"
+      "sha256": "bf647930a4ff36959cf535094f2285fcaf59ff6b38ccb62f3ab3f5817802b673"
     },
     "backend/app/domains/analysis/provider.py": {
       "spec": [
@@ -855,10 +870,15 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
         }
       ],
       "original_docstring": "Real local inference with async HTTP, bounded concurrency and connection reuse.",
-      "sha256": "dd29738457ac45b29d31370e80402ab3319bf282a685505322e0897051e5f0bc"
+      "sha256": "59240ab18324ffe366359977d38f631c7a447400e9c6d2cf272a9025930d6d8a"
     },
     "backend/app/domains/analysis/reconciliation.py": {
       "spec": [
@@ -982,7 +1002,7 @@
         }
       ],
       "original_docstring": "Small durable LangGraph state: IDs only; source bodies live in storage.",
-      "sha256": "27adef81d1b9770a3ea3886bfd0bb77bf36c5f40c77e00bb5454466c09d6ecad"
+      "sha256": "401e474f6dad479a565f742d15f05033d3a9da439c33224b2be507f1920bb984"
     },
     "backend/app/domains/catalog/__init__.py": {
       "spec": [
@@ -1021,8 +1041,8 @@
         "공통 transport가 소유한 같은 DB 트랜잭션을 사용"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1041,7 +1061,26 @@
         }
       ],
       "original_docstring": "Catalog HTTP use cases. The transport owns authentication and the transaction.",
-      "sha256": "f7ff468d41c6d2cf1d4483593004f05d45ba16460f63f93ddd2044f9e2148dd8"
+      "sha256": "61abb0799c7830a94daf7678a76d6d8e1aab099c443bbb05cd5a335cc8436c55"
+    },
+    "backend/app/domains/catalog/editing.py": {
+      "spec": [
+        "프로젝트 설정 editing.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "original_docstring": "Manual canonical food edits with optimistic locking and an append-only audit.",
+      "sha256": "47993c0495d0048d6467a7b6f70238e50d1e15627ec7a6f80df8b0e528ec8bf6"
     },
     "backend/app/domains/catalog/queries.py": {
       "spec": [
@@ -1110,7 +1149,7 @@
         }
       ],
       "original_docstring": "One nullable FoodRecord contract for extraction, review, storage and catalog views.\nUnknown is None; zero is a number; no allergen statement never means allergen-free.\n",
-      "sha256": "08cdbf87db9f8958a3bee81eb2dd7c1486bb2f497b3e0cf7f996e51cd9284f70"
+      "sha256": "913a399ddffd8e1ae2e2d86e6464cc0704882e2d2902616250e4b7429f61546e"
     },
     "backend/app/domains/identity/__init__.py": {
       "spec": [
@@ -1303,8 +1342,8 @@
         "동일 원본 중복 수집을 구분하고 접근 실패를 숨기지 않음"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1328,7 +1367,7 @@
         }
       ],
       "original_docstring": "Resumable incremental collection with short DB transactions, per-post commit,\nrevisit of recent known posts, immutable revisions and durable analysis handoff.",
-      "sha256": "157ae97426e7a2abca13ed88e475b882685f7c0023f2670eb9503eed76110308"
+      "sha256": "854d553e4ca6d6742a7d49b7ab2b2c17b3d06204271369447dadaece5026e89f"
     },
     "backend/app/domains/ingestion/connections.py": {
       "spec": [
@@ -1456,8 +1495,8 @@
         "공통 transport가 소유한 같은 DB 트랜잭션을 사용"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1476,7 +1515,7 @@
         }
       ],
       "original_docstring": "Jobs HTTP use cases. The transport owns authentication and the transaction.",
-      "sha256": "fbc1ae4784853a0ee8a5940903871a9b6e4fa91d738f0eac0241019d72f272ce"
+      "sha256": "23fa421bc091eec23536b27ca94a26125953829c898faa79ff3dd6f293f034f9"
     },
     "backend/app/domains/jobs/service.py": {
       "spec": [
@@ -1486,8 +1525,8 @@
         "실제 처리는 별도 worker가 수행"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1505,7 +1544,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "247fb97150b7c55fc447dde2e4704c85832b5cc806d0930406e5e55a4bc6030f"
+      "sha256": "2273d2167ddf82bf71ab61900b16b440d9e76eb608abcbbcfeb9fc6f658b2811"
     },
     "backend/app/domains/jobs/worker.py": {
       "spec": [
@@ -1515,8 +1554,8 @@
         "작업 lease·취소·종료와 제한된 lane을 관리"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1540,7 +1579,7 @@
         }
       ],
       "original_docstring": "Durable queue consumer. Single worker by default; database claim/fencing prevents duplicates.",
-      "sha256": "67379b4052bb7d2c71d82602bcd2802003416660b353655eba2ecefa1899df5d"
+      "sha256": "44a19546491c081a6758bde4ae74aea9592a0d6f970a8a4b14b3216bba799f87"
     },
     "backend/app/domains/pricing/__init__.py": {
       "spec": [
@@ -1639,8 +1678,8 @@
         "원본 자료 가격을 승인된 공급 단가와 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1659,7 +1698,7 @@
         }
       ],
       "original_docstring": "Source workbook reader. Never writes authoritative product/price facts.\nRead-only streaming import; values, sheet/row/cell coordinates and formula absence\nare retained. Queries, compound filters, ordering and pagination run in PostgreSQL.\n",
-      "sha256": "b2833b9a980207b26b8fde2482c035d440d38ea0a2be23436576bc7282b18210"
+      "sha256": "599576b78f1bb4544fc6dd1042cd5670eb1f304f83e44c177a84f65e0871553f"
     },
     "backend/app/domains/reporting/__init__.py": {
       "spec": [
@@ -1813,6 +1852,25 @@
       ],
       "sha256": "655dbb3847df7502310cc3b5e74ecf60cbbbbba410670addeb4c13bae5015429"
     },
+    "backend/app/domains/review/approval.py": {
+      "spec": [
+        "프로젝트 설정 approval.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "original_docstring": "One human approval command; existing validation, decisions and durable apply jobs remain authoritative.",
+      "sha256": "7f3b0195e996a4ba84eebba002cffe126bc1020c5f9bd91dc4a4375d7d469611"
+    },
     "backend/app/domains/review/inbox.py": {
       "spec": [
         "자료별 최신 분석 검수함 조회",
@@ -1821,8 +1879,8 @@
         "내부 DB 반영 묶음을 검토 품목으로 노출하지 않고 전체 그룹에서 페이지를 적용"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -1836,7 +1894,7 @@
         }
       ],
       "original_docstring": "A review inbox lists completed analysis results, not internal application batches.",
-      "sha256": "f795f106d86253cbb2d21c2bbb9524051e2a41d7f188f1d21529ad86f99b01ab"
+      "sha256": "86bcea9811bb3ad4a1b545f3b0a5b3313f6632a583690feb686b00a89d5b9645"
     },
     "backend/app/domains/review/items.py": {
       "spec": [
@@ -1925,7 +1983,7 @@
         }
       ],
       "original_docstring": "Build approval drafts from explicitly confirmed DTOs; never called by extraction.",
-      "sha256": "f8b22cc085e25a45f6ff5c4555d40501d0497efebc07b26e6b7142fba631e49c"
+      "sha256": "a5f3e29c23a0a11a964526464217859054a1b60b6e31d64b8834e5c29752f9f9"
     },
     "backend/app/infrastructure/__init__.py": {
       "spec": [
@@ -2058,8 +2116,8 @@
         "크기·페이지·셀·픽셀·구간을 제한하고 OCR는 선택 구성"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2083,7 +2141,7 @@
         }
       ],
       "original_docstring": "Bounded synchronous parsing, executed only in the worker process.",
-      "sha256": "bc4ee26be4f7f0d9fa65764cf3ba937b06ceb245c60d2d7c3275abfa66dbd146"
+      "sha256": "da3392e831f3247d7aa7f0f05cd540766489a11c1b01203192be22d189e0059c"
     },
     "backend/app/parsers/ocr.py": {
       "spec": [
@@ -2144,6 +2202,25 @@
       ],
       "original_docstring": "One serialized OCR subprocess: reuse weights, recycle, release idle native memory.",
       "sha256": "065c194aed301eb98eb96ebafda45c0ca9e8760fde83bf30fa673254cc844f4d"
+    },
+    "backend/app/parsers/xlsx_merges.py": {
+      "spec": [
+        "프로젝트 설정 xlsx_merges.py",
+        "도구별 설정·실행 환경",
+        "해당 도구의 구성 또는 실행 결과",
+        "실제 비밀값과 로컬 실행 데이터는 Git에서 제외"
+      ],
+      "style": "python",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "original_docstring": "Read explicit XLSX merge anchors without loading the workbook into memory.",
+      "sha256": "d0e267985a7b2f8da5b3ab8fe952d4332e0d27bb0811a3da7fb2ebe09cf39835"
     },
     "backend/app/runtime/__init__.py": {
       "spec": [
@@ -2428,7 +2505,7 @@
         }
       ],
       "original_docstring": "Agent decisions must change actual tools, preserve evidence, and stay bounded.",
-      "sha256": "d7a67a4ba5bf1650650b4dcb0ac0bb7188983339556343ca2a72b4b99393c8d6"
+      "sha256": "6b7d0d5ae92f61b5f9bc867a332932c5c0c5fa9d10d17c04f4eed94d8e4db8c8"
     },
     "backend/tests/test_async_runtime.py": {
       "spec": [
@@ -2460,6 +2537,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
         }
       ],
       "sha256": "aed8540fe58396662656ed023f600691061e4df0ea2c28d200444e8e7ab525c5"
@@ -2492,7 +2574,7 @@
         }
       ],
       "original_docstring": "Verify lossless, conservative merging of vendor tables and repeated OCR facts.",
-      "sha256": "08a92af095c4796e5f16b85396eb7587ed2243ab61da239a23c435dc2e3e1bbf"
+      "sha256": "1c1165b54350e8df1c6874693cde567363fe60b9cadd860fc5c56c1de8eb2cbe"
     },
     "backend/tests/test_domain_architecture.py": {
       "spec": [
@@ -2559,6 +2641,16 @@
           "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
           "date": "2026-10-22T09:16:03+09:00",
           "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
+        },
+        {
+          "commit": "ebf1e8e3435595533bfea185965690efc56b2ab5",
+          "date": "2026-10-22T09:35:48+09:00",
+          "subject": "Preserve validated CI configuration and session regression coverage"
         }
       ],
       "original_docstring": "Check that documenting source files preserves executable code and original inputs.",
@@ -2596,7 +2688,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "2e5b926d7c48664d3e855b4348c9125631966dff3fb47e92e7241c9df1d49c56"
+      "sha256": "625a17fdcdc3f093622de419e7c282d35a4709d178da8f723bd45eadea91a665"
     },
     "backend/tests/test_parsers_mcp.py": {
       "spec": [
@@ -2687,10 +2779,15 @@
           "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
           "date": "2026-10-22T09:13:16+09:00",
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
-      "sha256": "a5e75d2f2f1b0edcbb2cf933044d9255247f7d22283667ee0d07266d984dc6ad"
+      "sha256": "0550ef4d94723749d8609728ce5d5e15c84aaf4f613234b0ff8ee0420a6c068e"
     },
     "compose.food.yml": {
       "spec": [
@@ -2882,6 +2979,11 @@
           "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
           "date": "2026-10-22T09:16:03+09:00",
           "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
         }
       ],
       "sha256": null
@@ -2926,6 +3028,11 @@
           "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
           "date": "2026-10-22T09:13:16+09:00",
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
         }
       ],
       "sha256": null
@@ -3153,6 +3260,16 @@
           "commit": "58e689525e78e56cccc611e48fe5f2226b85d487",
           "date": "2026-10-22T09:16:03+09:00",
           "subject": "Fix workflow comment syntax and validate CI YAML in regression tests"
+        },
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
+        },
+        {
+          "commit": "ebf1e8e3435595533bfea185965690efc56b2ab5",
+          "date": "2026-10-22T09:35:48+09:00",
+          "subject": "Preserve validated CI configuration and session regression coverage"
         }
       ],
       "sha256": "1352ab3acd0c2ba725a327eec0ca721f7aa1562d0d905ddbd48b8703216b2c76"
@@ -3754,7 +3871,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "65cc30412950fb4c304b79d1cba9d63b5f76eac1",
+          "date": "2026-10-22T09:34:26+09:00",
+          "subject": "Fix Ollama grammar expansion errors and isolate oversized image sources"
+        }
+      ],
       "sha256": "32704ea6462f79415b4c348c202f07ac31ce55963402e5980f34a4b2c84fc8f2"
     },
     "doc/food-agent/ocr-reuse-benchmark.json": {
@@ -3813,7 +3936,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "b3d294baf5783bf3f211f71ecb39f2734d3c66c129eb3060f1d9097d019293a8"
+      "sha256": "54cde1af4f4939555575f8f008840471c452bf4e2b80d191ebaad260e4464e9d"
     },
     "doc/food-agent/operational-update.md": {
       "spec": [
@@ -4296,6 +4419,24 @@
       ],
       "sha256": "2474073042823d738d3c56a0307d2efbe1d7c6243b337c27f023f4641cb5156a"
     },
+    "doc/food-agent/service-workflow.md": {
+      "spec": [
+        "프로젝트 문서 service-workflow",
+        "설계·구현·측정·검증 근거",
+        "설명·명세·예제·검증 또는 발표 안내",
+        "계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인"
+      ],
+      "style": "html",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "8e1cdb155f36c6bc99a446c7d9e89cf10980bb0c90584d8711d4a11dd2adc454"
+    },
     "doc/food-agent/technology-review.md": {
       "spec": [
         "프로젝트 문서 technology-review",
@@ -4634,7 +4775,7 @@
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
-      "sha256": "725f64ffab55fd8540796e4a0b5e0a4e42c7b79ab725cca0e373841040fbbc6e"
+      "sha256": "cb632db7eb43b5d59a6fc766984ad28e8f15e14ab269f08a3726e982cc765839"
     },
     "frontend/src/api/auth.js": {
       "spec": [
@@ -4842,7 +4983,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "50b4fd50893a79a018c709d10a64dfc94191fff4ab3336f9696cd0c0b31bb870"
+      "sha256": "9042be2b41db9fa8d130656bee3171e52848946c27597698f81377393c208c1a"
     },
     "frontend/src/components/FoodRecordTable.vue": {
       "spec": [
@@ -4852,8 +4993,8 @@
         "업무 반영은 권한 있는 API를 통해 수행하고 컴포넌트가 직접 DB에 접근하지 않음"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -4876,7 +5017,7 @@
           "subject": "fix: 공급업체 표 직접 정규화와 근거 보존형 추출 후보 통합"
         }
       ],
-      "sha256": "566a5f3685dc9eea8adf26419f75ac4d0405ab445824aac6534323c66ebfbf7d"
+      "sha256": "b0fe6bbb9a477a61d60dc9d02cd00d83696e9add92252a2de9a882065d298577"
     },
     "frontend/src/components/ImageEvidence.vue": {
       "spec": [
@@ -5084,7 +5225,7 @@
           "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
-      "sha256": "415c10ffa9469cd29e3899e5cb5807324c29d395d4ad447497ce1ccd8b40399b"
+      "sha256": "36d8901f036ecf76c77c022d3e59349cd35e5557621af14dc97c5c2f8b274699"
     },
     "frontend/src/style.css": {
       "spec": [
@@ -5114,6 +5255,24 @@
         }
       ],
       "sha256": "be428bfdc1d4e991ab68d1893a24d198c100258608bc2edf06ab118095439108"
+    },
+    "frontend/src/utils/agentLogs.js": {
+      "spec": [
+        "Vue 애플리케이션 agentLogs",
+        "애플리케이션·라우트·상태·빌드 설정",
+        "화면·공유 상태·빌드 산출물",
+        "설치 의존성과 생성 lock 파일은 원본 형식을 유지"
+      ],
+      "style": "block",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "90fb86b1c748c2f58ac9f00a3df53bfd8d17da58ca9bacb753df42f00aa4b473"
     },
     "frontend/src/utils/reviewJourney.js": {
       "spec": [
@@ -5152,8 +5311,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5171,70 +5330,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "94939010e3ae9fbd199fd30686250d26f2a38daff89fa87e9cde7ca79a60be53"
-    },
-    "frontend/src/views/CreateReview.vue": {
-      "spec": [
-        "수동 검토 변경안 작성",
-        "라우트·사용자 입력·API 조회 DTO",
-        "사용자 여정에 맞는 화면과 명시적 API 요청",
-        "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
-      ],
-      "style": "html",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        }
-      ],
-      "sha256": "84c20f1747e422e688c1ad45a84a43068e796c5e1ad12326169cdb66611d7599"
-    },
-    "frontend/src/views/Dashboard.vue": {
-      "spec": [
-        "업무 집계와 주요 화면 진입",
-        "라우트·사용자 입력·API 조회 DTO",
-        "사용자 여정에 맞는 화면과 명시적 API 요청",
-        "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
-      ],
-      "style": "html",
-      "author": "미지정",
-      "email": "미지정",
-      "license": "미지정",
-      "version": "0.1.0",
-      "status": "Development",
-      "created": "2026-10-21",
-      "documented": "2026-10-21",
-      "git_history": [
-        {
-          "commit": "a11ef05aae65c85a47bbb0dd24e034ca23b83ba2",
-          "date": "2026-10-21T18:51:31+09:00",
-          "subject": "refactor: initialize food service with domain-based backend and delivery guide"
-        },
-        {
-          "commit": "be0e63283f611166084c0605109606b825d03e1f",
-          "date": "2026-10-21T19:30:28+09:00",
-          "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
-        },
-        {
-          "commit": "23e40a0983dbbc73320fd749ced834eaf76913c3",
-          "date": "2026-10-21T19:53:12+09:00",
-          "subject": "fix: 수집 진행 상태 갱신과 첨부 다운로드·완료 집계 개선"
-        }
-      ],
-      "sha256": "061303d2288c9b4d0f57102fe243e130fc739d51ec69e96399060a23d3ec63bb"
+      "sha256": "93d1e81ca9963a9b7c0b58b561532be5308b3dc3c88f4e11efd86931215329ac"
     },
     "frontend/src/views/Documents.vue": {
       "spec": [
@@ -5244,8 +5340,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5263,7 +5359,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "0f2f5770f775ed3577f6533029df5105b6d0f640961f906c4d53d218efd825a5"
+      "sha256": "ba4997da8fdee5ac7c680a574c2c95d3feb0887bf5d5d07cba9efdc12fd6aea8"
     },
     "frontend/src/views/ExtractionReview.vue": {
       "spec": [
@@ -5307,7 +5403,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "90766046ff6f833febd245588cdb4bb813dd1f1b7fb64d09fcfc64972f3d46c3"
+      "sha256": "28aab6e4d1e8d4dad3ae4f234a8fc84c2db517666aab8c21a0aefda7f3a63a17"
     },
     "frontend/src/views/FoodCatalog.vue": {
       "spec": [
@@ -5317,8 +5413,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5336,7 +5432,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "2990b89d763d6b84a0f462b5b1ff40657fed502084cf3cef346e825307b67e25"
+      "sha256": "cb0674d5e97eca5686ea6a4cfc0357d30d6cbbf53f24b60fe1ce690a069d81ec"
     },
     "frontend/src/views/Jobs.vue": {
       "spec": [
@@ -5375,7 +5471,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "b45f78d6ecfc30ca49b2a593436d6d1e2323595fe418d6773f15e9e440868dc8"
+      "sha256": "eb5ee5cd2da996681c73a7ce3b607c25a0f299dab24a7885b43344182dd1e994"
     },
     "frontend/src/views/Prices.vue": {
       "spec": [
@@ -5414,8 +5510,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5433,7 +5529,7 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "4ffb00c2aaa4879aa9067a33f13a848b64e9a15a221d83f1a32369abeb9e81e3"
+      "sha256": "abcacec70fe0057717ccf4ba8af23e9ec549ae9a91d201f46d35a4024d45642e"
     },
     "frontend/src/views/Reviews.vue": {
       "spec": [
@@ -5443,8 +5539,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5467,7 +5563,7 @@
           "subject": "fix: 검수함을 내부 변경 배치 대신 자료별 최신 분석으로 표시"
         }
       ],
-      "sha256": "d8709310d95e9933110a88e95929e2e06503e2506ba1a6c9778910afb53d0e6e"
+      "sha256": "33922aea88d44c4b65621ebbc269f4e71dd28b181341c542667e3cb74f1cec16"
     },
     "frontend/src/views/Sources.vue": {
       "spec": [
@@ -5477,8 +5573,8 @@
         "미확인 값과 저장 전 수정·서버 권한/검증 상태를 구분"
       ],
       "style": "html",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -5496,7 +5592,25 @@
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
         }
       ],
-      "sha256": "d345a7de5662d6720fd67b76080fc420a43776e0a484a3e3485f328ea329337f"
+      "sha256": "addf82cf6da48c1230339c9cff8556360c54f55e30b5249f2e964bee3795156b"
+    },
+    "frontend/tests/agentLogs.test.js": {
+      "spec": [
+        "기능·경계·회귀 검증",
+        "테스트 fixture·가상 입력·명시적 mock/테스트 대역",
+        "assert 결과와 실패 사유",
+        "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
+      ],
+      "style": "block",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
+      "license": "미지정",
+      "version": "0.1.0",
+      "status": "Development",
+      "created": "2026-10-22",
+      "documented": "2026-10-22",
+      "git_history": [],
+      "sha256": "397cad7338e49687697d8556d3b2f4e0bb2e11d837d991c28690e8a197d2075b"
     },
     "frontend/tests/auth.test.js": {
       "spec": [
@@ -5908,7 +6022,7 @@
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
         }
       ],
-      "sha256": "9d2e209045fd1407155a036bf12e9ee1ef1050b3e39983c5c0850d5278612336"
+      "sha256": "09fcba79e95a650bae001c53f60ec09acb5096521b672c00e1eed9b7794c4a8a"
     },
     "requirements.txt": {
       "spec": [

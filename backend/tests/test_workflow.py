@@ -37,6 +37,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   이미지 예산 초과 자료 격리·나머지 결과 및 Excel 보존 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -797,7 +799,7 @@ def test_browser_session_cookie_rotation_expiry_and_logout(client):
     assert client.get('/api/v1/products').status_code==401
 
 
-@pytest.mark.parametrize('budget_code',['IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET'])
+@pytest.mark.parametrize('budget_code',['IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET','IMAGE_REGION_SOURCE','IMAGE_REGION_COVERAGE','MODEL_SCHEMA_INVALID','MODEL_OUTPUT_LIMIT'])
 def test_image_budget_failure_preserves_other_source_results(client,monkeypatch,budget_code):
     from backend.app.domains.analysis import agent,planning,workflow
     from backend.app.infrastructure.database import Problem
@@ -824,3 +826,170 @@ def test_image_budget_failure_preserves_other_source_results(client,monkeypatch,
     assert report['tool_executions'][0]['review_required']['code']==budget_code
     assert len(report['events'])==1 and report['events'][0]['amount']=='72000'
     assert report['export_asset_id'] and report['proposal_ids']==[]
+
+
+def test_food_catalog_edit_is_versioned_audited_and_role_checked(client):
+    login(client)
+    row=client.get('/api/v1/foods').json()['items'][0]
+    record=copy.deepcopy(row['food_record']);record['food_name']='수정 검증 식품';record['attributes']['origin_country']='KR'
+    body={'food_record':record,'reason':'원문 표기 정정'};path='/api/v1/foods/'+row['id'];key=uid()
+    with tx() as c:before=c.execute('SELECT count(*) n FROM facts').fetchone()['n']
+    r=client.patch(path,json=body,headers={'If-Match':'"'+str(row['version'])+'"','Idempotency-Key':key});assert r.status_code==200,r.text
+    edited=r.json();assert edited['version']>row['version'] and edited['food_record']['food_name']=='수정 검증 식품'
+    assert client.patch(path,json=body,headers={'If-Match':'"'+str(row['version'])+'"','Idempotency-Key':key}).json()==edited
+    audit=client.get('/api/v1/audit-events/'+edited['audit_event_id']).json()
+    assert audit['before']['food_name']==row['food_record']['food_name'] and audit['after']['food_name']=='수정 검증 식품'
+    assert audit['reason']=='원문 표기 정정' and audit['actor']
+    assert audit['evidence_ids']==row['evidence_ids']
+    assert client.patch(path,json=body,headers={'If-Match':'"'+str(row['version'])+'"','Idempotency-Key':uid()}).status_code==412
+    bad=copy.deepcopy(body);bad['food_record']['specification']['quantity']='-2'
+    assert client.patch(path,json=bad,headers={'If-Match':'"'+str(edited['version'])+'"','Idempotency-Key':uid()}).status_code==422
+    login(client,'operator')
+    assert client.patch(path,json=body,headers={'If-Match':'"'+str(edited['version'])+'"','Idempotency-Key':uid()}).status_code==403
+    login(client,'reviewer')
+    newer=client.patch(path,json=body,headers={'If-Match':'"'+str(edited['version'])+'"','Idempotency-Key':uid()});assert newer.status_code==200,newer.text
+    with tx() as c:assert c.execute('SELECT count(*) n FROM facts').fetchone()['n']==before
+    login(client)
+
+
+def test_single_review_approval_requires_confirmation_and_reuses_jobs(client,monkeypatch):
+    from backend.app.domains.analysis import agent
+    from test_agent import TestModel
+    name='승인 통합 검증 '+uid()
+    class ProfileModel(TestModel):
+        def generate(self,task,payload,schema):
+            if 'routes' in schema['properties']:
+                return {'document_type':'notice','summary':'식품 정보','tasks':['extract_food_profiles'],
+                    'routes':[{'source_id':s['id'],'tool':'extract_text','reason':'식품 본문'} for s in payload['sources']]}
+            event={k:None for k in ['company_name','food_code','attributes_text','allergen_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
+            return {'events':[{**event,'kind':'food_profile','product_name':name,'replacements':[],'uncertainties':[],'source_ids':[payload['segments'][0]['id']]}]}
+    monkeypatch.setattr(agent,'LocalModel',ProfileModel);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');login(client)
+    imported=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('approval.txt',name.encode())},data={'title':name});assert imported.status_code==201,imported.text
+    once();runid=imported.json()['analysis_job']['analysis_run_id'];report=client.get('/api/v1/analysis-runs/'+runid+'/report').json();path='/api/v1/analysis-runs/'+runid+'/approve'
+    assert post(client,path.removeprefix('/api/v1'),{'version':report['version']}).status_code==422
+    item=report['events'][0]
+    reviewed=client.patch('/api/v1/analysis-runs/'+runid+'/items/'+item['id'],json={'version':report['version'],'status':'confirmed','fields':{},'reason':'원문과 대조'},headers={'Idempotency-Key':uid()});assert reviewed.status_code==200,reviewed.text
+    assert post(client,path.removeprefix('/api/v1'),{'version':report['version']}).status_code==409
+    with tx() as c:assert not c.execute('SELECT 1 FROM food_profiles WHERE data->>\'food_name\'=%s',(name,)).fetchone()
+    key=uid();body={'version':reviewed.json()['version']}
+    approved=post(client,path.removeprefix('/api/v1'),body,key=key);assert approved.status_code==202,approved.text
+    assert len(approved.json()['jobs'])==1
+    assert post(client,path.removeprefix('/api/v1'),body,key=key).json()==approved.json()
+    assert once()
+    with tx() as c:assert c.execute('SELECT 1 FROM food_profiles WHERE data->>\'food_name\'=%s',(name,)).fetchone()
+    login(client,'operator')
+    assert post(client,path.removeprefix('/api/v1'),{'version':approved.json()['report']['version']}).status_code==403
+    login(client)
+
+
+def test_truncated_model_output_splits_source_rows_and_preserves_review_boundary(client,monkeypatch):
+    from backend.app.domains.analysis import agent,workflow
+    from backend.app.infrastructure.database import Problem
+    from test_agent import TestModel
+    calls=[]
+    class Model(TestModel):
+        def generate(self,task,payload,schema):
+            if 'routes' in schema['properties']:return {'document_type':'notice','summary':'원문 행','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_text','reason':'본문'} for s in payload['sources']]}
+            calls.append(len(payload['segments']))
+            if len(payload['segments'])>1:raise Problem(422,'MODEL_OUTPUT_LIMIT','출력 상한')
+            source=payload['segments'][0];event={k:None for k in ['company_name','food_code','attributes_text','allergen_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
+            return {'events':[{**event,'kind':'food_profile','product_name':source['text'],'replacements':[],'uncertainties':[],'source_ids':[source['id']]}]}
+    monkeypatch.setattr(agent,'LocalModel',Model);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent')
+    monkeypatch.setattr(workflow,'parse',lambda *args:[{'text':name,'confidence':1,'locator':{'kind':'html','block_id':name}} for name in ['분할 검증 식품 가','분할 검증 식품 나','분할 검증 식품 다']])
+    login(client);r=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('split.txt',b'test')},data={'title':'출력 제한 복구'})
+    assert r.status_code==201,r.text
+    assert once();job=client.get('/api/v1/jobs/'+r.json()['analysis_job']['id']).json();assert job['status']=='succeeded',job
+    report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json()
+    assert len(report['events'])==3 and calls==[3,1,2,1,1]
+    assert len(set(e['evidence_ids'][0] for e in report['events']))==3
+    assert report['proposal_ids']==[] and not report.get('manual_evidence_ids')
+
+
+def test_image_region_dto_keeps_all_line_references(client,monkeypatch):
+    from backend.app.domains.analysis import agent,workflow
+    from test_agent import TestModel
+    class Model(TestModel):
+        def generate(self,task,payload,schema):
+            if 'routes' in schema['properties']:return {'document_type':'marketing','summary':'상품 이미지','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_image_regions','reason':'상품 배치'} for s in payload['sources']]}
+            if 'regions' in schema['properties']:return {'regions':[{'label':'압축 검증 식품','source_ids':[line[0] for line in payload['lines']],'context_ids':[]}],'unassigned_ids':[]}
+            assert len(payload['segments'])==1
+            event={k:None for k in ['company_name','food_code','attributes_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
+            return {'events':[{**event,'allergen_text':'(5,6,12)','kind':'food_profile','product_name':'압축 검증 식품','replacements':[],'uncertainties':[],'source_ids':['S1']}]}
+    monkeypatch.setattr(agent,'LocalModel',Model);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent')
+    monkeypatch.setattr(workflow,'parse',lambda *args:[{'text':('압축 검증 식품 (5,6,12)' if i==0 else '원재료 설명 '+str(i)),'confidence':1,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1]}} for i in range(41)])
+    login(client);r=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('image.txt',b'test')},data={'title':'상품 영역 압축'})
+    assert once();job=client.get('/api/v1/jobs/'+r.json()['analysis_job']['id']).json();assert job['status']=='succeeded',job
+    report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json();event=report['events'][0]
+    assert len(event['evidence_ids'])==41
+    assert event['food_record']['allergens']['contains']==['soy','wheat','tomato']
+    assert report['proposal_ids']==[]
+
+
+@pytest.mark.parametrize('code,expected',[('SCAN_CONTINUES','succeeded'),('SOURCE_SIZE','partial')])
+def test_collection_continuation_notice_is_not_a_failure(client,monkeypatch,code,expected):
+    import backend.app.domains.jobs.worker as worker
+    source=client.get('/api/v1/sources').json()['items'][0]
+    monkeypatch.setattr(worker,'collect_source',lambda *args,**kwargs:{'document_ids':[],'counts':{'new':0,'updated':0,'unchanged':0},'analysis_job_ids':[],'issues':[{'code':code,'message':'검증','board':'product_del'}]})
+    login(client)
+    result=post(client,'/collection-runs',{'source_id':source['id'],'board_keys':['product_del'],'max_posts_per_board':1,'revisit_days':0,'auto_analyze':False})
+    assert result.status_code==202,result.text
+    assert once();job=client.get('/api/v1/jobs/'+result.json()['id']).json()
+    assert job['status']==expected and job['issues'][0]['code']==code
+    filtered=client.get('/api/v1/jobs?type=collect').json()
+    assert filtered['items'] and all(row['type']=='collect' for row in filtered['items'])
+    assert client.get('/api/v1/jobs?type=invalid').status_code==422
+
+
+def test_vendor_workbook_registers_and_normalizes_without_row_llm(client,monkeypatch):
+    import io,openpyxl
+    from backend.app.domains.analysis import agent
+    wb=openpyxl.Workbook();ws=wb.active;ws.title='단가표'
+    ws.append(['2026년 신제품 가격표']);ws.append(['품 목','개별중량','학교가(vat포함)개당가격','성분 및 함량','알러지 유발물질 NO.'])
+    ws.append(['닭다리 꼬치','50g',1900,'닭고기 100%','5,6,15,18']);ws.append([None,'70g',2130,None,None]);ws.merge_cells('A3:A4');ws.merge_cells('D3:D4');ws.merge_cells('E3:E4')
+    output=io.BytesIO();wb.save(output);wb.close()
+    class TableModel:
+        def __init__(self):self.name='TEST';self.calls=[]
+        def generate(self,task,payload,schema):
+            assert 'routes' in schema['properties'],'표 행을 LLM으로 해석하면 안 됩니다.'
+            assert payload['sources'][0]['structured_rows']==2
+            self.calls.append({'task':task,'model':'TEST','input_tokens':1,'output_tokens':1,'elapsed_seconds':0,'actual_model_call':False})
+            return {'document_type':'price_table','summary':'명확한 단가표','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'normalize_table','reason':'식품명·규격·가격 열 인식'} for s in payload['sources']]}
+    monkeypatch.setattr(agent,'LocalModel',TableModel);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');login(client)
+    response=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('vendor.xlsx',output.getvalue())},data={'title':'표 직접 등록'})
+    assert response.status_code==201,response.text
+    imported=response.json();assert once();job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']=='succeeded',job
+    report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json()
+    assert len(report['events'])==2 and len(report['model_calls'])==1
+    records=[e['food_record'] for e in report['events']]
+    assert {r['specification']['quantity'] for r in records}=={'50','70'}
+    assert {r['prices']['source_columns'][0]['amount'] for r in records}=={'1900','2130'}
+    assert all(r['food_name']=='닭다리 꼬치' and r['allergens']['contains']==['soy','wheat','chicken','shellfish'] for r in records)
+    assert len(report['events'][1]['evidence_ids'])==2
+    tables=client.get('/api/v1/price-workbooks?limit=100').json()
+    assert any(w['document_id']==imported['document']['id'] for w in tables['items'])
+    matching=next(w for w in tables['items'] if w['document_id']==imported['document']['id'])
+    registered=client.get('/api/v1/price-workbooks/'+matching['id']).json()
+    assert registered['sheets'][0]['header_row']==2
+    assert report['proposal_ids']==[]
+
+
+def test_approved_same_size_flavors_keep_separate_catalog_variants(client,monkeypatch):
+    from backend.app.domains.analysis import agent,workflow
+    from backend.app.domains.catalog.record import empty_record,specification
+    class TableModel:
+        def __init__(self):self.name='TEST';self.calls=[]
+        def generate(self,task,payload,schema):return {'document_type':'price_table','summary':'맛별 품목','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'normalize_table','reason':'표 행'} for s in payload['sources']]}
+    name='맛 구분 검증 '+uid();records=[]
+    for flavor in ['오리지널','매콤']:
+        record=empty_record();record.update(food_name=name,raw_food_name=name);record['attributes']['flavor']=flavor;record['specification']=specification('50g');records.append(record)
+    monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent');monkeypatch.setattr(agent,'LocalModel',TableModel)
+    monkeypatch.setattr(workflow,'parse',lambda *args:[{'text':name+' '+r['attributes']['flavor'],'confidence':1,'locator':{'kind':'html','block_id':str(i)},'food_record':r} for i,r in enumerate(records)])
+    login(client);r=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('flavor.txt',b'test')},data={'title':'맛별 SKU'})
+    assert once();runid=r.json()['analysis_job']['analysis_run_id'];report=client.get('/api/v1/analysis-runs/'+runid+'/report').json();assert len(report['events'])==2
+    for item in list(report['events']):
+        checked=client.patch('/api/v1/analysis-runs/'+runid+'/items/'+item['id'],json={'version':report['version'],'status':'confirmed','fields':{},'reason':'맛 구분 확인'},headers={'Idempotency-Key':uid()});assert checked.status_code==200,checked.text;report=checked.json()
+    approved=post(client,'/analysis-runs/'+runid+'/approve',{'version':report['version']});assert approved.status_code==202,approved.text
+    assert once()
+    with tx() as c:
+        rows=c.execute("SELECT fp.variant_id,fp.data#>>'{attributes,flavor}' flavor FROM food_profiles fp WHERE fp.data->>'food_name'=%s",(name,)).fetchall()
+        assert len(rows)==2 and {row['flavor'] for row in rows}=={'오리지널','매콤'}

@@ -26,6 +26,8 @@ test_consolidation.py - 기능·경계·회귀 검증
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   가격 기준 및 맛별 식품 정체성 보존 검증
+
     상세 Git 이력: git log --follow -- backend/tests/test_consolidation.py
     공통 규칙: doc/file-header-policy.md
 
@@ -122,3 +124,21 @@ def test_cached_table_records_are_reparsed_with_original_revision_provenance():
     assert result['attributes']['ingredients'][0]['percentage']=='38'
     assert result['field_sources']['ingredients']['evidence_ids']==['E2']
     assert result['field_sources']['ingredients']['document_revision_id']=='original-revision'
+
+
+def test_conflicting_explicit_price_columns_are_not_merged():
+    first=event(id='first');second=event(id='second')
+    def quote(amount):return {'basis':'piece','label':'학교가 개당가격','amount':amount,'original_text':amount,'quantity':'1','unit':'ea','tax_included':True}
+    first['food_record']['prices']['source_columns']=[quote('1900')]
+    second['food_record']['prices']['source_columns']=[quote('2130')]
+    kept,archive=consolidate([first,second])
+    assert len(kept)==2 and not archive
+
+
+def test_complementary_price_bases_survive_consolidation():
+    first=event(id='first');second=event(id='second')
+    first['food_record']['prices']['source_columns']=[{'basis':'piece','label':'개당','amount':'1000','original_text':'1000','quantity':'1','unit':'ea','tax_included':None}]
+    second['food_record']['prices']['source_columns']=[{'basis':'kg','label':'kg당','amount':'40000','original_text':'40000','quantity':'1','unit':'kg','tax_included':None}]
+    kept,archive=consolidate([first,second])
+    assert len(kept)==1 and len(archive)==1
+    assert {q['basis'] for q in kept[0]['food_record']['prices']['source_columns']}=={'piece','kg'}

@@ -11,8 +11,8 @@ service.py - 영속 작업의 등록·조회·상태 저장
 실행 가정:
     - 실제 처리는 별도 worker가 수행
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,14 +23,16 @@ service.py - 영속 작업의 등록·조회·상태 저장
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/jobs/service.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -52,4 +54,12 @@ def getjob(c,id,lock=False):
     if not r:raise Problem(404,'NOT_FOUND','작업을 찾을 수 없습니다.')
     return r['data']
 
-def savejob(c,j):c.execute('UPDATE jobs SET data=%s,status=%s WHERE id=%s',(Jsonb(j),j['status'],j['id']))
+def stamp_stage(j):
+    stage=j.get('stage')
+    history=j.setdefault('stage_history',[])
+    if stage and (not history or history[-1]['stage']!=stage):history.append({'at':now(),'stage':stage})
+    j['stage_history']=history[-100:]
+
+def savejob(c,j):
+    stamp_stage(j)
+    c.execute('UPDATE jobs SET data=%s,status=%s WHERE id=%s',(Jsonb(j),j['status'],j['id']))

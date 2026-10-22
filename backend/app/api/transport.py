@@ -27,6 +27,8 @@ transport.py - 공통 HTTP 보안·트랜잭션 경계
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/api/transport.py
     공통 규칙: doc/file-header-policy.md
 
@@ -97,7 +99,8 @@ def dispatch_request(path,req,method,mutating,q,payload,content,extra_archive):
             return handle(RequestContext(c,req,method,q,payload,content,u,path))
         if mutating:
             roles=['admin','reviewer'] if path.startswith('proposals') or path.endswith('/proposals') or path.endswith('/header') else ['admin','operator']
-            if path.startswith('analysis-runs/') and ('/items/' in path or path.endswith('/review-proposals') or path.endswith('/review-export') or path.endswith('/normalize')):roles=['admin','reviewer']
+            if path.startswith('analysis-runs/') and ('/items/' in path or path.endswith('/review-proposals') or path.endswith('/review-export') or path.endswith('/normalize') or path.endswith('/approve')):roles=['admin','reviewer']
+            if method=='PATCH' and path.startswith('foods/'):roles=['admin','reviewer']
             if extra_archive:roles=['admin','reviewer'] if path.startswith('foods/') else ['admin','operator']
             if path=='suppliers':roles=['admin','operator','reviewer']
             if path.startswith('sources'):roles=['admin']

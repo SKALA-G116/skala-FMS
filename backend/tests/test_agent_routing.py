@@ -24,6 +24,8 @@ test_agent_routing.py - 기능·경계·회귀 검증
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/tests/test_agent_routing.py
     공통 규칙: doc/file-header-policy.md
 
@@ -95,3 +97,43 @@ def test_window_references_resume_without_copying_source_text_into_checkpoint():
     assert all('text' not in item for group in refs for item in group)
     restored=restore_groups(refs,rows)
     assert ''.join(s['text'] for g in restored for s in g)==''.join(s['text'] for s in rows)
+
+
+def test_compact_product_region_preserves_all_ocr_evidence_without_per_line_overhead():
+    from backend.app.domains.analysis.agent import model_mapping,extraction_payload
+    from backend.app.domains.analysis.provider import LocalModel
+    from backend.app.domains.analysis.schemas import event_schema
+    rows=[{'text':'상품 원재료 규격 정보 '+str(i),'evidence_id':'E'+str(i),'region_label':'하나의 상품','locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1]}} for i in range(41)]
+    mapping=model_mapping(rows)
+    assert list(mapping)==['S1']
+    assert mapping['S1']['text']=='\n'.join(row['text'] for row in rows)
+    assert [mapping['S1']['evidence_id'],*mapping['S1']['related_evidence_ids']]==[row['evidence_id'] for row in rows]
+    assert len(extraction_payload({'title':'상품','assets':[]},'marketing',mapping)['segments'])==1
+    LocalModel().request('extract',extraction_payload({'title':'상품','assets':[]},'marketing',mapping),event_schema(list(mapping)))
+
+
+def test_redundant_unassigned_ids_keep_valid_region_assignment():
+    async def model(*args):return {'regions':[{'label':'상품','source_ids':['1','2'],'context_ids':[]}],'unassigned_ids':['1','2']}
+    groups,manual,layout=asyncio.run(image_regions(sources(sample('image'))[0],model))
+    assert len(groups)==1 and not manual and layout['unassigned_ids']==[]
+    assert [s['evidence_id'] for s in groups[0]]==['E1','E2']
+
+
+def test_job_stage_log_is_bounded_and_does_not_repeat_heartbeat_updates():
+    from backend.app.domains.jobs.service import stamp_stage
+    job={'stage':'수집 시작'}
+    stamp_stage(job);stamp_stage(job)
+    assert len(job['stage_history'])==1
+    for i in range(150):job['stage']='처리 '+str(i);stamp_stage(job)
+    assert len(job['stage_history'])==100
+    assert job['stage_history'][0]['stage']=='처리 50' and job['stage_history'][-1]['stage']=='처리 149'
+
+
+def test_merged_cell_memory_budget_is_shared_across_sheets(tmp_path,monkeypatch):
+    import openpyxl
+    from backend.app.parsers import xlsx_merges
+    book=openpyxl.Workbook();book.active.merge_cells('A1:B3');book.create_sheet('두번째').merge_cells('A1:B3')
+    path=tmp_path/'merged.xlsx';book.save(path);book.close()
+    monkeypatch.setattr(xlsx_merges,'MAX_MERGE_CELLS',10)
+    with pytest.raises(Problem) as error:xlsx_merges.merge_anchors(path)
+    assert error.value.code=='SHEET_LIMIT'

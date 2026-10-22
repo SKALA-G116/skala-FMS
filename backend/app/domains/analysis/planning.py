@@ -24,6 +24,8 @@ planning.py - 프로젝트 설정 planning.py
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/planning.py
     공통 규칙: doc/file-header-policy.md
 
@@ -147,11 +149,18 @@ async def image_regions(source,call):
         owned.extend(region['source_ids']);ids=list(dict.fromkeys(region['source_ids']+region['context_ids']));covered.update(ids)
         if not set(ids)<=set(mapping):raise Problem(422,'IMAGE_REGION_SOURCE','원문에 없는 이미지 영역 근거입니다.')
         group=[{**mapping[key],'region_label':region['label']} for key in ids]
-        if sum(len(s['text'].encode())+200 for s in group)>4000:
+        if sum(len(s['text'].encode())+1 for s in group)>4000:
             raise Problem(422,'IMAGE_REGION_BUDGET','한 상품 영역의 추출 예산을 넘었습니다. 상품을 중간에서 잘라 처리하지 않았습니다.')
         groups.append(group)
-    unassigned=result['unassigned_ids']
-    if not set(unassigned)<=set(mapping) or set(unassigned)&covered:raise Problem(422,'IMAGE_REGION_SOURCE','이미지 미분류 근거가 잘못되거나 이미 처리한 영역과 겹칩니다.')
+    unassigned=list(dict.fromkeys(result['unassigned_ids']))
+    if not set(unassigned)<=set(mapping):raise Problem(422,'IMAGE_REGION_SOURCE','원문에 없는 이미지 미분류 근거입니다.')
+    # Redundant unassigned IDs do not negate a valid explicit region assignment.
+    # Keep every source; unknown IDs and duplicate product ownership still fail.
+    overlap=set(unassigned)&covered
+    if overlap:
+        unassigned=[key for key in unassigned if key not in covered]
+        result['unassigned_ids']=unassigned
+        result['normalization_notes']=['이미 배정된 근거의 중복 미분류 표시를 정리했습니다.']
     covered.update(unassigned)
     if len(owned)!=len(set(owned)) or covered!=set(mapping) or set(unassigned)&set(owned):
         raise Problem(422,'IMAGE_REGION_COVERAGE','상품 영역이 중복되거나 원문 줄이 누락됐습니다. 원문 확인이 필요합니다.')

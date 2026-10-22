@@ -25,6 +25,8 @@ workflow.py - LangGraph 분석 흐름
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -86,11 +88,12 @@ def get_asset_key(asset_id):
     with tx() as c:return get(c,'asset',asset_id)['storage_key']
 
 def extract(state):
+    previous=None
     with tx() as c:
         run=get(c,'analysis_run',state['run_id']);check_running(c,run);r=get(c,'revision',state['revision_id']);a=get(c,'asset',r['snapshot_asset_id'])
         if run.get('extraction_id'):
             previous=get(c,'extraction',run['extraction_id'])
-            if previous.get('parser_version')=='food-parser-v4':return {'extraction_id':run['extraction_id']}
+            if previous.get('parser_version')=='food-parser-v6' or previous.get('parser_version') in ('food-parser-v4','food-parser-v5') and run.get('agent_report_id'):return {'extraction_id':run['extraction_id']}
     blocks=[];parse_issues=[];eid=uid();started=time.monotonic();extracted_bytes=0
     for index,asset in enumerate(r['assets']):
         with tx() as c:
@@ -102,7 +105,8 @@ def extract(state):
         if time.monotonic()-started>600:raise Problem(422,'ANALYSIS_DEADLINE','문서 처리 시간이 초과되었습니다. 자료를 나누어 주세요.')
         try:
             if asset['id']==r['snapshot_asset_id'] and not r['body_text'].strip() and len(r['assets'])>1:continue
-            parts=parse(DATA/get_asset_key(asset['id']),asset['filename'])
+            reusable=[b for b in (previous or {}).get('segments',[]) if b.get('asset_id')==asset['id']]
+            parts=reusable if reusable and not asset['filename'].lower().endswith(('.xlsx','.xls')) else parse(DATA/get_asset_key(asset['id']),asset['filename'])
             for b in parts:b['asset_id']=asset['id']
             extracted_bytes+=sum(len(b['text'].encode()) for b in parts)
             if extracted_bytes>EXTRACTION_BYTES:raise Problem(422,'EXTRACTION_MEMORY_BUDGET','자료의 추출 텍스트가 메모리 예산을 초과했습니다. 자료를 나눠 주세요.')
@@ -114,16 +118,20 @@ def extract(state):
     if len(blocks)>2000:raise Problem(422,'SEGMENT_LIMIT','문서 전체 추출 구간이 2,000개를 초과했습니다.')
     with tx() as c:
         check_running(c,get(c,'analysis_run',state['run_id'],True))
+        for i,b in enumerate(blocks):b['evidence_id']=uid();b['id']=f'segment-{i}'
+        row_evidence={(b['asset_id'],b['locator'].get('sheet_name'),re.search(r'\d+',b['locator'].get('cell_range',''))[0]):b['evidence_id'] for b in blocks if b['locator'].get('kind')=='spreadsheet' and re.search(r'\d+',b['locator'].get('cell_range',''))}
         for i,b in enumerate(blocks):
             loc=b['locator']
             if loc['kind'] in ('image','pdf','spreadsheet'):loc['asset_id']=b['asset_id']
-            ev={'id':uid(),'document_revision_id':r['id'],'source_url':get(c,'document',r['document_id'])['source_url'],'quote':b['text'],'locator':loc,'extraction_id':eid,'ocr_confidence':b['confidence'],'created_at':now()};put(c,'evidence',ev)
+            ev={'id':b['evidence_id'],'document_revision_id':r['id'],'source_url':get(c,'document',r['document_id'])['source_url'],'quote':b['text'],'locator':loc,'extraction_id':eid,'ocr_confidence':b['confidence'],'created_at':now()};put(c,'evidence',ev)
             b['evidence_id']=ev['id'];b['id']=f'segment-{i}'
             if b.get('food_record'):
                 for field,source in b['food_record']['field_sources'].items():
-                    source.update(evidence_ids=[ev['id']],document_revision_id=r['id'])
+                    anchor=re.search(r'\d+',source.get('locator',{}).get('cell_range',''))
+                    related=row_evidence.get((b['asset_id'],loc.get('sheet_name'),anchor[0])) if anchor and source.get('origin')=='merged_cell' else None
+                    source.update(evidence_ids=list(dict.fromkeys([ev['id']]+([related] if related else []))),document_revision_id=r['id'])
                     source['locator']['asset_id']=b['asset_id']
-        put(c,'extraction',{'id':eid,'revision_id':r['id'],'segments':blocks,'parser_version':'food-parser-v4','issues':parse_issues,'created_at':now()})
+        put(c,'extraction',{'id':eid,'revision_id':r['id'],'segments':blocks,'parser_version':'food-parser-v6','issues':parse_issues,'created_at':now()})
         run=get(c,'analysis_run',state['run_id'],True);run['extraction_id']=eid;put(c,'analysis_run',run)
         r['extraction_ids']=[eid];r['segment_manifest_id']=eid;r['parse_issues']=parse_issues;put(c,'revision',r)
     return {'extraction_id':eid}

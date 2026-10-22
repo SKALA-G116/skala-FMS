@@ -26,6 +26,8 @@ consolidation.py - 원본 표 정규화·추출 후보 중복 통합
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/consolidation.py
     공통 규칙: doc/file-header-policy.md
 
@@ -75,6 +77,8 @@ def enrich_tables(segments):
         if detected:
             mapping=detected;segment['structured_table_header']=True;continue
         if not mapping or len(row)<=max(mapping.values()):continue
+        existing=segment.get('food_record')
+        if existing and (existing.get('prices',{}).get('source_columns') or any(v.get('origin')=='merged_cell' for v in existing.get('field_sources',{}).values())):continue
         record=from_table_row(row,mapping,loc,company_name=company)
         if not record:continue
         for field,source in record['field_sources'].items():
@@ -120,6 +124,11 @@ def _compatible(source,target,allow_alias=False):
     a,b=source['food_record'],target['food_record']
     if a.get('food_code') and b.get('food_code') and a['food_code']!=b['food_code']:return False
     if a.get('company_name') and b.get('company_name') and canonical(a['company_name'])!=canonical(b['company_name']):return False
+    for left in a['prices'].get('source_columns') or []:
+        for right in b['prices'].get('source_columns') or []:
+            if (left['basis'],left['quantity'],left['unit'])!=(right['basis'],right['quantity'],right['unit']):continue
+            if left['amount']!=right['amount'] or left['amount'] is None and canonical(left['original_text'])!=canonical(right['original_text']):return False
+            if left['tax_included'] is not None and right['tax_included'] is not None and left['tax_included']!=right['tax_included']:return False
     an,bn=canonical(a['food_name']),canonical(b['food_name'])
     if an!=bn and not (allow_alias and len(an)>=3 and an in bn):return False
     if a['attributes']['flavor'] and b['attributes']['flavor'] and a['attributes']['flavor']!=b['attributes']['flavor']:return False
@@ -149,6 +158,10 @@ def _merge(target,source):
     # The structured row stays authoritative. Only empty fields are supplemented.
     before=target['food_record'];extra=source['food_record']
     merged=merge_profile(extra,before)
+    quotes=deepcopy(before['prices'].get('source_columns') or [])
+    for quote in extra['prices'].get('source_columns') or []:
+        if not any((q['basis'],q['quantity'],q['unit'])==(quote['basis'],quote['quantity'],quote['unit']) for q in quotes):quotes.append(deepcopy(quote))
+    merged['prices']['source_columns']=quotes or None
     for key in ('field_sources',):
         merged[key]=deepcopy(before[key])
         for field,origin in extra[key].items():

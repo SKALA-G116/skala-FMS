@@ -27,6 +27,8 @@ test_food_record.py - 기능·경계·회귀 검증
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/tests/test_food_record.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -66,7 +68,7 @@ def test_common_food_columns_null_zero_allergy_provenance():
     assert r['attributes']['ingredients'][0]['origin_country']=='KR' and r['attributes']['origin_country'] is None
     assert r['attributes']['quality_grade']=='1등급' and r['attributes']['intended_use']=='우유급식용'
     assert r['specification']['normalized_quantity']=='0.2' and r['specification']['normalized_unit']=='l'
-    assert r['prices']=={'source_applied':'0','survey_1':'1','survey_2':'0','survey_3':'0'}
+    assert r['prices']=={'source_applied':'0','survey_1':'1','survey_2':'0','survey_3':'0','source_columns':None}
     assert r['company_name'] is None and r['allergens']['contains'] is None
     assert 'milk' in r['allergens']['candidates'] and r['allergens']['review_status']=='unknown'
     assert r['field_sources']['survey_1']['column_index']==8
@@ -134,3 +136,48 @@ def test_ingredient_origin_brackets_and_generic_names_do_not_split_or_infer_alle
     assert len(record['attributes']['ingredients'])==3
     assert record['attributes']['ingredients'][0]['name']=='돼지고기(국산, 제주)'
     assert record['allergens']['candidates']==['pork'] and record['allergens']['contains'] is None
+
+
+@pytest.mark.parametrize('raw,expected',[
+    ('(5,6,12)',['soy','wheat','tomato']),
+    ('(5,6,15,18)',['soy','wheat','chicken','shellfish']),
+    ('5,6,15,18',['soy','wheat','chicken','shellfish']),
+    ('알러지: 1,2,5,6,10,12,15,16',['egg','milk','soy','wheat','pork','tomato','chicken','beef']),
+    ('알레르기 5.6.12',['soy','wheat','tomato']),
+    ('같은 제조시설 알레르기: 5,6',['soy','wheat']),
+])
+def test_school_allergen_numbers_with_or_without_parentheses(raw,expected):
+    from backend.app.domains.catalog.record import allergens_from_text
+    result=allergens_from_text(raw)
+    assert (result['may_contain'] if '시설' in raw else result['contains'])==expected
+    assert result['original_text']==raw and result['review_status']=='source_declared'
+
+
+@pytest.mark.parametrize('raw',['규격 (5,6,12)cm','사이즈 (5,6,12)','2026.10.22','(5,6,99)','1.92kg (60g*32EA)'])
+def test_non_allergen_numeric_values_do_not_become_contains(raw):
+    from backend.app.domains.catalog.record import allergens_from_text
+    assert allergens_from_text(raw)['contains'] is None
+
+
+def test_numeric_name_allergens_are_not_hidden_by_ingredient_attributes():
+    record=from_event({'product_name':'혼합식품 (5,6,12)','attributes_text':'국산 원료 사용','spec':'1kg'})
+    assert record['allergens']['contains']==['soy','wheat','tomato']
+    assert '(5,6,12)' in record['allergens']['original_text']
+
+
+def test_vendor_school_price_headers_keep_different_price_bases():
+    headers=['품 목','개별중량','학교가\n(vat포함)\n규격가격','학교가\n(vat포함)\nkg가격','학교가\n(vat포함)\n개당가격','성분 및 함량','알러지 유발물질','알러지 유발물질 NO.']
+    mapping=header_mapping(headers)
+    record=from_table_row(['피자설기','60g',54100,None,1690,'쌀 54.22%',None,'5,6,12'],mapping,{'kind':'spreadsheet','cell_range':'A3:H3'},headers=headers)
+    validate_record(record)
+    assert record['food_name']=='피자설기' and record['specification']['quantity']=='60'
+    assert record['prices']['source_applied'] is None
+    assert [(p['basis'],p['amount']) for p in record['prices']['source_columns']]==[('package','54100'),('piece','1690')]
+    assert all(p['tax_included'] for p in record['prices']['source_columns'])
+    assert record['allergens']['contains']==['soy','wheat','tomato']
+
+
+def test_legacy_food_price_dto_without_source_columns_remains_valid():
+    record=empty_record();record['food_name']='기존 식품'
+    record['prices'].pop('source_columns')
+    validate_record(record)

@@ -29,6 +29,8 @@ record.py - 표준 FoodRecord DTO와 정규화
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/record.py
     공통 규칙: doc/file-header-policy.md
 
@@ -63,7 +65,7 @@ def empty_record():
       'attributes':{'original_text':None,'flavor':None,'origin_region':None,'size_grade':None,'quality_grade':None,'intended_use':None,'labeling_requirement':None,'origin_country':None,'ingredients':None,'other':None},
       'specification':{'original_text':None,'quantity':None,'unit':None,'piece_quantity':None,'piece_unit':None,'pack_count':None,'normalized_quantity':None,'normalized_unit':None,'sales_unit':None},
       'allergens':{'contains':None,'may_contain':None,'free_from_claims':None,'candidates':[],'review_status':'unknown','original_text':None},
-      'prices':{'source_applied':None,'survey_1':None,'survey_2':None,'survey_3':None},'supplier_group':None,'eco_classification':None,'note':None,'field_sources':{},'issues':[]}
+      'prices':{'source_applied':None,'survey_1':None,'survey_2':None,'survey_3':None,'source_columns':None},'supplier_group':None,'eco_classification':None,'note':None,'field_sources':{},'issues':[]}
 
 def text(v):return None if v is None or str(v).strip()=='' else str(v).strip()
 
@@ -74,6 +76,33 @@ def number(v):
     if not re.fullmatch(r'\d{1,16}(?:\.\d{1,6})?',v):return None
     return format(Decimal(v).normalize(),'f')
 
+# School meal label codes, verified against the Incheon education office guide.
+ALLERGEN_NUMBERS={'1':'egg','2':'milk','3':'buckwheat','4':'peanut','5':'soy','6':'wheat','7':'mackerel','8':'crab','9':'shrimp','10':'pork','11':'peach','12':'tomato','13':'sulfite','14':'walnut','15':'chicken','16':'beef','17':'squid','18':'shellfish','19':'pine_nut'}
+
+def allergen_numbers(raw):
+    value=text(raw)
+    if not value:return []
+    spans=[]
+    label=r'(?:알레르기|알러지|알러젠)(?:\s*(?:유발물질|정보|표시))?\s*[:：]?\s*'
+    sequence=r'\d{1,2}(?:\s*[,，·.]\s*\d{1,2})*'
+    for match in re.finditer(label+r'[（(]?('+sequence+r')',value):spans.append(match[1])
+    if re.fullmatch(r'[（(]?\s*'+sequence+r'\s*[）)]?',value):spans.append(value)
+    for match in re.finditer(r'[（(]\s*('+sequence+r')\s*[）)]',value):
+        # Numeric size, date, and count tuples are not allergen declarations.
+        if re.search(r'(?:규격|사이즈|크기|치수|날짜|수량)\s*[:：]?\s*$',value[:match.start()]):continue
+        if re.match(r'\s*(?:cm|mm|kg|ml|g|l|개|입|월|일)\b',value[match.end():],re.I):continue
+        if len(re.findall(r'\d+',match[1]))>=2:spans.append(match[1])
+    codes=[]
+    for span in spans:
+        numbers=re.findall(r'\d+',span)
+        if all(number in ALLERGEN_NUMBERS for number in numbers):
+            codes.extend(ALLERGEN_NUMBERS[number] for number in numbers)
+    return list(dict.fromkeys(codes))
+
+def allergen_evidence(raw,name):
+    numeric_name=text(name) if allergen_numbers(name) else None
+    return '\n'.join(dict.fromkeys(value for value in (text(raw),numeric_name) if value)) or None
+
 def allergens_from_text(raw,name=None):
     result=empty_record()['allergens'];result['original_text']=text(raw)
     def detect(s):
@@ -83,12 +112,13 @@ def allergens_from_text(raw,name=None):
         return found
     result['candidates']=detect(' '.join(filter(None,[raw,name])))
     for clause in re.split(r'[\n;]',raw or ''):
-        codes=detect(clause)
+        numeric=allergen_numbers(clause)
+        codes=list(dict.fromkeys(detect(clause)+numeric))
         if not codes:continue
         key=None
         if re.search(r'같은.*(?:시설|공장)|혼입|교차|혼재',clause):key='may_contain'
         elif re.search(r'미함유|불포함|무첨가|(?:free\s*from)',clause,re.I):key='free_from_claims'
-        elif re.search(r'함유|알레르기\s*(?:유발물질)?\s*[:：]',clause):key='contains'
+        elif numeric or re.search(r'함유|(?:알레르기|알러지)\s*(?:유발물질)?\s*[:：]',clause):key='contains'
         if key:result[key]=list(dict.fromkeys((result[key] or [])+codes));result['review_status']='source_declared'
     return result
 
@@ -146,10 +176,10 @@ def specification(raw=None,quantity=None,unit=None,sales_unit=None,normalized=No
     return out
 
 ALIASES={
- 'food_code':['공통식품코드','통식품코드','식품코드','공통코드'], 'food_name':['공통식품명','식품명','품명','제품명','상품명','품목명'],
+ 'food_code':['공통식품코드','통식품코드','식품코드','공통코드'], 'food_name':['공통식품명','식품명','품명','제품명','상품명','품목명','품목'],
  'attributes':['공통식품속성','식품속성','제품설명','상품설명','상세설명'], 'quantity':['규격수','규격수량','내용량'], 'unit':['규격'], 'normalized':['규격(kg.l)','규격(kg,l)','규격(kg/l)'], 'sales_unit':['단위','판매단위','포장단위'],
- 'raw_spec':['제품규격','포장규격'], 'ingredients':['원재료','원재료명','원재료및함량','원재료함량'], 'description':['맛&구별','제품특징','제품특성','보관','보관방법'], 'flavor':['맛','맛·종류','종류'], 'supply_price':['학교가','납품가','공급가','판매가','단가'],
- 'source_applied':['적용가','적용단가'],'survey_1':['조사가1'],'survey_2':['조사가2'],'survey_3':['조사가3'], 'supplier_group':['업체군'],'eco_classification':['친환경구분'],'note':['비고','메모'], 'allergens':['알레르기','알레르기정보','알레르기유발물질'],'company_name':['업체','업체명','공급처','공급업체','판매사','제조사','제조업체','브랜드']}
+ 'raw_spec':['제품규격','포장규격','개별중량','개별규격'], 'ingredients':['원재료','원재료명','원재료및함량','원재료함량','성분및함량'], 'description':['맛&구별','제품특징','제품특성','보관','보관방법'], 'flavor':['맛','맛·종류','종류'], 'supply_price':['학교가','납품가','공급가','판매가','단가'],
+ 'source_applied':['적용가','적용단가'],'survey_1':['조사가1'],'survey_2':['조사가2'],'survey_3':['조사가3'], 'supplier_group':['업체군'],'eco_classification':['친환경구분'],'note':['비고','메모'], 'allergens':['알레르기','알러지','알레르기정보','알레르기유발물질','알레르기표시','알러지유발물질','알레르기유발물질'],'company_name':['업체','업체명','공급처','공급업체','판매사','제조사','제조업체','브랜드']}
 
 def company_display(value):
     """Normalize legal-form prefixes for display; source text remains in provenance."""
@@ -176,6 +206,10 @@ def header_mapping(row):
     found={}
     for index,value in enumerate(row):
         key=header_key(value)
+        if re.search(r'알(?:러지|레르기).*유발물질(?:no\.?|번호)$',key):found['allergen_codes']=index
+        if key.startswith(('학교가','공급가','납품가','판매가')):
+            for suffix,kind in [('규격가격','package'),('kg가격','kg'),('개당가격','piece')]:
+                if key.endswith(suffix):found['quote_'+kind]=index
         for name,aliases in ALIASES.items():
             if key in [header_key(a) for a in aliases] and name not in found:found[name]=index
     if 'quantity' not in found and 'unit' in found:found['raw_spec']=found.pop('unit')
@@ -226,7 +260,7 @@ def apply_name(record,raw):
         record['specification'].update({k:v for k,v in normalized.items() if v is not None});record['specification'].update(extra)
     return record
 
-def from_table_row(row,mapping,locator,company_name=None):
+def from_table_row(row,mapping,locator,company_name=None,headers=None):
     get=lambda key:row[mapping[key]] if key in mapping and mapping[key]<len(row) else None
     if text(get('food_name')) is None:return None
     record=empty_record();record.update(record_type='common_food' if text(get('food_code')) else 'commercial_product',food_code=text(get('food_code')),food_name=text(get('food_name')),company_name=company_display(text(get('company_name')) or company_name),supplier_group=text(get('supplier_group')),eco_classification=text(get('eco_classification')),note=text(get('note')))
@@ -239,12 +273,24 @@ def from_table_row(row,mapping,locator,company_name=None):
         if package.get(key):record['specification'][key]=package[key]
     if text(get('ingredients')):record['attributes']['ingredients']=ingredient_details(text(get('ingredients')))
     if text(get('description')):record['attributes']['other']=list(dict.fromkeys((record['attributes']['other'] or [])+[text(get('description'))]))
+    if text(get('variant_label')):
+        detail=text(get('variant_label'));label=re.split(r'[（(]',detail,maxsplit=1)[0].strip()
+        if re.search(r'[가-힣]',label):record['attributes']['flavor']=label
+        record['attributes']['other']=list(dict.fromkeys((record['attributes']['other'] or [])+[detail]))
     if text(get('flavor')):record['attributes']['flavor']=text(get('flavor'))
     if text(get('supply_price')):record['prices']['source_applied']=number(get('supply_price'))
     if record['specification']['sales_unit'] in ('개','EA','ea','EA(개)') and record['specification']['quantity']:
         record['specification'].update(piece_quantity=record['specification']['quantity'],piece_unit=record['specification']['unit'])
-    record['allergens']=allergens_from_text(text(get('allergens')) or text(get('ingredients')) or text(get('attributes')),record['food_name'])
-    for key in record['prices']:
+    allergy_raw='\n'.join(value for value in [text(get('allergens')),text(get('allergen_codes'))] if value) or text(get('ingredients')) or text(get('attributes'))
+    record['allergens']=allergens_from_text(allergen_evidence(allergy_raw,record['raw_food_name']),record['food_name'])
+    quotes=[]
+    for basis,label in [('package','규격 가격'),('kg','kg당 가격'),('piece','개당 가격')]:
+        key='quote_'+basis;value=text(get(key))
+        if value is None:continue
+        header=text(headers[mapping[key]]) if headers and key in mapping else label
+        quotes.append({'basis':basis,'label':header,'amount':number(value),'original_text':value,'quantity':'1' if basis!='package' else None,'unit':{'kg':'kg','piece':'ea'}.get(basis),'tax_included':True if re.search(r'(?:vat|부가세)\s*포함',header,re.I) else None})
+    record['prices']['source_columns']=quotes or None
+    for key in ('source_applied','survey_1','survey_2','survey_3'):
         if text(get(key)) is not None:record['prices'][key]=number(get(key))
     if company_name and not text(get('company_name')):record['field_sources']['company_name']={'locator':locator,'raw_value':company_name,'origin':'parser_context'}
     for key,index in mapping.items():
@@ -254,7 +300,7 @@ def from_table_row(row,mapping,locator,company_name=None):
 
 def from_event(event):
     if event.get('food_record'):return copy.deepcopy(event['food_record'])
-    result=empty_record();result['company_name']=text(event.get('company_name'));result['food_name']=text(event.get('product_name'));result['food_code']=text(event.get('food_code'));result['record_type']='common_food' if result['food_code'] else 'commercial_product';result['attributes']=attributes(text(event.get('attributes_text')));result['specification']=specification(event.get('spec'));result['allergens']=allergens_from_text(text(event.get('allergen_text')) or text(event.get('attributes_text')),event.get('product_name'));apply_name(result,event.get('product_name'))
+    result=empty_record();result['company_name']=text(event.get('company_name'));result['food_name']=text(event.get('product_name'));result['food_code']=text(event.get('food_code'));result['record_type']='common_food' if result['food_code'] else 'commercial_product';result['attributes']=attributes(text(event.get('attributes_text')));result['specification']=specification(event.get('spec'));result['allergens']=allergens_from_text(allergen_evidence(text(event.get('allergen_text')) or text(event.get('attributes_text')),event.get('product_name')),event.get('product_name'));apply_name(result,event.get('product_name'))
     rawspec=text(event.get('spec'))
     if rawspec:
         parts=split_name('식품('+rawspec+')')['specification']
@@ -290,7 +336,7 @@ def record_schema():
     attrs['other']={'type':['array','null'],'maxItems':100,'items':{'type':'string','maxLength':2000}}
     top={k:copy.deepcopy(string) for k in ('food_code','food_name','raw_food_name','company_id','company_name','supplier_group','eco_classification','note')}
     top['company_id']={'type':['string','null'],'format':'uuid'}
-    top.update(schema_version={'const':VERSION},record_type={'enum':['common_food','commercial_product']},attributes=obj(attrs),specification=obj({k:copy.deepcopy(string) for k in empty_record()['specification']}),allergens=obj({'contains':allergy_list,'may_contain':allergy_list,'free_from_claims':allergy_list,'candidates':{'type':'array','items':{'enum':list(ALLERGENS)},'uniqueItems':True},'review_status':{'enum':['unknown','source_declared','reviewed']},'original_text':string}),prices=obj({k:copy.deepcopy(string) for k in empty_record()['prices']}),field_sources={'type':'object'},issues={'type':'array','items':{'type':'string'},'maxItems':100})
+    top.update(schema_version={'const':VERSION},record_type={'enum':['common_food','commercial_product']},attributes=obj(attrs),specification=obj({k:copy.deepcopy(string) for k in empty_record()['specification']}),allergens=obj({'contains':allergy_list,'may_contain':allergy_list,'free_from_claims':allergy_list,'candidates':{'type':'array','items':{'enum':list(ALLERGENS)},'uniqueItems':True},'review_status':{'enum':['unknown','source_declared','reviewed']},'original_text':string}),prices={'type':'object','additionalProperties':False,'required':['source_applied','survey_1','survey_2','survey_3'],'properties':{**{k:copy.deepcopy(string) for k in ('source_applied','survey_1','survey_2','survey_3')},'source_columns':{'type':['array','null'],'maxItems':20,'items':obj({'basis':{'enum':['package','kg','piece']},'label':string,'amount':string,'original_text':string,'quantity':string,'unit':string,'tax_included':{'type':['boolean','null']}})}}},field_sources={'type':'object'},issues={'type':'array','items':{'type':'string'},'maxItems':100})
     return obj(top)
 
 def validate_record(record):
@@ -306,13 +352,15 @@ def validate_record(record):
     for ingredient in record['attributes']['ingredients'] or []:
         value=ingredient.get('percentage')
         if value is not None and (number(value) is None or Decimal(number(value))>100):raise Problem(422,'FOOD_INGREDIENT','원재료 함량은 0~100 사이의 숫자로 입력하세요.')
-    for key in record['prices']:
-
+    for key in ('source_applied','survey_1','survey_2','survey_3'):
         v=record['prices'][key]
         if v is not None and number(v) is None:raise Problem(422,'FOOD_PRICE_FORMAT','자료의 가격은 숫자 또는 공란이어야 합니다.')
     for key in ('quantity','piece_quantity','normalized_quantity','pack_count'):
         record['specification'][key]=number(record['specification'][key])
-    for key,value in record['prices'].items():record['prices'][key]=number(value)
+    for key in ('source_applied','survey_1','survey_2','survey_3'):record['prices'][key]=number(record['prices'][key])
+    for quote in record['prices'].get('source_columns') or []:
+        if quote['amount'] is not None and number(quote['amount']) is None:raise Problem(422,'FOOD_PRICE_FORMAT','가격 열의 금액은 숫자 또는 공란이어야 합니다.')
+        quote['amount']=number(quote['amount'])
     return record
 
 def upgrade_event(event):
