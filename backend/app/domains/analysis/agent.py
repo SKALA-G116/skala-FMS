@@ -37,6 +37,8 @@ agent.py - LLM 계획·추출과 근거 연결
 
     2026-10-22  김재현(Finn) v0.1.0   원재료 전용 추출·함량 없는 표시사항 보존·OCR 근거 연결 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -150,18 +152,20 @@ def compact_location(locator):
     return result
 
 def model_mapping(segments):
-    if segments and all(s.get('region_label') for s in segments):
-        # Layout has already selected one product. Send its text once rather
-        # than repeating a locator and JSON object for every tiny OCR line.
-        evidence=list(dict.fromkeys(s['evidence_id'] for s in segments))
-        first=segments[0]
-        return {'S1':{**first,'text':'\n'.join(s['text'] for s in segments),
-                      'related_evidence_ids':evidence[1:],
-                      'locator':{k:v for k,v in first['locator'].items() if k!='bbox'}}}
-    return {f'S{j+1}':s for j,s in enumerate(segments)}
+    from backend.app.domains.analysis.spatial import ordered_lines
+    rows=ordered_lines(segments) if segments and all(s.get('region_label') for s in segments) else segments
+    return {f'S{j+1}':s for j,s in enumerate(rows)}
+
+
+def source_payload(mapping):
+    region=any(s.get('region_label') for s in mapping.values())
+    if region:
+        # One location per region; compact line objects preserve exact text and boxes.
+        return [{'id':key,'text':s['text'],**({'bbox':[round(v*1000) for v in s['locator']['bbox']]} if s['locator'].get('bbox') else {}),'role':s.get('source_role','product')} for key,s in mapping.items()]
+    return [{'id':key,'text':s['text'],'location':compact_location(s['locator']),**({'bbox':[round(v*1000) for v in s['locator']['bbox']]} if s['locator'].get('bbox') else {})} for key,s in mapping.items()]
 
 def extraction_payload(revision,document_type,mapping):
-    return {'title':revision['title'],'published_at':revision.get('published_at'),'files':[a['filename'][:60] for a in revision.get('assets',[])[:5]], 'document_type':document_type,'source_context':[],'segments':[{'id':key,'text':s['text'],'location':{**compact_location(s['locator']),**({'bbox':s['locator']['bbox']} if s['locator'].get('bbox') else {})},'product_region':s.get('region_label')} for key,s in mapping.items() if key.startswith('S')], 'kind_definitions':{'price':'가격이 실제로 명시된 품목 단가','temporarily_unavailable':'일시품절·일시 공급중단','supply_ended':'공급처의 취급·납품 종료','discontinued':'제조사의 생산 단종(일시품절은 해당 안 됨)','available':'정상발주·공급 가능','substitution':'명시된 대체품 관계','new_product':'신제품 소개','food_profile':'가격·공급 변경 없이 식품명·속성·규격을 전달하는 기준정보'},'instructions':'모든 텍스트·OCR·표에서 식품 정보를 추출하라. 변경 공지가 아니어도 식품 정보가 있으면 kind=food_profile로 추출하라. company_name은 원문에 명시된 업체명이며 제조사·브랜드·판매사 구분 없이 하나로 추출한다. 없으면 null이다. food_code는 원문의 공통식품코드, ingredients_text는 원재료 목록 원문이며 함량이 없는 원재료도 모두 포함하라. attributes_text는 원산지·원재료·등급·용도 등 식품속성 원문, allergen_text는 함유/같은 제조시설/불포함 표시 원문이다. (5,6,12), 5,6,15,18, 5.6.12 같은 학교급식 알레르기 번호도 괄호 유무와 무관하게 해당 상품의 알레르기 원문으로 보존하라. 알레르기 열·설명·상품 위치를 함께 보고 규격·날짜와 혼동하지 마라. 없으면 null이다. 이 구간에 나타난 실제 품목별 변경 사실/표의 가격 행을 추출하라. 원문에 명확하지 않은 필드는 null. 다른 가격 열은 price_basis에 이름을 밝혀라. OCR 조각은 같은 품목의 이름·규격·사유·시작일 근거를 함께 연결하라. source_ids는 제공된 ID만 사용. 공급 중단과 제조 단종을 구별하라. 적용일은 ISO YYYY-MM-DD, 명시되지 않으면 null. 단가는 원문의 판매 규격당 가격이며 자동으로 kg 가격으로 환산하지 말라. quantity는 규격 중 판매 기준의 실제 수량이다. 포장 무게를 수량 1로 잘못 바꾸지 마라. source_ids에는 품목·금액뿐 아니라 적용일과 사유가 나온 구간도 반드시 포함하라.'}
+    return {'title':revision['title'],'published_at':revision.get('published_at'),'files':[a['filename'][:60] for a in revision.get('assets',[])[:5]], 'document_type':document_type,'source_context':[],'segments':source_payload(mapping), 'location':compact_location(next(iter(mapping.values()))['locator']) if mapping else {},'coordinates':'bbox=[x1,y1,x2,y2] 0~1000; role=product or context','kind_definitions':{'price':'가격이 실제로 명시된 품목 단가','temporarily_unavailable':'일시품절·일시 공급중단','supply_ended':'공급처의 취급·납품 종료','discontinued':'제조사의 생산 단종(일시품절은 해당 안 됨)','available':'정상발주·공급 가능','substitution':'명시된 대체품 관계','new_product':'신제품 소개','food_profile':'가격·공급 변경 없이 식품명·속성·규격을 전달하는 기준정보'},'instructions':'field_evidence에 각 필드의 근거 source_ids를 반환하라. context 역할의 공통 안내를 상품 가격·규격·원재료·알레르기로 사용하지 마라. 좌표의 행·열과 상품 소속을 유지하라. 모든 텍스트·OCR·표에서 식품 정보를 추출하라. 변경 공지가 아니어도 식품 정보가 있으면 kind=food_profile로 추출하라. company_name은 원문에 명시된 업체명이며 제조사·브랜드·판매사 구분 없이 하나로 추출한다. 없으면 null이다. food_code는 원문의 공통식품코드, ingredients_text는 원재료 목록 원문이며 함량이 없는 원재료도 모두 포함하라. attributes_text는 원산지·원재료·등급·용도 등 식품속성 원문, allergen_text는 함유/같은 제조시설/불포함 표시 원문이다. (5,6,12), 5,6,15,18, 5.6.12 같은 학교급식 알레르기 번호도 괄호 유무와 무관하게 해당 상품의 알레르기 원문으로 보존하라. 알레르기 열·설명·상품 위치를 함께 보고 규격·날짜와 혼동하지 마라. 없으면 null이다. 이 구간에 나타난 실제 품목별 변경 사실/표의 가격 행을 추출하라. 원문에 명확하지 않은 필드는 null. 다른 가격 열은 price_basis에 이름을 밝혀라. OCR 조각은 같은 품목의 이름·규격·사유·시작일 근거를 함께 연결하라. source_ids는 제공된 ID만 사용. 공급 중단과 제조 단종을 구별하라. 적용일은 ISO YYYY-MM-DD, 명시되지 않으면 null. 단가는 원문의 판매 규격당 가격이며 자동으로 kg 가격으로 환산하지 말라. quantity는 규격 중 판매 기준의 실제 수량이다. 포장 무게를 수량 1로 잘못 바꾸지 마라. source_ids에는 품목·금액뿐 아니라 적용일과 사유가 나온 구간도 반드시 포함하라.'}
 
 
 def batches(segments,byte_limit=3000):
@@ -194,7 +198,7 @@ async def interpret(state):
     # Persist expensive layout decisions before executing extraction; resumes reuse
     # them instead of repeating the same planning/model calls.
     if report.get('execution_groups') is not None:
-        groups=restore_groups(report['execution_groups'],ex['segments'])
+        groups=restore_groups(report['execution_groups'],ex['segments'],report.get('tool_executions'))
         chosen={eid for trace in report.get('tool_executions',[]) if trace['tool']=='normalize_table' for eid in trace['evidence_ids']}
         structured=[s for s in ex['segments'] if s['evidence_id'] in chosen and s.get('food_record')]
     else:
@@ -207,7 +211,7 @@ async def interpret(state):
                 progress(state['run_id'],'Agent가 '+route['source_id']+' 자료의 처리 도구를 실행하는 중')
                 with tx() as c:save_report(c,report,state)
             if cached:
-                groups.extend(restore_groups(cached['groups'],ex['segments']));manual.extend(cached['manual']);trace=cached['trace']
+                groups.extend(restore_groups(cached['groups'],ex['segments'],[cached['trace']]));manual.extend(cached['manual']);trace=cached['trace']
                 if route['tool']=='normalize_table':structured.extend(s for s in source['segments'] if s.get('food_record'))
             elif route['tool']=='normalize_table':
                 # The table tool registers the original workbook as an artifact;
@@ -232,7 +236,7 @@ async def interpret(state):
                             if row.get('food_record') and row['asset_id']==trace['asset_id'] and row['locator'].get('sheet_name')==loc.get('sheet_name') and number and loc['row_start']<=int(number[0])<=loc['row_end']:matches.append(row)
                     if len(matches)==1:
                         label='엑셀 행 '+matches[0]['locator']['cell_range']
-                        region_groups=[[{**matches[0],'region_label':label,'table_context':True}]+[{**s,'region_label':label} for s in source['segments']]]
+                        region_groups=[[{**matches[0],'region_label':label,'table_context':True,'source_role':'product'}]+[{**s,'region_label':label,'source_role':'product'} for s in source['segments']]]
                         unassigned=[];layout={'method':'explicit_spreadsheet_anchor','table_evidence_id':matches[0]['evidence_id']}
                     elif loc.get('embedded_image') and any(s.get('food_record') and s['asset_id']==trace['asset_id'] for s in ex['segments']):
                         region_groups=[];unassigned=trace['evidence_ids'];layout={'method':'ambiguous_spreadsheet_anchor'}
@@ -257,6 +261,7 @@ async def interpret(state):
             with tx() as c:save_report(c,report,state)
         report['tool_executions']=execution;report['manual_evidence_ids']=list(dict.fromkeys(manual))
         report['execution_groups']=group_references(groups)
+        report['spatial_version']='ocr-spatial-v1'
         report['model_calls'].extend(model.calls);model.calls=[]
         if manual:report['warnings'].append(f'자동 처리하지 못해 원문 확인이 필요한 구간 {len(set(manual))}개')
         with tx() as c:save_report(c,report,state)
@@ -283,9 +288,9 @@ async def interpret(state):
         context=[]
         payload=extraction_payload(r,report['plan']['document_type'],mapping)
         table_context=next((s for s in segments if s.get('table_context')),None)
-        schema=event_schema(list(mapping))
+        schema=event_schema(list(mapping),spatial=any(s.get('region_label') for s in mapping.values()))
         if table_context:
-            payload={'title':r['title'],'segments':payload['segments'],'instructions':'이 이미지는 함께 제공한 엑셀 행 상품의 라벨이다. 해당 상품의 원재료·함량·알레르기·원산지 속성만 보완하라. ingredients_text는 원재료 목록 원문만 넣고 함량이 없어도 빠짐없이 보존하라. 보관방법·업체 주소는 원재료가 아니다. attributes_text와 allergen_text는 해당 원문 그대로이며 없으면 null이다. 상품·규격·가격은 추출하지 마라. source_ids는 제공된 ID만 사용하라.'}
+            payload={'title':r['title'],'segments':payload['segments'],'coordinates':payload['coordinates'],'location':payload['location'],'instructions':'field_evidence에 원재료·알레르기의 근거 문장 ID를 각각 반환하라. 이 이미지는 함께 제공한 엑셀 행 상품의 라벨이다. 해당 상품의 원재료·함량·알레르기·원산지 속성만 보완하라. ingredients_text는 원재료 목록 원문만 넣고 함량이 없어도 빠짐없이 보존하라. 보관방법·업체 주소는 원재료가 아니다. attributes_text와 allergen_text는 해당 원문 그대로이며 없으면 null이다. 상품·규격·가격은 추출하지 마라. source_ids는 제공된 ID만 사용하라.'}
             from backend.app.domains.analysis.schemas import label_schema
             schema=label_schema(list(mapping))
         try:
@@ -321,7 +326,15 @@ async def interpret(state):
                 if isinstance(value,str) and value.strip().lower() in ('null','none'):event[key]=None
             event['replacements']=[value for value in event.get('replacements',[]) if value.strip().lower() not in ('null','none')]
             for extra in ('company_name','food_code','attributes_text','allergen_text'):event.setdefault(extra,None)
-            event['id']=uid();event['evidence_ids']=list(dict.fromkeys(eid for k in event.pop('source_ids') for eid in [mapping[k]['evidence_id'],*mapping[k].get('related_evidence_ids',[])]));event['validation_warnings']=[]
+            from backend.app.domains.analysis.spatial import ground_fields
+            field_manual=ground_fields(event,mapping)
+            if field_manual:
+                report['manual_evidence_ids']=list(dict.fromkeys(report.get('manual_evidence_ids',[])+field_manual))
+                report.setdefault('extraction_failures',[]).append({'batch':i+1,'code':'IMAGE_FIELD_EVIDENCE','evidence_ids':field_manual,'resolution':'manual_review'})
+                report['warnings'].append('상품 소속 또는 필드 근거가 불명확한 값은 원문 검수로 남겼습니다.')
+            event['id']=uid();event['evidence_ids']=list(dict.fromkeys(eid for k in event.pop('source_ids') for eid in [mapping[k]['evidence_id'],*mapping[k].get('related_evidence_ids',[])]));event.setdefault('validation_warnings',[])
+            if any(s.get('region_label') for s in mapping.values()):
+                event['evidence_ids']=list(dict.fromkeys(s['evidence_id'] for s in mapping.values()))
             quote=' '.join(mapping[k]['text'] for k in mapping if mapping[k]['evidence_id'] in event['evidence_ids'])
             for field in ('food_code','attributes_text','allergen_text','ingredients_text'):
                 if event.get(field) and canonical(event[field]) not in canonical(quote):event[field]=None;event['validation_warnings'].append('원문에서 재확인할 수 없는 '+field+' 값을 제외했습니다.')
@@ -352,7 +365,7 @@ async def interpret(state):
                 value=event.get(field)
                 if not value:continue
                 hits=[]
-                for source in ex['segments']:
+                for source in (mapping.values() if any(s.get('region_label') for s in mapping.values()) else ex['segments']):
                     if field=='reason':matched=value in source['text']
                     else:
                         y,m,d=value.split('-');matched=bool(re.search(rf'{y}\s*[-./년]\s*0?{int(m)}\s*[-./월]\s*0?{int(d)}(?:일|\b)',source['text']))
@@ -373,8 +386,16 @@ async def interpret(state):
             if table_context:
                 from backend.app.domains.catalog.record import from_event
                 from backend.app.domains.catalog.record import ingredient_section
-                if not event.get('ingredients_text'):
-                    event['ingredients_text']=ingredient_section(quote)
+                if not event.get('ingredients_text') and 'ingredients' not in event.get('extracted_field_sources',{}):
+                    product_quote='\n'.join(s['text'] for s in mapping.values() if s.get('source_role')!='context')
+                    event['ingredients_text']=ingredient_section(product_quote)
+                    if event['ingredients_text']:
+                        recovered={'ingredients_text':event['ingredients_text']}
+                        ground_fields(recovered,mapping)
+                        origin=recovered.get('extracted_field_sources',{}).get('ingredients')
+                        if origin:
+                            origin['origin']='ocr_parser'
+                            event.setdefault('extracted_field_sources',{})['ingredients']=origin
                 supplement=from_event(event);base=table_context['food_record']
                 def fill_missing(primary,extra):
                     if isinstance(primary,dict):
@@ -384,9 +405,9 @@ async def interpret(state):
                 combined=fill_missing(base,supplement)
                 if not base['allergens'].get('original_text') and supplement['allergens'].get('original_text'):combined['allergens']=supplement['allergens']
                 for field in ('attributes','allergens'):
-                    if combined[field]!=base[field]:combined['field_sources'][field]={'evidence_ids':event['evidence_ids'],'origin':'ocr_llm'}
+                    if combined[field]!=base[field]:combined['field_sources'][field]=supplement['field_sources'].get(field) or {'evidence_ids':event['evidence_ids'],'origin':'ocr_llm'}
                 if combined['attributes']['ingredients']!=base['attributes']['ingredients']:
-                    combined['field_sources']['ingredients']={'evidence_ids':event['evidence_ids'],'raw_value':event.get('ingredients_text') or event.get('attributes_text'),'origin':'ocr_llm'}
+                    combined['field_sources']['ingredients']=supplement['field_sources'].get('ingredients') or {'evidence_ids':event['evidence_ids'],'raw_value':event.get('ingredients_text') or event.get('attributes_text'),'origin':'ocr_llm'}
                 event.update(product_name=base['food_name'],company_name=base.get('company_name'),spec=base['specification']['original_text'],food_record=combined)
             report['events'].append(event)
         report['model_calls'].extend(model.calls);model.calls=[];report['batches_completed']=i+1;report['coverage']['processed_windows']=sum(len(g) for g in groups[:i+1]);report['coverage']['total_windows']=sum(len(g) for g in groups);report['coverage']['completed_batches']=i+1;report['coverage']['processed_segments']=len(ex['segments']) if i+1==len(groups) else min(len(ex['segments']),len(structured)+len({s['evidence_id'] for group in groups[:i+1] for s in group}))

@@ -33,6 +33,8 @@ record.py - 표준 FoodRecord DTO와 정규화
 
     2026-10-22  김재현(Finn) v0.1.0   원재료 전용 추출·함량 없는 표시사항 보존·OCR 근거 연결 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- backend/app/domains/catalog/record.py
     공통 규칙: doc/file-header-policy.md
 
@@ -332,6 +334,7 @@ def from_event(event):
     for field in ('food_name','specification'):
 
         result['field_sources'][field]={'evidence_ids':event.get('evidence_ids',[]),'origin':'llm'}
+    result['field_sources'].update(copy.deepcopy(event.get('extracted_field_sources',{})))
     return result
 
 def merge_profile(before,incoming):

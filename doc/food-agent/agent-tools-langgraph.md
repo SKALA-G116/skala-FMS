@@ -164,3 +164,7 @@ parse_document_segment는 MCP 안에서 직접 OCR를 수행하지 않고 분석
 | 사용자 승인·원자적 반영 | [review 도메인](../../backend/app/domains/review) |
 
 실행 중인 서비스의 Agent 로그에서 도구 선택 이유·진행 단계·실제 모델 호출 기록을 확인합니다. 입력 준비 완료는 그 자료의 의미 추출까지 성공했다는 표시가 아닙니다. 최종 검토본, 처리 안내, 형식 오류와 보류된 원문을 함께 확인해야 합니다. 입력이 있어야 실제 로그가 생기며 코드 설명용 가상 예제를 실제 실행 기록으로 대신 제시하지 않습니다. [실제 표 실행 기록](../submission/table-demo-result.json) · [오류 재현·재개 기록](../submission/before-after/05-model-schema-recovery.md) · [README](../../README.md)
+
+## OCR 위치·필드 근거 보완
+
+이미지 영역 분류와 정보 추출에 문장별 텍스트·좌표·상품/공통 안내 소속을 유지합니다. 원재료·알레르기 등의 필드별 근거를 검증하고 DTO에 연결하며, 검수 화면에서 항목별 근거를 선택할 수 있습니다. [처리 계약·입력 한도·회귀 검증](ocr-spatial-evidence.md)

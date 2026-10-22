@@ -49,6 +49,8 @@ test_workflow.py - 기능·경계·회귀 검증
 
     2026-10-22  김재현(Finn) v0.1.0   원재료 전용 추출·함량 없는 표시사항 보존·OCR 근거 연결 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- backend/tests/test_workflow.py
     공통 규칙: doc/file-header-policy.md
 
@@ -923,7 +925,8 @@ def test_image_region_dto_keeps_all_line_references(client,monkeypatch):
         def generate(self,task,payload,schema):
             if 'routes' in schema['properties']:return {'document_type':'marketing','summary':'상품 이미지','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_image_regions','reason':'상품 배치'} for s in payload['sources']]}
             if 'regions' in schema['properties']:return {'regions':[{'label':'압축 검증 식품','source_ids':[line[0] for line in payload['lines']],'context_ids':[]}],'unassigned_ids':[]}
-            assert len(payload['segments'])==1
+            assert len(payload['segments'])==41
+            assert all(line['bbox']==[0,0,1000,1000] for line in payload['segments'])
             event={k:None for k in ['company_name','food_code','attributes_text','spec','amount','quantity','unit','effective_from','effective_to','reason','price_basis']}
             return {'events':[{**event,'allergen_text':'(5,6,12)','kind':'food_profile','product_name':'압축 검증 식품','replacements':[],'uncertainties':[],'source_ids':['S1']}]}
     monkeypatch.setattr(agent,'LocalModel',Model);monkeypatch.setenv('FOOD_ANALYSIS_MODE','agent')
@@ -933,6 +936,8 @@ def test_image_region_dto_keeps_all_line_references(client,monkeypatch):
     report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json();event=report['events'][0]
     assert len(event['evidence_ids'])==41
     assert event['food_record']['allergens']['contains']==['soy','wheat','tomato']
+    assert len(event['food_record']['field_sources']['allergens']['evidence_ids'])==1
+    assert event['food_record']['field_sources']['allergens']['locators'][0]['bbox']==[0,0,1,1]
     assert report['proposal_ids']==[]
 
 
@@ -1078,7 +1083,7 @@ def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(
                 return {'document_type':'price_table','summary':'표와 삽입 라벨','tasks':['extract_food_profiles'],'routes':[{'source_id':s['id'],'tool':'extract_image_regions' if s['location']['kind']=='image' else 'normalize_table','reason':'표 셀과 라벨 이미지'} for s in payload['sources']]}
             assert 'regions' not in schema['properties'],'명확한 행 anchor에 영역 분류를 다시 호출하면 안 됩니다.'
             assert '해당 상품의 원재료' in payload['instructions']
-            assert set(schema['properties'])=={'attributes_text','allergen_text','ingredients_text','source_ids'}
+            assert set(schema['properties'])=={'attributes_text','allergen_text','ingredients_text','field_evidence','source_ids'}
             assert 'kind_definitions' not in payload
             if label_error and label_error not in ('unquantified','ocr_fallback'):
                 self.calls.append({'task':task,'model':self.name,'input_tokens':10,'output_tokens':20,'elapsed_seconds':1,'actual_model_call':False,'outcome':'invalid'})
@@ -1091,7 +1096,7 @@ def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(
     if label_error in ('unquantified','ocr_fallback'):
         monkeypatch.setattr('backend.app.parsers.documents.ocr_result',lambda *args:[{'text':'원재료명: 우유, 밀가루, 설탕\n알레르기: 우유 함유','confidence':.95,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1],'image_width':200,'image_height':100}}])
     login(client);response=client.post('/api/v1/documents/import',headers={'Idempotency-Key':uid()},files={'file':('label.xlsx',output.getvalue())},data={'title':'삽입 라벨 대조'});assert response.status_code==201,response.text
-    imported=response.json();assert once();job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']==('partial' if label_error and label_error not in ('unquantified','ocr_fallback') else 'succeeded'),job
+    imported=response.json();assert once();job=client.get('/api/v1/jobs/'+imported['analysis_job']['id']).json();assert job['status']==('partial' if label_error and label_error!='unquantified' else 'succeeded'),job
     report=client.get('/api/v1/analysis-runs/'+job['analysis_run_id']+'/report').json();assert len(report['events'])==1,report['events']
     event=report['events'][0];record=event['food_record']
     assert record['food_name']==name and record['specification']['original_text']=='50g'
@@ -1110,7 +1115,7 @@ def test_agent_enriches_table_row_from_embedded_label_and_previews_parent_asset(
     assert record['attributes']['ingredients'][0]['name']=='우유'
     if label_error in ('unquantified','ocr_fallback'):assert [x['name'] for x in record['attributes']['ingredients']]==['우유','밀가루','설탕']
     assert record['field_sources']['allergens']['origin']=='ocr_llm'
-    assert record['field_sources']['ingredients']['origin']=='ocr_llm'
+    assert record['field_sources']['ingredients']['origin']==('ocr_parser' if label_error=='ocr_fallback' else 'ocr_llm')
     assert len(event['evidence_ids'])==2
     trace=next(t for t in report['tool_executions'] if t['tool']=='extract_image_regions');assert trace['layout']['method']=='explicit_spreadsheet_anchor'
     aid=imported['revision']['assets'][0]['id'];access=client.get('/api/v1/assets/'+aid+'/access').json()['url']

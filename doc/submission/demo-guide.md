@@ -29,6 +29,8 @@ demo-guide.md - 프로젝트 문서 demo-guide
 
     2026-10-22  김재현(Finn) v0.1.0   최신 main 코드·저장 결과·현재 화면 기준 발표 근거 갱신
 
+    2026-10-22  김재현(Finn) v0.1.0   OCR 문장 좌표·상품 소속·필드 근거 보존 및 발표 자료 단순화
+
     상세 Git 이력: git log --follow -- doc/submission/demo-guide.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -37,16 +39,15 @@ demo-guide.md - 프로젝트 문서 demo-guide
 
 ## 기본 발표 방식: README와 저장된 결과 공유
 
-[README](../../README.md) 4절의 캡처를 **105초** 동안 순서대로 보여 줍니다. 새 추론을 기다리거나 운영 자료를 승인할 필요가 없습니다. 전체300초 배분과 발화 예시는 [발표 흐름](presentation-5min.md)을 따릅니다.
+[README](../../README.md) 4절의 캡처를 **110초** 동안 순서대로 보여 줍니다. 새 추론을 기다리거나 운영 자료를 승인할 필요가 없습니다. 전체300초 배분과 발화 예시는 [발표 흐름](presentation-5min.md)을 따릅니다.
 
-| 순서·시간 | 화면/결과 | 확인 포인트 |
+| 순서·시간 | 화면 | 확인 포인트 |
 |---|---|---|
-| ①20초 | `screenshots/current/01-review-inbox.png` | 분석 전·진행 중·검수 가능 자료를 같은 목록에서 확인 |
-| ②25초 | `screenshots/current/02-table-dto.png` | 원본 셀과 같은 행의 DTO·알레르기·검수 링크 |
-| ③35초 | `screenshots/current/03-label-review.png` | 라벨 근거와 식품 정보 대조·수정·제외·승인 경계 |
-| ④25초 | `screenshots/current/04-agent-tools.png` | 표 정리·이미지 추출·원문 확인 요청의 선택 이유 |
+| ①25초 | `screenshots/current/01-review-inbox.png` | 자료 수집·분석·검수 상태 |
+| ②50초 | `screenshots/current/03-label-review.png` | 라벨 원문과 정리된 값 비교, 수정·제외·승인 경계 |
+| ③35초 | `screenshots/current/05-approved-price.png` | 실제 승인 단가29,000원/2.5kg, 적용일과 근거 |
 
-기준 코드는 `402f0c7`이며 [현재 조회 기록](current-code-evidence.json)을 함께 사용합니다. 저장된 맘스케익 분석은 후보13개·원문 확인13구간·실제 모델 호출20회입니다. 후보에는 잘못 인식한 안내 문장도 있어 정확한 식품13개로 소개하지 않습니다. 촬영 당시 제외1개·대기12개이며 최종 승인은 수행하지 않았습니다. 현재 테스트는 Backend165/Frontend16 및 Vite 빌드 통과입니다. 백엔드 테스트는 격리 DB의 규칙 모드로 실행했습니다.
+현재 기본 동선은 **110초·화면3장**입니다. 세 화면은 서로 다른 저장 자료를 조회한 사례이며 앞의 빵을 승인해 뒤의 치즈가 생긴 것처럼 설명하지 않습니다. 최신 OCR 개선 후 새 추론 결과를 촬영한 화면도 아닙니다. 상세 수치·모델 호출은 [기록](current-code-evidence.json)과 [코드 대조](current-code-review.md)를 질문이 있을 때 확인합니다. 원본 표·Agent 로그는 추가 설명용으로 보관합니다.
 
 아래 준비 절차는 **선택적인 라이브 승인 시연**을 위한 별도 경로입니다. 아직 완료한 리허설로 표시하지 않습니다. 단순 조회는 현재 서비스의 자료·Agent 로그·검수·식품 DB 메뉴에서 할 수 있습니다.
 
