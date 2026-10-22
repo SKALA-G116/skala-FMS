@@ -120,9 +120,14 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
-      "sha256": "5dead094ea752122bc55ba223fa5d8923f3edf94d5c5742f2fc01ebba985828f"
+      "sha256": "aa5839714b56893112ee24842ce1929052a4346ffbcde6c152bf9f6c99e725dd"
     },
     ".gitignore": {
       "spec": [
@@ -1186,6 +1191,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "original_docstring": "Session authentication and role checks shared by domain endpoints.",
@@ -2522,8 +2532,8 @@
         "DB 통합 테스트는 별도 _test DB·임시 assets 사용; 대역과 실제 모델 검증을 구분"
       ],
       "style": "python",
-      "author": "미지정",
-      "email": "미지정",
+      "author": "김재현(Finn)",
+      "email": "penguin.klg@gmail.com",
       "license": "미지정",
       "version": "0.1.0",
       "status": "Development",
@@ -2542,7 +2552,7 @@
         }
       ],
       "original_docstring": "Check that documenting source files preserves executable code and original inputs.",
-      "sha256": "c9a1834455d2e0bd6dacea46d62c09b4a744ac49c4c537913bfbda45677e997f"
+      "sha256": "a47eb71f53ff43dc76c872d189fcf0baf78a0900ae61c75676fbcfa2e4858387"
     },
     "backend/tests/test_food_record.py": {
       "spec": [
@@ -2662,6 +2672,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "original_docstring": "Integration tests require a disposable PostgreSQL database ending in _test.",
@@ -2847,6 +2862,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "sha256": null
@@ -2886,6 +2906,11 @@
           "commit": "9f48733ee440db4f4ea9362ada90ed093f844f56",
           "date": "2026-10-22T08:56:20+09:00",
           "subject": "Rebuild food analysis around Agent-selected tools and reviewed DTOs"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "sha256": null
@@ -3103,8 +3128,14 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
-      "sha256": "b558b5bdf06f380ffaca6fa1c675cbcede448c59ec1da2515f97d97a2d25bb0f"
+      "git_history": [
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        }
+      ],
+      "sha256": "1352ab3acd0c2ba725a327eec0ca721f7aa1562d0d905ddbd48b8703216b2c76"
     },
     "doc/food-agent/capability-design.md": {
       "spec": [
@@ -4558,6 +4589,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "sha256": "725f64ffab55fd8540796e4a0b5e0a4e42c7b79ab725cca0e373841040fbbc6e"
@@ -4577,7 +4613,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        }
+      ],
       "sha256": "3ae299324cb79d458cf1293f416ab44bd45abbe87654b9daf5d61830f8a60d87"
     },
     "frontend/src/api/client.js": {
@@ -4605,6 +4647,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "sha256": "2000e29b03f50c60753a19b01527a77adb2dd7908527e83d514c22f695d26f07"
@@ -4992,6 +5039,11 @@
           "commit": "be0e63283f611166084c0605109606b825d03e1f",
           "date": "2026-10-21T19:30:28+09:00",
           "subject": "docs: 파일별 역할·입출력·변경 이력과 자동 검증 추가"
+        },
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
         }
       ],
       "sha256": "415c10ffa9469cd29e3899e5cb5807324c29d395d4ad447497ce1ccd8b40399b"
@@ -5423,7 +5475,13 @@
       "status": "Development",
       "created": "2026-10-22",
       "documented": "2026-10-22",
-      "git_history": [],
+      "git_history": [
+        {
+          "commit": "e1c18ea60b6ae73d922950c8ee086b3e9fe8c111",
+          "date": "2026-10-22T09:13:16+09:00",
+          "subject": "Hide protected screens on session expiry and enforce authentication on navigation"
+        }
+      ],
       "sha256": "d149b9a729d71931c085adf3df025a8497afedff69e94b01061df8d34488f58e"
     },
     "frontend/tests/reviewJourney.test.js": {

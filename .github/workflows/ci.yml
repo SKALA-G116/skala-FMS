@@ -24,7 +24,7 @@
 #
 #     2026-10-22  김재현(Finn) v0.1.0   세션 복원·만료·로그아웃 경계와 접근 제어 검증
 
-    상세 Git 이력: git log --follow -- .github/workflows/ci.yml
+#     상세 Git 이력: git log --follow -- .github/workflows/ci.yml
 #     공통 규칙: doc/file-header-policy.md
 # ==============================================================================
 name: FMS checks
