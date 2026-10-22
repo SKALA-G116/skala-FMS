@@ -11,8 +11,8 @@ demo-guide.md - 프로젝트 문서 demo-guide
 실행 가정:
     - 계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,15 +23,34 @@ demo-guide.md - 프로젝트 문서 demo-guide
     2026-10-21  미지정      v0.1.0   최초 Git 등록 76610858
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   실제 화면·비교 근거·5분 발표 자료 작성
+
+    2026-10-22  김재현(Finn) v0.1.0   README·결과 공유 중심 300초 발표 및 근거별 문제 해결 문서 구성
+
     상세 Git 이력: git log --follow -- doc/submission/demo-guide.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 -->
 # 발표 환경과 시연 준비
 
+## 기본 발표 방식: README와 저장된 결과 공유
+
+[README](../../README.md) 4절의 캡처를 **105초** 동안 순서대로 보여 줍니다. 새 추론을 기다리거나 운영 자료를 승인할 필요가 없습니다. 전체300초 배분과 발화 예시는 [발표 흐름](presentation-5min.md)을 따릅니다.
+
+| 순서·시간 | 화면/결과 | 확인 포인트 |
+|---|---|---|
+| ①20초 | `screenshots/05-table-filter.jpg` | 원본18행,50g 필터3행, 다른 맛·가격 |
+| ②25초 | `screenshots/12-model-calls.jpg` + `table-demo-result.json` | qwen3:4b planner1회·normalize_table·18품목 |
+| ③35초 | `screenshots/06-review.jpg` | 원문/DTO 대조·공란·검토 대기·최종 승인 경계 |
+| ④25초 | `screenshots/10-history-evidence.jpg` | 별도 기존 승인 품목의 공급 상태·원문 근거 |
+
+기록된 run `1dc358e6-1cf3-400e-b5f4-e37d94f8ea8a`는 README 갱신 시 현재 DB에서 확인되지 않았습니다. 과거 run URL 대신 보존한 캡처·JSON을 사용합니다. 신규 사이트 수집·OCR·승인까지 이번에 실시간으로 완료한 것처럼 소개하지 않습니다. 예전 캡처의 테스트 수는 촬영 당시 값이며 최신 코드 검증은 Backend153/Frontend15입니다.
+
+아래 준비 절차는 **선택적인 라이브 승인 시연**을 위한 별도 경로입니다. 아직 완료한 리허설로 표시하지 않습니다. 단순 조회는 현재 서비스의 자료·Agent 로그·검수·식품 DB 메뉴에서 할 수 있습니다.
+
 ## 시연 원칙
 
-운영 자료와 회원 계정을 화면에 노출하지 않는다. 발표에는 `demo/`의 **가상 입력**과 별도 DB·assets를 사용한다. 규칙 모드·테스트 대역·실제 LLM·저장된 캡처를 구분해서 설명한다. 준비 점검 성공은 실제 Agent와 DB 반영의 성공을 대신하지 않는다.
+운영 자료와 회원 계정을 화면에 노출하지 않는다. 자료 비교·조회에는 사용자가 공유한 실제 기수집 자료를 사용할 수 있다. 승인·수정 저장 시연은 `demo/` 가상 입력과 별도 DB·assets에서 진행한다. 규칙 모드·테스트 대역·실제 LLM·저장된 캡처를 구분해서 설명한다. 준비 점검 성공은 실제 Agent와 DB 반영의 성공을 대신하지 않는다.
 
 ## 사전 준비
 
@@ -45,6 +64,8 @@ export FOOD_DATA_DIR="$PWD/.local/demo-assets"
 export FOOD_ANALYSIS_MODE=agent
 export FOOD_MODEL_URL=http://127.0.0.1:11434
 export FOOD_MODEL_NAME=qwen3:8b
+export FOOD_PLANNER_MODEL_NAME=qwen3:4b
+export FOOD_EXTRACTION_MODEL_NAME=qwen3:8b
 export FOOD_SEED_PASSWORD='직접_정한_시연용_비밀번호'
 .venv/bin/python -m backend.app.seed
 ```
@@ -59,7 +80,7 @@ export FOOD_SEED_PASSWORD='직접_정한_시연용_비밀번호'
 ```
 
 4. `http://localhost:8101`을 시연 전용 브라우저 프로필에서 연다. 빌드한 프런트를 API가 직접 제공하므로 Vite의 8100 proxy는 사용하지 않는다. 다른 창의 운영 세션과 시연 세션을 혼동하지 않는다.
-5. Ollama 서비스와 `qwen3:8b`를 준비한다. OCR을 시연하면 별도 Python 3.11 환경·모델 가중치·`FOOD_OCR_ENABLED`·`FOOD_OCR_PYTHON`도 설정한다. OCR을 준비하지 않았으면 텍스트/CSV 시연으로 범위를 밝힌다.
+5. Ollama 서비스와 `qwen3:4b`·`qwen3:8b`를 준비한다. OCR을 시연하면 별도 Python 3.11 환경·모델 가중치·`FOOD_OCR_ENABLED`·`FOOD_OCR_PYTHON`도 설정한다. OCR을 준비하지 않았으면 텍스트/CSV 시연으로 범위를 밝힌다.
 6. 사전 점검을 실행한다. 결과는 Git에 포함하지 않는 `.local/`에 둔다.
 
 ```sh
@@ -87,7 +108,7 @@ export FOOD_SEED_PASSWORD='직접_정한_시연용_비밀번호'
 
 공지 예제의 원문 단가는 “1봉당 16,500원”이다. 추출 값이 봉/총중량 기준 중 무엇을 뜻하는지 검토하고, 0원 CSV 행을 빈 값으로 바꾸지 않는지 확인한다. 예제를 정답이라고 기계적으로 승인하지 않는다.
 
-## 85초 실시간 시연
+## 선택: 별도 DB에서 85초 실시간 승인 시연
 
 | 경과 | 행동 | 보여 줄 증거 |
 |---|---|---|
@@ -119,3 +140,7 @@ export FOOD_SEED_PASSWORD='직접_정한_시연용_비밀번호'
 - [ ] 300초 타이머로 2회 리허설하고 대체 화면을 준비했다.
 
 이 파일의 체크박스는 준비 절차이며 작성 시점에는 완료하지 않았다. 실제 확인자·시각·커밋·작업 ID를 시연용 로컬 기록에 남긴 뒤 체크한다. Zoom 설정은 발표자의 장치에서 직접 확인해야 한다.
+
+## 2026-10-22 촬영 결과
+
+실제 기수집 코주부 엑셀 첨부를 `[발표 시연] 수집 단가표 재처리`로 재등록했다. run `1dc358e6-1cf3-400e-b5f4-e37d94f8ea8a`는 실제 qwen3:4b planner1회로 normalize_table을 선택하고18개 검토 항목을 만들었다. 작업 시작~완료6.027초, 모델5.765초이며 표 제목1구간은 수동 확인으로 남았다. 식품 DB 승인은 하지 않았다. 캡처11장·모델 기록·동일 파일 비교 결과는 `doc/submission/`에 있다. Zoom·발표자 리허설 체크는 자동 완료하지 않는다.

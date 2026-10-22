@@ -47,7 +47,7 @@ AI 자동 처리의 최신 구현은 [AI 처리 보완](agent-update.md)을 참�
 - 기존 대상 version/원문 최신 revision/기간 충돌 재검사. 정정 체인을 사용한 부분 기간 교체와 원본 보존.
 - 별도 durable job worker: PostgreSQL SKIP LOCKED claim, lease/fence, 실패 상태, 재시도 job, 취소 경계. apply 작업은 취소 불가.
 - LangGraph + 실제 PostgreSQL checkpointer. 상태는 ID 참조로 유지. 파싱 결과와 제안 ID는 업무 DB에 보관해 재실행 중복을 피함.
-- TXT/CSV/HTML, Excel(XLS/XLSX), 텍스트 PDF 파싱. Excel 셀 위치, 이미지 OCR 좌표, 텍스트 블록 근거. 파일 20MiB, PDF 20페이지, 이미지 16MP, 셀 20만개 등 제한.
+- TXT/CSV/HTML, Excel(XLS/XLSX), 텍스트 PDF 파싱. Excel 셀 위치, 이미지 OCR 좌표, 텍스트 블록 근거. 파일 25MiB, PDF 20페이지, 이미지 16MP, 셀 20만개 등 제한.
 - school062 공개 본문 수동 수집 커넥터. 허용 호스트·리다이렉트 검사, 내용 해시와 원문 revision. 이미지/첨부가 있으면 불완전 입력으로 표시하고 승인 차단. 사이트 로그인을 우회하지 않음.
 - MCP stdio: 모델용 read Tool 3개, 별도 신뢰 호스트 실행은 Tool 6개. Resource 5종, Prompt 3종. 모델에 DB 직접 수정·승인·삭제 Tool 미제공.
 - Argon2 비밀번호, 해시 저장 세션, 8시간 만료, CSRF, 동일 출처 검사, 역할 검사, 사용자별 로그인 시도 제한, 다운로드 인증+5분 서명.

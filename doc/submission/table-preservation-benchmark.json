@@ -1,0 +1,516 @@
+{
+  "input_sha256": "2eb96a3f807393edf17835e28212c6ca30df5a571d69f47ad0f3f5c5d95b5679",
+  "before_ref": "13e484758efe54acf50bf591bf8e27aab5295a42",
+  "after_ref": "5a8ff51acfb24096cb4515e291fb4796cd677064",
+  "method": "동일 XLSX를 이전/현재 파서와 통합 코드로 재실행. 공통 record.py는 현재 코드 사용. DB 저장/모델/네트워크 제외. 순서 효과가 있어 속도 비교는 하지 않음.",
+  "results": {
+    "before": {
+      "parsed_rows": 18,
+      "review_rows": 8,
+      "merged_rows": 10,
+      "flavor_rows": 0,
+      "numeric_price_values": 9,
+      "row_extraction_llm_calls": 0,
+      "rows": [
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": null,
+          "spec": "50g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "1900",
+              "original_text": "1900",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": null,
+          "spec": "70g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2130",
+              "original_text": "2130",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": null,
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2800",
+              "original_text": "2800",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 북채 소스 SET",
+          "flavor": null,
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "25000",
+              "original_text": "25000",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "치킨 통다리 로스트 장각세트",
+          "flavor": null,
+          "spec": "200g",
+          "prices": [
+            {
+              "basis": "package",
+              "label": "학교가\n(vat포함)\n규격가격",
+              "amount": null,
+              "original_text": "1kg",
+              "quantity": null,
+              "unit": null,
+              "tax_included": true
+            },
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "25000",
+              "original_text": "25000",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "순대국SET 머릿고기 단품",
+          "flavor": null,
+          "spec": "1kg",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "24250",
+              "original_text": "24250",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "코주부 피자설기",
+          "flavor": null,
+          "spec": "60g",
+          "prices": [
+            {
+              "basis": "package",
+              "label": "학교가\n(vat포함)\n규격가격",
+              "amount": null,
+              "original_text": "32개\n(벌크)",
+              "quantity": null,
+              "unit": null,
+              "tax_included": true
+            },
+            {
+              "basis": "kg",
+              "label": "학교가\n(vat포함)\nkg가격",
+              "amount": "54100",
+              "original_text": "54100",
+              "quantity": "1",
+              "unit": "kg",
+              "tax_included": true
+            },
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "1690",
+              "original_text": "1690",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "코주부X포메인 양지쌀국수",
+          "flavor": null,
+          "spec": "6.128kg",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "89700",
+              "original_text": "89700",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "parsed_rows": 18,
+      "review_rows": 18,
+      "merged_rows": 0,
+      "flavor_rows": 18,
+      "numeric_price_values": 19,
+      "row_extraction_llm_calls": 0,
+      "rows": [
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "육즙가득 오리지널",
+          "spec": "50g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "1900",
+              "original_text": "1900",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "육즙가득 오리지널",
+          "spec": "70g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2130",
+              "original_text": "2130",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "육즙가득 오리지널",
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2800",
+              "original_text": "2800",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "숯불딥크리미 닭꼬치",
+          "spec": "50g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2000",
+              "original_text": "2000",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "숯불딥크리미 닭꼬치",
+          "spec": "70g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2320",
+              "original_text": "2320",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "숯불딥크리미 닭꼬치",
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2950",
+              "original_text": "2950",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "자메이카크리미 닭꼬치",
+          "spec": "50g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2180",
+              "original_text": "2180",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "자메이카크리미 닭꼬치",
+          "spec": "70g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "2500",
+              "original_text": "2500",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 꼬치 소스 SET",
+          "flavor": "자메이카크리미 닭꼬치",
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "3100",
+              "original_text": "3100",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 북채 소스 SET",
+          "flavor": "탄두리 커리 크리미 치킨",
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "25000",
+              "original_text": "25000",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 북채 소스 SET",
+          "flavor": "자메이카 크리미 치킨",
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "25000",
+              "original_text": "25000",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "닭다리 북채 소스 SET",
+          "flavor": "탄두리 치즈 스노우 치킨",
+          "spec": "100g",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "24250",
+              "original_text": "24250",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "치킨 통다리 로스트 장각세트",
+          "flavor": "자메이카 통다리 화이트 더블 소스",
+          "spec": "200g",
+          "prices": [
+            {
+              "basis": "package",
+              "label": "학교가\n(vat포함)\n규격가격",
+              "amount": null,
+              "original_text": "1kg",
+              "quantity": null,
+              "unit": null,
+              "tax_included": true
+            },
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "25000",
+              "original_text": "25000",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "치킨 통다리 로스트 장각세트",
+          "flavor": "화덕 탄두리 커리 장각구이",
+          "spec": "200g",
+          "prices": [
+            {
+              "basis": "package",
+              "label": "학교가\n(vat포함)\n규격가격",
+              "amount": null,
+              "original_text": "1kg",
+              "quantity": null,
+              "unit": null,
+              "tax_included": true
+            },
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "23800",
+              "original_text": "23800",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "치킨 통다리 로스트 장각세트",
+          "flavor": "자메이카 통다리 뿌링뿌링",
+          "spec": "200g",
+          "prices": [
+            {
+              "basis": "package",
+              "label": "학교가\n(vat포함)\n규격가격",
+              "amount": null,
+              "original_text": "1kg",
+              "quantity": null,
+              "unit": null,
+              "tax_included": true
+            },
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "23800",
+              "original_text": "23800",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "순대국SET 머릿고기 단품",
+          "flavor": "머릿고기 단품",
+          "spec": "1kg",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "24250",
+              "original_text": "24250",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "코주부 피자설기",
+          "flavor": "코주부 피자설기",
+          "spec": "60g",
+          "prices": [
+            {
+              "basis": "package",
+              "label": "학교가\n(vat포함)\n규격가격",
+              "amount": null,
+              "original_text": "32개\n(벌크)",
+              "quantity": null,
+              "unit": null,
+              "tax_included": true
+            },
+            {
+              "basis": "kg",
+              "label": "학교가\n(vat포함)\nkg가격",
+              "amount": "54100",
+              "original_text": "54100",
+              "quantity": "1",
+              "unit": "kg",
+              "tax_included": true
+            },
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "1690",
+              "original_text": "1690",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        },
+        {
+          "food_name": "코주부X포메인 양지쌀국수",
+          "flavor": "코주부X포메인 양지쌀국수",
+          "spec": "6.128kg",
+          "prices": [
+            {
+              "basis": "piece",
+              "label": "학교가\n(vat포함)\n개당가격",
+              "amount": "89700",
+              "original_text": "89700",
+              "quantity": "1",
+              "unit": "ea",
+              "tax_included": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "run_id": "1dc358e6-1cf3-400e-b5f4-e37d94f8ea8a",
+  "job_id": "58943967-9a79-4655-952a-e708d8eb209d",
+  "status": "succeeded",
+  "started_at": "2026-10-22T01:43:51.541906Z",
+  "finished_at": "2026-10-22T01:43:57.569162Z",
+  "events": 18,
+  "model_calls": [
+    {
+      "role": "planner",
+      "task": "자료를 관찰하고 각 자료에 실행할 도구를 선택하라. 파일 확장자만으로 선택하지 말고 추출된 내용·열 인식 상태를 판단하라. 명확한 표는 normalize_table, 비정형 서술은 extract_text, 상품별 배치가 있는 OCR은 extract_image_regions, 읽을 수 없으면 request_review. 모든 source_id를 정확히 한 번 포함하고 이유를 밝혀라.",
+      "model": "qwen3:4b",
+      "transport": "async",
+      "input_tokens": 787,
+      "output_tokens": 130,
+      "queue_seconds": 0.0,
+      "elapsed_seconds": 5.765,
+      "actual_model_call": true
+    }
+  ],
+  "metrics": null,
+  "coverage": {
+    "total_batches": 0,
+    "manual_segments": 1,
+    "source_segments": 20,
+    "structured_rows": 18,
+    "processed_segments": 19
+  },
+  "tools": [
+    {
+      "tool": "normalize_table",
+      "reason": "이미 읽은 표의 열을 공통 식품 DTO로 매핑한다. 알려진 열이 충분한 경우 우선 사용한다.",
+      "location": {
+        "kind": "spreadsheet",
+        "sheet_name": "코주부2학기신제품"
+      },
+      "started_at": "2026-10-22T01:43:57.477623Z",
+      "prepared_at": "2026-10-22T01:43:57.516609Z",
+      "registered_table_id": "1e442bfa-005f-428b-bcd0-cd0c76361df6"
+    }
+  ]
+}

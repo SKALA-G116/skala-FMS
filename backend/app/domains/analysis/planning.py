@@ -26,6 +26,8 @@ planning.py - 프로젝트 설정 planning.py
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/planning.py
     공통 규칙: doc/file-header-policy.md
 
@@ -63,8 +65,8 @@ TOOLS={
 def sources(segments):
     grouped=OrderedDict()
     for segment in segments:
-        loc=segment['locator'];key=(segment.get('asset_id'),loc['kind'],loc.get('sheet_name'),loc.get('page_number'))
-        if key not in grouped:grouped[key]={'id':f'D{len(grouped)+1}','segments':[],'location':{k:loc[k] for k in ('kind','sheet_name','page_number') if k in loc}}
+        loc=segment['locator'];key=(segment.get('asset_id'),loc['kind'],loc.get('sheet_name'),loc.get('page_number'),loc.get('embedded_image'))
+        if key not in grouped:grouped[key]={'id':f'D{len(grouped)+1}','segments':[],'location':{k:loc[k] for k in ('kind','sheet_name','page_number','embedded_image','row_start','row_end') if k in loc}}
         grouped[key]['segments'].append(segment)
     return list(grouped.values())
 
@@ -168,7 +170,7 @@ async def image_regions(source,call):
 
 
 def group_references(groups):
-    return [[{k:s[k] for k in ('evidence_id','region_label','window_start','window_end') if k in s} for s in group] for group in groups]
+    return [[{k:s[k] for k in ('evidence_id','region_label','window_start','window_end','table_context') if k in s} for s in group] for group in groups]
 
 
 def restore_groups(refs,segments):

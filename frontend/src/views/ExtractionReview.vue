@@ -31,13 +31,17 @@ ExtractionReview.vue - 품목 선택·원문 대조·수정·최종 반영
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   다중 원문 근거 승인·검증 오류 표시·조회 재사용 개선
+
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- frontend/src/views/ExtractionReview.vue
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 -->
 <script setup>
 import {ref,computed,onMounted,onBeforeUnmount,nextTick,watch,inject} from 'vue';import {useRoute,useRouter,onBeforeRouteLeave,onBeforeRouteUpdate} from 'vue-router';import {get,api} from '../api/client';import SourceComparison from '../components/SourceComparison.vue';import FoodRecordForm from '../components/FoodRecordForm.vue';import FoodRecordTable from '../components/FoodRecordTable.vue';
-import {reviewStatus,reviewName,draftSnapshot,filterReviewItems,nextPendingItem,requiredReviewFields} from '../utils/reviewJourney';
+import {reviewStatus,reviewName,draftSnapshot,filterReviewItems,nextPendingItem,requiredReviewFields,reviewErrorMessage} from '../utils/reviewJourney';
 const route=useRoute(),router=useRouter(),user=inject('user');const sourceReady=ref(false),report=ref(null),doc=ref(null),run=ref(null),suppliers=ref([]),products=ref([]),selected=ref(''),draft=ref({}),reason=ref(''),error=ref(''),busy=ref(false),message=ref(''),proposals=ref([]),jobs=ref([]);
 const manualOpen=ref(false),manualPage=ref(0);const manualIds=computed(()=>(report.value?.manual_evidence_ids||[]).slice(manualPage.value*10,manualPage.value*10+10));
 const filter=ref('all'),query=ref(''),showTable=ref(false),stage=ref('review'),mobilePane=ref('fields'),savedSnapshot=ref(''),leaveTarget=ref(null),discardButton=ref(null);
@@ -79,7 +83,7 @@ onBeforeUnmount(()=>{loadRequest++});
 function resetDraft(){const e=active.value;if(!e)return;const current=e.review?.fields||e;draft.value={...Object.fromEntries(fields.map(k=>[k,current[k]??null])),food_record:JSON.parse(JSON.stringify(current.food_record||e.food_record)),supplier_id:current.supplier_id||suppliers.value.find(s=>s.name===doc.value?.author_display_name)?.id||null,product_id:current.product_id||e.matched_product_id||null};reason.value=e.review?.reason||'';savedSnapshot.value=draftSnapshot(draft.value,reason.value)}
 watch(selected,resetDraft);onMounted(load);
 async function save(status){if(!active.value)return;busy.value=true;error.value='';try{if(status==='confirmed'){if(!draft.value.food_record?.food_name?.trim())throw new Error('식품명을 확인해 주세요.');if(!['food_profile','new_product'].includes(draft.value.kind)){if(!draft.value.effective_from)throw new Error('적용 시작일을 입력하거나 이번 반영에서 제외해 주세요.');if(!draft.value.food_record.company_name)throw new Error('업체를 입력해 주세요.')}}draft.value.product_name=draft.value.food_record.food_name;draft.value.spec=draft.value.food_record.specification.original_text;draft.value.supplier_id=draft.value.food_record.company_id;if(changed.value&&!reason.value.trim()&&status==='confirmed')throw new Error('수정한 이유를 간단히 남겨 주세요.');const body={version:report.value.version,status,fields:draft.value,reason:reason.value.trim()||(status==='skipped'?'이번 반영에서 제외':'원문과 표준 식품 정보를 대조해 확인')};const r=await api('/analysis-runs/'+route.params.id+'/items/'+active.value.id,{method:'PATCH',body});report.value=r.data;proposals.value=[];const next=nextPendingItem(report.value.events,selected.value);message.value=status==='skipped'?'이 항목을 반영 대상에서 제외했습니다.':'원문 대조 결과를 저장했습니다. DB 반영은 아직 진행하지 않았습니다.';if(next)selected.value=next.id;resetDraft();if(!next)stage.value='summary'}catch(e){error.value=e.message}finally{busy.value=false}}
-async function submitReviewed(){if(busy.value)return;busy.value=true;error.value='';try{const result=await api('/analysis-runs/'+route.params.id+'/approve',{method:'POST',body:{version:report.value.version}});report.value=result.data.report;jobs.value=result.data.jobs;proposals.value=await Promise.all(result.data.proposal_ids.map(id=>get('/proposals/'+id)));message.value='승인한 식품 정보의 DB 반영을 시작했습니다.'}catch(e){error.value=e.message;if(e.data?.error?.details?.length)error.value+=' '+e.data.error.details.map(i=>i.message).filter(Boolean).join(' / ')}finally{busy.value=false}}
+async function submitReviewed(){if(busy.value)return;busy.value=true;error.value='';try{const result=await api('/analysis-runs/'+route.params.id+'/approve',{method:'POST',body:{version:report.value.version}});report.value=result.data.report;jobs.value=result.data.jobs;proposals.value=await Promise.all(result.data.proposal_ids.map(id=>get('/proposals/'+id)));message.value='승인한 식품 정보의 DB 반영을 시작했습니다.'}catch(e){error.value=reviewErrorMessage(e)}finally{busy.value=false}}
 const prepared=computed(()=>report.value?.review_prepared&&proposals.value.length&&proposals.value.every(p=>p.changes.every(ch=>ch.field_evidence.every(f=>f.origin==='reviewer'))));async function download(){try{const result=await api('/analysis-runs/'+route.params.id+'/review-export',{method:'POST',body:{}});report.value.export_asset_id=result.data.export_asset_id;const a=await get('/assets/'+report.value.export_asset_id+'/access');window.open(a.url,'_blank','noopener')}catch(e){error.value=e.message}}
 </script>
 <template>

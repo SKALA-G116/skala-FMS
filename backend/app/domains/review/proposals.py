@@ -11,8 +11,8 @@ proposals.py - 변경안 검증과 승인 상태 전이
 실행 가정:
     - 근거와 대상 관계·적용 기간을 확인한 뒤 허용된 전이만 수행
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,14 +23,18 @@ proposals.py - 변경안 검증과 승인 상태 전이
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   다중 원문 근거 승인·검증 오류 표시·조회 재사용 개선
+
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/domains/review/proposals.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -57,7 +61,7 @@ def bump(p):
     p['summary']['version']+=1;p['summary']['updated_at']=now();return actions(p)
 
 def validate(c,p):
-    issues=[];targets={};locals={};diffs=[]
+    issues=[];targets={};locals={};diffs=[];evidence_cache={}
     def issue(message,change=None): issues.append({'code':'REVIEW_REQUIRED','severity':'blocking','message':message,'change_item_id':change})
     if p.get('analysis_run_id'):
         run=get(c,'analysis_run',p['analysis_run_id'])
@@ -119,7 +123,8 @@ def validate(c,p):
             except (KeyError,IndexError,ValueError,TypeError):issue('근거의 필드 경로가 실제 변경 필드와 다릅니다.',cid)
             for eid in fe['evidence_ids']:
                 try:
-                    ev=get(c,'evidence',eid)
+                    if eid not in evidence_cache:evidence_cache[eid]=get(c,'evidence',eid)
+                    ev=evidence_cache[eid]
                     if ev['document_revision_id'] not in p['source_document_revision_ids']:issue('근거가 다른 원문에 속합니다.',cid)
                 except Problem:issue('존재하지 않는 근거입니다.',cid)
         fields=set(op)-{'kind','local_ref','supersedes_fact_id','manufacturer_id','brand_id','barcode','supplier_code'}

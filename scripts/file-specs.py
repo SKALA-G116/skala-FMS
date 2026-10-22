@@ -29,6 +29,8 @@ file-specs.py - 파일 명세·변경 이력 관리
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   발표·비교 자료 및 바이너리 외부 명세 지원
+
     상세 Git 이력: git log --follow -- scripts/file-specs.py
     공통 규칙: doc/file-header-policy.md
 
@@ -146,6 +148,8 @@ def spec(path):
         return ('식품 도메인 MCP stdio 제공', 'Tool 인자·Resource URI·Prompt 이름·선택 host 모드', '제한된 조회/초안 Tool 결과·정책/근거·작업 안내', '기본 서버에 승인·최종 반영·임의 SQL을 노출하지 않음')
     if path == 'backend/app/parsers/documents.py':
         return ('원본 텍스트·표·PDF·이미지 파싱', '파일 경로·파일명·선택 OCR 환경', '본문·셀·페이지·좌표와 confidence를 갖는 segment 목록', '크기·페이지·셀·픽셀·구간을 제한하고 OCR는 선택 구성')
+    if path == 'backend/app/parsers/xlsx_images.py':
+        return ('XLSX 삽입 이미지·셀 anchor 추출', 'XLSX 경로·삽입 이미지 번호', '시트·행 범위·미디어 목록 또는 크기를 제한한 이미지 bytes', '외부 관계를 읽지 않고 ZIP·미디어 크기·픽셀·이미지 수를 제한')
     if '/parsers/ocr' in path:
         return ('격리 OCR 실행과 프로세스 수명 관리', '이미지/PDF 경로·페이지·timeout·OCR 환경', '인식 텍스트·confidence·locator 또는 OCR 오류', '가중치 재사용·직렬 요청·유휴 종료·임시 자원 정리')
     if '/runtime/' in path:
@@ -174,7 +178,7 @@ def spec(path):
         return ('개발·운영 보조 '+p.stem, 'CLI 인자·실행 환경·선택 입력 파일', '명령 결과·검증 기록·실행 프로세스', '실제 작업과 읽기 전용 점검의 범위를 해당 CLI에서 확인')
     if path.startswith('demo/'):
         return ('개인정보 없는 가상 시연 입력', '가상 식품 공지 또는 표 행', '파싱·모델·검수 시연용 입력', '실제 거래·급식 발주 자료로 사용하지 않음')
-    if path.endswith('requirements.txt') or 'requirements' in p.name:
+    if p.name.startswith('requirements') and p.suffix == '.txt':
         return ('Python 의존성 명세', '환경별 패키지와 버전 제약', '설치할 Python 환경', '잠금 파일은 생성 내용을 유지하고 환경·플랫폼 호환성을 검증')
     if path.startswith('doc/') or p.suffix == '.md':
         return ('프로젝트 문서 '+p.stem, '설계·구현·측정·검증 근거', '설명·명세·예제·검증 또는 발표 안내', '계획·테스트 대역·실제 실행 결과를 구분하고 현재 상태는 README 및 검증 근거 확인')
@@ -185,7 +189,7 @@ def style(path):
     p = Path(path)
     if path in GENERATED or path.startswith(('legacy/', 'doc/food-agent/prompts/', 'doc/food-agent/policies/')):
         return 'external'
-    if p.suffix in ('.json', '.csv', '.jpg', '.png') or '.lock.' in p.name:
+    if p.suffix.lower() in ('.json', '.csv', '.jpg', '.jpeg', '.png', '.webp', '.pdf', '.pptx') or '.lock.' in p.name:
         return 'external'
     if p.suffix == '.txt' and 'requirements' not in p.name:
         return 'external'

@@ -27,6 +27,8 @@ test_parsers_mcp.py - 기능·경계·회귀 검증
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/tests/test_parsers_mcp.py
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
@@ -120,6 +122,64 @@ def test_oversized_attachment_is_rejected_before_reading_body():
     from backend.app.connectors.school062 import SiteClient
     class UnreadBody(httpx.SyncByteStream):
         def __iter__(self):raise AssertionError('oversized response body must not be read')
-    with httpx.Client(transport=httpx.MockTransport(lambda req:httpx.Response(200,headers={'content-length':str(21*1024*1024)},stream=UnreadBody()))) as client:
+    with httpx.Client(transport=httpx.MockTransport(lambda req:httpx.Response(200,headers={'content-length':str(26*1024*1024)},stream=UnreadBody()))) as client:
         with pytest.raises(Problem) as error:SiteClient(client).request('https://school062.com/large.xlsx')
         assert error.value.code=='SOURCE_SIZE'
+
+
+@pytest.mark.parametrize('size,accepted',[(25*1024*1024,True),(25*1024*1024+1,False)])
+def test_attachment_stream_has_25mb_boundary_without_content_length(size,accepted):
+    import httpx
+    from backend.app.connectors.school062 import SiteClient
+    class Body(httpx.SyncByteStream):
+        def __iter__(self):
+            remaining=size
+            while remaining:
+                count=min(65536,remaining);remaining-=count;yield b'x'*count
+    with httpx.Client(transport=httpx.MockTransport(lambda req:httpx.Response(200,stream=Body()))) as client:
+        if accepted:assert len(SiteClient(client).request('https://school062.com/price.xlsx')[0])==size
+        else:
+            with pytest.raises(Problem) as error:SiteClient(client).request('https://school062.com/price.xlsx')
+            assert error.value.code=='SOURCE_SIZE'
+
+
+def test_xlsx_embedded_images_keep_separate_anchors_and_ocr_sources(tmp_path,monkeypatch):
+    import io,openpyxl
+    from PIL import Image
+    from openpyxl.drawing.image import Image as ExcelImage
+    from backend.app.parsers.xlsx_images import inventory,read_image
+    from backend.app.domains.analysis.planning import sources
+    wb=openpyxl.Workbook();ws=wb.active;ws.title='단가표';ws.append(['제품명','규격','학교가']);ws.append(['케이크','50g',1200]);ws.append(['빵','80g',1500])
+    def picture():
+        stream=io.BytesIO();Image.new('RGB',(100,40),'white').save(stream,format='PNG');stream.seek(0);return ExcelImage(stream)
+    ws.add_image(picture(),'D2');ws.add_image(picture(),'D3');path=tmp_path/'images.xlsx';wb.save(path);wb.close()
+    descriptors=inventory(path);assert [d['row_start'] for d in descriptors]==[2,3]
+    assert read_image(path,1)[2]=='image/png'
+    monkeypatch.setenv('FOOD_OCR_ENABLED','true')
+    monkeypatch.setattr('backend.app.parsers.documents.ocr_result',lambda *args:[{'text':'우유 함유','confidence':.95,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1],'image_width':100,'image_height':40}}])
+    blocks=parse(path,path.name);images=[s for s in blocks if s['locator'].get('embedded_image')]
+    assert len(images)==2 and {s['locator']['embedded_image'] for s in images}=={1,2}
+    for b in blocks:b['asset_id']='same-workbook'
+    assert len([s for s in sources(blocks) if s['location']['kind']=='image'])==2
+    monkeypatch.setenv('FOOD_OCR_ENABLED','false')
+    blocked=parse(path,path.name)
+    assert len([s for s in blocked if s.get('food_record')])==2
+    assert len([s for s in blocked if s.get('embedded_image_issue',{}).get('code')=='OCR_NOT_CONFIGURED'])==2
+
+
+def test_xlsx_image_budget_preserves_table_rows(tmp_path,monkeypatch):
+    import io,openpyxl
+    from PIL import Image
+    from openpyxl.drawing.image import Image as ExcelImage
+    wb=openpyxl.Workbook();ws=wb.active;ws.append(['제품명','규격','학교가']);ws.append(['케이크','50g',1200])
+    for _ in range(41):
+        stream=io.BytesIO();Image.new('RGB',(10,10),'white').save(stream,format='PNG');stream.seek(0);ws.add_image(ExcelImage(stream),'D2')
+    path=tmp_path/'many-images.xlsx';wb.save(path);wb.close()
+    calls=[];monkeypatch.setenv('FOOD_OCR_ENABLED','true')
+    def ocr(*args):
+        calls.append(1)
+        return [{'text':'우유 함유','confidence':.95,'locator':{'kind':'image','page_number':1,'bbox':[0,0,1,1],'image_width':10,'image_height':10}}]
+    monkeypatch.setattr('backend.app.parsers.documents.ocr_result',ocr)
+    blocks=parse(path,path.name)
+    assert len(calls)==40 and len([b for b in blocks if b.get('food_record')])==1
+    assert next(b for b in blocks if b.get('embedded_image_issue'))['embedded_image_issue']['unprocessed_images']==1

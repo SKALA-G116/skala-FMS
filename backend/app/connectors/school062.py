@@ -27,6 +27,8 @@ school062.py - 허용된 식품 사이트 수집 어댑터
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/connectors/school062.py
     공통 규칙: doc/file-header-policy.md
 
@@ -54,6 +56,7 @@ import re,time,json,hashlib
 import httpx
 from bs4 import BeautifulSoup
 from backend.app.infrastructure.database import Problem
+from backend.app.runtime.limits import MAX_FILE_BYTES
 HOSTS={'school062.com','www.school062.com'}
 BASE='https://school062.com'
 def safe_url(url):
@@ -77,11 +80,11 @@ class SiteClient:
                 r.raise_for_status();content=bytearray();reported=0
                 if progress:progress('다운로드 시작')
                 declared=r.headers.get('content-length','')
-                if declared.isdigit() and int(declared)>20*1024*1024:
-                    raise Problem(422,'SOURCE_SIZE','원격 파일이 20MB를 초과했습니다.')
-                for b in r.iter_bytes():
+                if declared.isdigit() and int(declared)>MAX_FILE_BYTES:
+                    raise Problem(422,'SOURCE_SIZE','원격 파일이 25MB를 초과했습니다.')
+                for b in r.iter_bytes(chunk_size=64*1024):
+                    if len(content)+len(b)>MAX_FILE_BYTES:raise Problem(422,'SOURCE_SIZE','원격 파일이 25MB를 초과했습니다.')
                     content.extend(b)
-                    if len(content)>20*1024*1024:raise Problem(422,'SOURCE_SIZE','원격 파일이 20MB를 초과했습니다.')
                     if progress and time.monotonic()-reported>=1:
                         progress(f'{len(content)/1024/1024:.1f}MB 받음');reported=time.monotonic()
                 return bytes(content),r.headers,str(r.url)

@@ -31,6 +31,8 @@ agent.py - LLM 계획·추출과 근거 연결
 
     2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
+    2026-10-22  김재현(Finn) v0.1.0   25MB·표 삽입 이미지 근거 보완 및 검수 오류 개선
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/agent.py
     공통 규칙: doc/file-header-policy.md
 
@@ -219,7 +221,20 @@ async def interpret(state):
             elif route['tool']=='extract_text':groups.extend(batches(source['segments']))
             elif route['tool']=='extract_image_regions':
                 try:
-                    region_groups,unassigned,layout=await image_regions(source,call)
+                    loc=source['location'];matches=[]
+                    if loc.get('embedded_image') and loc.get('row_start'):
+                        for row in ex['segments']:
+                            cell=row['locator'].get('cell_range','');number=re.search(r'\d+',cell)
+                            if row.get('food_record') and row['asset_id']==trace['asset_id'] and row['locator'].get('sheet_name')==loc.get('sheet_name') and number and loc['row_start']<=int(number[0])<=loc['row_end']:matches.append(row)
+                    if len(matches)==1:
+                        label='엑셀 행 '+matches[0]['locator']['cell_range']
+                        region_groups=[[{**matches[0],'region_label':label,'table_context':True}]+[{**s,'region_label':label} for s in source['segments']]]
+                        unassigned=[];layout={'method':'explicit_spreadsheet_anchor','table_evidence_id':matches[0]['evidence_id']}
+                    elif loc.get('embedded_image') and any(s.get('food_record') and s['asset_id']==trace['asset_id'] for s in ex['segments']):
+                        region_groups=[];unassigned=trace['evidence_ids'];layout={'method':'ambiguous_spreadsheet_anchor'}
+                        trace['review_required']={'code':'XLSX_IMAGE_ROW_AMBIGUOUS','message':'삽입 이미지에 연결할 상품 행이 하나로 정해지지 않아 원문 확인이 필요합니다.'}
+                        report['warnings'].append(f"{route['source_id']}: "+trace['review_required']['message'])
+                    else:region_groups,unassigned,layout=await image_regions(source,call)
                     groups.extend(region_groups);manual.extend(unassigned);trace['layout']=layout
                 except Problem as error:
                     if error.code not in ('IMAGE_LAYOUT_BUDGET','IMAGE_REGION_BUDGET','MODEL_INPUT_BUDGET','IMAGE_REGION_SOURCE','IMAGE_REGION_COVERAGE','MODEL_SCHEMA_INVALID','MODEL_OUTPUT_LIMIT'):raise
@@ -263,8 +278,14 @@ async def interpret(state):
         # A small source-context prefix supplies dates/header labels that span rows/batches.
         context=[]
         payload=extraction_payload(r,report['plan']['document_type'],mapping)
+        table_context=next((s for s in segments if s.get('table_context')),None)
+        schema=event_schema(list(mapping))
+        if table_context:
+            payload['instructions']+=' 이 이미지는 함께 제공한 엑셀 행 상품의 라벨이다. 해당 상품의 원재료·함량·알레르기·원산지 속성만 보완하고 상품을 새로 나누거나 표의 제품명·규격·가격을 변경하지 마라.'
+            schema['properties']['events']['maxItems']=1
+            schema['properties']['events']['items']['properties']['kind']={'const':'food_profile'}
         try:
-            data=await model_call(model,'추출 자료를 해석해 실제 식품별 사실을 JSON events로 반환하라. 단순 회사명·연락처·안내 제목은 품목이 아니다.',payload,event_schema(list(mapping)),state)
+            data=await model_call(model,'추출 자료를 해석해 실제 식품별 사실을 JSON events로 반환하라. 단순 회사명·연락처·안내 제목은 품목이 아니다.',payload,schema,state)
             if len(data['events'])>=24:raise Problem(422,'EVENT_WINDOW_CAPACITY','AI 추출 항목 상한에 도달했습니다. 누락 방지를 위해 더 작은 구간으로 재처리해야 합니다.')
         except Problem as error:
             if error.code not in ('MODEL_OUTPUT_LIMIT','EVENT_WINDOW_CAPACITY','MODEL_INPUT_BUDGET'):raise
@@ -336,6 +357,19 @@ async def interpret(state):
             if event['kind']=='price' and event['amount'] is None:
                 event['excluded_reason']='가격 근거를 확인할 수 없어 단가 변경안에서 제외했습니다.'
             # Keep distinct specs/periods and both baseline/correction evidence.
+            if table_context:
+                from backend.app.domains.catalog.record import from_event
+                supplement=from_event(event);base=table_context['food_record']
+                def fill_missing(primary,extra):
+                    if isinstance(primary,dict):
+                        other=extra if isinstance(extra,dict) else {}
+                        return {k:fill_missing(v,other.get(k)) for k,v in primary.items()}
+                    return extra if primary is None or primary=='' or primary==[] else primary
+                combined=fill_missing(base,supplement)
+                if not base['allergens'].get('original_text') and supplement['allergens'].get('original_text'):combined['allergens']=supplement['allergens']
+                for field in ('attributes','allergens'):
+                    if combined[field]!=base[field]:combined['field_sources'][field]={'evidence_ids':event['evidence_ids'],'origin':'ocr_llm'}
+                event.update(product_name=base['food_name'],company_name=base.get('company_name'),spec=base['specification']['original_text'],food_record=combined)
             report['events'].append(event)
         report['model_calls'].extend(model.calls);model.calls=[];report['batches_completed']=i+1;report['coverage']['processed_windows']=sum(len(g) for g in groups[:i+1]);report['coverage']['total_windows']=sum(len(g) for g in groups);report['coverage']['completed_batches']=i+1;report['coverage']['processed_segments']=len(ex['segments']) if i+1==len(groups) else min(len(ex['segments']),len(structured)+len({s['evidence_id'] for group in groups[:i+1] for s in group}))
         with tx() as c:save_report(c,report,state)

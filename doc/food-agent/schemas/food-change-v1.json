@@ -17,7 +17,8 @@
           },
           "minItems": 1,
           "uniqueItems": true,
-          "maxItems": 20
+          "maxItems": 2000,
+          "description": "상품 영역·표 병합으로 연결한 원문 근거를 보존한다. 단일 OCR 결과의 2000구간 상한과 일치하며 UUID·중복·원문 소속 검증은 유지한다."
         },
         "origin": {
           "type": "string",
