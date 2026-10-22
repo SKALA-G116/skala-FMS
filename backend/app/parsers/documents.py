@@ -11,8 +11,8 @@ documents.py - 원본 텍스트·표·PDF·이미지 파싱
 실행 가정:
     - 크기·페이지·셀·픽셀·구간을 제한하고 OCR는 선택 구성
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -25,6 +25,8 @@ documents.py - 원본 텍스트·표·PDF·이미지 파싱
 
     2026-10-21  미지정      v0.1.0   업체 표 직접 정규화·중복 통합·원문 이력 보존
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/parsers/documents.py
     공통 규칙: doc/file-header-policy.md
 
@@ -34,8 +36,8 @@ documents.py - 원본 텍스트·표·PDF·이미지 파싱
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -91,6 +93,8 @@ def parse(path,filename):
                 else:mapping=None;delimiter=None
             block(line,locator,**metadata)
     elif ext in ('.xlsx','.xls'):
+        from backend.app.parsers.xlsx_merges import merge_anchors,expand_row
+        merges=merge_anchors(path) if ext=='.xlsx' else {}
         if ext=='.xlsx':
             with zipfile.ZipFile(path) as z:
                 if sum(x.file_size for x in z.infolist())>100*1024*1024:raise Problem(422,'EXPANDED_LIMIT','압축 해제 크기가 너무 큽니다.')
@@ -106,17 +110,27 @@ def parse(path,filename):
         try:
             from backend.app.domains.catalog.record import header_mapping; from backend.app.domains.catalog.record import from_table_row
             for name,rows in sheets:
-                mapping=None
+                mapping=None;headers=None;anchor_values={}
                 for i,row in enumerate(rows,1):
                     cells+=sum(v is not None and v!='' for v in row)
                     if i>20000 or cells>200000:raise Problem(422,'SHEET_LIMIT','표의 행·셀 제한을 초과했습니다.')
                     if not any(v is not None and str(v).strip() for v in row):continue
                     locator={'kind':'spreadsheet','sheet_name':name,'cell_range':f'A{i}:{column(len(row))}{i}'}
-                    detected=header_mapping(row);metadata={}
-                    if detected:mapping=detected;metadata['structured_table_header']=True
+                    expanded,merged_sources=expand_row(i,row,merges.get(name,{}),anchor_values)
+                    detected=header_mapping(expanded);metadata={}
+                    if detected:
+                        mapping=detected;headers=expanded;metadata['structured_table_header']=True
+                        name_col=mapping.get('food_name')
+                        if name_col is not None and 'description' not in mapping:
+                            for col,anchor in merged_sources.items():
+                                if expanded[col]==expanded[name_col] and col!=name_col:mapping['description']=col;break
                     elif mapping:
-                        record=from_table_row(row,mapping,locator)
-                        if record:metadata['food_record']=record
+                        record=from_table_row(expanded,mapping,locator,headers=headers)
+                        if record:
+                            for field,index in mapping.items():
+                                if index in merged_sources and field in record['field_sources']:
+                                    record['field_sources'][field].update(locator={**locator,'cell_range':merged_sources[index]},origin='merged_cell')
+                            metadata['food_record']=record
                     block(' | '.join('' if v is None else str(v) for v in row),locator,**metadata)
         finally:
             if ext=='.xlsx':book.close();excel_stream.close()

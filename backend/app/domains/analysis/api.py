@@ -27,6 +27,8 @@ api.py - analysis 도메인 HTTP 유스케이스
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/api.py
     공통 규칙: doc/file-header-policy.md
 
@@ -78,6 +80,10 @@ def handle(ctx):
             if not run.get('agent_report_id') or get(c, 'agent_report', run['agent_report_id'])['status'] != 'completed':
                 raise Problem(409, 'REPORT_NOT_READY', '분석이 끝난 뒤 다운로드할 수 있습니다.')
             out = export_review({'run_id': id, 'revision_id': run['document_revision_id'], 'agent_report_id': run['agent_report_id'], 'review_mode': True}, connection=c)
+        elif action == 'approve' and method=='POST':
+            from backend.app.domains.review.approval import approve_review
+            out=approve_review(c,id,payload,u)
+            status=202
         elif action == 'review-proposals' and method == 'POST':
             from backend.app.domains.review.items import prepare
             out = prepare(c, id, payload, u['id'])
@@ -106,6 +112,6 @@ def handle(ctx):
         raise Problem(404, 'NOT_FOUND', '지원하지 않는 경로입니다.')
     return DomainResult(out, status, headers)
 
-ROUTES = (('analysis-runs', ('POST',)), ('analysis-profiles', ('GET',)), ('analysis-runs/{id}', ('GET',)), ('analysis-runs/{id}/normalize', ('POST',)), ('analysis-runs/{id}/review-export', ('POST',)), ('analysis-runs/{id}/report', ('GET',)), ('analysis-runs/{id}/items/{item_id}', ('PATCH',)), ('analysis-runs/{id}/review-proposals', ('POST',)))
+ROUTES = (('analysis-runs', ('POST',)), ('analysis-profiles', ('GET',)), ('analysis-runs/{id}', ('GET',)), ('analysis-runs/{id}/normalize', ('POST',)), ('analysis-runs/{id}/review-export', ('POST',)), ('analysis-runs/{id}/report', ('GET',)), ('analysis-runs/{id}/items/{item_id}', ('PATCH',)), ('analysis-runs/{id}/review-proposals', ('POST',)), ('analysis-runs/{id}/approve', ('POST',)))
 
 router = domain_router('analysis', ROUTES)

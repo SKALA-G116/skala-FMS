@@ -39,6 +39,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/domains/analysis/workflow.py](../backend/app/domains/analysis/workflow.py) | LangGraph 분석 흐름 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/catalog/__init__.py](../backend/app/domains/catalog/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/catalog/api.py](../backend/app/domains/catalog/api.py) | catalog 도메인 HTTP 유스케이스 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/catalog/editing.py](../backend/app/domains/catalog/editing.py) | 프로젝트 설정 editing.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/catalog/queries.py](../backend/app/domains/catalog/queries.py) | 식품·규격·단가의 시점별 조회 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/catalog/record.py](../backend/app/domains/catalog/record.py) | 표준 FoodRecord DTO와 정규화 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/identity/__init__.py](../backend/app/domains/identity/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
@@ -64,6 +65,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/domains/review/__init__.py](../backend/app/domains/review/__init__.py) | Python 패키지 진입점 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/api.py](../backend/app/domains/review/api.py) | review 도메인 HTTP 유스케이스 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/application.py](../backend/app/domains/review/application.py) | 승인된 변경의 원자적 DB 반영 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/domains/review/approval.py](../backend/app/domains/review/approval.py) | 프로젝트 설정 approval.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/inbox.py](../backend/app/domains/review/inbox.py) | 자료별 최신 분석 검수함 조회 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/items.py](../backend/app/domains/review/items.py) | 추출 품목의 사용자 검토와 반영 준비 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/domains/review/proposals.py](../backend/app/domains/review/proposals.py) | 변경안 검증과 승인 상태 전이 | 파일 상단 헤더 + 외부 목록 |
@@ -75,6 +77,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [backend/app/parsers/documents.py](../backend/app/parsers/documents.py) | 원본 텍스트·표·PDF·이미지 파싱 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/parsers/ocr.py](../backend/app/parsers/ocr.py) | 격리 OCR 실행과 프로세스 수명 관리 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/parsers/ocr_pool.py](../backend/app/parsers/ocr_pool.py) | 격리 OCR 실행과 프로세스 수명 관리 | 파일 상단 헤더 + 외부 목록 |
+| [backend/app/parsers/xlsx_merges.py](../backend/app/parsers/xlsx_merges.py) | 프로젝트 설정 xlsx_merges.py | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/runtime/__init__.py](../backend/app/runtime/__init__.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/runtime/execution.py](../backend/app/runtime/execution.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
 | [backend/app/runtime/limits.py](../backend/app/runtime/limits.py) | 실행 예산과 중단·메모리 제어 | 파일 상단 헤더 + 외부 목록 |
@@ -152,6 +155,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [doc/food-agent/schemas/food-change-v1.json](../doc/food-agent/schemas/food-change-v1.json) | 프로젝트 문서 food-change-v1 | 외부 명세 (원본 보존) |
 | [doc/food-agent/schemas/food-record-v2.json](../doc/food-agent/schemas/food-record-v2.json) | 프로젝트 문서 food-record-v2 | 외부 명세 (원본 보존) |
 | [doc/food-agent/screenshots/review-journey.jpg](../doc/food-agent/screenshots/review-journey.jpg) | 프로젝트 문서 review-journey | 외부 명세 (원본 보존) |
+| [doc/food-agent/service-workflow.md](../doc/food-agent/service-workflow.md) | 프로젝트 문서 service-workflow | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/technology-review.md](../doc/food-agent/technology-review.md) | 프로젝트 문서 technology-review | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/validate_contract.py](../doc/food-agent/validate_contract.py) | 프로젝트 문서 validate_contract | 파일 상단 헤더 + 외부 목록 |
 | [doc/food-agent/validate_design.py](../doc/food-agent/validate_design.py) | 프로젝트 문서 validate_design | 파일 상단 헤더 + 외부 목록 |
@@ -180,10 +184,9 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/composables/useJob.js](../frontend/src/composables/useJob.js) | Vue 애플리케이션 useJob | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/main.js](../frontend/src/main.js) | Vue 애플리케이션 main | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/style.css](../frontend/src/style.css) | Vue 애플리케이션 style | 파일 상단 헤더 + 외부 목록 |
+| [frontend/src/utils/agentLogs.js](../frontend/src/utils/agentLogs.js) | Vue 애플리케이션 agentLogs | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/utils/reviewJourney.js](../frontend/src/utils/reviewJourney.js) | Vue 애플리케이션 reviewJourney | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Catalog.vue](../frontend/src/views/Catalog.vue) | 식품 상세·규격·연결 정보 | 파일 상단 헤더 + 외부 목록 |
-| [frontend/src/views/CreateReview.vue](../frontend/src/views/CreateReview.vue) | 수동 검토 변경안 작성 | 파일 상단 헤더 + 외부 목록 |
-| [frontend/src/views/Dashboard.vue](../frontend/src/views/Dashboard.vue) | 업무 집계와 주요 화면 진입 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Documents.vue](../frontend/src/views/Documents.vue) | 자료 등록·선택·삭제·복구·영구 삭제 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/ExtractionReview.vue](../frontend/src/views/ExtractionReview.vue) | 품목 선택·원문 대조·수정·최종 반영 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/FoodCatalog.vue](../frontend/src/views/FoodCatalog.vue) | 표준 식품 목록과 삭제·복구 | 파일 상단 헤더 + 외부 목록 |
@@ -192,6 +195,7 @@ JSON·CSV·잠금 파일·가상 입력·이미지·MCP Prompt/정책·legacy �
 | [frontend/src/views/Reference.vue](../frontend/src/views/Reference.vue) | 원본 자료·근거·표 조회 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Reviews.vue](../frontend/src/views/Reviews.vue) | 검토할 변경안 목록 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/src/views/Sources.vue](../frontend/src/views/Sources.vue) | 사이트 연결·업데이트 수집 | 파일 상단 헤더 + 외부 목록 |
+| [frontend/tests/agentLogs.test.js](../frontend/tests/agentLogs.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/auth.test.js](../frontend/tests/auth.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/tests/reviewJourney.test.js](../frontend/tests/reviewJourney.test.js) | 기능·경계·회귀 검증 | 파일 상단 헤더 + 외부 목록 |
 | [frontend/vite.config.js](../frontend/vite.config.js) | Vue 애플리케이션 vite.config | 파일 상단 헤더 + 외부 목록 |

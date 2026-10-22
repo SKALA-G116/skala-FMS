@@ -11,8 +11,8 @@ collection.py - 게시글·첨부 수집과 변경 감지
 실행 가정:
     - 동일 원본 중복 수집을 구분하고 접근 실패를 숨기지 않음
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -25,6 +25,8 @@ collection.py - 게시글·첨부 수집과 변경 감지
 
     2026-10-21  미지정      v0.1.0   수집 진행 표시·갱신·완료 건수 수정
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/ingestion/collection.py
     공통 규칙: doc/file-header-policy.md
 
@@ -35,8 +37,8 @@ collection.py - 게시글·첨부 수집과 변경 감지
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -133,12 +135,12 @@ def collect_source(source_id,payload,progress=None,site=None):
                     # Recent pages are revisited even when known, so edits/deletions are not hidden by high water.
                     if processed>=limit:break
                     seen.add(post_id);processed+=1;consumed+=1
-                    if progress:progress(f'{BOARD_LABELS[board]} · 게시글 {post_id} 가져오는 중',len(results))
+                    if progress:progress(f'{BOARD_LABELS[board]} · 이번 범위 {processed}/{limit} · 글 번호 {post_id} 읽는 중',len(results))
                     try:
                         if isinstance(site,SiteClient) and progress:
-                            site.progress=lambda detail:progress(f'{BOARD_LABELS[board]} · 게시글 {post_id} · {detail}',len(results))
+                            site.progress=lambda detail:progress(f'{BOARD_LABELS[board]} · 이번 범위 {processed}/{limit} · 글 번호 {post_id} · {detail}',len(results))
                         post=site.post(board,post_id)
-                        if progress:progress(f'{BOARD_LABELS[board]} · 게시글 {post_id} 저장',len(results))
+                        if progress:progress(f'{BOARD_LABELS[board]} · 글 번호 {post_id} 저장',len(results))
                         with tx() as c:
                             doc,kind=ingest(c,source_id,post);counts[kind]=counts.get(kind,0)+1
                             if doc is None:continue
@@ -146,7 +148,7 @@ def collect_source(source_id,payload,progress=None,site=None):
                             if payload.get('auto_analyze',True):
                                 run,job=queue_analysis(c,doc['latest_revision_id'])
                                 if job:analysis_jobs.append(job['id'])
-                        issues.extend([dict(e,document_id=doc['id']) for e in post['issues']])
+                        issues.extend([dict(e,document_id=doc['id'],board=board,post=post_id) for e in post['issues']])
                     except Problem as e:
                         if e.code in ('CANCELLED','LEASE_LOST'):raise
                         had_error=True;issues.append({'code':e.code,'message':e.message,'board':board,'post':post_id})

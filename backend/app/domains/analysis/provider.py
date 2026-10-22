@@ -25,6 +25,8 @@ provider.py - Ollama 비동기 구조화 추론
 
     2026-10-22  김재현(Finn) v0.1.0   생성 문법 반복 확장 제한 회피·모델 오류 원인 분리
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/provider.py
     공통 규칙: doc/file-header-policy.md
 
@@ -102,10 +104,11 @@ class LocalModel:
         response.raise_for_status()
         if len(response.content)>1024*1024:raise Problem(422,'MODEL_RESPONSE_LIMIT','AI 응답 크기 제한을 초과했습니다.')
         data=response.json()
+        self.calls.append({'task':task,'model':self.name,'input_tokens':data.get('prompt_eval_count',0),'output_tokens':data.get('eval_count',0),'elapsed_seconds':round(time.monotonic()-started,3),'queue_seconds':round(queued,3),'actual_model_call':True,'transport':transport,'role':getattr(self,'role','extractor')})
         if data.get('done_reason')=='length':raise Problem(422,'MODEL_OUTPUT_LIMIT','AI 출력 제한에 도달했습니다. 자료를 더 작은 구간으로 나눠 주세요.')
         try:result=json.loads(data['message']['content']);Draft202012Validator(schema).validate(result)
         except Exception as ex:raise Problem(422,'MODEL_SCHEMA_INVALID','AI 출력 형식 검증에 실패했습니다.') from ex
-        self.calls.append({'task':task,'model':self.name,'input_tokens':data.get('prompt_eval_count',0),'output_tokens':data.get('eval_count',0),'elapsed_seconds':round(time.monotonic()-started,3),'queue_seconds':round(queued,3),'actual_model_call':True,'transport':transport,'role':getattr(self,'role','extractor')})
+
         return result
     async def agenerate(self,task,payload,schema):
         request=self.request(task,payload,schema);waiting=time.monotonic()

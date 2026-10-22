@@ -11,8 +11,8 @@ worker.py - 수집·분석·반영 작업 소비
 실행 가정:
     - 작업 lease·취소·종료와 제한된 lane을 관리
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -25,6 +25,8 @@ worker.py - 수집·분석·반영 작업 소비
 
     2026-10-21  미지정      v0.1.0   수집 진행 표시·갱신·완료 건수 수정
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/jobs/worker.py
     공통 규칙: doc/file-header-policy.md
 
@@ -34,8 +36,8 @@ worker.py - 수집·분석·반영 작업 소비
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -108,7 +110,8 @@ def once(job_types=None):
             if lock['fence']!=fence or lock['status']=='cancelled':return True
             issues=job['issues'];job=getjob(c,job['id'],True);job['issues']=issues
             count=len(output.get('document_ids',[])) if job['type']=='collect' and not output.get('connected') else job.get('total_count') or 1
-            job.update(status='partial' if job['issues'] else 'succeeded',stage='일부 확인 필요' if job['issues'] else '완료',finished_at=now(),processed_count=count,total_count=count,result=output,allowed_actions=[]);savejob(c,job)
+            actionable=[issue for issue in job['issues'] if issue['code']!='SCAN_CONTINUES']
+            job.update(status='partial' if actionable else 'succeeded',stage='일부 확인 필요' if actionable else '완료',finished_at=now(),processed_count=count,total_count=count,result=output,allowed_actions=[]);savejob(c,job)
             if job['analysis_run_id']:
                 run=get(c,'analysis_run',job['analysis_run_id']);run.update(status='succeeded',finished_at=now());put(c,'analysis_run',run)
     except AnalysisYield:

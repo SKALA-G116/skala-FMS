@@ -25,13 +25,19 @@ README.md - 프로젝트 문서 README
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- README.md
     공통 규칙: doc/file-header-policy.md
 ==============================================================================
 -->
 # skala-FMS · 식품장부
 
-학교급식 게시글과 첨부 단가표를 표준 식품 정보로 정리하고, 원문 대조와 승인 후 식품·단가·이력을 관리하는 AI 서비스입니다.
+학교급식 게시글과 첨부 자료를 Agent가 읽고 처리 도구를 선택한 뒤, 표준 DTO로 추출한 정보를 사람이 검수·승인해 식품 DB에 반영하는 서비스입니다.
+
+**자료 가져오기 → Agent 도구 선택·LangGraph 처리 → 검수·승인 → 식품 DB**
+
+주요 화면은 자료 가져오기·검수/승인·식품 DB·Agent 로그 네 개입니다. 수동 JSON 변경안 작성과 별도 대시보드는 제거했습니다. 내부 검증·승인 revision·영속 반영 작업은 검수 화면의 한 번의 승인 요청으로 이어집니다. [현재 서비스 흐름과 API](doc/food-agent/service-workflow.md)를 참고하세요.
 
 [상세 실행·API 명세](readmd.md) · [평가 기준 점검표](doc/submission/requirements-audit.md) · [5분 발표 구성·대본](doc/submission/presentation-5min.md) · [시연 준비](doc/submission/demo-guide.md) · [GitHub 저장소](https://github.com/SKALA-G116/skala-FMS)
 
@@ -59,7 +65,7 @@ README.md - 프로젝트 문서 README
 |---|---|---|
 | Vue 3 / Vite / Node 22 | View에서 사용자 여정을 조합하고 표·폼·근거 컴포넌트 재사용 | 복잡한 검수 상태와 저장 전 변경을 별도로 관리해야 함 |
 | FastAPI / Python | API와 수집·파싱·AI 코드를 같은 언어로 연결 | DB·OCR 같은 동기 작업의 실행 위치를 제한해야 함 |
-| LangGraph | 분석 단계를 명시하고 checkpoint·작업 재개 지원 | 현재는 고정 흐름이며 범용 자율 Agent가 아님 |
+| LangGraph | 분석 단계를 명시하고 checkpoint·작업 재개 지원 | Agent가 자료별 도구를 선택하고 LangGraph가 실행·근거·재개를 관리. 임의 SQL·무제한 도구 실행은 제공하지 않음 |
 | Ollama / Qwen3 4B·8B | 로컬에서 구조화 추출, 외부 모델 API 키 없이 개발 | 모델 RAM/VRAM과 생성 지연이 큼 |
 | PaddleOCR | 한국어 이미지·스캔 PDF의 텍스트 추출 | 모델 설치와 메모리 부담, 표 구조·양식별 정확도 한계 |
 | PostgreSQL 17 / JSONB | 관계·버전·승인 트랜잭션과 가변 식품 속성을 함께 저장 | 일부 조회의 개발용 상한과 저장 계층 개선이 남음 |

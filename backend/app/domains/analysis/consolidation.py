@@ -26,6 +26,8 @@ consolidation.py - 원본 표 정규화·추출 후보 중복 통합
 
     2026-10-21  김재현(Finn) v0.1.0   Agent 도구 선택 기반 리빌드·업무 경계 및 검증
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/analysis/consolidation.py
     공통 규칙: doc/file-header-policy.md
 
@@ -75,6 +77,8 @@ def enrich_tables(segments):
         if detected:
             mapping=detected;segment['structured_table_header']=True;continue
         if not mapping or len(row)<=max(mapping.values()):continue
+        existing=segment.get('food_record')
+        if existing and (existing.get('prices',{}).get('source_columns') or any(v.get('origin')=='merged_cell' for v in existing.get('field_sources',{}).values())):continue
         record=from_table_row(row,mapping,loc,company_name=company)
         if not record:continue
         for field,source in record['field_sources'].items():

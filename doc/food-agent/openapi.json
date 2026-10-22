@@ -3294,6 +3294,60 @@
             "description": "버전 변경 또는 분석 중"
           }
         }
+      },
+      "patch": {
+        "summary": "식품 DB 정보 수정·변경 이력 저장 (관리자·검토자)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoodEditInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "최신 FoodRecord·version·audit_event_id"
+          },
+          "412": {
+            "description": "다른 수정으로 버전 변경"
+          },
+          "403": {
+            "description": "관리자·검토자 권한 필요"
+          },
+          "409": {
+            "description": "삭제한 식품 수정 차단"
+          }
+        }
       }
     },
     "/foods/{id}/restore": {
@@ -3457,6 +3511,64 @@
           },
           "409": {
             "description": "분석 미완료 또는 삭제된 자료"
+          }
+        }
+      }
+    },
+    "/analysis-runs/{id}/approve": {
+      "post": {
+        "summary": "확인한 품목 검증·승인·DB 반영 작업 일괄 등록",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "version"
+                ],
+                "properties": {
+                  "version": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "검토 보고서와 DB 반영 jobs·proposal_ids. Worker가 승인 revision만 저장"
+          },
+          "409": {
+            "description": "검토 버전·반영 상태 충돌"
+          },
+          "422": {
+            "description": "확인 품목 없음 또는 검증 차단. 승인·작업 등록 전체 롤백"
+          },
+          "403": {
+            "description": "관리자·검토자 권한 필요"
           }
         }
       }
@@ -7603,6 +7715,12 @@
           "prices": {
             "type": "object",
             "additionalProperties": false,
+            "required": [
+              "source_applied",
+              "survey_1",
+              "survey_2",
+              "survey_3"
+            ],
             "properties": {
               "source_applied": {
                 "type": [
@@ -7631,14 +7749,78 @@
                   "null"
                 ],
                 "maxLength": 2000
+              },
+              "source_columns": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "maxItems": 20,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "basis": {
+                      "enum": [
+                        "package",
+                        "kg",
+                        "piece"
+                      ]
+                    },
+                    "label": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 2000
+                    },
+                    "amount": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 2000
+                    },
+                    "original_text": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 2000
+                    },
+                    "quantity": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 2000
+                    },
+                    "unit": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 2000
+                    },
+                    "tax_included": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "basis",
+                    "label",
+                    "amount",
+                    "original_text",
+                    "quantity",
+                    "unit",
+                    "tax_included"
+                  ]
+                }
               }
-            },
-            "required": [
-              "source_applied",
-              "survey_1",
-              "survey_2",
-              "survey_3"
-            ]
+            }
           },
           "field_sources": {
             "type": "object"
@@ -7698,6 +7880,24 @@
           "profile",
           "clear_fields"
         ]
+      },
+      "FoodEditInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "food_record",
+          "reason"
+        ],
+        "properties": {
+          "food_record": {
+            "$ref": "#/components/schemas/FoodRecord"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        }
       }
     },
     "parameters": {

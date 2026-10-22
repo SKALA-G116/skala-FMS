@@ -11,8 +11,8 @@ api.py - jobs 도메인 HTTP 유스케이스
 실행 가정:
     - 공통 transport가 소유한 같은 DB 트랜잭션을 사용
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -23,6 +23,8 @@ api.py - jobs 도메인 HTTP 유스케이스
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
 
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
+
     상세 Git 이력: git log --follow -- backend/app/domains/jobs/api.py
     공통 규칙: doc/file-header-policy.md
 
@@ -32,8 +34,8 @@ api.py - jobs 도메인 HTTP 유스케이스
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -65,7 +67,9 @@ def handle(ctx):
     status, headers = 200, {}
     if root == 'jobs':
         if not id:
-            out = page(filtered([x['data'] for x in c.execute('SELECT data FROM jobs ORDER BY created_at DESC LIMIT 2000')], q), q, c)
+            job_type=q.get('type') or None
+            if job_type and job_type not in ('analyze','collect','apply'):raise Problem(422,'JOB_TYPE','작업 종류를 확인하세요.')
+            out = page(filtered([x['data'] for x in c.execute('SELECT data FROM jobs WHERE (%s::text IS NULL OR type=%s) ORDER BY created_at DESC LIMIT 2000',(job_type,job_type))], q), q, c)
         else:
             out = getjob(c, id, mutating)
             if action == 'cancel' and method == 'POST':

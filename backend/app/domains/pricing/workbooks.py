@@ -11,8 +11,8 @@ workbooks.py - 원본 단가표·시트·열 조회
 실행 가정:
     - 원본 자료 가격을 승인된 공급 단가와 구분
 작성 정보:
-    - 작성자: 미지정
-    - 이메일: 미지정
+    - 작성자: 김재현(Finn)
+    - 이메일: penguin.klg@gmail.com
     - 작성일: 2026-10-21 (최초 Git 등록일 기준)
     - 라이선스: 미지정
     - 버전: 0.1.0
@@ -22,6 +22,8 @@ workbooks.py - 원본 단가표·시트·열 조회
     --------------------------------------------------------------------
     2026-10-21  미지정      v0.1.0   최초 Git 등록 a11ef05a
     2026-10-21  미지정      v0.1.0   파일 역할·입출력·가정·이력 명세 추가
+
+    2026-10-22  김재현(Finn) v0.1.0   자료·Agent·검수 승인·식품 DB 중심 흐름 및 알레르기 표기 정리
 
     상세 Git 이력: git log --follow -- backend/app/domains/pricing/workbooks.py
     공통 규칙: doc/file-header-policy.md
@@ -34,8 +36,8 @@ workbooks.py - 원본 단가표·시트·열 조회
 """
 
 # FMS_MODULE_METADATA_BEGIN
-__author__ = "미지정"
-__email__ = "미지정"
+__author__ = "김재현(Finn)"
+__email__ = "penguin.klg@gmail.com"
 __version__ = "0.1.0"
 __status__ = "Development"
 # FMS_MODULE_METADATA_END
@@ -206,7 +208,11 @@ def set_header(c,sheet_id,header_row):
 def detect_header(c,sheet_id):
     s=c.execute('SELECT columns,source_header FROM price_sheets WHERE id=%s',(sheet_id,)).fetchone()
     candidates=[(1,{col['key']:col['original_label'] for col in (s['source_header'] or s['columns'])})]+[(r['row_number'],r['cells']) for r in c.execute('SELECT row_number,cells FROM price_sheet_rows WHERE sheet_id=%s AND row_number<=20 ORDER BY row_number',(sheet_id,))]
-    def score(values):return sum(bool(re.search(r'식품명|상품명|제품명|품명|규격|단위|학교가|판매가|단가|적용가|조사가|업체군',v)) for v in values.values())
+    def score(values):
+        from backend.app.domains.catalog.record import header_mapping
+        mapped=header_mapping(list(values.values())) or {}
+        legacy=sum(bool(re.search(r'식품명|상품명|제품명|품명|규격|단위|학교가|판매가|단가|적용가|조사가|업체군',v)) for v in values.values())
+        return max(legacy,len(mapped))
     best=max(candidates,key=lambda pair:score(pair[1]))
     if best[0]!=1 and score(best[1])>=3:return set_header(c,sheet_id,best[0])
     return None
